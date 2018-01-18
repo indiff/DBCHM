@@ -152,7 +152,7 @@ Settings for a test, including the query, database information, and parameter as
 
         private void textBoxDescription_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://dbchm.51try.top");
+            System.Diagnostics.Process.Start("http://wpa.qq.com/msgrd?v=3&uin=411340965&site=qq&menu=yes");
         }
     }
 }

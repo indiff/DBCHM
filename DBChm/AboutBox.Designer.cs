@@ -142,7 +142,7 @@ namespace DBCHM
             this.textBoxDescription.Size = new System.Drawing.Size(361, 147);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "Please visit  http://dbchm.51try.top";
+            this.textBoxDescription.Text = "51try.Top 出品，联系QQ：411340965";
             this.textBoxDescription.Click += new System.EventHandler(this.textBoxDescription_Click);
             // 
             // okButton

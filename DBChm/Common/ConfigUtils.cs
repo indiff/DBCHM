@@ -22,25 +22,16 @@ namespace DBCHM
         {
             try
             {
-                try
+                if (!Directory.Exists(AppPath))
                 {
-                    if (!Directory.Exists(AppPath))
-                    {
-                        Directory.CreateDirectory(AppPath);
-                    }
-                    ConfigFilePath = Path.Combine(AppPath, ConfigFileName + ".db");
-                    Init();
+                    Directory.CreateDirectory(AppPath);
                 }
-                catch
-                {
-                    ConfigFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), ConfigFileName + ".ini");
-                    Init();
-                }
+                ConfigFilePath = Path.Combine(AppPath, ConfigFileName + ".db");
+                Init();
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                LogUtils.LogError("ConfigUtils初始化", Developer.SysDefault, ex);
             }
         }
 
@@ -99,7 +90,7 @@ namespace DBCHM
         public static bool HasValue()
         {
             string strSql = "select count(1) from DBCHMConfig";
-            return db.Single<int>(strSql,0) > 0;
+            return db.Single<int>(strSql, 0) > 0;
         }
 
     }

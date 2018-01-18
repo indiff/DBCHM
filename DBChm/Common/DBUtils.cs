@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Common;
+using System.Reflection;
 using Top._51Try.Data;
 
 namespace DBCHM
@@ -8,22 +9,5 @@ namespace DBCHM
     {
         public static DB Instance
         { get; set; }
-
-        public static bool TryConnn(DbProviderFactory factory, string connectionString)
-        {
-            try
-            {
-                var conn = factory.CreateConnection();
-                conn.ConnectionString = connectionString;
-                conn.Open();
-                conn.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
     }
 }
