@@ -14,6 +14,6 @@ DBCHM支持SqlServer/MySql/Oracle/PostgreSQL/Sqlite等数据库的表列批注�
 
 DBCHM效果展示：
 ------------------------
-![数据库连接管理](http://gitee.com/lztkdr/DBCHM/DBChm/Images/DBCHM001.png)
+![数据库连接管理](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM001.png)
 
-![批注修改](http://gitee.com/lztkdr/DBCHM/tree/master/DBChm/Images/DBCHM002.png)
+![批注修改](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
