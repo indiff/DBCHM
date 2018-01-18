@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("DBCHM")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("DBCHM - 51Try.Top")]
+[assembly: AssemblyDescription("数据库CHM生成工具")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("lztkdr")]
+[assembly: AssemblyCompany("51Try.Top")]
 [assembly: AssemblyProduct("DBCHM")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright ©  2018 lztkdr")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
