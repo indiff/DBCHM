@@ -20,4 +20,4 @@ DBCHM效果展示：
 
 ![CHM文件导出](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
 
-![CHM文件](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM04.png)
+![CHM文件](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM004.png)
