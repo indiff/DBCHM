@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DBCHM.Properties {
+namespace DBChm.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
