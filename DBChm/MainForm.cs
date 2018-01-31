@@ -413,8 +413,18 @@ namespace DBCHM
         {
             // 设置 进度位置
             Prog.Value = e.ProgressPercentage;
-            if (e.UserState != null)
+            if (e.UserState != null )
             {
+                if (!string.IsNullOrWhiteSpace(e.UserState.ToString()))
+                {
+                    var diaRes = MessageBox.Show("很抱歉，执行过程出现错误，出错原因：\r\n" + e.UserState.ToString()+"\r\n你可以把错误日志截图给作者，以帮助作者完善该项目，是否打开错误日志目录？", "执行出错，是否协助作者完善该项目", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                    if (diaRes == DialogResult.Yes)
+                    {
+                        string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");                       
+                        System.Diagnostics.Process.Start(dir);
+                    }
+                }
+
                 lblMsg.Text = "操作失败！";
                 lblMsg.ForeColor = System.Drawing.Color.Red;
             }

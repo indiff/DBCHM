@@ -52,7 +52,7 @@ namespace DBCHM
             //todo :可以将日志写入 文件、数据库、MongoDB
             //这里写入根目录 log文件夹
             string logText = Log.GetModelData(log) + "\r\n----------------------------------------------------------------------------------------------------\r\n";
-            string fileName = logName + DateTime.Now.ToString("yyyyMMdd") + ".log";
+            string fileName = DateTime.Now.ToString("yyyyMMdd") + ".log";
             string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
             if (!Directory.Exists(dir))
             {

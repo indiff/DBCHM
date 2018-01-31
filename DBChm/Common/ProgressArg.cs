@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DBCHM
 {
+    /// <summary>
+    /// 进度条参数类
+    /// </summary>
     public class ProgressArg
     {
         public ProgressArg(Action execAct, int maxNum)
