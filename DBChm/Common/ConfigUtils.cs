@@ -43,7 +43,7 @@ namespace DBCHM
             db = DBMgr.Connect(DBType.SQLite, ConfigFilePath);
 
             string strSql = string.Empty;
-            if (!db.Info.TableNames.Contains("DBCHMConfig", StringComparer.OrdinalIgnoreCase))
+            if (db.Info.TableNames == null || !db.Info.TableNames.Contains("DBCHMConfig", StringComparer.OrdinalIgnoreCase))
             {
                 strSql = @"create table DBCHMConfig
 (
