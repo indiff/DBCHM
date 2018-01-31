@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBCHM", "DBChm\DBCHM.csproj", "{55B00DB1-BA55-47B7-BD44-35C0FCD05FD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Top.51Try.Data", "H:\GitOsChina\51TryPlatform\Code\Top.51Try.Sln\Top.51Try.Data\Top.51Try.Data.csproj", "{3D36CDC9-E989-465B-A9F1-AD85DC42F242}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{55B00DB1-BA55-47B7-BD44-35C0FCD05FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55B00DB1-BA55-47B7-BD44-35C0FCD05FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55B00DB1-BA55-47B7-BD44-35C0FCD05FD5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D36CDC9-E989-465B-A9F1-AD85DC42F242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D36CDC9-E989-465B-A9F1-AD85DC42F242}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D36CDC9-E989-465B-A9F1-AD85DC42F242}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D36CDC9-E989-465B-A9F1-AD85DC42F242}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
