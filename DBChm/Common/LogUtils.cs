@@ -59,7 +59,7 @@ namespace DBCHM
                 Directory.CreateDirectory(dir);
             }
             fileName = Path.Combine(dir, fileName);
-            File.AppendAllText(fileName, logText, Encoding.UTF8);
+            File.AppendAllText(fileName, logText, Encoding.GetEncoding("gb2312"));
         }
 
         /// <summary>

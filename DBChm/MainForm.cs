@@ -10,6 +10,8 @@ namespace DBCHM
     using System;
     using System.ComponentModel;
     using System.IO;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
     using Top._51Try.Data;
 
@@ -23,6 +25,8 @@ namespace DBCHM
         /// </summary>
         public MainForm()
         {
+            Control.CheckForIllegalCrossThreadCalls = false;
+
             KryptonManager kryptonManager = new KryptonManager();
             this.InitializeComponent();
             this.InitializeRibbonTabContainer();
@@ -182,18 +186,18 @@ namespace DBCHM
 
             // 注册 报告进度更新事件
             bgWork.ProgressChanged += BgWork_ProgressChanged;
-
-
+            
+            //初始化窗体
             InitMain();
         }
 
-
+      
 
         private void InitMain()
         {
             GridFormMgr conMgrForm = new GridFormMgr();
             var diaRes = conMgrForm.ShowDialog(this);
-            if (diaRes == DialogResult.OK || FormUtils.IsOK_Close)
+            if (diaRes == DialogResult.OK || FormUtils.IsOK_Close) //当前窗体 是正常关闭的情况下
             {
                 LstBox.DataSource = DBUtils.Instance?.Info?.TableNames;
                 FormUtils.IsOK_Close = false;
@@ -203,18 +207,24 @@ namespace DBCHM
                 return;
             }
 
-            if (LstBox.Items.Count > 0)
+            
+            if (LstBox.Items.Count > 0)//默认选择第一张表
             {
                 LstBox.SelectedIndex = 0;
                 LabCurrTabName.Text = LstBox.SelectedItems[0].ToString();
                 TxtCurrTabComment.Text = DBUtils.Instance?.Info?.TableComments[LabCurrTabName.Text];
             }
-            else
+            else//无数据表时，清空 Gird列表
             {
                 GV_ColComments.Rows.Clear();
             }
         }
 
+        /// <summary>
+        /// 模糊搜索数据表名
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TxtTabName_TextChanged(object sender, EventArgs e)
         {
             string strName = TxtTabName.Text.Trim().ToLower();
@@ -227,20 +237,20 @@ namespace DBCHM
             {
                 lstTableName.ForEach(t =>
                 {
-                    if (t.ToLower().Contains(strName))
+                    if (t.ToLower().Contains(strName))//模糊匹配
                     {
                         LstBox.Items.Add(t);
                     }
 
                 });
             }
-            else
+            else//默认所有数据表
             {
                 LstBox.DataSource = DBUtils.Instance?.Info?.TableNames;
             }
 
 
-            if (LstBox.Items.Count > 0)
+            if (LstBox.Items.Count > 0)//默认选择第一张表
             {
                 LstBox.SelectedIndex = 0;
                 LabCurrTabName.Text = LstBox.SelectedItems[0].ToString();
@@ -336,24 +346,29 @@ namespace DBCHM
             if (saveDia.ShowDialog(this) == DialogResult.OK)
             {
                 chm_path = saveDia.FileName;
+                try
+                {
+                    //创建临时文件夹,存在则删除，防止已经存在的文件 会导致生成出来的chm 有问题
+                    dirPath = Path.Combine(ConfigUtils.AppPath, DBUtils.Instance.DBType + "_" + DBUtils.Instance.Info.DBName);
+                    if (Directory.Exists(dirPath))
+                    {
+                        Directory.Delete(dirPath, true);
+                    }
+                    Directory.CreateDirectory(dirPath);
+                    ConfigUtils.AddSecurityControll2Folder(dirPath);
+                }
+                catch (Exception ex)
+                {
+                    LogUtils.LogError("文件目录创建出错", Developer.SysDefault, ex, dirPath);
+                    return;
+                }
 
                 //设置要 滚动条 对应的执行方法，以及滚动条最大值
                 FormUtils.ProgArg = new ProgressArg(() =>
                 {
                     try
                     {
-
-                        dirPath = Path.Combine(ConfigUtils.AppPath, DBUtils.Instance.DBType + "_" + DBUtils.Instance.Info.DBName);
-                        if (Directory.Exists(dirPath))
-                        {
-                            Directory.Delete(dirPath, true);
-                        }
-                        Directory.CreateDirectory(dirPath);
-                        FormUtils.AddSecurityControll2Folder(dirPath);
-
-                        bgWork.ReportProgress(1);
-
-
+                        //生成数据库目录文件
                         indexHtmlpath = Path.Combine(dirPath, defaultHtml);
                         ChmHtmlHelper.CreateDirHtml("数据库表目录", DBUtils.Instance.Info.TableComments, indexHtmlpath);
 
@@ -365,26 +380,19 @@ namespace DBCHM
 
                         bgWork.ReportProgress(2);
 
+                        //生成每张表列结构的html
                         ChmHtmlHelper.CreateHtml(DBUtils.Instance.Info.TableInfoDict, structPath);
 
                         bgWork.ReportProgress(3);
-
 
                         ChmHelp c3 = new ChmHelp();
                         c3.DefaultPage = defaultHtml;
                         c3.Title = Path.GetFileName(chm_path);
                         c3.ChmFileName = chm_path;
                         c3.SourcePath = dirPath;
-                        string result = c3.Compile(true);
+                        c3.Compile();
+
                         bgWork.ReportProgress(4);
-                        if (string.IsNullOrWhiteSpace(result))
-                        {
-                            bgWork.ReportProgress(4);
-                        }
-                        else
-                        {
-                            bgWork.ReportProgress(4, result);
-                        }
                     }
                     catch (Exception ex)
                     {
@@ -414,32 +422,12 @@ namespace DBCHM
         }
 
 
-        private void BgWork_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // 设置 进度位置
-            Prog.Value = e.ProgressPercentage;
-            if (e.UserState != null )
-            {
-                lblMsg.Text = "操作失败！";
-                lblMsg.ForeColor = System.Drawing.Color.Red;
-
-                Exception ex = e.UserState as Exception;
-                if (ex != null)
-                {
-                    var diaRes = MessageBox.Show("很抱歉，执行过程出现错误，出错原因：\r\n" + e.UserState.ToString() + "\r\n\r\n是否打开错误日志目录？", "程序执行出错", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
-                    if (diaRes == DialogResult.Yes)
-                    {
-                        string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
-                        System.Diagnostics.Process.Start(dir);
-                    }
-                }
-            }
-        }
-
         private void BgWork_DoWork(object sender, DoWorkEventArgs e)
         {
             if (FormUtils.ProgArg != null)
             {
+                lblMsg.Text = string.Empty;
+
                 Prog.Maximum = FormUtils.ProgArg.MaxNum;
                 FormUtils.ProgArg.ExecAct.Invoke();
 
@@ -452,6 +440,30 @@ namespace DBCHM
                 FormUtils.ProgArg = null;
             }
         }
+
+        private void BgWork_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            // 设置 进度位置
+            Prog.Value = e.ProgressPercentage;
+            if (e.UserState != null )
+            {
+                lblMsg.Text = "操作失败！";
+                lblMsg.ForeColor = System.Drawing.Color.Red;
+
+                Exception ex = e.UserState as Exception;
+                if (ex != null)
+                {
+                    LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    var diaRes = MessageBox.Show("很抱歉，执行过程出现错误，出错原因：\r\n" + e.UserState.ToString() + "\r\n\r\n是否打开错误日志目录？", "程序执行出错", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                    if (diaRes == DialogResult.Yes)
+                    {
+                        string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
+                        System.Diagnostics.Process.Start(dir);
+                    }
+                }
+            }
+        }
+
 
 
         private void BtnSaveGridData_Click(object sender, EventArgs e)

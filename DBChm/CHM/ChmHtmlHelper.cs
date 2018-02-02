@@ -33,7 +33,7 @@ namespace DBCHM.CHM
             code.AppendLine("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
             code.AppendLine("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
             code.AppendLine("<head>");
-            code.AppendLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\" />");
+            code.AppendLine("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=gb2312\" />");
             code.AppendLine("    <title>{0}</title>".FormatString(tabDirName));
             code.AppendLine("    <style type=\"text/css\">");
             code.AppendLine("        *");
@@ -135,7 +135,7 @@ namespace DBCHM.CHM
                 code.AppendLine("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
                 code.AppendLine("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
                 code.AppendLine("<head>");
-                code.AppendLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\" />");
+                code.AppendLine("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=gb2312\" />");
                 code.AppendLine("    <title>{0}</title>".FormatString(tabInfo.TableName));
                 code.AppendLine("    <style type=\"text/css\">");
                 code.AppendLine("        *");

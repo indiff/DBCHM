@@ -9,12 +9,26 @@ namespace DBCHM.CHM
 
     /// <summary>
     /// Chm辅助类
+    /// 
     /// </summary>
     public class ChmHelp
     {
-        public string ChmFileName { get; set; }//Chm文件保存路径
-        public string Title { get; set; }//Chm文件Titie
+
+        /// <summary>
+        /// Chm文件保存路径
+        /// </summary>
+        public string ChmFileName { get; set; }
+
+        /// <summary>
+        /// Chm文件Titie
+        /// </summary>
+        public string Title { get; set; }
+
         private string sourcePath;
+
+        /// <summary>
+        /// 编印所在目录
+        /// </summary>
         public string SourcePath
         {
             get { return sourcePath; }
@@ -26,14 +40,23 @@ namespace DBCHM.CHM
                     sourcePath += "\\";
                 }
             }
-        }//编译文件夹路径
-        public string DefaultPage { get; set; }//默认页面 相对编译文件夹的路径
+        }
+
+        /// <summary>
+        /// 默认页面 相对编译文件夹的路径
+        /// </summary>
+        public string DefaultPage { get; set; }
 
         private StringBuilder hhcBody = new StringBuilder();
         private StringBuilder hhpBody = new StringBuilder();
         private StringBuilder hhkBody = new StringBuilder();       
 
         #region 构造所需要的文件
+
+        /// <summary>
+        /// 生成 HHC 的Body 主体内容
+        /// </summary>
+        /// <param name="path"></param>
         private void Create(string path)
         {
             //获取文件
@@ -73,13 +96,17 @@ namespace DBCHM.CHM
                 hhcBody.AppendLine("	</UL>");
             }
         }
+
+        /// <summary>
+        /// 创建HHC文件：列表文件,确定目标文件中左侧树形列表中"目录"选项卡下的内容.
+        /// </summary>
         private void CreateHHC()
         {
             var code = new StringBuilder();
             code.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
             code.AppendLine("<HTML>");
             code.AppendLine("<HEAD>");
-            code.AppendLine("<meta name=\"GENERATOR\" content=\"EasyCHM.exe  www.zipghost.com\">");
+            code.AppendLine("<meta name=\"GENERATOR\" content=\"DBCHM.exe  www.51try.top\">");
             code.AppendLine("<!-- Sitemap 1.0 -->");
             code.AppendLine("</HEAD><BODY>");
             code.AppendLine("<OBJECT type=\"text/site properties\">");
@@ -87,26 +114,32 @@ namespace DBCHM.CHM
             code.AppendLine("	<param name=\"Window Styles\" value=\"0x800025\">");
             code.AppendLine("	<param name=\"Font\" value=\"MS Sans Serif,9,0\">");
             code.AppendLine("</OBJECT>");
+
             //遍历文件夹 构建hhc文件内容
             code.Append(hhcBody.ToString());
+
             code.AppendLine("</BODY></HTML>");
             File.WriteAllText(Path.Combine(SourcePath, "chm.hhc"), code.ToString(), Encoding.GetEncoding("gb2312"));
         }
+
+        /// <summary>
+        /// 创建HHP配置项文件
+        /// </summary>
         private void CreateHHP()
         {
             var code = new StringBuilder();
             code.AppendLine("[OPTIONS]");
             code.AppendLine("Auto Index=Yes");
-            code.AppendLine("CITATION=Made by mj");//制作人
+            code.AppendLine("CITATION=Made by lztkdr");//制作人
             code.AppendLine("Compatibility=1.1 or later");//版本
             code.AppendLine(@"Compiled file=" + ChmFileName);//生成chm文件路径
             code.AppendLine("Contents file=chm.HHC");//hhc文件路径
-            code.AppendLine("COPYRIGHT=www.lztkdr.com");//版权所有
+            code.AppendLine("COPYRIGHT=www.51try.top");//版权所有
             code.AppendLine(@"Default topic={1}");//CHM文件的首页
             code.AppendLine("Default Window=Main");//目标文件窗体控制参数,这里跳转到Windows小节中，与其一致即可
             code.AppendLine("Display compile notes=Yes");//显示编译信息
             code.AppendLine("Display compile progress=Yes");//显示编译进度
-            code.AppendLine("Error log file=d:\\error.Log");//错误日志文件
+            //code.AppendLine("Error log file=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log","chm.log"));//错误日志文件
             code.AppendLine("Full-text search=Yes");//是否支持全文检索信息
             code.AppendLine("Language=0x804 中文(中国)");
             code.AppendLine("Index file=chm.HHK");//hhk文件路径
@@ -117,14 +150,12 @@ namespace DBCHM.CHM
             code.AppendLine("[WINDOWS]");
             //例子中使用的参数 0x20 表示只显示目录和索引
             code.AppendLine("Main=\"{0}\",\"chm.hhc\",\"chm.hhk\",\"{1}\",\"{1}\",,,,20000,0x63520,180,0x104E, [0,0,745,509],0x0,0x0,,,,,0");
-            //Easy Chm使用的参数 0x63520 表示目录索引搜索收藏夹
-            //code.AppendLine("Main=\"{0}\",\"chm.HHC\",\"chm.HHK\",\"{1}\",\"{1}\",,,,,0x63520,271,0x304E,[0,0,745,509],,,,,,,0");
             code.AppendLine();
             code.AppendLine("[MERGE FILES]");
             code.AppendLine();
             code.AppendLine("[FILES]");
             code.Append(hhpBody.ToString());
-
+            
             File.WriteAllText(Path.Combine(SourcePath, "chm.hhp"), code.ToString().FormatString(Title, DefaultPage), Encoding.GetEncoding("gb2312"));
         }
         private void CreateHHK()
@@ -133,7 +164,7 @@ namespace DBCHM.CHM
             code.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
             code.AppendLine("<HTML>");
             code.AppendLine("<HEAD>");
-            code.AppendLine("<meta name=\"GENERATOR\" content=\"EasyCHM.exe  www.zipghost.com\">");
+            code.AppendLine("<meta name=\"GENERATOR\" content=\"DBCHM.exe  www.51try.top\">");
             code.AppendLine("<!-- Sitemap 1.0 -->");
             code.AppendLine("</HEAD><BODY>");
             code.AppendLine("<OBJECT type=\"text/site properties\">");
@@ -155,9 +186,10 @@ namespace DBCHM.CHM
         /// 编译
         /// </summary>
         /// <returns></returns>
-        public string Compile(bool isRetainHtml = false)
+        public void Compile()
         {
-            //使用 HTML Help Workshop 的 hhc.exe 编译 
+            #region 使用 HTML Help Workshop 的 hhc.exe 编译 ,先判断系统中是否已经安装有  HTML Help Workshop 
+
             string hhcPath = string.Empty;
 
             string[] installPaths ={
@@ -165,10 +197,11 @@ namespace DBCHM.CHM
                                        @"Program Files\HTML Help Workshop\hhc.exe"
                                   };
 
-            if (!FormUtils.IsInstall(installPaths, out hhcPath))
+            if (!ConfigUtils.IsInstall(installPaths, out hhcPath))
             {
-                return "未安装HTML Help Workshop！";
-            }
+                throw new FileNotFoundException("未安装HTML Help Workshop！", "hhc.exe");
+            } 
+            #endregion
 
             //准备hhp hhc hhk文件
             Create(SourcePath);
@@ -176,52 +209,39 @@ namespace DBCHM.CHM
             CreateHHK();
             CreateHHP();
             
-            var process = new Process();//创建新的进程，用Process启动HHC.EXE来Compile一个CHM文件
-            try
-            {
-                ProcessStartInfo processInfo = new ProcessStartInfo();
-                processInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                processInfo.FileName = hhcPath;  //调入HHC.EXE文件 
-                processInfo.Arguments = "\"{0}\"".FormatString(Path.Combine(SourcePath, "chm.hhp"));
-                processInfo.UseShellExecute = false;
-                processInfo.CreateNoWindow = true;
-                process.StartInfo = processInfo;
-                process.Start();
-                process.WaitForExit(); //组件无限期地等待关联进程退出
-
-                if (process.ExitCode == 0)
-                {
-                    return string.Empty;
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-            finally
-            {
-                process.Close();
-                //删除编译过程中的文件
-                //if (!debug)
-                {
-                    var arr = new string[] { "chm.hhc", "chm.hhp", "chm.hhk" };
-                    foreach (var a in arr)
-                    {
-                        var tmp = Path.Combine(SourcePath, a);
-                        if (File.Exists(tmp))
-                        {
-                            File.Delete(tmp);
-                        }
-                    }
-                }
-                if (!isRetainHtml)
-                {
-                    Directory.Delete(sourcePath, true);
-                }
-            }
-            return string.Empty;
-
+            string res = StartRun(hhcPath, Path.Combine(SourcePath, "chm.hhp"), Encoding.GetEncoding("gb2312"));
+            File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
         }
+
+
+
+        public static string StartRun(string hhcPath,string arguments,Encoding encoding)
+        {
+            string str = "";
+            ProcessStartInfo startInfo = new ProcessStartInfo()
+            {
+                FileName = hhcPath,  //调入HHC.EXE文件 
+                Arguments = arguments,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                CreateNoWindow = true,
+                StandardErrorEncoding = encoding,
+                StandardOutputEncoding = encoding
+            };
+
+            using (Process process = Process.Start(startInfo))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    str = reader.ReadToEnd();
+                }
+                process.WaitForExit();
+            }
+            return str.Trim();
+        }
+
         /// <summary>
         /// 反编译
         /// </summary>
