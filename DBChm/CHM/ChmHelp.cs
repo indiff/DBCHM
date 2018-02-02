@@ -128,7 +128,7 @@ namespace DBCHM.CHM
             code.Append(hhcBody.ToString());
 
             code.AppendLine("</BODY></HTML>");
-            File.WriteAllText(Path.Combine(SourcePath, "chm.hhc"), code.ToString(), Encoding.GetEncoding("gb2312"));
+            File.WriteAllText(Path.Combine(SourcePath, "chm.hhc"), code.ToString(), Encoding.GetEncoding("gbk"));
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace DBCHM.CHM
             code.AppendLine("Display compile progress=Yes");//显示编译进度
             //code.AppendLine("Error log file=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log","chm.log"));//错误日志文件
             code.AppendLine("Full-text search=Yes");//是否支持全文检索信息
-            code.AppendLine("Language=0x804 中文(中国)");
+            code.AppendLine("Language=0x804 中文(中国)");// 国家语言代码Locale ID (LCID)
             code.AppendLine("Index file=chm.HHK");//hhk文件路径
             code.AppendLine("Title={0}");//CHM文件标题
             //code.AppendLine("Flat=NO");//编译文件不包括文件夹
@@ -165,7 +165,7 @@ namespace DBCHM.CHM
             code.AppendLine("[FILES]");
             code.Append(hhpBody.ToString());
             
-            File.WriteAllText(Path.Combine(SourcePath, "chm.hhp"), code.ToString().FormatString(Title, DefaultPage), Encoding.GetEncoding("gb2312"));
+            File.WriteAllText(Path.Combine(SourcePath, "chm.hhp"), code.ToString().FormatString(Title, DefaultPage), Encoding.GetEncoding("gbk"));
         }
         private void CreateHHK()
         {
@@ -186,7 +186,7 @@ namespace DBCHM.CHM
             code.Append(hhkBody.ToString());
             code.AppendLine("</UL>");
             code.AppendLine("</BODY></HTML>");
-            File.WriteAllText(Path.Combine(SourcePath, "chm.hhk"), code.ToString(), Encoding.GetEncoding("gb2312"));
+            File.WriteAllText(Path.Combine(SourcePath, "chm.hhk"), code.ToString(), Encoding.GetEncoding("gbk"));
         }
         #endregion
 
@@ -218,7 +218,7 @@ namespace DBCHM.CHM
             CreateHHK();
             CreateHHP();
             
-            string res = StartRun(hhcPath, Path.Combine(SourcePath, "chm.hhp"), Encoding.GetEncoding("gb2312"));
+            string res = StartRun(hhcPath, Path.Combine(SourcePath, "chm.hhp"), Encoding.GetEncoding("gbk"));
             File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
         }
 
