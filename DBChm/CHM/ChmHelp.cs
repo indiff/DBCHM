@@ -14,6 +14,15 @@ namespace DBCHM.CHM
     public class ChmHelp
     {
 
+        public ChmHelp()
+        {
+            string logDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
+            if (!Directory.Exists(logDir))
+            {
+                Directory.CreateDirectory(logDir);
+            }
+        }
+
         /// <summary>
         /// Chm文件保存路径
         /// </summary>
