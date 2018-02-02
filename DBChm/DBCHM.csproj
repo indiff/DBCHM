@@ -100,6 +100,12 @@
     <Compile Include="Common\ConfigUtils.cs" />
     <Compile Include="Common\LogUtils.cs" />
     <Compile Include="Common\ProgressArg.cs" />
+    <Compile Include="FrmProcessing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProcessing.Designer.cs">
+      <DependentUpon>FrmProcessing.cs</DependentUpon>
+    </Compile>
     <Compile Include="GridFormMgr.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +142,9 @@
     </Compile>
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProcessing.resx">
+      <DependentUpon>FrmProcessing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GridFormMgr.resx">
       <DependentUpon>GridFormMgr.cs</DependentUpon>
@@ -189,6 +198,7 @@
     <Content Include="lib\Oracle\Oracle.ManagedDataAccess.dll" />
     <Content Include="lib\System.Data.SQLite.dll" />
     <Content Include="lib\Top.51Try.Data.dll" />
+    <EmbeddedResource Include="Resources\loading.gif" />
     <EmbeddedResource Include="lib\ComponentFactory.Krypton.Toolkit.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

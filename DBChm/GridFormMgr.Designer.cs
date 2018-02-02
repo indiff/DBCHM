@@ -152,6 +152,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GridFormMgr";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "数据库连接管理";
             this.Load += new System.EventHandler(this.GridFormMgr_Load);

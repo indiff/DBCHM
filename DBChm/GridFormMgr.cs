@@ -1,4 +1,5 @@
 ﻿using ComponentFactory.Krypton.Toolkit;
+using DBChm;
 using System;
 using System.Windows.Forms;
 using Top._51Try.Data;
@@ -100,8 +101,12 @@ namespace DBCHM
 
             int Id = Convert.ToInt32(GV_DBConfigs.SelectedRows[0].Cells[0].Value);
             DBCHMConfig config = ConfigUtils.Get(Id);
-            DBUtils.Instance = DBMgr.Connect((DBType)Enum.Parse(typeof(DBType), config.DBType), config.ConnString);
+            
+            FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
+            {
+                DBUtils.Instance = DBMgr.Connect((DBType)Enum.Parse(typeof(DBType), config.DBType), config.ConnString);
 
+            }, null);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

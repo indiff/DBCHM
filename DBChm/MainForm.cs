@@ -284,9 +284,14 @@ namespace DBCHM
         }
         private void tsbRefresh_Click(object sender, EventArgs e)
         {
-            DBUtils.Instance?.Info?.Refresh();
+            FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
+            {
+                DBUtils.Instance?.Info?.Refresh();
 
-            TxtTabName_TextChanged(sender, e);
+                TxtTabName_TextChanged(sender, e);
+
+            }, null);
+
         }
         private void tsbSaveUpload_Click(object sender, EventArgs e)
         {

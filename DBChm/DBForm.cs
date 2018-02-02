@@ -134,6 +134,12 @@ namespace DBCHM
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(cboDBName.Text))
+            {
+                MessageBox.Show("请输入数据库名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
             DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
             string connString = DBMgr.GetConnectionString(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
             NameValueCollection nvc = new NameValueCollection();
