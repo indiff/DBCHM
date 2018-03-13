@@ -50,6 +50,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -168,6 +172,7 @@
     <Content Include="Images\DBCHM001.png" />
     <Content Include="Images\DBCHM002.png" />
     <Content Include="lib\MJTop.Data.dll" />
+    <Content Include="lib\System.Data.SQLite.dll" />
     <EmbeddedResource Include="Resources\loading.gif" />
     <EmbeddedResource Include="lib\ComponentFactory.Krypton.Toolkit.dll" />
   </ItemGroup>

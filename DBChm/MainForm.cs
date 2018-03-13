@@ -468,38 +468,59 @@ namespace DBCHM
             //设置要 滚动条 对应的执行方法，以及滚动条最大值
             FormUtils.ProgArg = new ProgressArg(() =>
             {
-                try
+                bool? blRes = DBUtils.Instance?.Info?.SetTableComment(LabCurrTabName.Text, TxtCurrTabComment.Text.Replace("'", "`"));
+                if (blRes.HasValue)
                 {
-                    DBUtils.Instance?.Info?.SetTableComment(LabCurrTabName.Text, TxtCurrTabComment.Text.Replace("'", "`"));
-                    bgWork.ReportProgress(1);
-                }
-                catch (Exception ex)
-                {
-                    LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
-                    bgWork.ReportProgress(1 + GV_ColComments.Rows.Count, ex);
-                }
-
-                try
-                {
-                    for (int j = 0; j < GV_ColComments.Rows.Count; j++)
+                    if (blRes.Value)
                     {
-                        string columnName = GV_ColComments[0, j].Value.ToString();
-                        string colComment = (GV_ColComments[1, j].Value ?? string.Empty).ToString();
-                        if (!string.IsNullOrEmpty(colComment))
-                        {
-                            DBUtils.Instance?.Info?.SetColumnComment(LabCurrTabName.Text, columnName, colComment);
-                        }
-
-                        bgWork.ReportProgress(1 + (1 + j));
+                        bgWork.ReportProgress(1);
+                    }
+                    else
+                    {
+                        bgWork.ReportProgress(1 + GV_ColComments.Rows.Count, new Exception("执行更新 表描述过程中，出现异常！（" + LabCurrTabName.Text + "） "));
+                        return;
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
-                    //失败则通知 异常信息
-                    bgWork.ReportProgress(1 + GV_ColComments.Rows.Count, ex);
+                    bgWork.ReportProgress(1 + GV_ColComments.Rows.Count, new Exception("执行更新 表描述过程中，出现未知异常！（" + LabCurrTabName.Text + "） "));
+                    return;
                 }
 
+                for (int j = 0; j < GV_ColComments.Rows.Count; j++)
+                {
+                    string columnName = GV_ColComments[0, j].Value.ToString();
+                    string colComment = (GV_ColComments[1, j].Value ?? string.Empty).ToString();
+                    if (!string.IsNullOrEmpty(colComment))
+                    {
+                        blRes = DBUtils.Instance?.Info?.SetColumnComment(LabCurrTabName.Text, columnName, colComment);
+                    }
+
+                    if (string.IsNullOrEmpty(colComment))
+                    {
+                        bgWork.ReportProgress(1 + (1 + j));
+                    }
+                    else
+                    {
+                        if (blRes.HasValue)
+                        {
+                            if (blRes.Value)
+                            {
+                                bgWork.ReportProgress(1 + (1 + j));
+                            }
+                            else
+                            {
+                                bgWork.ReportProgress(1 + GV_ColComments.Rows.Count, new Exception("执行更新 列描述过程中，出现异常！（" + columnName + "） "));
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            bgWork.ReportProgress(1 + GV_ColComments.Rows.Count, new Exception("执行更新 列描述过程中，出现未知异常！（" + columnName + "）  "));
+                            return;
+                        }
+                    }
+                }
 
             }, 1 + GV_ColComments.Rows.Count);
 
