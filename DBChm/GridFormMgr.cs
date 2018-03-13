@@ -1,8 +1,7 @@
 ﻿using ComponentFactory.Krypton.Toolkit;
-using DBChm;
+using MJTop.Data;
 using System;
 using System.Windows.Forms;
-using Top._51Try.Data;
 
 namespace DBCHM
 {
@@ -104,7 +103,7 @@ namespace DBCHM
             
             FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
             {
-                DBUtils.Instance = DBMgr.Connect((DBType)Enum.Parse(typeof(DBType), config.DBType), config.ConnString);
+                DBUtils.Instance = DBMgr.UseDB((DBType)Enum.Parse(typeof(DBType), config.DBType), config.ConnString);
 
             }, null);
         }

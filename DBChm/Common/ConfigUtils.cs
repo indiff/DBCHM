@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MJTop.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
-using Top._51Try.Data;
 
 namespace DBCHM
 {
@@ -59,7 +59,7 @@ namespace DBCHM
         /// </summary>
         private static void Init()
         {
-            db = DBMgr.Connect(DBType.SQLite, ConfigFilePath);
+            db = DBMgr.UseDB(DBType.SQLite, ConfigFilePath);
             string strSql = string.Empty;
             //表不存在则创建 连接字符串 配置表
             if (db.Info.TableNames == null || !db.Info.TableNames.Contains("DBCHMConfig", StringComparer.OrdinalIgnoreCase))
@@ -146,7 +146,7 @@ namespace DBCHM
         /// <param name="dbCHMConfig"></param>
         public static void Save(NameValueCollection dbCHMConfig)
         {
-            db.Upsert(dbCHMConfig, "DBCHMConfig");
+            db.Save(dbCHMConfig, "DBCHMConfig");
         }
 
         /// <summary>

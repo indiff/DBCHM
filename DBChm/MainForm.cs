@@ -10,10 +10,7 @@ namespace DBCHM
     using System;
     using System.ComponentModel;
     using System.IO;
-    using System.Threading;
-    using System.Threading.Tasks;
     using System.Windows.Forms;
-    using Top._51Try.Data;
 
     /// <summary>
     /// Class MainForm.

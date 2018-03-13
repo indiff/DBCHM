@@ -1,8 +1,8 @@
 ﻿using ComponentFactory.Krypton.Toolkit;
+using MJTop.Data;
 using System;
 using System.Collections.Specialized;
 using System.Windows.Forms;
-using Top._51Try.Data;
 
 namespace DBCHM
 {
@@ -100,7 +100,7 @@ namespace DBCHM
 
             try
             {
-                DBUtils.Instance = DBMgr.Connect(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
+                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
 
                 var info = DBUtils.Instance.Info;
 
