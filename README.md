@@ -1,6 +1,6 @@
-﻿## DBCHM-最简单、实用的数据库表列批注维护工具
+﻿## DBCHM-最简单、最实用的数据库表列批注维护工具
 
-DBCHM支持SqlServer/MySql/Oracle/PostgreSQL/Sqlite等数据库的表列批注维护管理。
+DBCHM支持SqlServer/MySql/Oracle/PostgreSQL等数据库的表列批注维护管理。
 
 ## DBCHM有以下几个功能
 - 表，列的批注可以编辑保存到数据库。
