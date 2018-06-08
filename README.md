@@ -24,3 +24,7 @@ DBCHM效果展示：
 ![CHM文件导出](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
 
 ![CHM文件](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM004.png)
+
+## 如果觉得还不错，请作者喝杯咖啡吧
+ 
+![捐赠二维码](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/donate_qrcode.png)
