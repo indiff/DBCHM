@@ -10,6 +10,7 @@ namespace DBCHM
     using System;
     using System.ComponentModel;
     using System.IO;
+    using System.Reflection;
     using System.Windows.Forms;
 
     /// <summary>
@@ -183,7 +184,7 @@ namespace DBCHM
 
             // 注册 报告进度更新事件
             bgWork.ProgressChanged += BgWork_ProgressChanged;
-            
+
             //初始化窗体
             InitMain();
         }
@@ -214,6 +215,12 @@ namespace DBCHM
             else//无数据表时，清空 Gird列表
             {
                 GV_ColComments.Rows.Clear();
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(DBUtils.Instance?.Info?.DBName))
+            {
+                this.Text = DBUtils.Instance?.Info?.DBName + " - " + "DBCHM v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
             }
         }
 
