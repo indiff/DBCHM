@@ -21,19 +21,19 @@ DBCHM支持SqlServer/MySql/Oracle/PostgreSQL等数据库的表列批注维护管
 
 DBCHM效果展示：
 ------------------------
-###1.数据库连接管理
+### 1 数据库连接管理
 ![数据库连接管理](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM001.png)
 
-###2.表名模糊匹配
+### 2 表名模糊匹配
 ![表名模糊搜索](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
 
-###3.执行批注更新
+### 3 执行批注更新
 ![表批注更新](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
 
-###4.导出CHM文件
+### 4 导出CHM文件
 ![导出CHM文件](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM004.png)
 
-###5.表结构信息
+### 5 表结构信息
 ![表结构信息](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM005.png)
 
 
