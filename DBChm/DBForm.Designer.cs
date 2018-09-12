@@ -53,7 +53,7 @@
             this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelControl1.Location = new System.Drawing.Point(137, 20);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(45, 18);
+            this.labelControl1.Size = new System.Drawing.Size(75, 22);
             this.labelControl1.TabIndex = 2;
             this.labelControl1.Text = "连接名";
             // 

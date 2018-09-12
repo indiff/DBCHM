@@ -88,7 +88,7 @@
             // 
             this.BtnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnConnect.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.BtnConnect.Location = new System.Drawing.Point(510, 262);
+            this.BtnConnect.Location = new System.Drawing.Point(521, 319);
             this.BtnConnect.Name = "BtnConnect";
             this.BtnConnect.Size = new System.Drawing.Size(80, 32);
             this.BtnConnect.TabIndex = 3;
@@ -99,7 +99,7 @@
             // 
             this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BtnCancel.Location = new System.Drawing.Point(642, 262);
+            this.BtnCancel.Location = new System.Drawing.Point(653, 319);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(78, 32);
             this.BtnCancel.TabIndex = 4;
@@ -131,7 +131,7 @@
             this.GV_DBConfigs.RowHeadersVisible = false;
             this.GV_DBConfigs.RowTemplate.Height = 27;
             this.GV_DBConfigs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.GV_DBConfigs.Size = new System.Drawing.Size(724, 203);
+            this.GV_DBConfigs.Size = new System.Drawing.Size(735, 260);
             this.GV_DBConfigs.TabIndex = 5;
             this.GV_DBConfigs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_DBConfigs_CellDoubleClick);
             // 
@@ -140,7 +140,7 @@
             this.AcceptButton = this.BtnConnect;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(748, 306);
+            this.ClientSize = new System.Drawing.Size(759, 363);
             this.Controls.Add(this.GV_DBConfigs);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnConnect);

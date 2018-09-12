@@ -100,7 +100,18 @@ namespace DBCHM
 
             int Id = Convert.ToInt32(GV_DBConfigs.SelectedRows[0].Cells[0].Value);
             DBCHMConfig config = ConfigUtils.Get(Id);
-            
+
+
+            if ((DBType)Enum.Parse(typeof(DBType), config.DBType) == DBType.SqlServer 
+                && !GV_DBConfigs.SelectedRows[0].Cells[6].Value.ToString().Equals("sa", StringComparison.OrdinalIgnoreCase))
+            {
+                var dia = MessageBox.Show("非超级管理员的账号，可能因权限不足，查询不出表结构信息，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dia == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
             FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
             {
                 DBUtils.Instance = DBMgr.UseDB((DBType)Enum.Parse(typeof(DBType), config.DBType), config.ConnString);

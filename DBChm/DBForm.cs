@@ -98,6 +98,15 @@ namespace DBCHM
                 return;
             }
 
+            if (type == DBType.SqlServer && !TxtUName.Text.Equals("sa", StringComparison.OrdinalIgnoreCase))
+            {
+                var dia = MessageBox.Show("非超级管理员的账号，可能因权限不足，查询不出表结构信息，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dia == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
             try
             {
                 DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
