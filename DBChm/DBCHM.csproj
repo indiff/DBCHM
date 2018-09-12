@@ -171,6 +171,10 @@
     <Content Include="ico\saveUpload.png" />
     <Content Include="Images\DBCHM001.png" />
     <Content Include="Images\DBCHM002.png" />
+    <Content Include="Images\DBCHM003.png" />
+    <Content Include="Images\DBCHM004.png" />
+    <Content Include="Images\DBCHM005.png" />
+    <Content Include="Images\donate_qrcode.png" />
     <Content Include="lib\MJTop.Data.dll" />
     <Content Include="lib\System.Data.SQLite.dll" />
     <EmbeddedResource Include="Resources\loading.gif" />
