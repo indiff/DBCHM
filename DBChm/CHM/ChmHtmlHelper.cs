@@ -38,7 +38,7 @@ namespace DBCHM.CHM
             code.AppendLine("    <style type=\"text/css\">");
             code.AppendLine("        *");
             code.AppendLine("        {");
-            code.AppendLine("            font-family:'微软雅黑';");
+            code.AppendLine("            font-family:'Microsoft YaHei';");
             code.AppendLine("        }");
             code.AppendLine("        body");
             code.AppendLine("        {");
@@ -51,7 +51,7 @@ namespace DBCHM.CHM
             code.AppendLine("        }");
             code.AppendLine("        .styletab");
             code.AppendLine("        {");
-            code.AppendLine("            font-size: 20px;");
+            code.AppendLine("            font-size: 18px;");
             code.AppendLine("            padding-top: 10px;");
             code.AppendLine("        }");
             code.AppendLine("        a");
@@ -67,7 +67,33 @@ namespace DBCHM.CHM
             code.AppendLine("        {");
             code.AppendLine("            color: #E33E06;");
             code.AppendLine("        }");
+
+            code.AppendLine("        .other-bg-color");
+            code.AppendLine("        {");
+            code.AppendLine("            background-color: #FCFCFC;");
+            code.AppendLine("        }");
+            code.AppendLine("        .check-bg-color");
+            code.AppendLine("        {");
+            code.AppendLine("            background-color: #E6E6FA;");
+            code.AppendLine("        }");
             code.AppendLine("    </style>");
+
+            code.AppendLine("<script type=\"text/javascript\">");
+            code.AppendLine("     window.onload = function () {");
+            code.AppendLine("     var trs = document.getElementById('tab-struct').getElementsByTagName('tr');");
+            code.AppendLine("     for (var i = 0; i < trs.length; i++) {");
+            code.AppendLine("       if(i==0){continue;}");
+            code.AppendLine("       trs[i].onclick = function () {");
+            code.AppendLine("         for (var j = 0; j < trs.length; j++) {");
+            code.AppendLine("                  if(j==0){continue;}");
+            code.AppendLine("                  trs[j].className = 'other-bg-color';");
+            code.AppendLine("             }");
+            code.AppendLine("          this.className = 'check-bg-color';");
+            code.AppendLine("        }");
+            code.AppendLine("     }");
+            code.AppendLine("}");
+            code.AppendLine("</script>");
+
             code.AppendLine("</head>");
             code.AppendLine("<body>");
             code.AppendLine("    <div style=\"text-align: center\">");
@@ -75,11 +101,11 @@ namespace DBCHM.CHM
             code.AppendLine("            <table border=\"0\" cellpadding=\"5\" cellspacing=\"0\" width=\"90%\">");
             code.AppendLine("                <tr>");
             code.AppendLine("                    <td bgcolor=\"#FBFBFB\">");
-            code.AppendLine("                        <table cellspacing=\"0\" cellpadding=\"5\" border=\"1\" width=\"100%\" bordercolorlight=\"#D7D7E5\" bordercolordark=\"#D3D8E0\">");
+            code.AppendLine("                        <table id='tab-struct' cellspacing=\"0\" cellpadding=\"5\" border=\"1\" width=\"100%\" bordercolorlight=\"#D7D7E5\" bordercolordark=\"#D3D8E0\">");
             code.AppendLine("                        <caption>");
             code.AppendLine("        <div class=\"styletab\">{0}</div>".FormatString("<b>" + tabDirName + "</b>"));
             code.AppendLine("                        </caption>");
-            code.AppendLine("                          <tr bgcolor=\"#F0F0F0\"><td>序号</td><td>表名</td><td>表说明</td></tr>");
+            code.AppendLine("                          <tr bgcolor=\"#F0F0F0\" style='font-weight: bold;'><td>序号</td><td>表名</td><td>表说明</td></tr>");
 
 
             //构建表头
@@ -140,7 +166,7 @@ namespace DBCHM.CHM
                 code.AppendLine("    <style type=\"text/css\">");
                 code.AppendLine("        *");
                 code.AppendLine("        {");
-                code.AppendLine("            font-family:'微软雅黑';");
+                code.AppendLine("            font-family:'Microsoft YaHei';");
                 code.AppendLine("        }");
                 code.AppendLine("        body");
                 code.AppendLine("        {");
@@ -149,12 +175,13 @@ namespace DBCHM.CHM
                 code.AppendLine("        }");
                 code.AppendLine("        .styledb");
                 code.AppendLine("        {");
-                code.AppendLine("            font-size: 14px;");
+                code.AppendLine("            font-size: 16px;");
                 code.AppendLine("        }");
                 code.AppendLine("        .styletab");
                 code.AppendLine("        {");
-                code.AppendLine("            font-size: 14px;");
+                code.AppendLine("            font-size: 18px;");
                 code.AppendLine("            padding-top: 15px;");
+                code.AppendLine("            font-weight: bold;");
                 code.AppendLine("        }");
                 code.AppendLine("        a");
                 code.AppendLine("        {");
@@ -169,7 +196,33 @@ namespace DBCHM.CHM
                 code.AppendLine("        {");
                 code.AppendLine("            color: #E33E06;");
                 code.AppendLine("        }");
+
+                code.AppendLine("        .other-bg-color");
+                code.AppendLine("        {");
+                code.AppendLine("            background-color: #FCFCFC;");
+                code.AppendLine("        }");
+                code.AppendLine("        .check-bg-color");
+                code.AppendLine("        {");
+                code.AppendLine("            background-color: #E6E6FA;");
+                code.AppendLine("        }");
                 code.AppendLine("    </style>");
+
+                code.AppendLine("<script type=\"text/javascript\">");
+                code.AppendLine("     window.onload = function () {");
+                code.AppendLine("     var trs = document.getElementById('tab-struct').getElementsByTagName('tr');");
+                code.AppendLine("     for (var i = 0; i < trs.length; i++) {");
+                code.AppendLine("       if(i==0){continue;}");
+                code.AppendLine("       trs[i].onclick = function () {");
+                code.AppendLine("         for (var j = 0; j < trs.length; j++) {");
+                code.AppendLine("                  if(j==0){continue;}");
+                code.AppendLine("                  trs[j].className = 'other-bg-color';");
+                code.AppendLine("             }");
+                code.AppendLine("          this.className = 'check-bg-color';");
+                code.AppendLine("        }");
+                code.AppendLine("     }");
+                code.AppendLine("}");
+                code.AppendLine("</script>");
+
                 code.AppendLine("</head>");
                 code.AppendLine("<body>");
                 code.AppendLine("    <div style=\"text-align: center\">");
@@ -177,23 +230,23 @@ namespace DBCHM.CHM
                 code.AppendLine("            <table border=\"0\" cellpadding=\"5\" cellspacing=\"0\" width=\"90%\">");
                 code.AppendLine("                <tr>");
                 code.AppendLine("                    <td bgcolor=\"#FBFBFB\">");
-                code.AppendLine("                        <table cellspacing=\"0\" cellpadding=\"5\" border=\"1\" width=\"100%\" bordercolorlight=\"#D7D7E5\" bordercolordark=\"#D3D8E0\">");
+                code.AppendLine("                        <table id='tab-struct' cellspacing=\"0\" cellpadding=\"5\" border=\"1\" width=\"100%\" bordercolorlight=\"#D7D7E5\" bordercolordark=\"#D3D8E0\">");
                 code.AppendLine("                        <caption>");
                 code.AppendLine("        <div class=\"styletab\">{0}</div>{1}{2}".FormatString(
                     tabInfo.TableName,
-                    "<span style='float: left; margin-top: 6px;font-size:18px;'>" + tabInfo.TabComment + "</span>",
-                    "<a href='../数据库表目录.html' style='float: right; margin-top: 6px;'>返回目录</a>"));
+                    "<span style='float: left; margin-top: 6px;font-size:16px;'>" + tabInfo.TabComment + "</span>",
+                    "<a href='../数据库表目录.html' style='float: right; margin-top: 6px;font-size:16px;'>返回目录</a>"));
                 code.AppendLine("                        </caption>");
 
 
-                code.Append("<tr bgcolor=\"#F0F0F0\">");
+                code.Append("<tr bgcolor=\"#F0F0F0\" style='font-weight: bold;'>");
                 code.Append("<td>序号</td><td>列名</td><td>数据类型</td><td>长度</td><td>小数位数</td><td>主键</td><td>自增</td><td>允许空</td><td>默认值</td><td>列说明</td>");
                 code.AppendLine("</tr>");
 
                 int j = 1;
                 foreach (var col in tabInfo.Colnumns)
                 {
-                    code.Append("<tr bgcolor=\"#F0F0F0\">");
+                    code.Append("<tr>");
                     code.Append("<td>{0}</td>".FormatString(col.Colorder));
                     code.Append("<td>{0}</td>".FormatString(col.ColumnName));
                     code.Append("<td>{0}</td>".FormatString(col.TypeName));

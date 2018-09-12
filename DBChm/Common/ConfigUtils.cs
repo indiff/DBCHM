@@ -164,7 +164,7 @@ namespace DBCHM
         /// <returns></returns>
         public static List<DBCHMConfig> SelectAll()
         {
-            return db.QueryTable("select Id,Name,DBType,Server,Port,DBName,Uid,Pwd,ConnString from DBCHMConfig order by Id desc ").ConvertToListObject<DBCHMConfig>();
+            return db.GetDataTable("select Id,Name,DBType,Server,Port,DBName,Uid,Pwd,ConnString from DBCHMConfig order by Id desc ").ConvertToListObject<DBCHMConfig>();
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace DBCHM
         /// <returns></returns>
         public static DBCHMConfig Get(int id)
         {
-            return db.FirstRow("select Id,Name,DBType,Server,Port,DBName,Uid,Pwd,ConnString from DBCHMConfig where id = " + id).ConvertToObjectFromDR<DBCHMConfig>();
+            return db.GetDataTable("select Id,Name,DBType,Server,Port,DBName,Uid,Pwd,ConnString from DBCHMConfig where id = " + id).ConvertToListObject<DBCHMConfig>().FirstOrDefault();
         }
 
         /// <summary>
