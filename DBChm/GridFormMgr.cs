@@ -114,7 +114,15 @@ namespace DBCHM
 
             FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
             {
-                DBUtils.Instance = DBMgr.UseDB((DBType)Enum.Parse(typeof(DBType), config.DBType), config.ConnString);
+                try
+                {
+                    DBUtils.Instance = DBMgr.UseDB((DBType)Enum.Parse(typeof(DBType), config.DBType), config.ConnString);
+                }
+                catch (Exception ex)
+                {
+                    LogUtils.LogError("连接数据库失败", Developer.SysDefault, ex, config);
+                    MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }                
 
             }, null);
         }

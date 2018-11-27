@@ -16,7 +16,7 @@ namespace DBCHM
         {
             DictDBType = EnumExt<DBType>.All();
 
-            DictDBType.Remove(DBType.OracleDDTek.ToString());
+            DictDBType.Remove(DBType.Oracle.ToString());
             DictDBType.Remove(DBType.SQLite.ToString());
 
         }
@@ -27,9 +27,9 @@ namespace DBCHM
         {
             { DBType.SqlServer.ToString(),"1433"},
              { DBType.MySql.ToString(),"3306"},
-                { DBType.Oracle.ToString(),"1521"},
-                    //{ DBType.OracleDDTek.ToString(),"1521"},            
-                { DBType.PostgreSql.ToString(),"5432"},
+            { DBType.OracleDDTek.ToString(),"1521"},
+            //{ DBType.Oracle.ToString(),"1521"},            
+            { DBType.PostgreSql.ToString(),"5432"},
         };
 
         /// <summary>
