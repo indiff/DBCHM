@@ -120,7 +120,7 @@ namespace DBCHM
                         cboDBName.Items.Add(dbName);
                     }
                 }
-                cboDBName.SelectedIndex = 0;
+                cboDBName.SelectedItem = cboDBName.Text;
                 this.Text = "连接服务器成功！";
             }
             catch (Exception ex)
@@ -191,7 +191,7 @@ namespace DBCHM
         {
             this.Text = "连接数据库";
             string port;
-            if (FormUtils.DictPort.TryGetValue(cboDBType.Text, out port))
+            if (FormUtils.DictPort.TryGetValue(cboDBType.Text, out port) && string.IsNullOrWhiteSpace(TxtPort.Text))
             {
                 TxtPort.Text = port;
             }
