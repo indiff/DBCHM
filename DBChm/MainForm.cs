@@ -413,7 +413,7 @@ namespace DBCHM
 
         private void GV_ColComments_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex > 0)
+            if (e.ColumnIndex > 0 && e.RowIndex > -1)
             {
                 object obj = GV_ColComments.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
                 if (obj != null)

@@ -245,6 +245,9 @@ namespace DBCHM
 
         }
 
-
+        private void cboDBName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.Text = "连接数据库";
+        }
     }
 }

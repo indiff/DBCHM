@@ -62,7 +62,7 @@
             // 
             this.TxtConnectName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtConnectName.Location = new System.Drawing.Point(195, 14);
-            this.TxtConnectName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxtConnectName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtConnectName.Name = "TxtConnectName";
             this.TxtConnectName.Size = new System.Drawing.Size(147, 21);
             this.TxtConnectName.TabIndex = 0;
@@ -81,7 +81,7 @@
             // 
             this.TxtHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtHost.Location = new System.Drawing.Point(194, 90);
-            this.TxtHost.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxtHost.Margin = new System.Windows.Forms.Padding(2);
             this.TxtHost.Name = "TxtHost";
             this.TxtHost.Size = new System.Drawing.Size(147, 21);
             this.TxtHost.TabIndex = 2;
@@ -100,7 +100,7 @@
             // 
             this.TxtPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtPort.Location = new System.Drawing.Point(194, 127);
-            this.TxtPort.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxtPort.Margin = new System.Windows.Forms.Padding(2);
             this.TxtPort.Name = "TxtPort";
             this.TxtPort.Size = new System.Drawing.Size(147, 21);
             this.TxtPort.TabIndex = 3;
@@ -120,7 +120,7 @@
             // 
             this.TxtUName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtUName.Location = new System.Drawing.Point(194, 165);
-            this.TxtUName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxtUName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtUName.Name = "TxtUName";
             this.TxtUName.Size = new System.Drawing.Size(147, 21);
             this.TxtUName.TabIndex = 4;
@@ -139,7 +139,7 @@
             // 
             this.TxtPwd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.TxtPwd.Location = new System.Drawing.Point(194, 196);
-            this.TxtPwd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxtPwd.Margin = new System.Windows.Forms.Padding(2);
             this.TxtPwd.Name = "TxtPwd";
             this.TxtPwd.Size = new System.Drawing.Size(147, 21);
             this.TxtPwd.TabIndex = 5;
@@ -159,7 +159,7 @@
             this.BtnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BtnOk.Location = new System.Drawing.Point(273, 263);
-            this.BtnOk.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnOk.Margin = new System.Windows.Forms.Padding(2);
             this.BtnOk.Name = "BtnOk";
             this.BtnOk.Size = new System.Drawing.Size(61, 28);
             this.BtnOk.TabIndex = 8;
@@ -171,7 +171,7 @@
             this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BtnCancel.Location = new System.Drawing.Point(363, 263);
-            this.BtnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(57, 28);
             this.BtnCancel.TabIndex = 9;
@@ -182,7 +182,7 @@
             // 
             this.cboDBType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDBType.Location = new System.Drawing.Point(194, 50);
-            this.cboDBType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboDBType.Margin = new System.Windows.Forms.Padding(2);
             this.cboDBType.Name = "cboDBType";
             this.cboDBType.Size = new System.Drawing.Size(148, 20);
             this.cboDBType.TabIndex = 1;
@@ -202,7 +202,7 @@
             // 
             this.BtnTestConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnTestConnect.Location = new System.Drawing.Point(32, 263);
-            this.BtnTestConnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnTestConnect.Margin = new System.Windows.Forms.Padding(2);
             this.BtnTestConnect.Name = "BtnTestConnect";
             this.BtnTestConnect.Size = new System.Drawing.Size(70, 28);
             this.BtnTestConnect.TabIndex = 7;
@@ -213,11 +213,11 @@
             // 
             this.cboDBName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDBName.Location = new System.Drawing.Point(194, 230);
-            this.cboDBName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboDBName.Margin = new System.Windows.Forms.Padding(2);
             this.cboDBName.Name = "cboDBName";
             this.cboDBName.Size = new System.Drawing.Size(148, 20);
             this.cboDBName.TabIndex = 6;
-            this.cboDBName.SelectedIndexChanged += new System.EventHandler(this.cboDBType_SelectedIndexChanged);
+            this.cboDBName.SelectedIndexChanged += new System.EventHandler(this.cboDBName_SelectedIndexChanged);
             // 
             // DBForm
             // 
@@ -244,7 +244,7 @@
             this.Controls.Add(this.labelControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "DBForm";

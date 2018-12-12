@@ -43,9 +43,10 @@
             // linkAdd
             // 
             this.linkAdd.AutoSize = true;
-            this.linkAdd.Location = new System.Drawing.Point(30, 13);
+            this.linkAdd.Location = new System.Drawing.Point(22, 10);
+            this.linkAdd.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkAdd.Name = "linkAdd";
-            this.linkAdd.Size = new System.Drawing.Size(37, 15);
+            this.linkAdd.Size = new System.Drawing.Size(29, 12);
             this.linkAdd.TabIndex = 0;
             this.linkAdd.TabStop = true;
             this.linkAdd.Text = "新建";
@@ -54,9 +55,10 @@
             // linkEdit
             // 
             this.linkEdit.AutoSize = true;
-            this.linkEdit.Location = new System.Drawing.Point(84, 13);
+            this.linkEdit.Location = new System.Drawing.Point(63, 10);
+            this.linkEdit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkEdit.Name = "linkEdit";
-            this.linkEdit.Size = new System.Drawing.Size(37, 15);
+            this.linkEdit.Size = new System.Drawing.Size(29, 12);
             this.linkEdit.TabIndex = 0;
             this.linkEdit.TabStop = true;
             this.linkEdit.Text = "编辑";
@@ -65,9 +67,10 @@
             // linkRemove
             // 
             this.linkRemove.AutoSize = true;
-            this.linkRemove.Location = new System.Drawing.Point(137, 13);
+            this.linkRemove.Location = new System.Drawing.Point(103, 10);
+            this.linkRemove.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkRemove.Name = "linkRemove";
-            this.linkRemove.Size = new System.Drawing.Size(37, 15);
+            this.linkRemove.Size = new System.Drawing.Size(29, 12);
             this.linkRemove.TabIndex = 0;
             this.linkRemove.TabStop = true;
             this.linkRemove.Text = "删除";
@@ -76,9 +79,10 @@
             // linkClone
             // 
             this.linkClone.AutoSize = true;
-            this.linkClone.Location = new System.Drawing.Point(189, 13);
+            this.linkClone.Location = new System.Drawing.Point(142, 10);
+            this.linkClone.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkClone.Name = "linkClone";
-            this.linkClone.Size = new System.Drawing.Size(37, 15);
+            this.linkClone.Size = new System.Drawing.Size(29, 12);
             this.linkClone.TabIndex = 0;
             this.linkClone.TabStop = true;
             this.linkClone.Text = "克隆";
@@ -88,9 +92,10 @@
             // 
             this.BtnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnConnect.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.BtnConnect.Location = new System.Drawing.Point(521, 319);
+            this.BtnConnect.Location = new System.Drawing.Point(496, 273);
+            this.BtnConnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.BtnConnect.Name = "BtnConnect";
-            this.BtnConnect.Size = new System.Drawing.Size(80, 32);
+            this.BtnConnect.Size = new System.Drawing.Size(60, 26);
             this.BtnConnect.TabIndex = 3;
             this.BtnConnect.Text = "连接";
             this.BtnConnect.Click += new System.EventHandler(this.btnConnect_Click);
@@ -99,9 +104,10 @@
             // 
             this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BtnCancel.Location = new System.Drawing.Point(653, 319);
+            this.BtnCancel.Location = new System.Drawing.Point(595, 273);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(78, 32);
+            this.BtnCancel.Size = new System.Drawing.Size(58, 26);
             this.BtnCancel.TabIndex = 4;
             this.BtnCancel.Text = "取消";
             this.BtnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -124,23 +130,24 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.GV_DBConfigs.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.GV_DBConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GV_DBConfigs.Location = new System.Drawing.Point(12, 43);
+            this.GV_DBConfigs.Location = new System.Drawing.Point(9, 34);
+            this.GV_DBConfigs.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.GV_DBConfigs.MultiSelect = false;
             this.GV_DBConfigs.Name = "GV_DBConfigs";
             this.GV_DBConfigs.ReadOnly = true;
             this.GV_DBConfigs.RowHeadersVisible = false;
             this.GV_DBConfigs.RowTemplate.Height = 27;
             this.GV_DBConfigs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.GV_DBConfigs.Size = new System.Drawing.Size(735, 260);
+            this.GV_DBConfigs.Size = new System.Drawing.Size(656, 226);
             this.GV_DBConfigs.TabIndex = 5;
             this.GV_DBConfigs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_DBConfigs_CellDoubleClick);
             // 
             // GridFormMgr
             // 
             this.AcceptButton = this.BtnConnect;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 363);
+            this.ClientSize = new System.Drawing.Size(674, 308);
             this.Controls.Add(this.GV_DBConfigs);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnConnect);
@@ -149,6 +156,7 @@
             this.Controls.Add(this.linkEdit);
             this.Controls.Add(this.linkAdd);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GridFormMgr";
