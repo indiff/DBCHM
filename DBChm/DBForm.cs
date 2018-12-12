@@ -47,6 +47,7 @@ namespace DBCHM
                     TxtPwd.Text = config.Pwd;
                     cboDBName.Text = config.DBName;
 
+                    
                     if (this.OpType == OPType.克隆)
                     {
                         TxtConnectName.Text += "_Clone";
@@ -113,6 +114,7 @@ namespace DBCHM
 
                 var info = DBUtils.Instance.Info;
 
+                cboDBName.Items.Clear();
                 foreach (var dbName in info.DBNames)
                 {
                     if (!cboDBName.Items.Contains(dbName))
@@ -121,6 +123,16 @@ namespace DBCHM
                     }
                 }
                 cboDBName.SelectedItem = cboDBName.Text;
+
+                cboDBType.Items.Clear();
+                foreach (var item in FormUtils.DictDBType)
+                {
+                    cboDBType.Items.Add(item.Value.ToString());
+                }
+
+                cboDBType.SelectedItem = cboDBType.Text;
+
+
                 this.Text = "连接服务器成功！";
             }
             catch (Exception ex)
