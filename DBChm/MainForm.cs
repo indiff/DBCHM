@@ -9,6 +9,7 @@ namespace DBCHM
     using ComponentFactory.Krypton.Toolkit;
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
     using System.Windows.Forms;
@@ -347,9 +348,22 @@ namespace DBCHM
             saveDia.OverwritePrompt = true;
             saveDia.ValidateNames = true;
             saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.chm";
+            bool isOpen = false;
             if (saveDia.ShowDialog(this) == DialogResult.OK)
             {
                 chm_path = saveDia.FileName;
+
+                Process process;
+                if (IsExistProcess(Path.GetFileName(saveDia.FileName), out process))
+                {
+                    var dia = MessageBox.Show("文件已打开，导出前需关闭，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                    if (dia == DialogResult.OK)
+                    {
+                        process.Kill();
+                        isOpen = true;
+                    }
+                }
+
                 try
                 {
                     //创建临时文件夹,存在则删除，防止已经存在的文件 会导致生成出来的chm 有问题
@@ -395,6 +409,11 @@ namespace DBCHM
                         c3.ChmFileName = chm_path;
                         c3.SourcePath = dirPath;
                         c3.Compile();
+
+                        if (isOpen)
+                        {
+                            System.Diagnostics.Process.Start(chm_path);
+                        }
 
                         bgWork.ReportProgress(4);
                     }
@@ -538,6 +557,22 @@ namespace DBCHM
         {
             AboutBox aboutForm = new AboutBox();
             aboutForm.ShowDialog();
+        }
+
+
+        public bool IsExistProcess(string fileName,out Process process)
+        {
+            var procs = System.Diagnostics.Process.GetProcessesByName("hh");
+            foreach (var proc in procs)
+            {
+                if (proc.MainWindowTitle.Equals(fileName))
+                {
+                    process = proc;
+                    return true;
+                }
+            }
+            process = null;
+            return false;
         }
     }
 }

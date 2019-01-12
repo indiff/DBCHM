@@ -181,6 +181,7 @@
             // cboDBType
             // 
             this.cboDBType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboDBType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDBType.Location = new System.Drawing.Point(194, 50);
             this.cboDBType.Margin = new System.Windows.Forms.Padding(2);
             this.cboDBType.Name = "cboDBType";

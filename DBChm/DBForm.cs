@@ -36,8 +36,12 @@ namespace DBCHM
             {
                 if (id.HasValue)
                 {
-                    this.Id = id.Value;
+                    foreach (var item in FormUtils.DictDBType)
+                    {
+                        cboDBType.Items.Add(item.Value.ToString());
+                    }
 
+                    this.Id = id.Value;
                     DBCHMConfig config = ConfigUtils.Get(id.Value);
                     TxtConnectName.Text = config.Name;
                     cboDBType.Text = config.DBType;
@@ -85,6 +89,18 @@ namespace DBCHM
                 if (FormUtils.DictPort.TryGetValue(cboDBType.Text, out port))
                 {
                     TxtPort.Text = port;
+                }
+
+                TxtHost.Text = "127.0.0.1";
+
+                DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
+                if (type == DBType.SqlServer)
+                {
+                    TxtUName.Text = "sa";
+                }
+                else if (type == DBType.MySql)
+                {
+                    TxtUName.Text = "root";
                 }
             }
 
@@ -203,12 +219,12 @@ namespace DBCHM
         {
             this.Text = "连接数据库";
             string port;
-            if (FormUtils.DictPort.TryGetValue(cboDBType.Text, out port) && string.IsNullOrWhiteSpace(TxtPort.Text))
+            if (FormUtils.DictPort.TryGetValue(cboDBType.Text, out port))
             {
                 TxtPort.Text = port;
             }
 
-            if (cboDBType.Text.ToString() == DBType.Oracle.ToString())
+            if (cboDBType.Text.ToString() == DBType.OracleDDTek.ToString())
             {
                 labDBName.Text = "服务名";
             }
