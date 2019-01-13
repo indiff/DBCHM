@@ -30,7 +30,7 @@ namespace DBCHM
             { DBType.OracleDDTek.ToString(),"1521"},
             //{ DBType.Oracle.ToString(),"1521"},            
             { DBType.PostgreSql.ToString(),"5432"},
-            { DBType.DB2.ToString(),"50000"},
+            { DBType.DB2DDTek.ToString(),"50000"},
         };
 
         /// <summary>
