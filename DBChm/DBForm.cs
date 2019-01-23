@@ -21,9 +21,8 @@ namespace DBCHM
 
         public int Id { get; private set; }
 
-        public DBForm(OPType opType, int? id = null)
+         public DBForm(OPType opType, int? id = null)
         {
-
             InitializeComponent();
 
             this.OpType = opType;
@@ -56,6 +55,9 @@ namespace DBCHM
                     {
                         TxtConnectName.Text += "_Clone";
                     }
+
+                    //编辑时，确定后刷新连接列表
+                    BtnOk.DialogResult = DialogResult.OK;
                 }
             }
 
@@ -64,6 +66,7 @@ namespace DBCHM
             {
                 control.KeyDown += control_KeyDown;
             }
+            lblMsg.Text = string.Empty;
         }
         void control_KeyDown(object sender, KeyEventArgs e)
         {
@@ -106,48 +109,40 @@ namespace DBCHM
 
         }
 
+        public void SetMsg(string msg, bool isSuccess = false)
+        {
+            lblMsg.Text = msg;
+            lblMsg.ForeColor = isSuccess ? System.Drawing.Color.Green : System.Drawing.Color.Red;
+        }
+
         private void BtnTestConnect_Click(object sender, EventArgs e)
         {
-            DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
-            if (type == DBType.Oracle && string.IsNullOrWhiteSpace(cboDBName.Text))
-            {
-                MessageBox.Show("Oracle没有提供数据库名称查询支持，请输入服务名！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return;
-            }
-
-            if (type == DBType.SqlServer && !TxtUName.Text.Equals("sa", StringComparison.OrdinalIgnoreCase))
-            {
-                var dia = MessageBox.Show("非超级管理员的账号，可能因权限不足，查询不出表结构信息，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (dia == DialogResult.Cancel)
-                {
-                    return;
-                }
-            }
-
+            DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);            
             try
             {
-                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
+                if (type == DBType.Oracle && string.IsNullOrWhiteSpace(cboDBName.Text))
+                {
+                    throw new Exception("Oracle没有提供数据库名称查询支持，请输入服务名！");
+                }
+
+                string strDBName = cboDBName.Text;
+                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), strDBName, TxtUName.Text, TxtPwd.Text);
 
                 var info = DBUtils.Instance.Info;
 
                 cboDBName.Items.Clear();
                 foreach (var dbName in info.DBNames)
                 {
-                    if (!cboDBName.Items.Contains(dbName))
-                    {
-                        cboDBName.Items.Add(dbName);
-                    }
+                    cboDBName.Items.Add(dbName);
                 }
-                cboDBName.SelectedItem = cboDBName.Text;
+                cboDBName.SelectedItem = strDBName;
 
                 cboDBType.Items.Clear();
                 foreach (var item in FormUtils.DictDBType)
                 {
                     cboDBType.Items.Add(item.Value.ToString());
                 }
-
-                cboDBType.SelectedItem = cboDBType.Text;
-
+                cboDBType.SelectedItem = type.ToString();
 
                 this.Text = "连接服务器成功！";
             }
@@ -156,6 +151,7 @@ namespace DBCHM
                 MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            BtnOk.DialogResult = DialogResult.OK;
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -165,54 +161,62 @@ namespace DBCHM
 
         private void BtnOk_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TxtConnectName.Text))
+            try
             {
-                MessageBox.Show("请输入连接名！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                if (string.IsNullOrWhiteSpace(TxtConnectName.Text))
+                {
+                    throw new Exception("请输入连接名！");
+                }
+
+                if (string.IsNullOrWhiteSpace(cboDBName.Text))
+                {
+                    throw new Exception("请输入数据库名称！");
+                }
+
+                DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
+                string connString = DBMgr.GetConnectionString(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
+                NameValueCollection nvc = new NameValueCollection();
+                if (OpType == OPType.新建 || OpType == OPType.克隆)
+                {
+                    nvc.Add("Name", TxtConnectName.Text.Trim());
+                    nvc.Add("DBType", cboDBType.Text.Trim());
+
+                    nvc.Add("Server", TxtHost.Text.Trim());
+                    nvc.Add("Port", TxtPort.Text);
+                    nvc.Add("DBName", cboDBName.Text.Trim());
+                    nvc.Add("Uid", TxtUName.Text.Trim());
+                    nvc.Add("Pwd", TxtPwd.Text);
+
+                    nvc.Add("ConnString", connString);
+
+                    ConfigUtils.Save(nvc);
+
+                    this.Close();
+
+                }
+                else if (OpType == OPType.编辑)
+                {
+                    nvc.Add("Id", Id.ToString());
+                    nvc.Add("Name", TxtConnectName.Text.Trim());
+                    nvc.Add("DBType", cboDBType.Text.Trim());
+
+                    nvc.Add("Server", TxtHost.Text.Trim());
+                    nvc.Add("Port", TxtPort.Text);
+                    nvc.Add("DBName", cboDBName.Text.Trim());
+                    nvc.Add("Uid", TxtUName.Text.Trim());
+                    nvc.Add("Pwd", TxtPwd.Text);
+
+                    nvc.Add("ConnString", connString);
+                    ConfigUtils.Save(nvc);
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            if (string.IsNullOrWhiteSpace(cboDBName.Text))
-            {
-                MessageBox.Show("请输入数据库名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return;
-            }
-
-            DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
-            string connString = DBMgr.GetConnectionString(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
-            NameValueCollection nvc = new NameValueCollection();
-            if (OpType == OPType.新建 || OpType == OPType.克隆)
-            {
-                nvc.Add("Name", TxtConnectName.Text.Trim());
-                nvc.Add("DBType", cboDBType.Text.Trim());
-
-                nvc.Add("Server", TxtHost.Text.Trim());
-                nvc.Add("Port", TxtPort.Text);
-                nvc.Add("DBName", cboDBName.Text.Trim());
-                nvc.Add("Uid", TxtUName.Text.Trim());
-                nvc.Add("Pwd", TxtPwd.Text);
-
-                nvc.Add("ConnString", connString);
-
-                ConfigUtils.Save(nvc);
-
-                this.Close();
-
-            }
-            else if (OpType == OPType.编辑)
-            {
-                nvc.Add("Id", Id.ToString());
-                nvc.Add("Name", TxtConnectName.Text.Trim());
-                nvc.Add("DBType", cboDBType.Text.Trim());
-
-                nvc.Add("Server", TxtHost.Text.Trim());
-                nvc.Add("Port", TxtPort.Text);
-                nvc.Add("DBName", cboDBName.Text.Trim());
-                nvc.Add("Uid", TxtUName.Text.Trim());
-                nvc.Add("Pwd", TxtPwd.Text);
-
-                nvc.Add("ConnString", connString);
-                ConfigUtils.Save(nvc);
-            }
+            
         }
 
         private void cboDBType_SelectedIndexChanged(object sender, EventArgs e)
@@ -224,14 +228,21 @@ namespace DBCHM
                 TxtPort.Text = port;
             }
 
-            if (cboDBType.Text.ToString() == DBType.OracleDDTek.ToString())
+            DBType dbtype = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text.ToString());
+            
+            labDBName.Text = "数据库";
+            if (dbtype== DBType.SqlServer)
+            {
+                TxtUName.Text = "sa";
+            }
+            else if (dbtype== DBType.MySql)
+            {
+                TxtUName.Text = "root";
+            }
+            else if (dbtype == DBType.OracleDDTek)
             {
                 labDBName.Text = "服务名";
             }
-            else
-            {
-                labDBName.Text = "数据库";
-            }           
         }
 
         /// <summary>

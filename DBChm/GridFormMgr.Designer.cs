@@ -92,8 +92,8 @@
             // 
             this.BtnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnConnect.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.BtnConnect.Location = new System.Drawing.Point(496, 273);
-            this.BtnConnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnConnect.Location = new System.Drawing.Point(602, 302);
+            this.BtnConnect.Margin = new System.Windows.Forms.Padding(2);
             this.BtnConnect.Name = "BtnConnect";
             this.BtnConnect.Size = new System.Drawing.Size(60, 26);
             this.BtnConnect.TabIndex = 3;
@@ -104,8 +104,8 @@
             // 
             this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BtnCancel.Location = new System.Drawing.Point(595, 273);
-            this.BtnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnCancel.Location = new System.Drawing.Point(701, 302);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(58, 26);
             this.BtnCancel.TabIndex = 4;
@@ -131,23 +131,24 @@
             this.GV_DBConfigs.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.GV_DBConfigs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GV_DBConfigs.Location = new System.Drawing.Point(9, 34);
-            this.GV_DBConfigs.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GV_DBConfigs.Margin = new System.Windows.Forms.Padding(2);
             this.GV_DBConfigs.MultiSelect = false;
             this.GV_DBConfigs.Name = "GV_DBConfigs";
             this.GV_DBConfigs.ReadOnly = true;
             this.GV_DBConfigs.RowHeadersVisible = false;
             this.GV_DBConfigs.RowTemplate.Height = 27;
             this.GV_DBConfigs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.GV_DBConfigs.Size = new System.Drawing.Size(656, 226);
+            this.GV_DBConfigs.Size = new System.Drawing.Size(762, 255);
             this.GV_DBConfigs.TabIndex = 5;
             this.GV_DBConfigs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_DBConfigs_CellDoubleClick);
+            this.GV_DBConfigs.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GV_DBConfigs_CellFormatting);
             // 
             // GridFormMgr
             // 
             this.AcceptButton = this.BtnConnect;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(674, 308);
+            this.ClientSize = new System.Drawing.Size(780, 337);
             this.Controls.Add(this.GV_DBConfigs);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnConnect);
@@ -156,7 +157,7 @@
             this.Controls.Add(this.linkEdit);
             this.Controls.Add(this.linkAdd);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GridFormMgr";

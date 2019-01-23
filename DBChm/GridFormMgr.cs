@@ -18,6 +18,8 @@ namespace DBCHM
             }
         }
 
+
+
         void control_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -26,21 +28,19 @@ namespace DBCHM
             }
         }
 
-
+        DBForm dbForm = null;
         private void linkAdd_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            DBForm dbForm = new DBForm(OPType.新建);
-            var diaResult = dbForm.ShowDialog(this);
-            if (diaResult == DialogResult.OK)
+            dbForm = new DBForm(OPType.新建);
+            var dia = dbForm.ShowDialog();
+            if (dia == DialogResult.OK)
             {
                 RefreshListView();
             }
-
         }
 
         private void linkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
             if (GV_DBConfigs.SelectedRows.Count <= 0)
             {
                 MessageBox.Show("请选择连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -49,7 +49,7 @@ namespace DBCHM
 
             int Id = Convert.ToInt32(GV_DBConfigs.SelectedRows[0].Cells[0].Value);
             DBForm dbForm = new DBForm(OPType.编辑, Id);
-            var diaResult = dbForm.ShowDialog(this);
+            var diaResult = dbForm.ShowDialog();
             if (diaResult == DialogResult.OK)
             {
                 RefreshListView();
@@ -161,6 +161,24 @@ namespace DBCHM
             //代表已经正常选中
             FormUtils.IsOK_Close = true;
             this.Close();
+        }
+
+        private void GV_DBConfigs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex == 7)
+            {
+                if (GV_DBConfigs.Columns[e.ColumnIndex].DataPropertyName == "Pwd")
+                {
+                    string str = e.Value.ToString();
+                    string strEncrypt = string.Empty;
+                    for (int j = 0; j < str.Length; j++)
+                    {
+                        strEncrypt += "*";
+                    }
+                    e.Value = strEncrypt;
+                }
+            }
+        
         }
     }
 }
