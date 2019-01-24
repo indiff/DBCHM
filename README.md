@@ -26,7 +26,8 @@ DBCHM效果展示：
 
 ## 使用前提/源码编译/注意事项
 - [最新发行版本下载](https://gitee.com/lztkdr/DBCHM/releases)
-- 电脑需`htmlhelp.exe`，[见附件](https://gitee.com/lztkdr/DBCHM/attach_files)（注：需安装到任意盘符下的 Program Files 文件夹）
+- 电脑需`htmlhelp.exe`，[见附件](https://gitee.com/lztkdr/DBCHM/attach_files)
+ （注：需安装到任意盘符下的 `Program Files (x86)\HTML Help Workshop\` 或 `Program Files\HTML Help Workshop\` 文件夹中。）
 - 电脑需`.net framework 4.5.2`
 - 登陆账号要给予`sa级别`的权限，不然表结构查询权限不足，会查不出来数据
 - 源码编印环境：`Visual Studio 2017 以上`版本
