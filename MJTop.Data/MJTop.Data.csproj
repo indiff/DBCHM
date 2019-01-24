@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D36CDC9-E989-465B-A9F1-AD85DC42F242}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MJTop.Data</RootNamespace>
+    <AssemblyName>MJTop.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DDTek.DB2, Version=2.10.12.3, Culture=neutral, PublicKeyToken=c84cd5c63851e072">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\DDTek.DB2.dll</HintPath>
+    </Reference>
+    <Reference Include="DDTek.DB2.Entity, Version=4.3.0.0, Culture=neutral, PublicKeyToken=c84cd5c63851e072, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\DDTek.DB2.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="DDTek.Oracle">
+      <HintPath>lib\DDTek.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>lib\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=3.0.8.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BWofter.Converters\Collections\Generic\DictionaryConverter.cs" />
+    <Compile Include="BWofter.Converters\Data\DataTableConverter.cs" />
+    <Compile Include="BWofter.Converters\EqualityComparers\StringCollectionComparer.cs" />
+    <Compile Include="BWofter.Converters\Expressions\ChangeTypeExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\DataColumnExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\DataExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\DataFieldExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\DataFieldIsNullExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\DataTableExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\DataTypeExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\ExpressionReducer.cs" />
+    <Compile Include="BWofter.Converters\Expressions\IsAssignableFromExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\TryParseExpression.cs" />
+    <Compile Include="BWofter.Converters\Expressions\TypeIsAssignExpression.cs" />
+    <Compile Include="BWofter.Converters\Extensions\DataColumnCollectionExtensions.cs" />
+    <Compile Include="BWofter.Converters\Extensions\DictionaryStringObjectExtensions.cs" />
+    <Compile Include="BWofter.Converters\Extensions\IEnumerableKeyValuePairExtensions.cs" />
+    <Compile Include="DatabaseInfo\DB2DBInfo.cs" />
+    <Compile Include="Database\DB2DDTekDB.cs" />
+    <Compile Include="IgCaseDictionary.cs" />
+    <Compile Include="DatabaseInfo\MySqlDBInfo.cs" />
+    <Compile Include="DatabaseInfo\OracleDBInfo.cs" />
+    <Compile Include="DatabaseInfo\PostgreSqlDBInfo.cs" />
+    <Compile Include="DatabaseInfo\SQLiteDBInfo.cs" />
+    <Compile Include="DatabaseInfo\SqlServerDBInfo.cs" />
+    <Compile Include="Database\MySqlDB.cs" />
+    <Compile Include="Database\OracleDDTekDB.cs" />
+    <Compile Include="Database\OracleDB.cs" />
+    <Compile Include="Database\PostgreSqlDB.cs" />
+    <Compile Include="Database\SQLiteDB.cs" />
+    <Compile Include="Database\SqlServerDB.cs" />
+    <Compile Include="DBFactotry.cs" />
+    <Compile Include="ExcludeColumn.cs" />
+    <Compile Include="Ext.Data.cs" />
+    <Compile Include="DB.cs" />
+    <Compile Include="DBMgr.cs" />
+    <Compile Include="Entity\ColumnInfo.cs" />
+    <Compile Include="Entity\TableInfo.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Ext.Object.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="LogUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setting.cs" />
+    <Compile Include="SPI\IDB.cs" />
+    <Compile Include="SPI\IDBInfo.cs" />
+    <Compile Include="Script.cs" />
+    <Compile Include="StringPlus.cs" />
+    <Compile Include="TableTrigger.cs" />
+    <Compile Include="Tool.cs" />
+    <Compile Include="TypeInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lib\DDTek.Oracle.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lib\MySql.Data.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lib\Oracle.ManagedDataAccess.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lib\System.Data.SQLite.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lib\Npgsql.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DB.Ext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lib\DDTek.DB2.dll" />
+    <EmbeddedResource Include="lib\DDTek.DB2.Entity.dll" />
+    <Content Include="System.Runtime.CompilerServices.Unsafe.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="System.Threading.Tasks.Extensions.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="System.ValueTuple.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lib\DDTek.lic" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

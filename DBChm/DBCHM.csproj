@@ -42,10 +42,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\ComponentFactory.Krypton.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="MJTop.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\MJTop.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -175,7 +171,6 @@
     <Content Include="Images\DBCHM004.png" />
     <Content Include="Images\DBCHM005.png" />
     <Content Include="Images\donate_qrcode.png" />
-    <Content Include="lib\MJTop.Data.dll" />
     <Content Include="lib\System.Data.SQLite.dll" />
     <Content Include="System.Runtime.CompilerServices.Unsafe.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -188,6 +183,12 @@
     </Content>
     <EmbeddedResource Include="Resources\loading.gif" />
     <EmbeddedResource Include="lib\ComponentFactory.Krypton.Toolkit.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MJTop.Data\MJTop.Data.csproj">
+      <Project>{3d36cdc9-e989-465b-a9f1-ad85dc42f242}</Project>
+      <Name>MJTop.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
