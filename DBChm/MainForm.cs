@@ -190,8 +190,6 @@ namespace DBCHM
             InitMain();
         }
 
-      
-
         private void InitMain()
         {
             GridFormMgr conMgrForm = new GridFormMgr();
@@ -205,8 +203,6 @@ namespace DBCHM
             {
                 return;
             }
-
-            
             if (LstBox.Items.Count > 0)//默认选择第一张表
             {
                 LstBox.SelectedIndex = 0;
@@ -217,8 +213,6 @@ namespace DBCHM
             {
                 GV_ColComments.Rows.Clear();
             }
-
-
             if (!string.IsNullOrWhiteSpace(DBUtils.Instance?.Info?.DBName))
             {
                 this.Text = DBUtils.Instance?.Info?.DBName + " - " + "DBCHM v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
@@ -253,7 +247,6 @@ namespace DBCHM
             {
                 LstBox.DataSource = DBUtils.Instance?.Info?.TableNames;
             }
-
 
             if (LstBox.Items.Count > 0)//默认选择第一张表
             {
@@ -292,7 +285,6 @@ namespace DBCHM
             }
         }
 
-
         private void tsbConnect_Click(object sender, EventArgs e)
         {
             InitMain();
@@ -319,9 +311,9 @@ namespace DBCHM
             }
         }
 
-       /// <summary>
-       /// chm文件根路径
-       /// </summary>
+        /// <summary>
+        /// chm文件根路径
+        /// </summary>
         private string dirPath = string.Empty;
         /// <summary>
         /// CHM 文件绝对路径
@@ -335,7 +327,8 @@ namespace DBCHM
         /// 索引文件路径
         /// </summary>
         private string indexHtmlpath = string.Empty;
-        private void tsbBuild_Click(object sender, EventArgs e)
+
+        private void ExportToChm()
         {
             SaveFileDialog saveDia = new SaveFileDialog();
             saveDia.Filter = "(*.chm)|*.chm";
@@ -353,7 +346,7 @@ namespace DBCHM
             {
                 chm_path = saveDia.FileName;
 
-                Process process;
+                System.Diagnostics.Process process;
                 if (IsExistProcess(Path.GetFileName(saveDia.FileName), out process))
                 {
                     var dia = MessageBox.Show("文件已打开，导出前需关闭，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
@@ -420,7 +413,7 @@ namespace DBCHM
                     catch (Exception ex)
                     {
                         LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
-                        bgWork.ReportProgress(4, ex);                       
+                        bgWork.ReportProgress(4, ex);
                     }
 
                 }, 4);
@@ -429,6 +422,368 @@ namespace DBCHM
             }
         }
 
+        private void ExportToWord()
+        {
+            FormUtils.ShowProcessing("正在导出数据字典Word文档，请稍等......", this, arg =>
+            {
+                try
+                {
+                    string docTitle = "数据库名：" + DBUtils.Instance.Info.DBName;
+                    object template = Missing.Value;
+                    object oEndOfDoc = @"\endofdoc"; // \endofdoc是预定义的bookmark
+
+                    // TODO 依赖冲突，所以用了全类名
+                    Microsoft.Office.Interop.Word._Application application = new Microsoft.Office.Interop.Word.Application();
+                    application.Visible = false;
+                    Microsoft.Office.Interop.Word._Document document = application.Documents.Add(ref template, ref template, ref template, ref template);
+                    application.ActiveWindow.View.Type = Microsoft.Office.Interop.Word.WdViewType.wdOutlineView;
+                    application.ActiveWindow.View.SeekView = Microsoft.Office.Interop.Word.WdSeekView.wdSeekPrimaryHeader;
+                    application.ActiveWindow.ActivePane.Selection.InsertAfter("DBCHM https://gitee.com/lztkdr/DBCHM");
+                    application.Selection.ParagraphFormat.Alignment = Microsoft.Office.Interop.Word.WdParagraphAlignment.wdAlignParagraphRight;
+                    application.ActiveWindow.View.SeekView = Microsoft.Office.Interop.Word.WdSeekView.wdSeekMainDocument;
+
+                    Microsoft.Office.Interop.Word.Paragraph paragraph = document.Content.Paragraphs.Add(ref template);
+                    paragraph.Range.Text = docTitle;
+                    paragraph.Range.Font.Bold = 1;
+                    paragraph.Range.Font.Name = "宋体";
+                    paragraph.Range.Font.Size = 12f;
+                    paragraph.Range.ParagraphFormat.Alignment = Microsoft.Office.Interop.Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    paragraph.Format.SpaceAfter = 5f;
+                    paragraph.OutlineLevel = Microsoft.Office.Interop.Word.WdOutlineLevel.wdOutlineLevel1;
+                    paragraph.Range.InsertParagraphAfter();
+
+                    // TODO 循环数据库表名
+                    System.Collections.Specialized.NameValueCollection dict_tabs = DBUtils.Instance.Info.TableComments;
+                    foreach (var tableName in dict_tabs.AllKeys)
+                    {
+                        string docTableName = "表名：" + tableName + " " + (!string.IsNullOrWhiteSpace(dict_tabs[tableName]) ? dict_tabs[tableName] : "");
+                        // TODO 一级标题
+                        object oRng = document.Bookmarks[oEndOfDoc].Range;
+                        Microsoft.Office.Interop.Word.Paragraph paragraph2 = document.Content.Paragraphs.Add(ref oRng);
+                        paragraph2.Range.Text = docTableName;
+                        paragraph2.Range.Font.Bold = 1;
+                        paragraph2.Range.Font.Name = "宋体";
+                        paragraph2.Range.Font.Size = 10f;
+                        paragraph2.OutlineLevel = Microsoft.Office.Interop.Word.WdOutlineLevel.wdOutlineLevel2;
+                        paragraph2.Range.ParagraphFormat.Alignment = Microsoft.Office.Interop.Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                        paragraph2.Format.SpaceBefore = 15f;
+                        paragraph2.Format.SpaceAfter = 5f;
+                        paragraph2.Range.InsertParagraphAfter();
+
+                        // TODO 循环数据库表字段
+                        System.Collections.Generic.Dictionary<string, MJTop.Data.TableInfo> dictTabs = DBUtils.Instance.Info.TableInfoDict;
+                        MJTop.Data.TableInfo tabInfo = dictTabs[tableName.ToLower()];
+                        // TODO 创建表格
+                        Microsoft.Office.Interop.Word.Range range = document.Bookmarks[oEndOfDoc].Range;
+                        Microsoft.Office.Interop.Word.Table table2 = document.Tables.Add(range, tabInfo.Colnumns.Count + 1, 10, ref template, ref template);
+                        table2.Range.Font.Name = "宋体";
+                        table2.Range.Font.Bold = 0;
+                        table2.Range.Font.Size = 9f;
+                        table2.Borders.Enable = 1;
+                        table2.Rows.Height = 10f;
+                        table2.AllowAutoFit = true;
+                        table2.Cell(1, 1).Range.Text = "序号";
+                        table2.Cell(1, 2).Range.Text = "列名";
+                        table2.Cell(1, 3).Range.Text = "数据类型";
+                        table2.Cell(1, 4).Range.Text = "长度";
+                        table2.Cell(1, 5).Range.Text = "小数位";
+                        table2.Cell(1, 6).Range.Text = "主键";
+                        table2.Cell(1, 7).Range.Text = "自增";
+                        table2.Cell(1, 8).Range.Text = "允许空";
+                        table2.Cell(1, 9).Range.Text = "默认值";
+                        table2.Cell(1, 10).Range.Text = "列说明";
+                        // TODO 分别设置word文档中表格的列宽
+                        //table2.Columns[1].Width = 33f;
+
+                        int j = 0;
+                        foreach (var col in tabInfo.Colnumns)
+                        {
+                            table2.Cell(j + 2, 1).Range.Text = col.Colorder + "";
+                            table2.Cell(j + 2, 2).Range.Text = col.ColumnName;
+                            table2.Cell(j + 2, 3).Range.Text = col.TypeName;
+                            table2.Cell(j + 2, 4).Range.Text = (col.Length.HasValue ? col.Length.Value.ToString() : "");
+                            table2.Cell(j + 2, 5).Range.Text = (col.Scale.HasValue ? col.Scale.Value.ToString() : "");
+                            table2.Cell(j + 2, 6).Range.Text = (col.IsPK ? "√" : "");
+                            table2.Cell(j + 2, 7).Range.Text = (col.IsIdentity ? "√" : "");
+                            table2.Cell(j + 2, 8).Range.Text = (col.CanNull ? "√" : "");
+                            table2.Cell(j + 2, 9).Range.Text = (!string.IsNullOrWhiteSpace(col.DefaultVal) ? col.DefaultVal : "");
+                            table2.Cell(j + 2, 10).Range.Text = (!string.IsNullOrWhiteSpace(col.DeText) ? col.DeText : "");
+                            j++;
+                        }
+                    }
+
+                    application.Visible = true;
+                    document.Activate();
+
+                    MessageBox.Show("生成数据库字典Word文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+                catch (Exception ex)
+                {
+                    LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                }
+
+            }, null);
+        }
+
+        private void ExportToExcel()
+        {
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "Excel files (*.xlsx)|*.xlsx";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".xlsx";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.xlsx";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典Excel文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        fileName = saveDia.FileName;
+                        FileInfo xlsFileInfo = new FileInfo(fileName);
+                        if (xlsFileInfo.Exists)
+                        {
+                            // TODO 存在Excel文档即删除再创建一个
+                            xlsFileInfo.Delete();
+                            xlsFileInfo = new FileInfo(fileName);
+                        }
+                        // TODO 创建并添加Excel文档信息
+                        using (OfficeOpenXml.ExcelPackage epck = new OfficeOpenXml.ExcelPackage(xlsFileInfo))
+                        {
+                            // TODO 循环数据库表名
+                            System.Collections.Specialized.NameValueCollection dict_tabs = DBUtils.Instance.Info.TableComments;
+                            foreach (var tableName in dict_tabs.AllKeys)
+                            {
+                                string docTableName = tableName + " " + (!string.IsNullOrWhiteSpace(dict_tabs[tableName]) ? dict_tabs[tableName] : "");
+                                // TODO 创建sheet
+                                OfficeOpenXml.ExcelWorksheet tbWorksheet = epck.Workbook.Worksheets.Add(tableName);
+                                //OfficeOpenXml.ExcelWorksheet tbWorksheet = null;
+                                //try
+                                //{
+                                //    tbWorksheet = epck.Workbook.Worksheets.Add(tableName);
+                                //}
+                                //catch (Exception)
+                                //{
+                                //    // TODO ignore
+                                //    epck.Workbook.Worksheets.Delete(tableName);
+                                //    tbWorksheet = epck.Workbook.Worksheets.Add(tableName);
+                                //}
+                                // TODO 查询数据库表
+                                System.Collections.Generic.Dictionary<string, MJTop.Data.TableInfo> dictTabs = DBUtils.Instance.Info.TableInfoDict;
+                                MJTop.Data.TableInfo tabInfo = dictTabs[tableName.ToLower()];
+                                // TODO 添加列标题
+                                tbWorksheet.Cells[1, 1].Value = "序号";
+                                tbWorksheet.Cells[1, 2].Value = "列名";
+                                tbWorksheet.Cells[1, 3].Value = "数据类型";
+                                tbWorksheet.Cells[1, 4].Value = "长度";
+                                tbWorksheet.Cells[1, 5].Value = "小数位";
+                                tbWorksheet.Cells[1, 6].Value = "主键";
+                                tbWorksheet.Cells[1, 7].Value = "自增";
+                                tbWorksheet.Cells[1, 8].Value = "允许空";
+                                tbWorksheet.Cells[1, 9].Value = "默认值";
+                                tbWorksheet.Cells[1, 10].Value = "列说明";
+                                // TODO 添加数据行,循环数据库表字段
+                                int rowNum = 2;
+                                foreach (var col in tabInfo.Colnumns)
+                                {
+                                    string Colorder = col.Colorder + ""; // 序号
+                                    string ColumnName = col.ColumnName; // 列名
+                                    string TypeName = col.TypeName; // 数据类型
+                                    string Length = (col.Length.HasValue ? col.Length.Value.ToString() : ""); // 长度
+                                    string Scale = (col.Scale.HasValue ? col.Scale.Value.ToString() : ""); // 小数位
+                                    string IsPK = (col.IsPK ? "√" : ""); // 主键
+                                    string IsIdentity = (col.IsIdentity ? "√" : ""); // 自增
+                                    string CanNull = (col.CanNull ? "√" : ""); // 允许空
+                                    string DefaultVal = (!string.IsNullOrWhiteSpace(col.DefaultVal) ? col.DefaultVal : ""); // 默认值
+                                    string DeText = (!string.IsNullOrWhiteSpace(col.DeText) ? col.DeText : ""); // 列说明
+                                    tbWorksheet.Cells[rowNum, 1].Value = Colorder;
+                                    tbWorksheet.Cells[rowNum, 2].Value = ColumnName;
+                                    tbWorksheet.Cells[rowNum, 3].Value = TypeName;
+                                    tbWorksheet.Cells[rowNum, 4].Value = Length;
+                                    tbWorksheet.Cells[rowNum, 5].Value = Scale;
+                                    tbWorksheet.Cells[rowNum, 6].Value = IsPK;
+                                    tbWorksheet.Cells[rowNum, 7].Value = IsIdentity;
+                                    tbWorksheet.Cells[rowNum, 8].Value = CanNull;
+                                    tbWorksheet.Cells[rowNum, 9].Value = DefaultVal;
+                                    tbWorksheet.Cells[rowNum, 10].Value = DeText;
+                                    // 行号+1
+                                    rowNum++;
+                                }
+                                // TODO 设置表格样式
+                                tbWorksheet.Cells.Style.WrapText = true; // 自动换行
+                                tbWorksheet.Cells.Style.ShrinkToFit = true; // 单元格自动适应大小
+                                tbWorksheet.Cells[1, 1, 1, 10].Style.Font.Bold = true; // 列标题字体为粗体
+                                tbWorksheet.Cells[1, 1, rowNum - 1, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; // 水平居中
+                                tbWorksheet.Cells[1, 1, rowNum - 1, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; // 垂直居中
+                                tbWorksheet.Cells[1, 1, rowNum - 1, 10].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin; // 上下左右边框线
+                                tbWorksheet.Cells[1, 1, rowNum - 1, 10].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                tbWorksheet.Cells[1, 1, rowNum - 1, 10].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                tbWorksheet.Cells[1, 1, rowNum - 1, 10].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            }
+                            epck.Save(); // 保存excel
+                            epck.Dispose();
+                            MessageBox.Show("生成数据库字典Excel文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+        private void ExportToPdf()
+        {
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "Text documents (.pdf)|*.pdf";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".pdf";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.pdf";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典PDF文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        fileName = saveDia.FileName;
+                        // TODO 创建并添加文档信息
+                        iTextSharp.text.Document pdfDocument = new iTextSharp.text.Document();
+                        pdfDocument.AddTitle(fileName);
+                        pdfDocument.AddSubject("Database Dictionary Document of PDF");
+                        pdfDocument.AddKeywords("DBCHM, PDF");
+                        pdfDocument.AddCreator("trycache,lztkdr");
+                        pdfDocument.AddAuthor("trycache,lztkdr");
+                        pdfDocument.AddHeader("DBCHM", "https://gitee.com/lztkdr/DBCHM");
+
+                        iTextSharp.text.pdf.PdfWriter pdfWriter = iTextSharp.text.pdf.PdfWriter.GetInstance(pdfDocument, new FileStream(fileName, FileMode.Create));
+                        pdfDocument.Open(); // 打开文档
+
+                        // TODO 循环数据库表名
+                        System.Collections.Specialized.NameValueCollection dict_tabs = DBUtils.Instance.Info.TableComments;
+                        int chapterNum = 1; // PDF书签章节序号
+                        // TODO 字体设置，处理iTextSharp中文不识别显示问题
+                        iTextSharp.text.pdf.BaseFont chinese = iTextSharp.text.pdf.BaseFont.CreateFont(Application.StartupPath + "\\Fonts\\msyh.ttf", iTextSharp.text.pdf.BaseFont.IDENTITY_H, true);
+                        iTextSharp.text.Font pdfFont = new iTextSharp.text.Font(chinese, 12, iTextSharp.text.Font.NORMAL);
+
+                        // TODO 标题
+                        iTextSharp.text.Paragraph title = new iTextSharp.text.Paragraph("数据库字典文档\n\n", new iTextSharp.text.Font(chinese, 30, iTextSharp.text.Font.BOLD));
+                        title.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        pdfDocument.Add(title);
+                        iTextSharp.text.Paragraph subTitle = new iTextSharp.text.Paragraph(" —— " + DBUtils.Instance.Info.DBName, new iTextSharp.text.Font(chinese, 20, iTextSharp.text.Font.NORMAL));
+                        subTitle.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        pdfDocument.Add(subTitle);
+
+                        foreach (var tableName in dict_tabs.AllKeys)
+                        {
+                            string docTableName = tableName + " " + (!string.IsNullOrWhiteSpace(dict_tabs[tableName]) ? dict_tabs[tableName] : "");
+                            // TODO 创建添加书签章节
+                            iTextSharp.text.Chapter chapter = new iTextSharp.text.Chapter(new iTextSharp.text.Paragraph(docTableName, pdfFont), chapterNum);
+                            pdfDocument.Add(chapter);
+                            pdfDocument.Add(new iTextSharp.text.Paragraph("\n", pdfFont)); // 换行
+
+                            // TODO 查询数据库表
+                            System.Collections.Generic.Dictionary<string, MJTop.Data.TableInfo> dictTabs = DBUtils.Instance.Info.TableInfoDict;
+                            MJTop.Data.TableInfo tabInfo = dictTabs[tableName.ToLower()];
+
+                            // TODO 创建表格
+                            iTextSharp.text.pdf.PdfPTable pdfTable = new iTextSharp.text.pdf.PdfPTable(10);
+                            // TODO 添加列标题
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("序号", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("列名", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("数据类型", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("长度", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("小数位", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("主键", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("自增", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("允许空", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("默认值", pdfFont)));
+                            pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase("列说明", pdfFont)));
+                            // TODO 添加数据行,循环数据库表字段
+                            foreach (var col in tabInfo.Colnumns)
+                            {
+                                string Colorder = col.Colorder + ""; // 序号
+                                string ColumnName = col.ColumnName; // 列名
+                                string TypeName = col.TypeName; // 数据类型
+                                string Length = (col.Length.HasValue ? col.Length.Value.ToString() : ""); // 长度
+                                string Scale = (col.Scale.HasValue ? col.Scale.Value.ToString() : ""); // 小数位
+                                string IsPK = (col.IsPK ? "√" : ""); // 主键
+                                string IsIdentity = (col.IsIdentity ? "√" : ""); // 自增
+                                string CanNull = (col.CanNull ? "√" : ""); // 允许空
+                                string DefaultVal = (!string.IsNullOrWhiteSpace(col.DefaultVal) ? col.DefaultVal : ""); // 默认值
+                                string DeText = (!string.IsNullOrWhiteSpace(col.DeText) ? col.DeText : ""); // 列说明
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(Colorder, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(ColumnName, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(TypeName, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(Length, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(Scale, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(IsPK, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(IsIdentity, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(CanNull, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(DefaultVal, pdfFont)));
+                                pdfTable.AddCell(new iTextSharp.text.pdf.PdfPCell(new iTextSharp.text.Phrase(DeText, pdfFont)));
+                            }
+                            // TODO 添加表格
+                            pdfDocument.Add(pdfTable);
+
+                            // TODO PDF换页
+                            pdfDocument.NewPage();
+
+                            // TODO PDF书签章节序号自增
+                            chapterNum++;
+                        }
+
+                        // TODO 关闭释放PDF文档资源
+                        pdfDocument.Close();
+
+                        MessageBox.Show("生成数据库字典Pdf文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+        private void tsbBuild_Click(object sender, EventArgs e)
+        {
+            // TODO 导出chm
+            ExportToChm();
+        }
+
+        private void tsWordExp_Click(object sender, EventArgs e)
+        {
+            // TODO 导出word
+            ExportToWord();
+        }
+
+        private void tsExcelExp_Click(object sender, EventArgs e)
+        {
+            // TODO 导出excel
+            ExportToExcel();
+        }
+
+        private void tsPdfExp_Click(object sender, EventArgs e)
+        {
+            // TODO 导出pdf
+            ExportToPdf();
+        }
 
         private void GV_ColComments_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -443,7 +798,6 @@ namespace DBCHM
                 }
             }
         }
-
 
         private void BgWork_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -486,8 +840,6 @@ namespace DBCHM
                 }
             }
         }
-
-
 
         private void BtnSaveGridData_Click(object sender, EventArgs e)
         {
@@ -558,7 +910,6 @@ namespace DBCHM
             AboutBox aboutForm = new AboutBox();
             aboutForm.ShowDialog();
         }
-
 
         public bool IsExistProcess(string fileName,out Process process)
         {

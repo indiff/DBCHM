@@ -34,7 +34,6 @@
             this.Prog = new System.Windows.Forms.ToolStripProgressBar();
             this.RibbonPanel = new System.Windows.Forms.Panel();
             this.GpTableCol = new System.Windows.Forms.GroupBox();
-            this.BtnSaveGridData = new System.Windows.Forms.Button();
             this.gpCurrTable = new System.Windows.Forms.GroupBox();
             this.labCurrTabComment = new System.Windows.Forms.Label();
             this.TxtCurrTabComment = new System.Windows.Forms.TextBox();
@@ -43,6 +42,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.GpColumns = new System.Windows.Forms.GroupBox();
             this.GV_ColComments = new System.Windows.Forms.DataGridView();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnSaveGridData = new System.Windows.Forms.Button();
             this.LstBox = new System.Windows.Forms.ListBox();
             this.TxtTabName = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -54,11 +56,12 @@
             this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
             this.tsbPDMUpload = new System.Windows.Forms.ToolStripButton();
             this.tsbBuild = new System.Windows.Forms.ToolStripButton();
+            this.tsWordExp = new System.Windows.Forms.ToolStripButton();
+            this.tsExcelExp = new System.Windows.Forms.ToolStripButton();
+            this.tsPdfExp = new System.Windows.Forms.ToolStripButton();
             this.RibbonTabContainer = new System.Windows.Forms.TabControl();
             this.bgWork = new System.ComponentModel.BackgroundWorker();
             this.lblMsg = new System.Windows.Forms.Label();
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStripMain.SuspendLayout();
             this.RibbonPanel.SuspendLayout();
             this.GpTableCol.SuspendLayout();
@@ -108,23 +111,13 @@
             this.GpTableCol.Controls.Add(this.LstBox);
             this.GpTableCol.Controls.Add(this.TxtTabName);
             this.GpTableCol.Location = new System.Drawing.Point(6, 7);
-            this.GpTableCol.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GpTableCol.Margin = new System.Windows.Forms.Padding(2);
             this.GpTableCol.Name = "GpTableCol";
-            this.GpTableCol.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GpTableCol.Padding = new System.Windows.Forms.Padding(2);
             this.GpTableCol.Size = new System.Drawing.Size(998, 626);
             this.GpTableCol.TabIndex = 0;
             this.GpTableCol.TabStop = false;
             this.GpTableCol.Text = "表列批注";
-            // 
-            // BtnSaveGridData
-            // 
-            this.BtnSaveGridData.Location = new System.Drawing.Point(564, 484);
-            this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.BtnSaveGridData.Name = "BtnSaveGridData";
-            this.BtnSaveGridData.Size = new System.Drawing.Size(98, 34);
-            this.BtnSaveGridData.TabIndex = 8;
-            this.BtnSaveGridData.Text = "保存";
-            this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
             // 
             // gpCurrTable
             // 
@@ -133,9 +126,9 @@
             this.gpCurrTable.Controls.Add(this.LabCurrTabName);
             this.gpCurrTable.Controls.Add(this.label2);
             this.gpCurrTable.Location = new System.Drawing.Point(298, 17);
-            this.gpCurrTable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpCurrTable.Margin = new System.Windows.Forms.Padding(2);
             this.gpCurrTable.Name = "gpCurrTable";
-            this.gpCurrTable.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpCurrTable.Padding = new System.Windows.Forms.Padding(2);
             this.gpCurrTable.Size = new System.Drawing.Size(681, 73);
             this.gpCurrTable.TabIndex = 7;
             this.gpCurrTable.TabStop = false;
@@ -156,7 +149,7 @@
             // 
             this.TxtCurrTabComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.TxtCurrTabComment.Location = new System.Drawing.Point(242, 39);
-            this.TxtCurrTabComment.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxtCurrTabComment.Margin = new System.Windows.Forms.Padding(2);
             this.TxtCurrTabComment.Name = "TxtCurrTabComment";
             this.TxtCurrTabComment.Size = new System.Drawing.Size(300, 21);
             this.TxtCurrTabComment.TabIndex = 3;
@@ -198,9 +191,9 @@
             this.GpColumns.Controls.Add(this.GV_ColComments);
             this.GpColumns.Controls.Add(this.BtnSaveGridData);
             this.GpColumns.Location = new System.Drawing.Point(299, 94);
-            this.GpColumns.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GpColumns.Margin = new System.Windows.Forms.Padding(2);
             this.GpColumns.Name = "GpColumns";
-            this.GpColumns.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GpColumns.Padding = new System.Windows.Forms.Padding(2);
             this.GpColumns.Size = new System.Drawing.Size(687, 528);
             this.GpColumns.TabIndex = 2;
             this.GpColumns.TabStop = false;
@@ -216,7 +209,7 @@
             this.GV_ColComments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -227,7 +220,7 @@
             this.ColumnName,
             this.ColComment});
             this.GV_ColComments.Location = new System.Drawing.Point(4, 18);
-            this.GV_ColComments.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GV_ColComments.Margin = new System.Windows.Forms.Padding(2);
             this.GV_ColComments.MultiSelect = false;
             this.GV_ColComments.Name = "GV_ColComments";
             this.GV_ColComments.RowHeadersVisible = false;
@@ -237,12 +230,36 @@
             this.GV_ColComments.TabIndex = 0;
             this.GV_ColComments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_ColComments_CellClick);
             // 
+            // ColumnName
+            // 
+            this.ColumnName.HeaderText = "列名";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Width = 220;
+            // 
+            // ColComment
+            // 
+            this.ColComment.HeaderText = "列批注";
+            this.ColComment.Name = "ColComment";
+            this.ColComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColComment.Width = 450;
+            // 
+            // BtnSaveGridData
+            // 
+            this.BtnSaveGridData.Location = new System.Drawing.Point(564, 484);
+            this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(2);
+            this.BtnSaveGridData.Name = "BtnSaveGridData";
+            this.BtnSaveGridData.Size = new System.Drawing.Size(98, 34);
+            this.BtnSaveGridData.TabIndex = 8;
+            this.BtnSaveGridData.Text = "保存";
+            this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
+            // 
             // LstBox
             // 
             this.LstBox.FormattingEnabled = true;
             this.LstBox.ItemHeight = 12;
             this.LstBox.Location = new System.Drawing.Point(5, 57);
-            this.LstBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LstBox.Margin = new System.Windows.Forms.Padding(2);
             this.LstBox.Name = "LstBox";
             this.LstBox.Size = new System.Drawing.Size(278, 568);
             this.LstBox.TabIndex = 1;
@@ -251,7 +268,7 @@
             // TxtTabName
             // 
             this.TxtTabName.Location = new System.Drawing.Point(40, 26);
-            this.TxtTabName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TxtTabName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtTabName.Name = "TxtTabName";
             this.TxtTabName.Size = new System.Drawing.Size(211, 21);
             this.TxtTabName.TabIndex = 0;
@@ -265,7 +282,7 @@
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(817, 64);
+            this.tabPage3.Size = new System.Drawing.Size(996, 73);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "关于";
             this.tabPage3.ToolTipText = "关于";
@@ -281,7 +298,7 @@
             this.toolStripButtonAbout});
             this.ribbonPageAbout.Location = new System.Drawing.Point(3, 2);
             this.ribbonPageAbout.Name = "ribbonPageAbout";
-            this.ribbonPageAbout.Size = new System.Drawing.Size(811, 70);
+            this.ribbonPageAbout.Size = new System.Drawing.Size(990, 70);
             this.ribbonPageAbout.TabIndex = 0;
             this.ribbonPageAbout.Text = "toolStripAbout";
             // 
@@ -318,7 +335,10 @@
             this.tsbConnect,
             this.tsbRefresh,
             this.tsbPDMUpload,
-            this.tsbBuild});
+            this.tsbBuild,
+            this.tsWordExp,
+            this.tsExcelExp,
+            this.tsPdfExp});
             this.ribbonPageFile.Location = new System.Drawing.Point(3, 2);
             this.ribbonPageFile.Name = "ribbonPageFile";
             this.ribbonPageFile.Size = new System.Drawing.Size(990, 70);
@@ -331,7 +351,7 @@
             this.tsbConnect.Image = ((System.Drawing.Image)(resources.GetObject("tsbConnect.Image")));
             this.tsbConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbConnect.Name = "tsbConnect";
-            this.tsbConnect.Size = new System.Drawing.Size(63, 67);
+            this.tsbConnect.Size = new System.Drawing.Size(59, 67);
             this.tsbConnect.Text = "数据连接";
             this.tsbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbConnect.Click += new System.EventHandler(this.tsbConnect_Click);
@@ -341,7 +361,7 @@
             this.tsbRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsbRefresh.Image")));
             this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Size = new System.Drawing.Size(63, 67);
+            this.tsbRefresh.Size = new System.Drawing.Size(59, 67);
             this.tsbRefresh.Text = "重新获取";
             this.tsbRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
@@ -351,7 +371,7 @@
             this.tsbPDMUpload.Image = ((System.Drawing.Image)(resources.GetObject("tsbPDMUpload.Image")));
             this.tsbPDMUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPDMUpload.Name = "tsbPDMUpload";
-            this.tsbPDMUpload.Size = new System.Drawing.Size(62, 67);
+            this.tsbPDMUpload.Size = new System.Drawing.Size(60, 67);
             this.tsbPDMUpload.Text = "pdm上传";
             this.tsbPDMUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbPDMUpload.Click += new System.EventHandler(this.tsbSaveUpload_Click);
@@ -361,10 +381,43 @@
             this.tsbBuild.Image = ((System.Drawing.Image)(resources.GetObject("tsbBuild.Image")));
             this.tsbBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbBuild.Name = "tsbBuild";
-            this.tsbBuild.Size = new System.Drawing.Size(65, 67);
+            this.tsbBuild.Size = new System.Drawing.Size(63, 67);
             this.tsbBuild.Text = "CHM导出";
             this.tsbBuild.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbBuild.Click += new System.EventHandler(this.tsbBuild_Click);
+            // 
+            // tsWordExp
+            // 
+            this.tsWordExp.AutoSize = false;
+            this.tsWordExp.Image = ((System.Drawing.Image)(resources.GetObject("tsWordExp.Image")));
+            this.tsWordExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsWordExp.Name = "tsWordExp";
+            this.tsWordExp.Size = new System.Drawing.Size(60, 67);
+            this.tsWordExp.Text = "Word导出";
+            this.tsWordExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsWordExp.Click += new System.EventHandler(this.tsWordExp_Click);
+            // 
+            // tsExcelExp
+            // 
+            this.tsExcelExp.AutoSize = false;
+            this.tsExcelExp.Image = ((System.Drawing.Image)(resources.GetObject("tsExcelExp.Image")));
+            this.tsExcelExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsExcelExp.Name = "tsExcelExp";
+            this.tsExcelExp.Size = new System.Drawing.Size(60, 67);
+            this.tsExcelExp.Text = "Excel导出";
+            this.tsExcelExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsExcelExp.Click += new System.EventHandler(this.tsExcelExp_Click);
+            // 
+            // tsPdfExp
+            // 
+            this.tsPdfExp.AutoSize = false;
+            this.tsPdfExp.Image = ((System.Drawing.Image)(resources.GetObject("tsPdfExp.Image")));
+            this.tsPdfExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsPdfExp.Name = "tsPdfExp";
+            this.tsPdfExp.Size = new System.Drawing.Size(60, 67);
+            this.tsPdfExp.Text = "PDF导出";
+            this.tsPdfExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsPdfExp.Click += new System.EventHandler(this.tsPdfExp_Click);
             // 
             // RibbonTabContainer
             // 
@@ -394,20 +447,6 @@
             this.lblMsg.Size = new System.Drawing.Size(23, 12);
             this.lblMsg.TabIndex = 5;
             this.lblMsg.Text = "msg";
-            // 
-            // ColumnName
-            // 
-            this.ColumnName.HeaderText = "列名";
-            this.ColumnName.Name = "ColumnName";
-            this.ColumnName.ReadOnly = true;
-            this.ColumnName.Width = 220;
-            // 
-            // ColComment
-            // 
-            this.ColComment.HeaderText = "列批注";
-            this.ColComment.Name = "ColComment";
-            this.ColComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColComment.Width = 450;
             // 
             // MainForm
             // 
@@ -480,5 +519,8 @@
         private System.Windows.Forms.Label lblMsg;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColComment;
+        private System.Windows.Forms.ToolStripButton tsWordExp;
+        private System.Windows.Forms.ToolStripButton tsExcelExp;
+        private System.Windows.Forms.ToolStripButton tsPdfExp;
     }
 }

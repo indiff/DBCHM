@@ -42,6 +42,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\ComponentFactory.Krypton.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.0.5.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>lib\Microsoft.Office.Interop.Word.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -142,6 +155,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Fonts\msyh.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -163,14 +179,20 @@
     <Content Include="ico\Connect.png" />
     <Content Include="ico\dbchm1.ico" />
     <Content Include="ico\DownBuild.png" />
+    <Content Include="ico\ExcelExp.png" />
+    <Content Include="ico\PdfExp.png" />
     <Content Include="ico\Refresh3.png" />
     <Content Include="ico\saveUpload.png" />
+    <Content Include="ico\WordExp.png" />
     <Content Include="Images\DBCHM001.png" />
     <Content Include="Images\DBCHM002.png" />
     <Content Include="Images\DBCHM003.png" />
     <Content Include="Images\DBCHM004.png" />
     <Content Include="Images\DBCHM005.png" />
     <Content Include="Images\donate_qrcode.png" />
+    <Content Include="lib\EPPlus.dll" />
+    <Content Include="lib\itextsharp.dll" />
+    <Content Include="lib\Microsoft.Office.Interop.Word.dll" />
     <Content Include="lib\System.Data.SQLite.dll" />
     <Content Include="System.Runtime.CompilerServices.Unsafe.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
