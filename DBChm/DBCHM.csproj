@@ -42,19 +42,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\ComponentFactory.Krypton.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus, Version=4.0.5.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\EPPlus.dll</HintPath>
-    </Reference>
-    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\itextsharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>lib\Microsoft.Office.Interop.Word.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -190,9 +177,6 @@
     <Content Include="Images\DBCHM004.png" />
     <Content Include="Images\DBCHM005.png" />
     <Content Include="Images\donate_qrcode.png" />
-    <Content Include="lib\EPPlus.dll" />
-    <Content Include="lib\itextsharp.dll" />
-    <Content Include="lib\Microsoft.Office.Interop.Word.dll" />
     <Content Include="lib\System.Data.SQLite.dll" />
     <Content Include="System.Runtime.CompilerServices.Unsafe.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -210,6 +194,10 @@
     <ProjectReference Include="..\MJTop.Data\MJTop.Data.csproj">
       <Project>{3d36cdc9-e989-465b-a9f1-ad85dc42f242}</Project>
       <Name>MJTop.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TryOpenXml.Text.Core\TryOpenXml.Text.Core.csproj">
+      <Project>{0461b8aa-baf6-4ed0-9826-046e86463b4e}</Project>
+      <Name>TryOpenXml.Text.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
