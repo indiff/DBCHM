@@ -1,0 +1,30 @@
+﻿namespace TryOpenXml.Dtos
+{
+    /// <summary>
+    /// 数据库表dto
+    /// </summary>
+    public class TableDto
+    {
+
+        /// <summary>
+        /// 序号
+        /// </summary>
+        public string TableOrder { get; set; }
+
+        /// <summary>
+        /// 表名
+        /// </summary>
+        public string TableName { get; set; }
+
+        /// <summary>
+        /// 注释
+        /// </summary>
+        public string Comment { get; set; }
+
+        /// <summary>
+        /// 表格列集合
+        /// </summary>
+        public System.Collections.Generic.List<ColumnDto> Columns { get; set; }
+
+    }
+}
