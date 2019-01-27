@@ -71,9 +71,7 @@
     <Compile Include="AppSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Library\Aspose.Words.dll" />
     <Content Include="Library\EPPlus.dll" />
