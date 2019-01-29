@@ -286,10 +286,21 @@ namespace DBCHM
             }
         }
 
+        /// <summary>
+        /// 数据连接
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsbConnect_Click(object sender, EventArgs e)
         {
             InitMain();
         }
+
+        /// <summary>
+        /// 重新获取
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsbRefresh_Click(object sender, EventArgs e)
         {
             FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
@@ -301,6 +312,12 @@ namespace DBCHM
             }, null);
 
         }
+
+        /// <summary>
+        /// pdm上传
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsbSaveUpload_Click(object sender, EventArgs e)
         {
             ImportPDMForm pdmForm = new ImportPDMForm();
@@ -545,28 +562,93 @@ namespace DBCHM
             }
         }
 
+        private void ExportToXml()
+        {
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "XML files (*.xml)|*.xml";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".xml";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.xml";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典XML文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
+                        TryOpenXml.Text.XmlUtils.ExportXml(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
+
+                        MessageBox.Show("生成数据库字典XML文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+        /// <summary>
+        /// chm文档导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsbBuild_Click(object sender, EventArgs e)
         {
             // TODO 导出chm
             ExportToChm();
         }
 
+        /// <summary>
+        /// word文档导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsWordExp_Click(object sender, EventArgs e)
         {
             // TODO 导出word
             ExportToWord();
         }
 
+        /// <summary>
+        /// excel文档导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsExcelExp_Click(object sender, EventArgs e)
         {
             // TODO 导出excel
             ExportToExcel();
         }
 
+        /// <summary>
+        /// pdf文档导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsPdfExp_Click(object sender, EventArgs e)
         {
             // TODO 导出pdf
             ExportToPdf();
+        }
+
+        /// <summary>
+        /// xml文档导出，预留（敬请期待）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsXmlExp_Click(object sender, EventArgs e)
+        {
+            // TODO 导出xml
+            ExportToXml();
         }
 
         private void GV_ColComments_CellClick(object sender, DataGridViewCellEventArgs e)

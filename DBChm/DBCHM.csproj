@@ -171,6 +171,7 @@
     <Content Include="ico\Refresh3.png" />
     <Content Include="ico\saveUpload.png" />
     <Content Include="ico\WordExp.png" />
+    <Content Include="ico\XmlExp.png" />
     <Content Include="Images\DBCHM001.png" />
     <Content Include="Images\DBCHM002.png" />
     <Content Include="Images\DBCHM003.png" />
