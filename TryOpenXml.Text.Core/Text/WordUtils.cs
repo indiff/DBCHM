@@ -410,7 +410,7 @@ namespace TryOpenXml.Text
             builder.Write("表名");
 
             builder.InsertCell();
-            builder.Write("说明");
+            builder.Write("注释/说明");
 
             builder.EndRow();
             #endregion
