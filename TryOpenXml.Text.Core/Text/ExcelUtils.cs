@@ -28,13 +28,13 @@ namespace TryOpenXml.Text
             using (OfficeOpenXml.ExcelPackage epck = new OfficeOpenXml.ExcelPackage(xlsFileInfo))
             {
                 // TODO 创建overview sheet
-                CreateLogSheet(epck, "修订日志", tables);
+                CreateLogSheet(epck, AppConst.LOG_CHAPTER_NAME, tables);
 
                 // TODO 创建overview sheet
-                CreateOverviewSheet(epck, "数据库表名", tables);
+                CreateOverviewSheet(epck, AppConst.TABLE_CHAPTER_NAME, tables);
 
                 // TODO 创建tables sheet
-                CreateTableSheet(epck, "数据库表结构", tables);
+                CreateTableSheet(epck, AppConst.TABLE_STRUCTURE_CHAPTER_NAME, tables);
 
                 epck.Save(); // 保存excel
                 epck.Dispose();
@@ -102,7 +102,7 @@ namespace TryOpenXml.Text
         }
 
         /// <summary>
-        /// 创建表名sheet
+        /// 创建表目录sheet
         /// </summary>
         /// <param name="epck"></param>
         /// <param name="sheetName"></param>
@@ -173,6 +173,10 @@ namespace TryOpenXml.Text
 
                 rowNum++; // 行号+1
 
+                // tbWorksheet.Cells[int FromRow, int FromCol, int ToRow, int ToCol]
+                // TODO 列标题字体为粗体
+                tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.Font.Bold = true;
+
                 // TODO 添加列标题
                 tbWorksheet.Cells[rowNum, 1].Value = "序号";
                 tbWorksheet.Cells[rowNum, 2].Value = "列名";
@@ -204,9 +208,6 @@ namespace TryOpenXml.Text
                     rowNum++; // 行号+1
                 }
 
-                // tbWorksheet.Cells[int FromRow, int FromCol, int ToRow, int ToCol]
-                // TODO 列标题字体为粗体
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, 10].Style.Font.Bold = true;
                 // TODO 水平居中
                 tbWorksheet.Cells[fromRow, 1, rowNum - 1, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                 // TODO 垂直居中

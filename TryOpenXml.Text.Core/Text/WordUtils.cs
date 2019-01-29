@@ -154,15 +154,19 @@ namespace TryOpenXml.Text
 
             // TODO 数据库字典文档修订日志表
             CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Center, Aspose.Words.OutlineLevel.Level2, 16,
-                asposeBookmarkLog, "修订日志");
+                asposeBookmarkLog, AppConst.LOG_CHAPTER_NAME);
             CreateLogTable(builder);
             builder.InsertBreak(Aspose.Words.BreakType.PageBreak);
 
             // TODO 创建数据库字典文档数据库概况一览表
             CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Center, Aspose.Words.OutlineLevel.Level2, 16,
-                asposeBookmarkOverview, "数据库表汇总");
+                asposeBookmarkOverview, AppConst.TABLE_CHAPTER_NAME);
             CreateOverviewTable(builder, tables);
             builder.InsertBreak(Aspose.Words.BreakType.PageBreak);
+
+            // TODO 创建书签
+            CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Left, Aspose.Words.OutlineLevel.Level2, 16,
+                asposeBookmark_prefix + 0, AppConst.TABLE_STRUCTURE_CHAPTER_NAME);
 
             int i = 0; // 计数器
             // TODO 遍历数据库表集合
@@ -171,7 +175,7 @@ namespace TryOpenXml.Text
                 string bookmarkName = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
 
                 // TODO 创建书签
-                CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Left, Aspose.Words.OutlineLevel.Level2, 16,
+                CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Left, Aspose.Words.OutlineLevel.Level3, 16,
                     asposeBookmark_prefix + i, table.TableOrder + "、" + bookmarkName);
 
                 // TODO 遍历数据库表字段集合
