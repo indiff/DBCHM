@@ -21,7 +21,7 @@ namespace DBCHM
 
         public int Id { get; private set; }
 
-         public DBForm(OPType opType, int? id = null)
+        public DBForm(OPType opType, int? id = null)
         {
             InitializeComponent();
 
@@ -50,7 +50,6 @@ namespace DBCHM
                     TxtPwd.Text = config.Pwd;
                     cboDBName.Text = config.DBName;
 
-                    
                     if (this.OpType == OPType.克隆)
                     {
                         TxtConnectName.Text += "_Clone";
@@ -68,6 +67,7 @@ namespace DBCHM
             }
             lblMsg.Text = string.Empty;
         }
+
         void control_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -75,8 +75,6 @@ namespace DBCHM
                 this.Close();
             }
         }
-
-
 
         private void DBFrom_Load(object sender, EventArgs e)
         {
@@ -86,27 +84,16 @@ namespace DBCHM
                 {
                     cboDBType.Items.Add(item.Value.ToString());
                 }
-
                 cboDBType.SelectedIndex = 0;
                 string port;
                 if (FormUtils.DictPort.TryGetValue(cboDBType.Text, out port))
                 {
                     TxtPort.Text = port;
                 }
-
                 TxtHost.Text = "127.0.0.1";
-
-                DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
-                if (type == DBType.SqlServer)
-                {
-                    TxtUName.Text = "sa";
-                }
-                else if (type == DBType.MySql)
-                {
-                    TxtUName.Text = "root";
-                }
+                // TODO 设置默认用户名等
+                SetUserNameByDbType();
             }
-
         }
 
         public void SetMsg(string msg, bool isSuccess = false)
@@ -137,12 +124,13 @@ namespace DBCHM
                 }
                 cboDBName.SelectedItem = strDBName;
 
-                cboDBType.Items.Clear();
-                foreach (var item in FormUtils.DictDBType)
-                {
-                    cboDBType.Items.Add(item.Value.ToString());
-                }
-                cboDBType.SelectedItem = type.ToString();
+                // TODO 此段代码需注释，连接测试成功会触发数据库类型下拉框控件事件 2019-01-24 21:14
+                //cboDBType.Items.Clear();
+                //foreach (var item in FormUtils.DictDBType)
+                //{
+                //    cboDBType.Items.Add(item.Value.ToString());
+                //}
+                //cboDBType.SelectedItem = type.ToString();
 
                 this.Text = "连接服务器成功！";
             }
@@ -208,7 +196,6 @@ namespace DBCHM
 
                     nvc.Add("ConnString", connString);
                     ConfigUtils.Save(nvc);
-                    
                 }
             }
             catch (Exception ex)
@@ -216,7 +203,6 @@ namespace DBCHM
                 MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
         }
 
         private void cboDBType_SelectedIndexChanged(object sender, EventArgs e)
@@ -227,21 +213,41 @@ namespace DBCHM
             {
                 TxtPort.Text = port;
             }
+            // TODO 设置默认用户名等
+            SetUserNameByDbType();
+        }
 
-            DBType dbtype = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text.ToString());
-            
+        /// <summary>
+        /// 根据数据库类型设置默认用户名等 扩展修改 2019-01-24 21:23
+        /// </summary>
+        private void SetUserNameByDbType()
+        {
             labDBName.Text = "数据库";
-            if (dbtype== DBType.SqlServer)
+            DBType dbtype = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text.ToString());
+            if (dbtype == DBType.SqlServer)
             {
                 TxtUName.Text = "sa";
             }
-            else if (dbtype== DBType.MySql)
+            else if (dbtype == DBType.MySql)
             {
                 TxtUName.Text = "root";
             }
-            else if (dbtype == DBType.OracleDDTek)
+            else if (dbtype == DBType.Oracle || dbtype == DBType.OracleDDTek)
             {
+                TxtUName.Text = "scott";
                 labDBName.Text = "服务名";
+            }
+            else if (dbtype == DBType.PostgreSql)
+            {
+                TxtUName.Text = "postgres";
+            }
+            else if (dbtype == DBType.DB2DDTek)
+            {
+                TxtUName.Text = "db2admin";
+            }
+            else
+            {
+                TxtUName.Text = "";
             }
         }
 

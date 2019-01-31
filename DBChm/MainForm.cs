@@ -13,6 +13,7 @@ namespace DBCHM
     using System.IO;
     using System.Reflection;
     using System.Windows.Forms;
+    using TryOpenXml.Dtos;
 
     /// <summary>
     /// Class MainForm.
@@ -190,8 +191,6 @@ namespace DBCHM
             InitMain();
         }
 
-      
-
         private void InitMain()
         {
             GridFormMgr conMgrForm = new GridFormMgr();
@@ -205,8 +204,6 @@ namespace DBCHM
             {
                 return;
             }
-
-            
             if (LstBox.Items.Count > 0)//默认选择第一张表
             {
                 LstBox.SelectedIndex = 0;
@@ -217,8 +214,6 @@ namespace DBCHM
             {
                 GV_ColComments.Rows.Clear();
             }
-
-
             if (!string.IsNullOrWhiteSpace(DBUtils.Instance?.Info?.DBName))
             {
                 this.Text = DBUtils.Instance?.Info?.DBName + " - " + "DBCHM v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
@@ -253,7 +248,6 @@ namespace DBCHM
             {
                 LstBox.DataSource = DBUtils.Instance?.Info?.TableNames;
             }
-
 
             if (LstBox.Items.Count > 0)//默认选择第一张表
             {
@@ -292,11 +286,21 @@ namespace DBCHM
             }
         }
 
-
+        /// <summary>
+        /// 数据连接
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsbConnect_Click(object sender, EventArgs e)
         {
             InitMain();
         }
+
+        /// <summary>
+        /// 重新获取
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsbRefresh_Click(object sender, EventArgs e)
         {
             FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
@@ -308,6 +312,12 @@ namespace DBCHM
             }, null);
 
         }
+
+        /// <summary>
+        /// pdm上传
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsbSaveUpload_Click(object sender, EventArgs e)
         {
             ImportPDMForm pdmForm = new ImportPDMForm();
@@ -319,9 +329,9 @@ namespace DBCHM
             }
         }
 
-       /// <summary>
-       /// chm文件根路径
-       /// </summary>
+        /// <summary>
+        /// chm文件根路径
+        /// </summary>
         private string dirPath = string.Empty;
         /// <summary>
         /// CHM 文件绝对路径
@@ -335,7 +345,8 @@ namespace DBCHM
         /// 索引文件路径
         /// </summary>
         private string indexHtmlpath = string.Empty;
-        private void tsbBuild_Click(object sender, EventArgs e)
+
+        private void ExportToChm()
         {
             SaveFileDialog saveDia = new SaveFileDialog();
             saveDia.Filter = "(*.chm)|*.chm";
@@ -353,7 +364,7 @@ namespace DBCHM
             {
                 chm_path = saveDia.FileName;
 
-                Process process;
+                System.Diagnostics.Process process;
                 if (IsExistProcess(Path.GetFileName(saveDia.FileName), out process))
                 {
                     var dia = MessageBox.Show("文件已打开，导出前需关闭，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
@@ -420,7 +431,7 @@ namespace DBCHM
                     catch (Exception ex)
                     {
                         LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
-                        bgWork.ReportProgress(4, ex);                       
+                        bgWork.ReportProgress(4, ex);
                     }
 
                 }, 4);
@@ -429,6 +440,216 @@ namespace DBCHM
             }
         }
 
+        private void ExportToWord()
+        {
+            #region 引用Microsoft.Office.Interop.Word.dll导出word文档方法弃用，改为引用Aspose.Words.dll方法导出word文档
+            //FormUtils.ShowProcessing("正在导出数据字典Word文档，请稍等......", this, arg =>
+            //{
+            //    try
+            //    {
+            //        System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
+            //        TryOpenXml.Text.WordUtils.ExportWordByMicrosoftOfficeInteropWord(DBUtils.Instance.Info.DBName, tableDtos);
+
+            //        MessageBox.Show("生成数据库字典Word文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+            //    }
+
+            //}, null); 
+            #endregion
+
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "Word files (*.doc)|*.doc";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".doc";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.doc";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典Word文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
+                        TryOpenXml.Text.WordUtils.ExportWordByAsposeWords(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
+
+                        MessageBox.Show("生成数据库字典Word文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+        private void ExportToExcel()
+        {
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "Excel files (*.xlsx)|*.xlsx";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".xlsx";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.xlsx";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典Excel文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
+                        TryOpenXml.Text.ExcelUtils.ExportExcelByEpplus(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
+
+                        MessageBox.Show("生成数据库字典Excel文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+        private void ExportToPdf()
+        {
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "Text documents (.pdf)|*.pdf";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".pdf";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.pdf";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典PDF文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        // TODO 中文ttf字体库文件（微软雅黑）
+                        string baseFontPath = System.Windows.Forms.Application.StartupPath + "\\Fonts\\msyh.ttf";
+                        System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
+                        TryOpenXml.Text.PdfUtils.ExportPdfByITextSharp(saveDia.FileName, baseFontPath, DBUtils.Instance.Info.DBName, tableDtos);
+
+                        MessageBox.Show("生成数据库字典Pdf文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+        private void ExportToXml()
+        {
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "XML files (*.xml)|*.xml";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".xml";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.xml";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典XML文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
+                        TryOpenXml.Text.XmlUtils.ExportXml(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
+
+                        MessageBox.Show("生成数据库字典XML文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+        /// <summary>
+        /// chm文档导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsbBuild_Click(object sender, EventArgs e)
+        {
+            // TODO 导出chm
+            ExportToChm();
+        }
+
+        /// <summary>
+        /// word文档导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsWordExp_Click(object sender, EventArgs e)
+        {
+            // TODO 导出word
+            ExportToWord();
+        }
+
+        /// <summary>
+        /// excel文档导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsExcelExp_Click(object sender, EventArgs e)
+        {
+            // TODO 导出excel
+            ExportToExcel();
+        }
+
+        /// <summary>
+        /// pdf文档导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsPdfExp_Click(object sender, EventArgs e)
+        {
+            // TODO 导出pdf
+            ExportToPdf();
+        }
+
+        /// <summary>
+        /// xml文档导出，预留（敬请期待）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsXmlExp_Click(object sender, EventArgs e)
+        {
+            // TODO 导出xml
+            ExportToXml();
+        }
 
         private void GV_ColComments_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -443,7 +664,6 @@ namespace DBCHM
                 }
             }
         }
-
 
         private void BgWork_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -486,8 +706,6 @@ namespace DBCHM
                 }
             }
         }
-
-
 
         private void BtnSaveGridData_Click(object sender, EventArgs e)
         {
@@ -559,7 +777,6 @@ namespace DBCHM
             aboutForm.ShowDialog();
         }
 
-
         public bool IsExistProcess(string fileName,out Process process)
         {
             var procs = System.Diagnostics.Process.GetProcessesByName("hh");
@@ -574,5 +791,56 @@ namespace DBCHM
             process = null;
             return false;
         }
+
+        /// <summary>
+        /// MJTop.Data数据库对象Instance转TableDto
+        /// </summary>
+        /// <returns>tables</returns>
+        private System.Collections.Generic.List<TableDto> DBInstanceTransToDto()
+        {
+            System.Collections.Generic.List<TableDto> tables = new System.Collections.Generic.List<TableDto>();
+
+            // TODO 查询数据库表集合
+            System.Collections.Specialized.NameValueCollection dict_tabs = DBUtils.Instance.Info.TableComments;
+            int i = 1; // 计数器
+            foreach (var tableName in dict_tabs.AllKeys)
+            {
+                TableDto tableDto = new TableDto();
+
+                tableDto.TableOrder = i + ""; // 序号
+                tableDto.TableName = tableName; // 表名
+                tableDto.Comment = (!string.IsNullOrWhiteSpace(dict_tabs[tableName]) ? dict_tabs[tableName] : ""); // 表注释（说明）
+
+                // TODO 查询数据库表字段集合
+                System.Collections.Generic.List<ColumnDto> columns = new System.Collections.Generic.List<ColumnDto>();
+                System.Collections.Generic.Dictionary<string, MJTop.Data.TableInfo> dictTabs = DBUtils.Instance.Info.TableInfoDict;
+                MJTop.Data.TableInfo tabInfo = dictTabs[tableName.ToLower()]; // TODO 注意此处表名应转为小写
+                // TODO 添加数据字段行,循环数据库表字段集合
+                foreach (var col in tabInfo.Colnumns)
+                {
+                    ColumnDto columnDto = new ColumnDto();
+
+                    columnDto.ColumnOrder = col.Colorder + ""; // 序号
+                    columnDto.ColumnName = col.ColumnName; // 列名
+                    columnDto.ColumnTypeName = col.TypeName; // 数据类型
+                    columnDto.Length = (col.Length.HasValue ? col.Length.Value.ToString() : ""); // 长度
+                    columnDto.Scale = (col.Scale.HasValue ? col.Scale.Value.ToString() : ""); // 小数位
+                    columnDto.IsPK = (col.IsPK ? "√" : ""); // 主键
+                    columnDto.IsIdentity = (col.IsIdentity ? "√" : ""); // 自增
+                    columnDto.CanNull = (col.CanNull ? "√" : ""); // 允许空
+                    columnDto.DefaultVal = (!string.IsNullOrWhiteSpace(col.DefaultVal) ? col.DefaultVal : ""); // 默认值
+                    columnDto.Comment = (!string.IsNullOrWhiteSpace(col.DeText) ? col.DeText : ""); // 列注释（说明）
+
+                    columns.Add(columnDto);
+                }
+                tableDto.Columns = columns; // 数据库表字段集合赋值
+
+                tables.Add(tableDto);
+
+                i++;
+            }
+            return tables;
+        }
+
     }
 }

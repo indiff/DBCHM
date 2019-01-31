@@ -142,6 +142,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Fonts\msyh.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -163,8 +166,12 @@
     <Content Include="ico\Connect.png" />
     <Content Include="ico\dbchm1.ico" />
     <Content Include="ico\DownBuild.png" />
+    <Content Include="ico\ExcelExp.png" />
+    <Content Include="ico\PdfExp.png" />
     <Content Include="ico\Refresh3.png" />
     <Content Include="ico\saveUpload.png" />
+    <Content Include="ico\WordExp.png" />
+    <Content Include="ico\XmlExp.png" />
     <Content Include="Images\DBCHM001.png" />
     <Content Include="Images\DBCHM002.png" />
     <Content Include="Images\DBCHM003.png" />
@@ -188,6 +195,10 @@
     <ProjectReference Include="..\MJTop.Data\MJTop.Data.csproj">
       <Project>{3d36cdc9-e989-465b-a9f1-ad85dc42f242}</Project>
       <Name>MJTop.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TryOpenXml.Text.Core\TryOpenXml.Text.Core.csproj">
+      <Project>{0461b8aa-baf6-4ed0-9826-046e86463b4e}</Project>
+      <Name>TryOpenXml.Text.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
