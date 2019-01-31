@@ -812,9 +812,17 @@ namespace DBCHM
                 tableDto.Comment = (!string.IsNullOrWhiteSpace(dict_tabs[tableName]) ? dict_tabs[tableName] : ""); // 表注释（说明）
 
                 // TODO 查询数据库表字段集合
-                System.Collections.Generic.List<ColumnDto> columns = new System.Collections.Generic.List<ColumnDto>();
-                System.Collections.Generic.Dictionary<string, MJTop.Data.TableInfo> dictTabs = DBUtils.Instance.Info.TableInfoDict;
-                MJTop.Data.TableInfo tabInfo = dictTabs[tableName.ToLower()]; // TODO 注意此处表名应转为小写
+                var columns = new System.Collections.Generic.List<ColumnDto>();
+                var dictTabs = DBUtils.Instance.Info.TableInfoDict;
+                MJTop.Data.TableInfo tabInfo = null;
+                if (dictTabs.Case == MJTop.Data.KeyCase.Lower)
+                {
+                    tabInfo = dictTabs[tableName.ToLower()]; 
+                }
+                else
+                {
+                    tabInfo = dictTabs[tableName.ToUpper()];
+                }                
                 // TODO 添加数据字段行,循环数据库表字段集合
                 foreach (var col in tabInfo.Colnumns)
                 {
