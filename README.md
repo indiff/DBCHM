@@ -6,7 +6,7 @@ DBCHM支持SqlServer/MySql/Oracle/PostgreSQL/DB2等数据库的表列批注维�
 - 表，列的批注可以编辑保存到数据库。
 - 表，列的批注支持通过pdm文件导入的方式进行更新到数据库。
 - 基于数据库中的表列结构(列ID/列名/数据类型/长度/精度/是否可以为null/默认值/是否自增/是否是主键/列描述)。
-- 目前支持的文档有：chm、word、excel、pdf、XML。
+- 目前支持导出的文档类型：chm、word、excel、pdf、XML。
 
 DBCHM效果展示：
 ------------------------
