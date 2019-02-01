@@ -342,10 +342,20 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
 
             try
             {
+                var colInfo = this[tableName, columnName];
+                string setSql = string.Empty;
+                if (!colInfo.CanNull)
+                {
+                    setSql += " not null ";
+                }
+                if (!string.IsNullOrWhiteSpace(colInfo.DefaultVal))
+                {
+                    setSql += " default '" + colInfo.DefaultVal + "' ";
+                }
                 //mysql修改字段注释方法:http://blog.sina.com.cn/s/blog_72aace390102uwgg.html
                 selsql = "use information_schema;select column_Type from COLUMNS where table_name = '" + tableName + "' and column_name = '" + columnName + "';";
                 string col_type = Db.Single<string>(selsql,string.Empty);
-                upsert_sql = "use " + DBName + ";ALTER TABLE " + tableName + " MODIFY COLUMN " + columnName + " " + col_type + " COMMENT '" + comment + "';";
+                upsert_sql = "use `" + DBName + "`;ALTER TABLE " + tableName + " MODIFY COLUMN " + columnName + " " + col_type + " " + setSql + " COMMENT '" + comment + "';";
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];
@@ -367,7 +377,7 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 TableColumnComments.Add(tableName, nvcColDesc);
 
                 var strKey = (tableName + "@" + columnName);
-                ColumnInfo colInfo = DictColumnInfo[strKey];
+                colInfo = DictColumnInfo[strKey];
                 colInfo.DeText = comment;
                 DictColumnInfo[strKey] = colInfo;
             }
