@@ -40,9 +40,9 @@ namespace DBCHM
         {
             try
             {
-                if (!Directory.Exists(AppPath))
+                if (!ZetaLongPaths.ZlpIOHelper.DirectoryExists(AppPath))
                 {
-                    Directory.CreateDirectory(AppPath);                   
+                    ZetaLongPaths.ZlpIOHelper.CreateDirectory(AppPath);                   
                 }
                 AddSecurityControll2Folder(AppPath);
                 ConfigFilePath = Path.Combine(AppPath, ConfigFileName + ".db");

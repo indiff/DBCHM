@@ -17,9 +17,9 @@ namespace DBCHM.CHM
         public ChmHelp()
         {
             string logDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
-            if (!Directory.Exists(logDir))
+            if (!ZetaLongPaths.ZlpIOHelper.DirectoryExists(logDir))
             {
-                Directory.CreateDirectory(logDir);
+                ZetaLongPaths.ZlpIOHelper.CreateDirectory(logDir);
             }
         }
 
@@ -128,7 +128,7 @@ namespace DBCHM.CHM
             code.Append(hhcBody.ToString());
 
             code.AppendLine("</BODY></HTML>");
-            File.WriteAllText(Path.Combine(SourcePath, "chm.hhc"), code.ToString(), Encoding.GetEncoding("gbk"));
+            ZetaLongPaths.ZlpIOHelper.WriteAllText(Path.Combine(SourcePath, "chm.hhc"), code.ToString(), Encoding.GetEncoding("gbk"));
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace DBCHM.CHM
             code.AppendLine("[FILES]");
             code.Append(hhpBody.ToString());
             
-            File.WriteAllText(Path.Combine(SourcePath, "chm.hhp"), code.ToString().FormatString(Title, DefaultPage), Encoding.GetEncoding("gbk"));
+            ZetaLongPaths.ZlpIOHelper.WriteAllText(Path.Combine(SourcePath, "chm.hhp"), code.ToString().FormatString(Title, DefaultPage), Encoding.GetEncoding("gbk"));
         }
         private void CreateHHK()
         {
@@ -186,7 +186,7 @@ namespace DBCHM.CHM
             code.Append(hhkBody.ToString());
             code.AppendLine("</UL>");
             code.AppendLine("</BODY></HTML>");
-            File.WriteAllText(Path.Combine(SourcePath, "chm.hhk"), code.ToString(), Encoding.GetEncoding("gbk"));
+            ZetaLongPaths.ZlpIOHelper.WriteAllText(Path.Combine(SourcePath, "chm.hhk"), code.ToString(), Encoding.GetEncoding("gbk"));
         }
         #endregion
 
@@ -219,7 +219,7 @@ namespace DBCHM.CHM
             CreateHHP();
             
             string res = StartRun(hhcPath, Path.Combine(SourcePath, "chm.hhp"), Encoding.GetEncoding("gbk"));
-            File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
+            ZetaLongPaths.ZlpIOHelper.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
         }
 
 

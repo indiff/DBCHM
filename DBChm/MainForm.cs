@@ -216,7 +216,7 @@ namespace DBCHM
             }
             if (!string.IsNullOrWhiteSpace(DBUtils.Instance?.Info?.DBName))
             {
-                this.Text = DBUtils.Instance?.Info?.DBName + " - " + "DBCHM v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
+                this.Text = DBUtils.Instance?.Info?.DBName + "(" + DBUtils.Instance.DBType.ToString() + ") - " + "DBCHM v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
             }
         }
 
@@ -379,11 +379,11 @@ namespace DBCHM
                 {
                     //创建临时文件夹,存在则删除，防止已经存在的文件 会导致生成出来的chm 有问题
                     dirPath = Path.Combine(ConfigUtils.AppPath, DBUtils.Instance.DBType + "_" + DBUtils.Instance.Info.DBName);
-                    if (Directory.Exists(dirPath))
+                    if (ZetaLongPaths.ZlpIOHelper.DirectoryExists(dirPath))
                     {
-                        Directory.Delete(dirPath, true);
+                        ZetaLongPaths.ZlpIOHelper.DeleteDirectory(dirPath, true);
                     }
-                    Directory.CreateDirectory(dirPath);
+                    ZetaLongPaths.ZlpIOHelper.CreateDirectory(dirPath);
                     ConfigUtils.AddSecurityControll2Folder(dirPath);
                 }
                 catch (Exception ex)
@@ -402,9 +402,9 @@ namespace DBCHM
                         ChmHtmlHelper.CreateDirHtml("数据库表目录", DBUtils.Instance.Info.TableComments, indexHtmlpath);
 
                         string structPath = Path.Combine(dirPath, "表结构");
-                        if (!Directory.Exists(structPath))
+                        if (!ZetaLongPaths.ZlpIOHelper.DirectoryExists(structPath))
                         {
-                            Directory.CreateDirectory(structPath);
+                            ZetaLongPaths.ZlpIOHelper.CreateDirectory(structPath);
                         }
 
                         bgWork.ReportProgress(2);

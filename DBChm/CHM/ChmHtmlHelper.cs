@@ -128,7 +128,7 @@ namespace DBCHM.CHM
             code.AppendLine("    </div>");
             code.AppendLine("</body>");
             code.AppendLine("</html>");
-            File.WriteAllText(indexHtmlpath, code.ToString(), Encoding.GetEncoding("gbk"));
+            ZetaLongPaths.ZlpIOHelper.WriteAllText(indexHtmlpath, code.ToString(), Encoding.GetEncoding("gbk"));
         }
 
 
@@ -268,7 +268,7 @@ namespace DBCHM.CHM
                 code.AppendLine("    </div>");
                 code.AppendLine("</body>");
                 code.AppendLine("</html>");
-                File.WriteAllText(tabPath, code.ToString(), Encoding.GetEncoding("gbk"));
+                ZetaLongPaths.ZlpIOHelper.WriteAllText(tabPath, code.ToString(), Encoding.GetEncoding("gbk"));
                 j++;
             }
         }
