@@ -57,6 +57,11 @@ namespace MJTop.Data
                 }
                 base.Add((Case == KeyCase.Lower ? key.ToLower() : key.ToUpper()), value);
             }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("IgCaseDictionary", Developer.SysDefault, ex, "Key:" + key + "Value:" + value);
+                throw ex;
+            }
             finally
             {
                 Locker.ExitWriteLock();
@@ -77,6 +82,11 @@ namespace MJTop.Data
                         throw new ArgumentException("key不能为空！[" + key + "]", "key");
                     }
                     return base[(Case == KeyCase.Lower ? key.ToLower() : key.ToUpper())];
+                }
+                catch(Exception ex)
+                {
+                    LogUtils.LogError("IgCaseDictionary", Developer.SysDefault, ex, "Key:" + key);
+                    throw ex;
                 }
                 finally
                 {
