@@ -30,6 +30,7 @@ namespace TryOpenXml.Text
             // TODO 设置根节点属性
             var root = xmlDoc.DocumentElement;
             root.SetAttribute("databaseName", databaseName);
+            root.SetAttribute("tableNum", tables.Count + "");
 
             xmlDoc.Save(fileName);
         }
