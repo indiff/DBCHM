@@ -352,10 +352,18 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 {
                     setSql += " default '" + colInfo.DefaultVal + "' ";
                 }
-                //mysql修改字段注释方法:http://blog.sina.com.cn/s/blog_72aace390102uwgg.html
-                selsql = "use information_schema;select column_Type from COLUMNS where table_name = '" + tableName + "' and column_name = '" + columnName + "';";
-                string col_type = Db.Single<string>(selsql,string.Empty);
-                upsert_sql = "use `" + DBName + "`;ALTER TABLE " + tableName + " MODIFY COLUMN " + columnName + " " + col_type + " " + setSql + " COMMENT '" + comment + "';";
+
+                selsql = "USE INFORMATION_SCHEMA;SELECT COLUMN_TYPE,EXTRA FROM COLUMNS WHERE TABLE_NAME = '" + tableName + "' AND COLUMN_NAME = '" + columnName + "';";
+                var dict = Db.GetFirstRow(selsql);
+                if (colInfo.DefaultVal != null && colInfo.DefaultVal.Equals("CURRENT_TIMESTAMP", StringComparison.OrdinalIgnoreCase))
+                {
+                    upsert_sql = "USE `" + DBName + "`;ALTER TABLE `" + DBName + "`.`" + tableName + "` CHANGE `" + columnName + "` `" + columnName + "` TIMESTAMP DEFAULT CURRENT_TIMESTAMP " + dict["EXTRA"] + " COMMENT '" + comment + "'; ";
+                }
+                else
+                {
+                    string col_type = dict["COLUMN_TYPE"].ToString();
+                    upsert_sql = "USE `" + DBName + "`;ALTER TABLE " + tableName + " MODIFY COLUMN " + columnName + " " + col_type + " " + setSql + " COMMENT '" + comment + "';";
+                }
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];
