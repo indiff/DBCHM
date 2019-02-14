@@ -238,6 +238,7 @@ namespace TryOpenXml.Text
                     builder.CellFormat.Shading.BackgroundPatternColor = System.Drawing.Color.White;
                     builder.CellFormat.Width = 100.0;
                     builder.CellFormat.VerticalAlignment = Aspose.Words.Tables.CellVerticalAlignment.Center;
+                    //builder.CellFormat.FitText = true;
                     // Reset height and define a different height rule for table body
                     builder.RowFormat.Height = 60.0;
                     builder.InsertCell();
@@ -277,6 +278,7 @@ namespace TryOpenXml.Text
                 }
 
                 // TODO 表格创建完成，结束
+                //asposeTable.PreferredWidth = Aspose.Words.Tables.PreferredWidth.Auto;
                 asposeTable.AutoFit(Aspose.Words.Tables.AutoFitBehavior.AutoFitToContents);
                 builder.EndTable();
 
