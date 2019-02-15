@@ -61,7 +61,7 @@ namespace MJTop.Data.SPI
 
         TRet Scalar<TRet>(string strSql, TRet defRet, object parameters = null);
 
-        Dictionary<string, object> GetFirstRow(string strSql, object parameters = null);
+        NameValueCollection GetFirstRow(string strSql, object parameters = null);
 
         DataTable GetDataTable(string strSql, object parameters = null);
 

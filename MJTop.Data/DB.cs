@@ -727,12 +727,12 @@ namespace MJTop.Data
             return result;
         }
 
-        public virtual Dictionary<string, object> GetFirstRow(string strSql, object parameters = null)
+        public virtual NameValueCollection GetFirstRow(string strSql, object parameters = null)
         {
             DbConnection conn = null;
             DbCommand cmd = null;
             DbDataReader myReader = null;
-            Dictionary<string, object> dict = new Dictionary<string, object>();
+            NameValueCollection dict = new NameValueCollection;
             try
             {
                 conn = CreateConn();
@@ -744,7 +744,7 @@ namespace MJTop.Data
                     for (int j = 0; j < myReader.FieldCount; j++)
                     {
                         string columnName = myReader.GetName(j);
-                        dict.Add(columnName, myReader[columnName]);
+                        dict.Add(columnName, myReader[columnName] == null ? string.Empty : myReader[columnName].ToString());
                     }
                 }
             }
