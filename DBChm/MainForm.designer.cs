@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.Prog = new System.Windows.Forms.ToolStripProgressBar();
             this.RibbonPanel = new System.Windows.Forms.Panel();
             this.GpTableCol = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.gpCurrTable = new System.Windows.Forms.GroupBox();
             this.labCurrTabComment = new System.Windows.Forms.Label();
             this.TxtCurrTabComment = new System.Windows.Forms.TextBox();
@@ -45,7 +47,6 @@
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnSaveGridData = new System.Windows.Forms.Button();
-            this.LstBox = new System.Windows.Forms.ListBox();
             this.TxtTabName = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.ribbonPageAbout = new System.Windows.Forms.ToolStrip();
@@ -59,10 +60,10 @@
             this.tsWordExp = new System.Windows.Forms.ToolStripButton();
             this.tsExcelExp = new System.Windows.Forms.ToolStripButton();
             this.tsPdfExp = new System.Windows.Forms.ToolStripButton();
+            this.tsXmlExp = new System.Windows.Forms.ToolStripButton();
             this.RibbonTabContainer = new System.Windows.Forms.TabControl();
             this.bgWork = new System.ComponentModel.BackgroundWorker();
             this.lblMsg = new System.Windows.Forms.Label();
-            this.tsXmlExp = new System.Windows.Forms.ToolStripButton();
             this.statusStripMain.SuspendLayout();
             this.RibbonPanel.SuspendLayout();
             this.GpTableCol.SuspendLayout();
@@ -106,10 +107,11 @@
             // 
             // GpTableCol
             // 
+            this.GpTableCol.Controls.Add(this.checkBox1);
+            this.GpTableCol.Controls.Add(this.checkedListBox1);
             this.GpTableCol.Controls.Add(this.gpCurrTable);
             this.GpTableCol.Controls.Add(this.label1);
             this.GpTableCol.Controls.Add(this.GpColumns);
-            this.GpTableCol.Controls.Add(this.LstBox);
             this.GpTableCol.Controls.Add(this.TxtTabName);
             this.GpTableCol.Location = new System.Drawing.Point(6, 7);
             this.GpTableCol.Margin = new System.Windows.Forms.Padding(2);
@@ -119,6 +121,31 @@
             this.GpTableCol.TabIndex = 0;
             this.GpTableCol.TabStop = false;
             this.GpTableCol.Text = "表列批注";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(3, 55);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(78, 16);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "全选/反选";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.CheckOnClick = true;
+            this.checkedListBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.checkedListBox1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(1, 80);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(260, 532);
+            this.checkedListBox1.Sorted = true;
+            this.checkedListBox1.TabIndex = 8;
+            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // gpCurrTable
             // 
@@ -208,14 +235,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.GV_ColComments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
@@ -255,23 +282,12 @@
             this.BtnSaveGridData.Text = "保存";
             this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
             // 
-            // LstBox
-            // 
-            this.LstBox.FormattingEnabled = true;
-            this.LstBox.ItemHeight = 12;
-            this.LstBox.Location = new System.Drawing.Point(5, 57);
-            this.LstBox.Margin = new System.Windows.Forms.Padding(2);
-            this.LstBox.Name = "LstBox";
-            this.LstBox.Size = new System.Drawing.Size(278, 568);
-            this.LstBox.TabIndex = 1;
-            this.LstBox.SelectedIndexChanged += new System.EventHandler(this.LstBox_SelectedIndexChanged);
-            // 
             // TxtTabName
             // 
             this.TxtTabName.Location = new System.Drawing.Point(40, 26);
             this.TxtTabName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtTabName.Name = "TxtTabName";
-            this.TxtTabName.Size = new System.Drawing.Size(211, 21);
+            this.TxtTabName.Size = new System.Drawing.Size(226, 21);
             this.TxtTabName.TabIndex = 0;
             this.TxtTabName.TextChanged += new System.EventHandler(this.TxtTabName_TextChanged);
             // 
@@ -421,6 +437,17 @@
             this.tsPdfExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsPdfExp.Click += new System.EventHandler(this.tsPdfExp_Click);
             // 
+            // tsXmlExp
+            // 
+            this.tsXmlExp.AutoSize = false;
+            this.tsXmlExp.Image = ((System.Drawing.Image)(resources.GetObject("tsXmlExp.Image")));
+            this.tsXmlExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsXmlExp.Name = "tsXmlExp";
+            this.tsXmlExp.Size = new System.Drawing.Size(60, 67);
+            this.tsXmlExp.Text = "XML导出";
+            this.tsXmlExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsXmlExp.Click += new System.EventHandler(this.tsXmlExp_Click);
+            // 
             // RibbonTabContainer
             // 
             this.RibbonTabContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -448,17 +475,6 @@
             this.lblMsg.Name = "lblMsg";
             this.lblMsg.Size = new System.Drawing.Size(0, 12);
             this.lblMsg.TabIndex = 5;
-            // 
-            // tsXmlExp
-            // 
-            this.tsXmlExp.AutoSize = false;
-            this.tsXmlExp.Image = ((System.Drawing.Image)(resources.GetObject("tsXmlExp.Image")));
-            this.tsXmlExp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsXmlExp.Name = "tsXmlExp";
-            this.tsXmlExp.Size = new System.Drawing.Size(60, 67);
-            this.tsXmlExp.Text = "XML导出";
-            this.tsXmlExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsXmlExp.Click += new System.EventHandler(this.tsXmlExp_Click);
             // 
             // MainForm
             // 
@@ -517,7 +533,6 @@
         private System.Windows.Forms.ToolStripButton tsbRefresh;
         private System.Windows.Forms.TextBox TxtCurrTabComment;
         private System.Windows.Forms.GroupBox GpColumns;
-        private System.Windows.Forms.ListBox LstBox;
         private System.Windows.Forms.ToolStripButton tsbPDMUpload;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LabCurrTabName;
@@ -535,5 +550,7 @@
         private System.Windows.Forms.ToolStripButton tsExcelExp;
         private System.Windows.Forms.ToolStripButton tsPdfExp;
         private System.Windows.Forms.ToolStripButton tsXmlExp;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
