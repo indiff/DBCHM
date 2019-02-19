@@ -732,7 +732,7 @@ namespace MJTop.Data
             DbConnection conn = null;
             DbCommand cmd = null;
             DbDataReader myReader = null;
-            NameValueCollection dict = new NameValueCollection;
+            NameValueCollection dict = new NameValueCollection();
             try
             {
                 conn = CreateConn();

@@ -88,7 +88,7 @@ namespace MJTop.Data.DatabaseInfo
 
 
             string dbSql = "SELECT SCHEMA_NAME FROM information_schema.SCHEMATA order by  SCHEMA_NAME asc";
-            string strSql = string.Format("SELECT table_name name,TABLE_COMMENT value FROM INFORMATION_SCHEMA.TABLES WHERE table_type='base table' and  table_schema = '{0}' order by table_name asc ", DBName);
+            string strSql = string.Format("SELECT table_name name,TABLE_COMMENT value FROM INFORMATION_SCHEMA.TABLES WHERE lower(table_type)='base table' and  table_schema = '{0}' order by table_name asc ", DBName);
 
             string viewSql = string.Format("SELECT  table_name,VIEW_DEFINITION  FROM  information_schema.views where TABLE_SCHEMA='{0}' order by table_name asc", DBName);
             string procSql = string.Format("SELECT  ROUTINE_NAME,ROUTINE_DEFINITION   FROM   INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_SCHEMA='{0}' AND ROUTINE_TYPE='PROCEDURE' ORDER BY ROUTINE_NAME ASC", DBName);
