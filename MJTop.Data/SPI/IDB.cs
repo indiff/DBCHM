@@ -78,9 +78,10 @@ namespace MJTop.Data.SPI
         DataTable ReadTable(string strSql, object parameters = null);
 
         List<TRet> ReadList<TRet>(string strSql, object parameters = null);
+
         NameValueCollection ReadNameValues(string strSql, object parameters = null);
 
-        Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(string strSql, object parameters = null);
+        Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(string strSql, object parameters = null, IEqualityComparer<TKey> comparer = null));
 
         #endregion
 

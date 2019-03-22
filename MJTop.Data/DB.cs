@@ -1112,7 +1112,7 @@ namespace MJTop.Data
             return nvc;
         }
 
-        public virtual Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(string strSql, object parameters = null)
+        public virtual Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(string strSql, object parameters = null, IEqualityComparer<TKey> comparer = null)
         {
             DbConnection conn = null;
             DbCommand cmd = null;
@@ -1123,7 +1123,7 @@ namespace MJTop.Data
                 conn = CreateConn();
                 cmd = BuildCommandByParam(conn, strSql, parameters);
                 myReader = cmd.ExecuteReader();
-                dict = new Dictionary<TKey, TValue>();
+                dict = new Dictionary<TKey, TValue>(comparer);
                 if (myReader.HasRows)
                 {
                     while (myReader.Read())

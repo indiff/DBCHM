@@ -64,7 +64,7 @@ namespace MJTop.Data.Database
             strSQL = string.Format(strSQL, selColumns, joinTableName, whereStr, orderbyStr);
 
             strPageSQL = string.Format(@"SELECT * FROM ({0}) A limit {1},{2}",
-                                       strSQL, (currentPage - 1) * pageSize, (currentPage) * pageSize);
+                                       strSQL, (currentPage - 1) * pageSize,  pageSize);
 
             DataSet ds = new DataSet("ds");
             DbConnection conn = null;
