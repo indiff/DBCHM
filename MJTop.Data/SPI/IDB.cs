@@ -81,7 +81,7 @@ namespace MJTop.Data.SPI
 
         NameValueCollection ReadNameValues(string strSql, object parameters = null);
 
-        Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(string strSql, object parameters = null, IEqualityComparer<TKey> comparer = null));
+        Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(string strSql, object parameters = null, IEqualityComparer<TKey> comparer = null);
 
         #endregion
 

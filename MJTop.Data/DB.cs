@@ -1198,7 +1198,8 @@ namespace MJTop.Data
             {
                 conn = CreateConn();
                 cmd = BuildCommandByParam(conn, strSql, parameters);
-                tran = conn.BeginTransaction();               
+                tran = conn.BeginTransaction();
+                cmd.Transaction = tran;
                 cnt = cmd.ExecuteNonQuery();
                 tran.Commit();
             }
@@ -1237,6 +1238,7 @@ namespace MJTop.Data
                 conn.Open();
                 tran = conn.BeginTransaction();
                 cmd = conn.CreateCommand();
+                cmd.Transaction = tran;
                 cmd.CommandTimeout = this.CmdTimeout;
 
                 for (int n = 0; n < sqlCmds.Length; n++)
@@ -1290,6 +1292,7 @@ namespace MJTop.Data
                 conn.Open();
                 tran = conn.BeginTransaction();
                 cmd = conn.CreateCommand();
+                cmd.Transaction = tran;
                 cmd.CommandTimeout = this.CmdTimeout;
 
                 for (int n = 0; n < strSqlList.Count; n++)
