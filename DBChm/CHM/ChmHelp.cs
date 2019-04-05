@@ -33,8 +33,12 @@ namespace DBCHM.CHM
         /// </summary>
         public string Title { get; set; }
 
-        private string sourcePath;
+        /// <summary>
+        /// hhc.exe 所在路径
+        /// </summary>
+        public string HHCPath { get; set; }
 
+        private string sourcePath;
         /// <summary>
         /// 编印所在目录
         /// </summary>
@@ -199,17 +203,11 @@ namespace DBCHM.CHM
         {
             #region 使用 HTML Help Workshop 的 hhc.exe 编译 ,先判断系统中是否已经安装有  HTML Help Workshop 
 
-            string hhcPath = string.Empty;
-
-            string[] installPaths ={
-                                       @"Program Files (x86)\HTML Help Workshop\hhc.exe",
-                                       @"Program Files\HTML Help Workshop\hhc.exe"
-                                  };
-
-            if (!ConfigUtils.IsInstall(installPaths, out hhcPath))
+            if (string.IsNullOrWhiteSpace(HHCPath))
             {
                 throw new FileNotFoundException("未安装HTML Help Workshop！", "hhc.exe");
-            } 
+            }
+
             #endregion
 
             //准备hhp hhc hhk文件
@@ -218,7 +216,7 @@ namespace DBCHM.CHM
             CreateHHK();
             CreateHHP();
             
-            string res = StartRun(hhcPath, Path.Combine(SourcePath, "chm.hhp"), Encoding.GetEncoding("gbk"));
+            string res = StartRun(HHCPath, Path.Combine(SourcePath, "chm.hhp"), Encoding.GetEncoding("gbk"));
             ZetaLongPaths.ZlpIOHelper.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
         }
 

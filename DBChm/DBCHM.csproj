@@ -166,6 +166,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dbchm1.ico" />
+    <Content Include="htmlhelp.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ico\about.png" />
     <Content Include="ico\Connect.png" />
     <Content Include="ico\dbchm1.ico" />

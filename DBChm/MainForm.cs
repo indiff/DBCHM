@@ -399,6 +399,25 @@ namespace DBCHM
 
         private void ExportToChm()
         {
+            #region 使用 HTML Help Workshop 的 hhc.exe 编译 ,先判断系统中是否已经安装有  HTML Help Workshop 
+
+            string hhcPath = string.Empty;
+
+            if (!ConfigUtils.CheckInstall("HTML Help Workshop", "hhc.exe", out hhcPath))
+            {
+                string htmlhelpPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "htmlhelp.exe");
+                if (File.Exists(htmlhelpPath))
+                {
+                    if (MessageBox.Show("导出CHM文档需安装 HTML Help Workshop ，是否现在安装？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
+                    {
+                        var proc = Process.Start(htmlhelpPath);
+                    }
+                }
+                return;
+            }
+
+            #endregion
+
             SaveFileDialog saveDia = new SaveFileDialog();
             saveDia.Filter = "(*.chm)|*.chm";
             saveDia.Title = "另存文件为";
@@ -470,6 +489,7 @@ namespace DBCHM
                         bgWork.ReportProgress(3);
 
                         ChmHelp c3 = new ChmHelp();
+                        c3.HHCPath = hhcPath;
                         c3.DefaultPage = defaultHtml;
                         c3.Title = Path.GetFileName(chm_path);
                         c3.ChmFileName = chm_path;
