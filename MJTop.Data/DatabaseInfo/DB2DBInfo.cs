@@ -37,6 +37,8 @@ namespace MJTop.Data.DatabaseInfo
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
 
+        private NameValueCollection TableSchemas { get; set; } = new NameValueCollection();
+
         public List<string> TableNames { get; private set; } = new List<string>();
 
         public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; }
@@ -88,16 +90,21 @@ namespace MJTop.Data.DatabaseInfo
 
 
             string dbSql = string.Empty;
-            string strSql = string.Format("select tabname,remarks from syscat.tables where type='T' and tabschema='{0}'  order by tabname asc", ConnBuilder.UserID);
+            string strSql = string.Format("select tabschema,tabname,remarks from syscat.tables where type='T' and OWNER='{0}' order BY tabschema asc, tabname ASC", ConnBuilder.UserID.ToUpper());
 
-            string viewSql = string.Format("select  viewname,text  from syscat.views where viewschema='{0}' order by viewname asc", ConnBuilder.UserID);
-            string procSql = string.Format("select procname,text from syscat.procedures where procschema='{0}' order by procname asc", ConnBuilder.UserID);
+            string viewSql = string.Format("select  viewname,text  from syscat.views where viewschema='{0}' order by viewname asc", ConnBuilder.UserID.ToUpper());
+            string procSql = string.Format("select procname,text from syscat.procedures where procschema='{0}' order by procname asc", ConnBuilder.UserID.ToUpper());
 
             try
             {
                 this.DBNames = new List<string>() { this.DBName };
 
-                this.TableComments = Db.ReadNameValues(strSql);
+                var data = Db.GetDataTable(strSql);
+                foreach (DataRow dr in data.Rows)
+                {
+                    this.TableComments[dr["tabname"].ToString()] = dr["remarks"].ToString();
+                    this.TableSchemas[dr["tabname"].ToString()] = dr["tabschema"].ToString();
+                }
 
                 //this.Views = Db.ReadNameValues(viewSql);
 
@@ -125,7 +132,7 @@ namespace MJTop.Data.DatabaseInfo
 
                             try
                             {
-                                tabInfo.Colnumns = Db.GetDataTable(strSql, new { t = ConnBuilder.UserID, t1 = tableName }).ConvertToListObject<ColumnInfo>();
+                                tabInfo.Colnumns = Db.GetDataTable(strSql, new { t = TableSchemas[tableName.ToUpper()], t1 = tableName.ToUpper() }).ConvertToListObject<ColumnInfo>();
                                 foreach (ColumnInfo colInfo in tabInfo.Colnumns)
                                 {
                                     lstColName.Add(colInfo.ColumnName);
@@ -228,7 +235,7 @@ namespace MJTop.Data.DatabaseInfo
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
-                upsert_sql = string.Format("comment on table \"{0}\".\"{1}\" is '{2}' ", ConnBuilder.UserID, tableName, comment);
+                upsert_sql = string.Format("comment on table \"{0}\".\"{1}\" is '{2}' ", TableSchemas[tableName], tableName, comment);
                 Db.ExecSql(upsert_sql);
 
                 TableComments[tableName] = comment;
@@ -253,7 +260,7 @@ namespace MJTop.Data.DatabaseInfo
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
-                upsert_sql = string.Format("comment on column \"{0}\".\"{1}\".\"{2}\" is '{3}'", ConnBuilder.UserID, tableName, columnName, comment);
+                upsert_sql = string.Format("comment on column \"{0}\".\"{1}\".\"{2}\" is '{3}'", TableSchemas[tableName], tableName, columnName, comment);
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];

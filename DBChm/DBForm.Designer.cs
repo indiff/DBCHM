@@ -110,7 +110,7 @@
             // labelControl4
             // 
             this.labelControl4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl4.Location = new System.Drawing.Point(102, 186);
+            this.labelControl4.Location = new System.Drawing.Point(103, 215);
             this.labelControl4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(77, 14);
@@ -120,7 +120,7 @@
             // TxtUName
             // 
             this.TxtUName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtUName.Location = new System.Drawing.Point(194, 184);
+            this.TxtUName.Location = new System.Drawing.Point(195, 213);
             this.TxtUName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtUName.Name = "TxtUName";
             this.TxtUName.Size = new System.Drawing.Size(190, 21);
@@ -129,7 +129,7 @@
             // labelControl5
             // 
             this.labelControl5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl5.Location = new System.Drawing.Point(102, 217);
+            this.labelControl5.Location = new System.Drawing.Point(103, 246);
             this.labelControl5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(84, 18);
@@ -139,7 +139,7 @@
             // TxtPwd
             // 
             this.TxtPwd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtPwd.Location = new System.Drawing.Point(194, 215);
+            this.TxtPwd.Location = new System.Drawing.Point(195, 244);
             this.TxtPwd.Margin = new System.Windows.Forms.Padding(2);
             this.TxtPwd.Name = "TxtPwd";
             this.TxtPwd.PasswordChar = '*';
@@ -192,7 +192,7 @@
             // labDBName
             // 
             this.labDBName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labDBName.Location = new System.Drawing.Point(101, 249);
+            this.labDBName.Location = new System.Drawing.Point(102, 180);
             this.labDBName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labDBName.Name = "labDBName";
             this.labDBName.Size = new System.Drawing.Size(85, 20);
@@ -213,7 +213,7 @@
             // cboDBName
             // 
             this.cboDBName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboDBName.Location = new System.Drawing.Point(194, 249);
+            this.cboDBName.Location = new System.Drawing.Point(195, 180);
             this.cboDBName.Margin = new System.Windows.Forms.Padding(2);
             this.cboDBName.Name = "cboDBName";
             this.cboDBName.Size = new System.Drawing.Size(191, 20);

@@ -178,6 +178,8 @@ namespace DBCHM
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            lblTip.Text = string.Empty;
+
             // 开启 报告进度更新
             bgWork.WorkerReportsProgress = true;
 
@@ -344,6 +346,7 @@ namespace DBCHM
         /// <param name="e"></param>
         private void tsbConnect_Click(object sender, EventArgs e)
         {
+            lblTip.Text = string.Empty;
             InitMain();
         }
 
