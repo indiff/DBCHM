@@ -92,8 +92,8 @@ namespace MJTop.Data.DatabaseInfo
             string dbSql = string.Empty;
             string strSql = string.Format("select tabschema,tabname,remarks from syscat.tables where type='T' and OWNER='{0}' order BY tabschema asc, tabname ASC", ConnBuilder.UserID.ToUpper());
 
-            string viewSql = string.Format("select  viewname,text  from syscat.views where viewschema='{0}' order by viewname asc", ConnBuilder.UserID.ToUpper());
-            string procSql = string.Format("select procname,text from syscat.procedures where procschema='{0}' order by procname asc", ConnBuilder.UserID.ToUpper());
+            string viewSql = string.Format("select  viewname,text  from syscat.views where OWNER='{0}' order by viewname asc", ConnBuilder.UserID.ToUpper());
+            string procSql = string.Format("select procname,text from syscat.procedures where DEFINER='{0}' order by procname asc", ConnBuilder.UserID.ToUpper());
 
             try
             {
