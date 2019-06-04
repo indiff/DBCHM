@@ -28,27 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.Prog = new System.Windows.Forms.ToolStripProgressBar();
-            this.RibbonPanel = new System.Windows.Forms.Panel();
-            this.GpTableCol = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.gpCurrTable = new System.Windows.Forms.GroupBox();
-            this.labCurrTabComment = new System.Windows.Forms.Label();
-            this.TxtCurrTabComment = new System.Windows.Forms.TextBox();
-            this.LabCurrTabName = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.GpColumns = new System.Windows.Forms.GroupBox();
-            this.lblTip = new System.Windows.Forms.Label();
-            this.GV_ColComments = new System.Windows.Forms.DataGridView();
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BtnSaveGridData = new System.Windows.Forms.Button();
-            this.TxtTabName = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.ribbonPageAbout = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
@@ -65,17 +48,34 @@
             this.RibbonTabContainer = new System.Windows.Forms.TabControl();
             this.bgWork = new System.ComponentModel.BackgroundWorker();
             this.lblMsg = new System.Windows.Forms.Label();
+            this.GpTableCol = new System.Windows.Forms.GroupBox();
+            this.TxtTabName = new System.Windows.Forms.TextBox();
+            this.GpColumns = new System.Windows.Forms.GroupBox();
+            this.BtnSaveGridData = new System.Windows.Forms.Button();
+            this.GV_ColComments = new System.Windows.Forms.DataGridView();
+            this.ColComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblTip = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.gpCurrTable = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.LabCurrTabName = new System.Windows.Forms.Label();
+            this.TxtCurrTabComment = new System.Windows.Forms.TextBox();
+            this.labCurrTabComment = new System.Windows.Forms.Label();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.RibbonPanel = new System.Windows.Forms.Panel();
             this.statusStripMain.SuspendLayout();
-            this.RibbonPanel.SuspendLayout();
-            this.GpTableCol.SuspendLayout();
-            this.gpCurrTable.SuspendLayout();
-            this.GpColumns.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GV_ColComments)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.ribbonPageAbout.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.ribbonPageFile.SuspendLayout();
             this.RibbonTabContainer.SuspendLayout();
+            this.GpTableCol.SuspendLayout();
+            this.GpColumns.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GV_ColComments)).BeginInit();
+            this.gpCurrTable.SuspendLayout();
+            this.RibbonPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStripMain
@@ -83,224 +83,16 @@
             this.statusStripMain.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Prog});
-            this.statusStripMain.Location = new System.Drawing.Point(0, 733);
+            this.statusStripMain.Location = new System.Drawing.Point(0, 678);
             this.statusStripMain.Name = "statusStripMain";
-            this.statusStripMain.Size = new System.Drawing.Size(1003, 22);
+            this.statusStripMain.Size = new System.Drawing.Size(1076, 22);
             this.statusStripMain.TabIndex = 2;
             this.statusStripMain.Text = "statusStripMain";
             // 
             // Prog
             // 
             this.Prog.Name = "Prog";
-            this.Prog.Size = new System.Drawing.Size(880, 16);
-            // 
-            // RibbonPanel
-            // 
-            this.RibbonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RibbonPanel.Controls.Add(this.GpTableCol);
-            this.RibbonPanel.Location = new System.Drawing.Point(0, 98);
-            this.RibbonPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.RibbonPanel.Name = "RibbonPanel";
-            this.RibbonPanel.Size = new System.Drawing.Size(1003, 637);
-            this.RibbonPanel.TabIndex = 4;
-            // 
-            // GpTableCol
-            // 
-            this.GpTableCol.Controls.Add(this.checkBox1);
-            this.GpTableCol.Controls.Add(this.checkedListBox1);
-            this.GpTableCol.Controls.Add(this.gpCurrTable);
-            this.GpTableCol.Controls.Add(this.label1);
-            this.GpTableCol.Controls.Add(this.GpColumns);
-            this.GpTableCol.Controls.Add(this.TxtTabName);
-            this.GpTableCol.Location = new System.Drawing.Point(6, 7);
-            this.GpTableCol.Margin = new System.Windows.Forms.Padding(2);
-            this.GpTableCol.Name = "GpTableCol";
-            this.GpTableCol.Padding = new System.Windows.Forms.Padding(2);
-            this.GpTableCol.Size = new System.Drawing.Size(998, 626);
-            this.GpTableCol.TabIndex = 0;
-            this.GpTableCol.TabStop = false;
-            this.GpTableCol.Text = "表列批注";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 55);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(78, 16);
-            this.checkBox1.TabIndex = 9;
-            this.checkBox1.Text = "全选/反选";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.CheckOnClick = true;
-            this.checkedListBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.checkedListBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(1, 80);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(260, 532);
-            this.checkedListBox1.Sorted = true;
-            this.checkedListBox1.TabIndex = 8;
-            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
-            // 
-            // gpCurrTable
-            // 
-            this.gpCurrTable.Controls.Add(this.labCurrTabComment);
-            this.gpCurrTable.Controls.Add(this.TxtCurrTabComment);
-            this.gpCurrTable.Controls.Add(this.LabCurrTabName);
-            this.gpCurrTable.Controls.Add(this.label2);
-            this.gpCurrTable.Location = new System.Drawing.Point(298, 17);
-            this.gpCurrTable.Margin = new System.Windows.Forms.Padding(2);
-            this.gpCurrTable.Name = "gpCurrTable";
-            this.gpCurrTable.Padding = new System.Windows.Forms.Padding(2);
-            this.gpCurrTable.Size = new System.Drawing.Size(681, 73);
-            this.gpCurrTable.TabIndex = 7;
-            this.gpCurrTable.TabStop = false;
-            this.gpCurrTable.Text = "表批注";
-            // 
-            // labCurrTabComment
-            // 
-            this.labCurrTabComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.labCurrTabComment.AutoSize = true;
-            this.labCurrTabComment.Location = new System.Drawing.Point(187, 42);
-            this.labCurrTabComment.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labCurrTabComment.Name = "labCurrTabComment";
-            this.labCurrTabComment.Size = new System.Drawing.Size(53, 12);
-            this.labCurrTabComment.TabIndex = 7;
-            this.labCurrTabComment.Text = "表批注：";
-            // 
-            // TxtCurrTabComment
-            // 
-            this.TxtCurrTabComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.TxtCurrTabComment.Location = new System.Drawing.Point(242, 39);
-            this.TxtCurrTabComment.Margin = new System.Windows.Forms.Padding(2);
-            this.TxtCurrTabComment.Name = "TxtCurrTabComment";
-            this.TxtCurrTabComment.Size = new System.Drawing.Size(300, 21);
-            this.TxtCurrTabComment.TabIndex = 3;
-            // 
-            // LabCurrTabName
-            // 
-            this.LabCurrTabName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.LabCurrTabName.AutoSize = true;
-            this.LabCurrTabName.Location = new System.Drawing.Point(247, 17);
-            this.LabCurrTabName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.LabCurrTabName.Name = "LabCurrTabName";
-            this.LabCurrTabName.Size = new System.Drawing.Size(0, 12);
-            this.LabCurrTabName.TabIndex = 5;
-            this.LabCurrTabName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(200, 17);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "表名：";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 28);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "查询:";
-            // 
-            // GpColumns
-            // 
-            this.GpColumns.Controls.Add(this.lblTip);
-            this.GpColumns.Controls.Add(this.GV_ColComments);
-            this.GpColumns.Controls.Add(this.BtnSaveGridData);
-            this.GpColumns.Location = new System.Drawing.Point(299, 94);
-            this.GpColumns.Margin = new System.Windows.Forms.Padding(2);
-            this.GpColumns.Name = "GpColumns";
-            this.GpColumns.Padding = new System.Windows.Forms.Padding(2);
-            this.GpColumns.Size = new System.Drawing.Size(687, 528);
-            this.GpColumns.TabIndex = 2;
-            this.GpColumns.TabStop = false;
-            this.GpColumns.Text = "列批注";
-            // 
-            // lblTip
-            // 
-            this.lblTip.AutoSize = true;
-            this.lblTip.Location = new System.Drawing.Point(19, 495);
-            this.lblTip.Name = "lblTip";
-            this.lblTip.Size = new System.Drawing.Size(41, 12);
-            this.lblTip.TabIndex = 9;
-            this.lblTip.Text = "lblTip";
-            // 
-            // GV_ColComments
-            // 
-            this.GV_ColComments.AllowUserToAddRows = false;
-            this.GV_ColComments.AllowUserToDeleteRows = false;
-            this.GV_ColComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            this.GV_ColComments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnName,
-            this.ColComment});
-            this.GV_ColComments.Location = new System.Drawing.Point(4, 18);
-            this.GV_ColComments.Margin = new System.Windows.Forms.Padding(2);
-            this.GV_ColComments.MultiSelect = false;
-            this.GV_ColComments.Name = "GV_ColComments";
-            this.GV_ColComments.RowHeadersVisible = false;
-            this.GV_ColComments.RowTemplate.Height = 27;
-            this.GV_ColComments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.GV_ColComments.Size = new System.Drawing.Size(676, 452);
-            this.GV_ColComments.TabIndex = 0;
-            this.GV_ColComments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_ColComments_CellClick);
-            // 
-            // ColumnName
-            // 
-            this.ColumnName.HeaderText = "列名";
-            this.ColumnName.Name = "ColumnName";
-            this.ColumnName.ReadOnly = true;
-            this.ColumnName.Width = 220;
-            // 
-            // ColComment
-            // 
-            this.ColComment.HeaderText = "列批注";
-            this.ColComment.Name = "ColComment";
-            this.ColComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColComment.Width = 450;
-            // 
-            // BtnSaveGridData
-            // 
-            this.BtnSaveGridData.Location = new System.Drawing.Point(564, 484);
-            this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(2);
-            this.BtnSaveGridData.Name = "BtnSaveGridData";
-            this.BtnSaveGridData.Size = new System.Drawing.Size(98, 34);
-            this.BtnSaveGridData.TabIndex = 8;
-            this.BtnSaveGridData.Text = "保存";
-            this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
-            // 
-            // TxtTabName
-            // 
-            this.TxtTabName.Location = new System.Drawing.Point(40, 26);
-            this.TxtTabName.Margin = new System.Windows.Forms.Padding(2);
-            this.TxtTabName.Name = "TxtTabName";
-            this.TxtTabName.Size = new System.Drawing.Size(226, 21);
-            this.TxtTabName.TabIndex = 0;
-            this.TxtTabName.TextChanged += new System.EventHandler(this.TxtTabName_TextChanged);
+            this.Prog.Size = new System.Drawing.Size(950, 16);
             // 
             // tabPage3
             // 
@@ -347,7 +139,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(996, 73);
+            this.tabPage1.Size = new System.Drawing.Size(1069, 73);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "文件";
             this.tabPage1.ToolTipText = "文件";
@@ -370,7 +162,7 @@
             this.tsXmlExp});
             this.ribbonPageFile.Location = new System.Drawing.Point(3, 2);
             this.ribbonPageFile.Name = "ribbonPageFile";
-            this.ribbonPageFile.Size = new System.Drawing.Size(990, 70);
+            this.ribbonPageFile.Size = new System.Drawing.Size(1063, 70);
             this.ribbonPageFile.TabIndex = 0;
             this.ribbonPageFile.Text = "toolStripFile";
             this.ribbonPageFile.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ribbonPageFile_ItemClicked);
@@ -470,7 +262,7 @@
             this.RibbonTabContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RibbonTabContainer.Name = "RibbonTabContainer";
             this.RibbonTabContainer.SelectedIndex = 0;
-            this.RibbonTabContainer.Size = new System.Drawing.Size(1004, 101);
+            this.RibbonTabContainer.Size = new System.Drawing.Size(1077, 101);
             this.RibbonTabContainer.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.RibbonTabContainer.TabIndex = 3;
             this.RibbonTabContainer.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.RibbonTabContainer_Selecting);
@@ -481,17 +273,225 @@
             // lblMsg
             // 
             this.lblMsg.AutoSize = true;
-            this.lblMsg.Location = new System.Drawing.Point(892, 737);
+            this.lblMsg.Location = new System.Drawing.Point(965, 682);
             this.lblMsg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMsg.Name = "lblMsg";
             this.lblMsg.Size = new System.Drawing.Size(0, 12);
             this.lblMsg.TabIndex = 5;
             // 
+            // GpTableCol
+            // 
+            this.GpTableCol.Controls.Add(this.checkBox1);
+            this.GpTableCol.Controls.Add(this.checkedListBox1);
+            this.GpTableCol.Controls.Add(this.gpCurrTable);
+            this.GpTableCol.Controls.Add(this.label1);
+            this.GpTableCol.Controls.Add(this.GpColumns);
+            this.GpTableCol.Controls.Add(this.TxtTabName);
+            this.GpTableCol.Location = new System.Drawing.Point(6, 7);
+            this.GpTableCol.Margin = new System.Windows.Forms.Padding(2);
+            this.GpTableCol.Name = "GpTableCol";
+            this.GpTableCol.Padding = new System.Windows.Forms.Padding(2);
+            this.GpTableCol.Size = new System.Drawing.Size(1051, 562);
+            this.GpTableCol.TabIndex = 0;
+            this.GpTableCol.TabStop = false;
+            this.GpTableCol.Text = "表列批注";
+            // 
+            // TxtTabName
+            // 
+            this.TxtTabName.Location = new System.Drawing.Point(40, 26);
+            this.TxtTabName.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtTabName.Name = "TxtTabName";
+            this.TxtTabName.Size = new System.Drawing.Size(258, 21);
+            this.TxtTabName.TabIndex = 0;
+            this.TxtTabName.TextChanged += new System.EventHandler(this.TxtTabName_TextChanged);
+            // 
+            // GpColumns
+            // 
+            this.GpColumns.Controls.Add(this.lblTip);
+            this.GpColumns.Controls.Add(this.GV_ColComments);
+            this.GpColumns.Controls.Add(this.BtnSaveGridData);
+            this.GpColumns.Location = new System.Drawing.Point(350, 95);
+            this.GpColumns.Margin = new System.Windows.Forms.Padding(2);
+            this.GpColumns.Name = "GpColumns";
+            this.GpColumns.Padding = new System.Windows.Forms.Padding(2);
+            this.GpColumns.Size = new System.Drawing.Size(687, 453);
+            this.GpColumns.TabIndex = 2;
+            this.GpColumns.TabStop = false;
+            this.GpColumns.Text = "列批注";
+            // 
+            // BtnSaveGridData
+            // 
+            this.BtnSaveGridData.Location = new System.Drawing.Point(529, 400);
+            this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(2);
+            this.BtnSaveGridData.Name = "BtnSaveGridData";
+            this.BtnSaveGridData.Size = new System.Drawing.Size(98, 34);
+            this.BtnSaveGridData.TabIndex = 8;
+            this.BtnSaveGridData.Text = "保存";
+            this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
+            // 
+            // GV_ColComments
+            // 
+            this.GV_ColComments.AllowUserToAddRows = false;
+            this.GV_ColComments.AllowUserToDeleteRows = false;
+            this.GV_ColComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.GV_ColComments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnName,
+            this.ColComment});
+            this.GV_ColComments.Location = new System.Drawing.Point(4, 18);
+            this.GV_ColComments.Margin = new System.Windows.Forms.Padding(2);
+            this.GV_ColComments.MultiSelect = false;
+            this.GV_ColComments.Name = "GV_ColComments";
+            this.GV_ColComments.RowHeadersVisible = false;
+            this.GV_ColComments.RowTemplate.Height = 27;
+            this.GV_ColComments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.GV_ColComments.Size = new System.Drawing.Size(676, 363);
+            this.GV_ColComments.TabIndex = 0;
+            this.GV_ColComments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_ColComments_CellClick);
+            // 
+            // ColComment
+            // 
+            this.ColComment.HeaderText = "列批注";
+            this.ColComment.Name = "ColComment";
+            this.ColComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColComment.Width = 450;
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.HeaderText = "列名";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Width = 220;
+            // 
+            // lblTip
+            // 
+            this.lblTip.AutoSize = true;
+            this.lblTip.Location = new System.Drawing.Point(18, 422);
+            this.lblTip.Name = "lblTip";
+            this.lblTip.Size = new System.Drawing.Size(41, 12);
+            this.lblTip.TabIndex = 9;
+            this.lblTip.Text = "lblTip";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 28);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "查询:";
+            // 
+            // gpCurrTable
+            // 
+            this.gpCurrTable.Controls.Add(this.labCurrTabComment);
+            this.gpCurrTable.Controls.Add(this.TxtCurrTabComment);
+            this.gpCurrTable.Controls.Add(this.LabCurrTabName);
+            this.gpCurrTable.Controls.Add(this.label2);
+            this.gpCurrTable.Location = new System.Drawing.Point(349, 18);
+            this.gpCurrTable.Margin = new System.Windows.Forms.Padding(2);
+            this.gpCurrTable.Name = "gpCurrTable";
+            this.gpCurrTable.Padding = new System.Windows.Forms.Padding(2);
+            this.gpCurrTable.Size = new System.Drawing.Size(681, 73);
+            this.gpCurrTable.TabIndex = 7;
+            this.gpCurrTable.TabStop = false;
+            this.gpCurrTable.Text = "表批注";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(200, 17);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "表名：";
+            // 
+            // LabCurrTabName
+            // 
+            this.LabCurrTabName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.LabCurrTabName.AutoSize = true;
+            this.LabCurrTabName.Location = new System.Drawing.Point(247, 17);
+            this.LabCurrTabName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LabCurrTabName.Name = "LabCurrTabName";
+            this.LabCurrTabName.Size = new System.Drawing.Size(0, 12);
+            this.LabCurrTabName.TabIndex = 5;
+            this.LabCurrTabName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // TxtCurrTabComment
+            // 
+            this.TxtCurrTabComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.TxtCurrTabComment.Location = new System.Drawing.Point(242, 39);
+            this.TxtCurrTabComment.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtCurrTabComment.Name = "TxtCurrTabComment";
+            this.TxtCurrTabComment.Size = new System.Drawing.Size(300, 21);
+            this.TxtCurrTabComment.TabIndex = 3;
+            // 
+            // labCurrTabComment
+            // 
+            this.labCurrTabComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.labCurrTabComment.AutoSize = true;
+            this.labCurrTabComment.Location = new System.Drawing.Point(187, 42);
+            this.labCurrTabComment.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labCurrTabComment.Name = "labCurrTabComment";
+            this.labCurrTabComment.Size = new System.Drawing.Size(53, 12);
+            this.labCurrTabComment.TabIndex = 7;
+            this.labCurrTabComment.Text = "表批注：";
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.CheckOnClick = true;
+            this.checkedListBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.checkedListBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(1, 80);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(312, 468);
+            this.checkedListBox1.Sorted = true;
+            this.checkedListBox1.TabIndex = 8;
+            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(3, 55);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(78, 16);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "全选/反选";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
+            // 
+            // RibbonPanel
+            // 
+            this.RibbonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RibbonPanel.Controls.Add(this.GpTableCol);
+            this.RibbonPanel.Location = new System.Drawing.Point(0, 98);
+            this.RibbonPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RibbonPanel.Name = "RibbonPanel";
+            this.RibbonPanel.Size = new System.Drawing.Size(1070, 578);
+            this.RibbonPanel.TabIndex = 4;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1003, 755);
+            this.ClientSize = new System.Drawing.Size(1076, 700);
             this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.RibbonPanel);
             this.Controls.Add(this.RibbonTabContainer);
@@ -506,14 +506,6 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
-            this.RibbonPanel.ResumeLayout(false);
-            this.GpTableCol.ResumeLayout(false);
-            this.GpTableCol.PerformLayout();
-            this.gpCurrTable.ResumeLayout(false);
-            this.gpCurrTable.PerformLayout();
-            this.GpColumns.ResumeLayout(false);
-            this.GpColumns.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GV_ColComments)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ribbonPageAbout.ResumeLayout(false);
@@ -523,6 +515,14 @@
             this.ribbonPageFile.ResumeLayout(false);
             this.ribbonPageFile.PerformLayout();
             this.RibbonTabContainer.ResumeLayout(false);
+            this.GpTableCol.ResumeLayout(false);
+            this.GpTableCol.PerformLayout();
+            this.GpColumns.ResumeLayout(false);
+            this.GpColumns.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GV_ColComments)).EndInit();
+            this.gpCurrTable.ResumeLayout(false);
+            this.gpCurrTable.PerformLayout();
+            this.RibbonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -531,7 +531,6 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStripMain;
-        private System.Windows.Forms.Panel RibbonPanel;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.ToolStrip ribbonPageAbout;
         private System.Windows.Forms.ToolStripButton toolStripButtonAbout;
@@ -540,30 +539,31 @@
         private System.Windows.Forms.ToolStripButton tsbConnect;
         private System.Windows.Forms.ToolStripButton tsbBuild;
         private System.Windows.Forms.TabControl RibbonTabContainer;
-        private System.Windows.Forms.GroupBox GpTableCol;
-        private System.Windows.Forms.TextBox TxtTabName;
         private System.Windows.Forms.ToolStripButton tsbRefresh;
-        private System.Windows.Forms.TextBox TxtCurrTabComment;
-        private System.Windows.Forms.GroupBox GpColumns;
         private System.Windows.Forms.ToolStripButton tsbPDMUpload;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label LabCurrTabName;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox gpCurrTable;
-        private System.Windows.Forms.Label labCurrTabComment;
-        private System.Windows.Forms.DataGridView GV_ColComments;
         private System.Windows.Forms.ToolStripProgressBar Prog;
-        private System.Windows.Forms.Button BtnSaveGridData;
         private System.ComponentModel.BackgroundWorker bgWork;
         private System.Windows.Forms.Label lblMsg;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColComment;
         private System.Windows.Forms.ToolStripButton tsWordExp;
         private System.Windows.Forms.ToolStripButton tsExcelExp;
         private System.Windows.Forms.ToolStripButton tsPdfExp;
         private System.Windows.Forms.ToolStripButton tsXmlExp;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.GroupBox GpTableCol;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.GroupBox gpCurrTable;
+        private System.Windows.Forms.Label labCurrTabComment;
+        private System.Windows.Forms.TextBox TxtCurrTabComment;
+        private System.Windows.Forms.Label LabCurrTabName;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox GpColumns;
         private System.Windows.Forms.Label lblTip;
+        private System.Windows.Forms.DataGridView GV_ColComments;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColComment;
+        private System.Windows.Forms.Button BtnSaveGridData;
+        private System.Windows.Forms.TextBox TxtTabName;
+        private System.Windows.Forms.Panel RibbonPanel;
     }
 }
