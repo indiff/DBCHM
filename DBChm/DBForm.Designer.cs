@@ -47,119 +47,120 @@
             this.BtnTestConnect = new System.Windows.Forms.Button();
             this.cboDBName = new System.Windows.Forms.ComboBox();
             this.lblMsg = new System.Windows.Forms.Label();
+            this.btnSelectFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelControl1
             // 
             this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl1.Location = new System.Drawing.Point(103, 35);
+            this.labelControl1.Location = new System.Drawing.Point(85, 49);
             this.labelControl1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(99, 18);
+            this.labelControl1.Size = new System.Drawing.Size(122, 18);
             this.labelControl1.TabIndex = 2;
             this.labelControl1.Text = "连接名";
             // 
             // TxtConnectName
             // 
             this.TxtConnectName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtConnectName.Location = new System.Drawing.Point(195, 33);
+            this.TxtConnectName.Location = new System.Drawing.Point(177, 47);
             this.TxtConnectName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtConnectName.Name = "TxtConnectName";
-            this.TxtConnectName.Size = new System.Drawing.Size(190, 21);
+            this.TxtConnectName.Size = new System.Drawing.Size(213, 21);
             this.TxtConnectName.TabIndex = 0;
             // 
             // labelControl2
             // 
             this.labelControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl2.Location = new System.Drawing.Point(102, 112);
+            this.labelControl2.Location = new System.Drawing.Point(84, 126);
             this.labelControl2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(121, 14);
+            this.labelControl2.Size = new System.Drawing.Size(144, 14);
             this.labelControl2.TabIndex = 2;
             this.labelControl2.Text = "主机名或IP地址";
             // 
             // TxtHost
             // 
             this.TxtHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtHost.Location = new System.Drawing.Point(194, 109);
+            this.TxtHost.Location = new System.Drawing.Point(176, 123);
             this.TxtHost.Margin = new System.Windows.Forms.Padding(2);
             this.TxtHost.Name = "TxtHost";
-            this.TxtHost.Size = new System.Drawing.Size(190, 21);
+            this.TxtHost.Size = new System.Drawing.Size(213, 21);
             this.TxtHost.TabIndex = 2;
             // 
             // labelControl3
             // 
             this.labelControl3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl3.Location = new System.Drawing.Point(102, 149);
+            this.labelControl3.Location = new System.Drawing.Point(84, 163);
             this.labelControl3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(77, 18);
+            this.labelControl3.Size = new System.Drawing.Size(100, 18);
             this.labelControl3.TabIndex = 2;
             this.labelControl3.Text = "端口";
             // 
             // TxtPort
             // 
             this.TxtPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtPort.Location = new System.Drawing.Point(194, 146);
+            this.TxtPort.Location = new System.Drawing.Point(176, 160);
             this.TxtPort.Margin = new System.Windows.Forms.Padding(2);
             this.TxtPort.Name = "TxtPort";
-            this.TxtPort.Size = new System.Drawing.Size(190, 21);
+            this.TxtPort.Size = new System.Drawing.Size(213, 21);
             this.TxtPort.TabIndex = 3;
             this.TxtPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtPort_KeyPress);
             // 
             // labelControl4
             // 
             this.labelControl4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl4.Location = new System.Drawing.Point(103, 215);
+            this.labelControl4.Location = new System.Drawing.Point(85, 229);
             this.labelControl4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(77, 14);
+            this.labelControl4.Size = new System.Drawing.Size(100, 14);
             this.labelControl4.TabIndex = 2;
             this.labelControl4.Text = "用户名";
             // 
             // TxtUName
             // 
             this.TxtUName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtUName.Location = new System.Drawing.Point(195, 213);
+            this.TxtUName.Location = new System.Drawing.Point(177, 227);
             this.TxtUName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtUName.Name = "TxtUName";
-            this.TxtUName.Size = new System.Drawing.Size(190, 21);
+            this.TxtUName.Size = new System.Drawing.Size(213, 21);
             this.TxtUName.TabIndex = 4;
             // 
             // labelControl5
             // 
             this.labelControl5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl5.Location = new System.Drawing.Point(103, 246);
+            this.labelControl5.Location = new System.Drawing.Point(85, 260);
             this.labelControl5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(84, 18);
+            this.labelControl5.Size = new System.Drawing.Size(107, 18);
             this.labelControl5.TabIndex = 2;
             this.labelControl5.Text = "密码";
             // 
             // TxtPwd
             // 
             this.TxtPwd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtPwd.Location = new System.Drawing.Point(195, 244);
+            this.TxtPwd.Location = new System.Drawing.Point(177, 258);
             this.TxtPwd.Margin = new System.Windows.Forms.Padding(2);
             this.TxtPwd.Name = "TxtPwd";
             this.TxtPwd.PasswordChar = '*';
-            this.TxtPwd.Size = new System.Drawing.Size(190, 21);
+            this.TxtPwd.Size = new System.Drawing.Size(213, 21);
             this.TxtPwd.TabIndex = 5;
             // 
             // labelControl6
             // 
             this.labelControl6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl6.Location = new System.Drawing.Point(101, 74);
+            this.labelControl6.Location = new System.Drawing.Point(83, 88);
             this.labelControl6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl6.Name = "labelControl6";
-            this.labelControl6.Size = new System.Drawing.Size(111, 15);
+            this.labelControl6.Size = new System.Drawing.Size(134, 15);
             this.labelControl6.TabIndex = 2;
             this.labelControl6.Text = "数据库类型";
             // 
             // BtnOk
             // 
             this.BtnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnOk.Location = new System.Drawing.Point(323, 285);
+            this.BtnOk.Location = new System.Drawing.Point(346, 309);
             this.BtnOk.Margin = new System.Windows.Forms.Padding(2);
             this.BtnOk.Name = "BtnOk";
             this.BtnOk.Size = new System.Drawing.Size(61, 28);
@@ -170,7 +171,7 @@
             // BtnCancel
             // 
             this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnCancel.Location = new System.Drawing.Point(400, 285);
+            this.BtnCancel.Location = new System.Drawing.Point(423, 309);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(57, 28);
@@ -182,27 +183,27 @@
             // 
             this.cboDBType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDBType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboDBType.Location = new System.Drawing.Point(194, 69);
+            this.cboDBType.Location = new System.Drawing.Point(176, 83);
             this.cboDBType.Margin = new System.Windows.Forms.Padding(2);
             this.cboDBType.Name = "cboDBType";
-            this.cboDBType.Size = new System.Drawing.Size(191, 20);
+            this.cboDBType.Size = new System.Drawing.Size(214, 20);
             this.cboDBType.TabIndex = 1;
             this.cboDBType.SelectedIndexChanged += new System.EventHandler(this.cboDBType_SelectedIndexChanged);
             // 
             // labDBName
             // 
             this.labDBName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labDBName.Location = new System.Drawing.Point(102, 180);
+            this.labDBName.Location = new System.Drawing.Point(84, 194);
             this.labDBName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labDBName.Name = "labDBName";
-            this.labDBName.Size = new System.Drawing.Size(85, 20);
+            this.labDBName.Size = new System.Drawing.Size(108, 20);
             this.labDBName.TabIndex = 2;
             this.labDBName.Text = "数据库";
             // 
             // BtnTestConnect
             // 
             this.BtnTestConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnTestConnect.Location = new System.Drawing.Point(32, 285);
+            this.BtnTestConnect.Location = new System.Drawing.Point(32, 309);
             this.BtnTestConnect.Margin = new System.Windows.Forms.Padding(2);
             this.BtnTestConnect.Name = "BtnTestConnect";
             this.BtnTestConnect.Size = new System.Drawing.Size(70, 28);
@@ -213,10 +214,10 @@
             // cboDBName
             // 
             this.cboDBName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboDBName.Location = new System.Drawing.Point(195, 180);
+            this.cboDBName.Location = new System.Drawing.Point(177, 194);
             this.cboDBName.Margin = new System.Windows.Forms.Padding(2);
             this.cboDBName.Name = "cboDBName";
-            this.cboDBName.Size = new System.Drawing.Size(191, 20);
+            this.cboDBName.Size = new System.Drawing.Size(214, 20);
             this.cboDBName.TabIndex = 6;
             this.cboDBName.SelectedIndexChanged += new System.EventHandler(this.cboDBName_SelectedIndexChanged);
             // 
@@ -229,11 +230,22 @@
             this.lblMsg.TabIndex = 10;
             this.lblMsg.Text = "lblMsg";
             // 
+            // btnSelectFile
+            // 
+            this.btnSelectFile.Location = new System.Drawing.Point(399, 189);
+            this.btnSelectFile.Name = "btnSelectFile";
+            this.btnSelectFile.Size = new System.Drawing.Size(81, 29);
+            this.btnSelectFile.TabIndex = 11;
+            this.btnSelectFile.Text = "选择文件";
+            this.btnSelectFile.UseVisualStyleBackColor = true;
+            this.btnSelectFile.Click += new System.EventHandler(this.BtnSelectFile_Click);
+            // 
             // DBForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 348);
+            this.ClientSize = new System.Drawing.Size(516, 372);
+            this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.cboDBName);
             this.Controls.Add(this.cboDBType);
@@ -286,5 +298,6 @@
         private System.Windows.Forms.Button BtnTestConnect;
         private System.Windows.Forms.ComboBox cboDBName;
         private System.Windows.Forms.Label lblMsg;
+        private System.Windows.Forms.Button btnSelectFile;
     }
 }

@@ -1,4 +1,4 @@
-﻿using DDTek.DB2;
+﻿using IBM.Data.DB2;
 using MJTop.Data.SPI;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace MJTop.Data.DatabaseInfo
         }
         public string DBName
         {
-            get { return (Db.ConnectionStringBuilder as DB2ConnectionStringBuilder).DatabaseName; }
+            get { return (Db.ConnectionStringBuilder as DB2ConnectionStringBuilder).Database; }
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();

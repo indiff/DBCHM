@@ -124,7 +124,7 @@ namespace DBCHM
             this.labelCompanyName.Name = "labelCompanyName";
             this.labelCompanyName.Size = new System.Drawing.Size(271, 16);
             this.labelCompanyName.TabIndex = 22;
-            this.labelCompanyName.Text = "QQ：411340965";
+            this.labelCompanyName.Text = "QQ群：132941648";
             this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxDescription
@@ -142,7 +142,7 @@ namespace DBCHM
             this.textBoxDescription.Size = new System.Drawing.Size(271, 119);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "51try.Top 出品，联系QQ：411340965";
+            this.textBoxDescription.Text = "有问题，我要反馈！";
             this.textBoxDescription.Click += new System.EventHandler(this.textBoxDescription_Click);
             // 
             // okButton

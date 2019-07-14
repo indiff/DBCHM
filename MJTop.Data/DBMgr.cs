@@ -139,6 +139,12 @@ namespace MJTop.Data
             return DBFactory.CreateInstance(dbType, GetConnectionString(dbType, server, port, databBase, uid, pwd), cmdTimeOut);
         }
 
+        public static DB UseSqlite(string dbPath, string password = null, int cmdTimeOut = 30)
+        {
+            return DBFactory.CreateInstance(DBType.SQLite, GetConnectionString(DBType.SQLite, null, null, dbPath, null, password), cmdTimeOut);
+        }
+
+
         /// <summary>
         /// 获取连接字符串
         /// </summary>
@@ -174,10 +180,15 @@ namespace MJTop.Data
                     connectionString = string.Format("host={0};port={1};database={2};user id={3};password={4};", server, (port ?? 5432), databBase, uid, pwd);
                     break;
                 case DBType.SQLite:
-                    connectionString = string.Format("Data Source={0};Pooling=True;BinaryGUID=True;Enlist=N;Synchronous=Off;Journal Mode=WAL;Cache Size=5000;", server);
+                    //connectionString = string.Format("Data Source={0};Pooling=True;BinaryGUID=True;Enlist=N;Synchronous=Off;Journal Mode=WAL;Cache Size=5000;", databBase);
+                    connectionString = string.Format("Data Source={0};", databBase);
+                    if (!string.IsNullOrWhiteSpace(pwd))
+                    {
+                        connectionString += "version=3;password=" + pwd;
+                    }
                     break;
-                case DBType.DB2DDTek:
-                    connectionString = string.Format(@"Host={0};Port={1};Database Name={2};User ID={3};password={4}", server, (port ?? 50000), databBase, uid, pwd);
+                case DBType.DB2:
+                    connectionString = string.Format(@"server={0}:{1};Database={2};Uid={3};Pwd={4}", server, (port ?? 50000), databBase, uid, pwd);
                     break;
                 default:
                     throw new ArgumentException("未知数据库类型！");

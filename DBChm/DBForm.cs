@@ -55,8 +55,24 @@ namespace DBCHM
                         TxtConnectName.Text += "_Clone";
                     }
 
+                    if (config.DBType == DBType.SQLite.ToString())
+                    {
+                        btnSelectFile.Visible = true;
+
+                        TxtHost.Enabled = false;
+                        TxtPort.Enabled = false;
+                        TxtUName.Enabled = false;
+
+                        //暂不支持 加密的 Sqlite数据库
+                        TxtPwd.Enabled = false;
+                    }
+
                     //编辑时，确定后刷新连接列表
                     BtnOk.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    btnSelectFile.Visible = false;
                 }
             }
 
@@ -95,6 +111,15 @@ namespace DBCHM
                 SetUserNameByDbType();
             }
         }
+        private void BtnSelectFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDia = new OpenFileDialog();
+            var dia = fileDia.ShowDialog();
+            if (dia == DialogResult.OK)
+            {
+                cboDBName.Text = fileDia.FileName;
+            }
+        }
 
         public void SetMsg(string msg, bool isSuccess = false)
         {
@@ -104,7 +129,7 @@ namespace DBCHM
 
         private void BtnTestConnect_Click(object sender, EventArgs e)
         {
-            DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);            
+            DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
             try
             {
                 if (type == DBType.Oracle && string.IsNullOrWhiteSpace(cboDBName.Text))
@@ -113,7 +138,8 @@ namespace DBCHM
                 }
 
                 string strDBName = cboDBName.Text;
-                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), strDBName, TxtUName.Text, TxtPwd.Text);
+
+                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))), strDBName, TxtUName.Text, TxtPwd.Text);
 
                 var info = DBUtils.Instance.Info;
 
@@ -162,18 +188,18 @@ namespace DBCHM
                 }
 
                 DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
-                string connString = DBMgr.GetConnectionString(type, TxtHost.Text, Convert.ToInt32(TxtPort.Text), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
+                string connString = DBMgr.GetConnectionString(type, TxtHost.Text, (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
                 NameValueCollection nvc = new NameValueCollection();
                 if (OpType == OPType.新建 || OpType == OPType.克隆)
                 {
                     nvc.Add("Name", TxtConnectName.Text.Trim());
                     nvc.Add("DBType", cboDBType.Text.Trim());
 
-                    nvc.Add("Server", TxtHost.Text.Trim());
-                    nvc.Add("Port", TxtPort.Text);
+                    nvc.Add("Server", TxtHost.Enabled ? TxtHost.Text.Trim() : string.Empty);
+                    nvc.Add("Port", TxtPort.Enabled ? TxtPort.Text : string.Empty);
                     nvc.Add("DBName", cboDBName.Text.Trim());
-                    nvc.Add("Uid", TxtUName.Text.Trim());
-                    nvc.Add("Pwd", TxtPwd.Text);
+                    nvc.Add("Uid", TxtUName.Enabled ? TxtUName.Text.Trim() : string.Empty);
+                    nvc.Add("Pwd", TxtPwd.Enabled ? TxtPwd.Text : string.Empty);
 
                     nvc.Add("ConnString", connString);
 
@@ -188,11 +214,11 @@ namespace DBCHM
                     nvc.Add("Name", TxtConnectName.Text.Trim());
                     nvc.Add("DBType", cboDBType.Text.Trim());
 
-                    nvc.Add("Server", TxtHost.Text.Trim());
-                    nvc.Add("Port", TxtPort.Text);
+                    nvc.Add("Server", TxtHost.Enabled ? TxtHost.Text.Trim() : string.Empty);
+                    nvc.Add("Port", TxtPort.Enabled ? TxtPort.Text : string.Empty);
                     nvc.Add("DBName", cboDBName.Text.Trim());
-                    nvc.Add("Uid", TxtUName.Text.Trim());
-                    nvc.Add("Pwd", TxtPwd.Text);
+                    nvc.Add("Uid", TxtUName.Enabled ? TxtUName.Text.Trim() : string.Empty);
+                    nvc.Add("Pwd", TxtPwd.Enabled ? TxtPwd.Text : string.Empty);
 
                     nvc.Add("ConnString", connString);
                     ConfigUtils.Save(nvc);
@@ -222,6 +248,12 @@ namespace DBCHM
         /// </summary>
         private void SetUserNameByDbType()
         {
+            btnSelectFile.Visible = false;
+            
+            TxtHost.Enabled = true;
+            TxtPort.Enabled = true;
+            TxtUName.Enabled = true;
+
             labDBName.Text = "数据库";
             DBType dbtype = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text.ToString());
             if (dbtype == DBType.SqlServer)
@@ -241,9 +273,20 @@ namespace DBCHM
             {
                 TxtUName.Text = "postgres";
             }
-            else if (dbtype == DBType.DB2DDTek)
+            else if (dbtype == DBType.DB2)
             {
                 TxtUName.Text = "db2admin";
+            }
+            else if(dbtype == DBType.SQLite)
+            {
+                btnSelectFile.Visible = true;
+
+                TxtHost.Enabled = false;
+                TxtPort.Enabled = false;
+                TxtUName.Enabled = false;
+
+                //暂不支持 加密的 Sqlite数据库
+                TxtPwd.Enabled = false;
             }
             else
             {
@@ -282,5 +325,7 @@ namespace DBCHM
         {
             this.Text = "连接数据库";
         }
+
+       
     }
 }

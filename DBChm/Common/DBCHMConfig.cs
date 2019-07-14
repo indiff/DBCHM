@@ -23,7 +23,7 @@ namespace DBCHM
         public string Server { get; set; }
 
         [DisplayName("端口")]
-        public int Port { get; set; }
+        public int? Port { get; set; }
         [DisplayName("数据库")]
         public string DBName { get; set; }
 

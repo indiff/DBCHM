@@ -38,7 +38,7 @@ namespace MJTop.Data
         /// <summary>
         /// DB2数据库
         /// </summary>
-        DB2DDTek
+        DB2
     }
 
     /// <summary>

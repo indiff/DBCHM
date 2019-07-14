@@ -31,7 +31,7 @@ namespace MJTop.Data.DatabaseInfo
 
         public string DBName
         {
-            get { return (Db.ConnectionStringBuilder as System.Data.SQLite.SQLiteConnectionStringBuilder).DataSource; }
+            get { return System.IO.Path.GetFileNameWithoutExtension((Db.ConnectionStringBuilder as System.Data.SQLite.SQLiteConnectionStringBuilder).DataSource); }
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
@@ -127,6 +127,12 @@ namespace MJTop.Data.DatabaseInfo
                             {
                                 colInfo.IsIdentity = true;
                             }
+
+                            if (colInfo.TypeName == "integer" || colInfo.TypeName == "bigint")
+                            {
+                                colInfo.Scale = null;
+                            }
+
                             lstColInfo.Add(colInfo);
                             lstColName.Add(colInfo.ColumnName);
                             nvcColDeText.Add(colInfo.ColumnName, colInfo.ColumnName);
@@ -151,7 +157,7 @@ namespace MJTop.Data.DatabaseInfo
                             Global.Dict_Sqlite_DbType.TryGetValue(colInfo.TypeName, out DbType type);
                             colInfo.DbType = type;
                         }
-
+                        tabInfo.Colnumns = lstColInfo;
                         this.TableInfoDict.Add(tableName, tabInfo);
                         this.TableColumnNameDict.Add(tableName, lstColName);
                         this.TableColumnInfoDict.Add(tableName, lstColInfo);

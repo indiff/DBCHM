@@ -115,7 +115,7 @@ namespace DBCHM
 
         private void textBoxDescription_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://wpa.qq.com/msgrd?v=3&uin=411340965&site=qq&menu=yes");
+            System.Diagnostics.Process.Start("http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26");
         }
     }
 }

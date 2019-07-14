@@ -76,7 +76,7 @@ namespace MJTop.Data
           { DBType.OracleDDTek,":" },
           { DBType.PostgreSql,":" },
           { DBType.SQLite,"@" },
-          { DBType.DB2DDTek,":" },
+          { DBType.DB2,":" },
         };
 
 

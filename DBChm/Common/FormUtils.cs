@@ -17,20 +17,19 @@ namespace DBCHM
             DictDBType = EnumExt<DBType>.All();
 
             DictDBType.Remove(DBType.Oracle.ToString());
-            DictDBType.Remove(DBType.SQLite.ToString());
-
         }
         /// <summary>
         /// 所有数据库类型 对应的端口
         /// </summary>
         public static readonly Dictionary<string, string> DictPort = new Dictionary<string, string>()
         {
+            { DBType.SQLite.ToString(),string.Empty},
             { DBType.SqlServer.ToString(),"1433"},
              { DBType.MySql.ToString(),"3306"},
             { DBType.OracleDDTek.ToString(),"1521"},
             //{ DBType.Oracle.ToString(),"1521"},            
             { DBType.PostgreSql.ToString(),"5432"},
-            { DBType.DB2DDTek.ToString(),"50000"},
+            { DBType.DB2.ToString(),"50000"},
         };
 
         /// <summary>

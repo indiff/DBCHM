@@ -54,7 +54,7 @@ namespace MJTop.Data
                     this.Dict_CSharpType = Global.Dict_Sqlite_CSharpType;
                     this.Dict_Data_DefValue = Global.Dict_Sqlite_DefValue;
                     break;
-                case DBType.DB2DDTek:
+                case DBType.DB2:
                     this.Dict_CSharpType = Global.Dict_DB2_CSharpType;
                     this.Dict_Data_DefValue = Global.Dict_DB2_DefValue;
                     break;

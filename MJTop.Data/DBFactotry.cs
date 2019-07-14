@@ -10,7 +10,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DDTek.DB2;
+using IBM.Data.DB2;
 
 namespace MJTop.Data
 {
@@ -32,7 +32,7 @@ namespace MJTop.Data
                     return new PostgreSqlDB(dbType, NpgsqlFactory.Instance, connectionString, cmdTimeOut);
                 case DBType.SQLite:
                     return new SQLiteDB(dbType, SQLiteFactory.Instance, connectionString, cmdTimeOut);
-                case DBType.DB2DDTek:
+                case DBType.DB2:
                     return new DB2DDTekDB(dbType, DB2Factory.Instance, connectionString, cmdTimeOut);
                 default:
                     throw new ArgumentException("未支持的数据库类型！");
