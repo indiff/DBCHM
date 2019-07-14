@@ -220,6 +220,22 @@ namespace DBCHM
             {
                 this.Text = DBUtils.Instance?.Info?.DBName + "(" + DBUtils.Instance.DBType.ToString() + ") - " + "DBCHM v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
             }
+
+            //Sqlite 数据库自身 不支持 数据库批注 功能
+            if (DBUtils.Instance != null && DBUtils.Instance.DBType == MJTop.Data.DBType.SQLite)
+            {
+                TxtCurrTabComment.Enabled = false;
+                BtnSaveGridData.Enabled = false;
+                lblTip.Text = DBUtils.Instance.DBType + "数据库不支持批注功能。";
+                lblTip.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                TxtCurrTabComment.Enabled = true;
+                BtnSaveGridData.Enabled = true;
+                lblTip.Text = string.Empty;
+                lblTip.ForeColor = System.Drawing.Color.Green;
+            }
         }
 
         /// <summary>
