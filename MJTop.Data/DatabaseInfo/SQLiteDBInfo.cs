@@ -83,12 +83,12 @@ namespace MJTop.Data.DatabaseInfo
             this.TableColumnInfoDict = new IgCaseDictionary<List<ColumnInfo>>();
             this.TableColumnComments = new IgCaseDictionary<NameValueCollection>();
 
-            string strSql = "SELECT name FROM sqlite_master WHERE type='table' order by name";
+            string strSql = "SELECT name,'' as desc FROM sqlite_master WHERE type='table' order by name";
             string viewSql = "SELECT name,sql FROM sqlite_master WHERE type='view' order by name asc";
             string procSql = string.Empty; //Sqlite 没有存储过程功能！
             try
             {
-                this.TableComments = Db.GetDataTable(strSql).MapperNameValues("Name", "Name");
+                this.TableComments = Db.GetDataTable(strSql).MapperNameValues("name", "desc");
 
                 //this.Views = Db.ReadNameValues(viewSql);
 
@@ -114,7 +114,7 @@ namespace MJTop.Data.DatabaseInfo
                         foreach (DataRow dr in columns)
                         {
                             ColumnInfo colInfo = new ColumnInfo();
-                            colInfo.Colorder = dr["ORDINAL_POSITION"].ToString().ChangeType<int>(0);
+                            colInfo.Colorder = dr["ORDINAL_POSITION"].ToString().ChangeType<int>(0) + 1;
                             colInfo.ColumnName = dr["COLUMN_NAME"].ToString();
                             colInfo.Length = dr["CHARACTER_MAXIMUM_LENGTH"].ToString().ChangeType<int?>((int?)null);
                             //colInfo.Preci = dr["NUMERIC_PRECISION"].ToString().ChangeType<int?>(null);
@@ -135,7 +135,7 @@ namespace MJTop.Data.DatabaseInfo
 
                             lstColInfo.Add(colInfo);
                             lstColName.Add(colInfo.ColumnName);
-                            nvcColDeText.Add(colInfo.ColumnName, colInfo.ColumnName);
+                            nvcColDeText.Add(colInfo.ColumnName, string.Empty);
                             
                             var strKey = (tableName + "@" + colInfo.ColumnName).ToLower();
                             DictColumnInfo.Add(strKey, colInfo);

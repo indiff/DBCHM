@@ -228,6 +228,7 @@ namespace DBCHM
                 BtnSaveGridData.Enabled = false;
                 lblTip.Text = DBUtils.Instance.DBType + "数据库不支持批注功能。";
                 lblTip.ForeColor = System.Drawing.Color.Red;
+                GV_ColComments.Columns[1].ReadOnly = true;
             }
             else
             {
@@ -235,6 +236,7 @@ namespace DBCHM
                 BtnSaveGridData.Enabled = true;
                 lblTip.Text = string.Empty;
                 lblTip.ForeColor = System.Drawing.Color.Green;
+                GV_ColComments.Columns[1].ReadOnly = false;
             }
         }
 
