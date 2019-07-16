@@ -9,6 +9,7 @@ DBCHM支持SqlServer/MySql/Oracle/PostgreSQL/DB2/SQLite等数据库的表列批�
 - 目前支持导出的文档类型：chm、word、excel、pdf、html、xml。
 
 
+
 DBCHM效果展示：
 ------------------------
 ### 1 数据库连接管理
@@ -28,10 +29,9 @@ DBCHM效果展示：
 
 ## 使用前提/源码编译/注意事项
 - [最新发行版本下载](https://gitee.com/lztkdr/DBCHM/releases)
-- 电脑需`htmlhelp.exe`，[见附件](https://gitee.com/lztkdr/DBCHM/attach_files)
-   （注：需安装到任意盘符下的 `Program Files (x86)\HTML Help Workshop\` 或 `Program Files\HTML Help Workshop\` 文件夹中。）
+- 导出chm文件时，电脑需`htmlhelp.exe`，[见附件](https://gitee.com/lztkdr/DBCHM/attach_files)
 - 电脑需`.net framework 4.5.2`
-- 登陆账号要给予`sa级别`的权限，不然表结构查询权限不足，会查不出来数据
+- 登陆账号要给予`sa级别`的权限，不然表结构可能因查询权限不足，会查不出来数据
 - 源码编印环境：`Visual Studio 2017 以上`版本
 - 对于表列批注，支持中文与英文，不支持gbk之外的不兼容编码。目前：如需要支持其他语言，Language(HHP中的一个属性)/html字符编码/html文件编码/html中的文字，相对应相兼容才可)；不过也不排除有更好的其他解决办法，如果有，欢迎进群讨论，共同完善该工具！
 
