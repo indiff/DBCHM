@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConst.cs" />
+    <Compile Include="Text\HtmlUtils.cs" />
     <Compile Include="Text\WordUtils.cs" />
     <Compile Include="Dtos\ColumnDto.cs" />
     <Compile Include="Dtos\TableDto.cs" />
@@ -78,6 +79,7 @@
     <Content Include="Library\EPPlus.dll" />
     <Content Include="Library\itextsharp.dll" />
     <Content Include="Library\Microsoft.Office.Interop.Word.dll" />
+    <EmbeddedResource Include="template.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

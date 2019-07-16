@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DBChm
+namespace DBCHM
 {
     public partial class FrmProcessing : Form
     {

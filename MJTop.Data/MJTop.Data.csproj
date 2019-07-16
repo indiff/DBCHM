@@ -143,8 +143,6 @@
     <Compile Include="DB.Ext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="lib\DDTek.DB2.dll" />
-    <EmbeddedResource Include="lib\DDTek.DB2.Entity.dll" />
     <Content Include="System.Runtime.CompilerServices.Unsafe.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -154,9 +152,6 @@
     <Content Include="System.ValueTuple.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="lib\DDTek.lic" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

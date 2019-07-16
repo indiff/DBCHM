@@ -7,8 +7,8 @@
     <ProjectGuid>{55B00DB1-BA55-47B7-BD44-35C0FCD05FD5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DBChm</RootNamespace>
-    <AssemblyName>DBChm</AssemblyName>
+    <RootNamespace>DBCHM</RootNamespace>
+    <AssemblyName>DBCHM</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -35,7 +35,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ico\dbchm1.ico</ApplicationIcon>
+    <ApplicationIcon>ico\dbchm.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ComponentFactory.Krypton.Toolkit, Version=4.5.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
@@ -165,26 +165,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dbchm1.ico" />
     <Content Include="htmlhelp.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ico\about.png" />
-    <Content Include="ico\Connect.png" />
-    <Content Include="ico\dbchm1.ico" />
-    <Content Include="ico\DownBuild.png" />
-    <Content Include="ico\ExcelExp.png" />
-    <Content Include="ico\PdfExp.png" />
-    <Content Include="ico\Refresh3.png" />
-    <Content Include="ico\saveUpload.png" />
-    <Content Include="ico\WordExp.png" />
-    <Content Include="ico\XmlExp.png" />
+    <Content Include="ico\connect.png" />
+    <Content Include="ico\DBCHM.ico" />
+    <Content Include="ico\excel.png" />
+    <Content Include="ico\exp.png" />
+    <Content Include="ico\html.png" />
+    <Content Include="ico\pdf.png" />
+    <Content Include="ico\refresh_reload.png" />
+    <Content Include="ico\upload.png" />
+    <Content Include="ico\word.png" />
+    <Content Include="ico\xml.png" />
     <Content Include="Images\DBCHM001.png" />
     <Content Include="Images\DBCHM002.png" />
     <Content Include="Images\DBCHM003.png" />
     <Content Include="Images\DBCHM004.png" />
     <Content Include="Images\DBCHM005.png" />
-    <Content Include="Images\donate_qrcode.png" />
     <Content Include="lib\System.Data.SQLite.dll" />
     <Content Include="lib\ZetaLongPaths.dll" />
     <Content Include="System.Runtime.CompilerServices.Unsafe.dll">

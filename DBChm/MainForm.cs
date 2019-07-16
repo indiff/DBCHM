@@ -226,7 +226,7 @@ namespace DBCHM
             {
                 TxtCurrTabComment.Enabled = false;
                 BtnSaveGridData.Enabled = false;
-                lblTip.Text = DBUtils.Instance.DBType + "数据库不支持批注功能。";
+                lblTip.Text = DBUtils.Instance.DBType + "数据库不支持批注功能！";
                 lblTip.ForeColor = System.Drawing.Color.Red;
                 GV_ColComments.Columns[1].ReadOnly = true;
             }
@@ -692,6 +692,41 @@ namespace DBCHM
             }
         }
 
+        private void ExportToHtml()
+        {
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "html files (*.html)|*.html";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".html";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.html";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典html文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
+                        TryOpenXml.Text.HtmlUtils.ExportHtml(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
+
+                        MessageBox.Show("生成数据库字典html文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+
         /// <summary>
         /// chm文档导出
         /// </summary>
@@ -745,6 +780,11 @@ namespace DBCHM
         {
             // TODO 导出xml
             ExportToXml();
+        }
+
+        private void tsHtmlExp_Click(object sender, EventArgs e)
+        {
+            ExportToHtml();
         }
 
         private void GV_ColComments_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -968,5 +1008,6 @@ namespace DBCHM
             return tables;
         }
 
+        
     }
 }

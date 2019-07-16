@@ -1,12 +1,13 @@
 ## DBCHM-最简单、最实用的数据库表列批注维护工具
 
-DBCHM支持SqlServer/MySql/Oracle/PostgreSQL/DB2等数据库的表列批注维护管理。
+DBCHM支持SqlServer/MySql/Oracle/PostgreSQL/DB2/SQLite等数据库的表列批注维护管理。
 
 ## DBCHM主要功能
 - 表，列的批注可以编辑保存到数据库。
 - 表，列的批注支持通过pdm文件导入的方式进行更新到数据库。
 - 基于数据库中的表列结构(列ID/列名/数据类型/长度/精度/是否可以为null/默认值/是否自增/是否是主键/列描述)。
-- 目前支持导出的文档类型：chm、word、excel、pdf、XML。
+- 目前支持导出的文档类型：chm、word、excel、pdf、html、xml。
+
 
 DBCHM效果展示：
 ------------------------
@@ -28,7 +29,7 @@ DBCHM效果展示：
 ## 使用前提/源码编译/注意事项
 - [最新发行版本下载](https://gitee.com/lztkdr/DBCHM/releases)
 - 电脑需`htmlhelp.exe`，[见附件](https://gitee.com/lztkdr/DBCHM/attach_files)
- （注：需安装到任意盘符下的 `Program Files (x86)\HTML Help Workshop\` 或 `Program Files\HTML Help Workshop\` 文件夹中。）
+   （注：需安装到任意盘符下的 `Program Files (x86)\HTML Help Workshop\` 或 `Program Files\HTML Help Workshop\` 文件夹中。）
 - 电脑需`.net framework 4.5.2`
 - 登陆账号要给予`sa级别`的权限，不然表结构查询权限不足，会查不出来数据
 - 源码编印环境：`Visual Studio 2017 以上`版本

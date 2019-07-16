@@ -1,4 +1,4 @@
-﻿namespace DBChm
+﻿namespace DBCHM
 {
     partial class FrmProcessing
     {

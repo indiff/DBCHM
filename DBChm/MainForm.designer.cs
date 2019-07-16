@@ -28,23 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.Prog = new System.Windows.Forms.ToolStripProgressBar();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.ribbonPageAbout = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.ribbonPageFile = new System.Windows.Forms.ToolStrip();
-            this.tsbConnect = new System.Windows.Forms.ToolStripButton();
-            this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
-            this.tsbPDMUpload = new System.Windows.Forms.ToolStripButton();
-            this.tsbBuild = new System.Windows.Forms.ToolStripButton();
-            this.tsWordExp = new System.Windows.Forms.ToolStripButton();
-            this.tsExcelExp = new System.Windows.Forms.ToolStripButton();
-            this.tsPdfExp = new System.Windows.Forms.ToolStripButton();
-            this.tsXmlExp = new System.Windows.Forms.ToolStripButton();
             this.RibbonTabContainer = new System.Windows.Forms.TabControl();
             this.bgWork = new System.ComponentModel.BackgroundWorker();
             this.lblMsg = new System.Windows.Forms.Label();
@@ -65,6 +56,16 @@
             this.BtnSaveGridData = new System.Windows.Forms.Button();
             this.TxtTabName = new System.Windows.Forms.TextBox();
             this.RibbonPanel = new System.Windows.Forms.Panel();
+            this.tsbConnect = new System.Windows.Forms.ToolStripButton();
+            this.tsbRefresh = new System.Windows.Forms.ToolStripButton();
+            this.tsbPDMUpload = new System.Windows.Forms.ToolStripButton();
+            this.tsbBuild = new System.Windows.Forms.ToolStripButton();
+            this.tsWordExp = new System.Windows.Forms.ToolStripButton();
+            this.tsExcelExp = new System.Windows.Forms.ToolStripButton();
+            this.tsPdfExp = new System.Windows.Forms.ToolStripButton();
+            this.tsHtmlExp = new System.Windows.Forms.ToolStripButton();
+            this.tsXmlExp = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
             this.statusStripMain.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.ribbonPageAbout.SuspendLayout();
@@ -122,16 +123,6 @@
             this.ribbonPageAbout.TabIndex = 0;
             this.ribbonPageAbout.Text = "toolStripAbout";
             // 
-            // toolStripButtonAbout
-            // 
-            this.toolStripButtonAbout.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAbout.Image")));
-            this.toolStripButtonAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAbout.Name = "toolStripButtonAbout";
-            this.toolStripButtonAbout.Size = new System.Drawing.Size(52, 67);
-            this.toolStripButtonAbout.Text = "About";
-            this.toolStripButtonAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
-            // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.ribbonPageFile);
@@ -159,6 +150,7 @@
             this.tsWordExp,
             this.tsExcelExp,
             this.tsPdfExp,
+            this.tsHtmlExp,
             this.tsXmlExp});
             this.ribbonPageFile.Location = new System.Drawing.Point(3, 2);
             this.ribbonPageFile.Name = "ribbonPageFile";
@@ -166,90 +158,6 @@
             this.ribbonPageFile.TabIndex = 0;
             this.ribbonPageFile.Text = "toolStripFile";
             this.ribbonPageFile.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ribbonPageFile_ItemClicked);
-            // 
-            // tsbConnect
-            // 
-            this.tsbConnect.Image = ((System.Drawing.Image)(resources.GetObject("tsbConnect.Image")));
-            this.tsbConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbConnect.Name = "tsbConnect";
-            this.tsbConnect.Size = new System.Drawing.Size(63, 67);
-            this.tsbConnect.Text = "数据连接";
-            this.tsbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbConnect.Click += new System.EventHandler(this.tsbConnect_Click);
-            // 
-            // tsbRefresh
-            // 
-            this.tsbRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsbRefresh.Image")));
-            this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Size = new System.Drawing.Size(63, 67);
-            this.tsbRefresh.Text = "重新获取";
-            this.tsbRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
-            // 
-            // tsbPDMUpload
-            // 
-            this.tsbPDMUpload.Image = ((System.Drawing.Image)(resources.GetObject("tsbPDMUpload.Image")));
-            this.tsbPDMUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbPDMUpload.Name = "tsbPDMUpload";
-            this.tsbPDMUpload.Size = new System.Drawing.Size(62, 67);
-            this.tsbPDMUpload.Text = "pdm上传";
-            this.tsbPDMUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbPDMUpload.Click += new System.EventHandler(this.tsbSaveUpload_Click);
-            // 
-            // tsbBuild
-            // 
-            this.tsbBuild.Image = ((System.Drawing.Image)(resources.GetObject("tsbBuild.Image")));
-            this.tsbBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbBuild.Name = "tsbBuild";
-            this.tsbBuild.Size = new System.Drawing.Size(65, 67);
-            this.tsbBuild.Text = "CHM导出";
-            this.tsbBuild.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbBuild.Click += new System.EventHandler(this.tsbBuild_Click);
-            // 
-            // tsWordExp
-            // 
-            this.tsWordExp.AutoSize = false;
-            this.tsWordExp.Image = ((System.Drawing.Image)(resources.GetObject("tsWordExp.Image")));
-            this.tsWordExp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsWordExp.Name = "tsWordExp";
-            this.tsWordExp.Size = new System.Drawing.Size(60, 67);
-            this.tsWordExp.Text = "Word导出";
-            this.tsWordExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsWordExp.Click += new System.EventHandler(this.tsWordExp_Click);
-            // 
-            // tsExcelExp
-            // 
-            this.tsExcelExp.AutoSize = false;
-            this.tsExcelExp.Image = ((System.Drawing.Image)(resources.GetObject("tsExcelExp.Image")));
-            this.tsExcelExp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsExcelExp.Name = "tsExcelExp";
-            this.tsExcelExp.Size = new System.Drawing.Size(60, 67);
-            this.tsExcelExp.Text = "Excel导出";
-            this.tsExcelExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsExcelExp.Click += new System.EventHandler(this.tsExcelExp_Click);
-            // 
-            // tsPdfExp
-            // 
-            this.tsPdfExp.AutoSize = false;
-            this.tsPdfExp.Image = ((System.Drawing.Image)(resources.GetObject("tsPdfExp.Image")));
-            this.tsPdfExp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsPdfExp.Name = "tsPdfExp";
-            this.tsPdfExp.Size = new System.Drawing.Size(60, 67);
-            this.tsPdfExp.Text = "PDF导出";
-            this.tsPdfExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsPdfExp.Click += new System.EventHandler(this.tsPdfExp_Click);
-            // 
-            // tsXmlExp
-            // 
-            this.tsXmlExp.AutoSize = false;
-            this.tsXmlExp.Image = ((System.Drawing.Image)(resources.GetObject("tsXmlExp.Image")));
-            this.tsXmlExp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsXmlExp.Name = "tsXmlExp";
-            this.tsXmlExp.Size = new System.Drawing.Size(60, 67);
-            this.tsXmlExp.Text = "XML导出";
-            this.tsXmlExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsXmlExp.Click += new System.EventHandler(this.tsXmlExp_Click);
             // 
             // RibbonTabContainer
             // 
@@ -419,14 +327,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.GV_ColComments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
@@ -486,6 +394,113 @@
             this.RibbonPanel.Name = "RibbonPanel";
             this.RibbonPanel.Size = new System.Drawing.Size(1070, 578);
             this.RibbonPanel.TabIndex = 4;
+            // 
+            // tsbConnect
+            // 
+            this.tsbConnect.Image = ((System.Drawing.Image)(resources.GetObject("tsbConnect.Image")));
+            this.tsbConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbConnect.Name = "tsbConnect";
+            this.tsbConnect.Size = new System.Drawing.Size(63, 67);
+            this.tsbConnect.Text = "数据连接";
+            this.tsbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbConnect.Click += new System.EventHandler(this.tsbConnect_Click);
+            // 
+            // tsbRefresh
+            // 
+            this.tsbRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsbRefresh.Image")));
+            this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbRefresh.Name = "tsbRefresh";
+            this.tsbRefresh.Size = new System.Drawing.Size(63, 67);
+            this.tsbRefresh.Text = "重新获取";
+            this.tsbRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
+            // 
+            // tsbPDMUpload
+            // 
+            this.tsbPDMUpload.Image = ((System.Drawing.Image)(resources.GetObject("tsbPDMUpload.Image")));
+            this.tsbPDMUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPDMUpload.Name = "tsbPDMUpload";
+            this.tsbPDMUpload.Size = new System.Drawing.Size(62, 67);
+            this.tsbPDMUpload.Text = "pdm上传";
+            this.tsbPDMUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbPDMUpload.Click += new System.EventHandler(this.tsbSaveUpload_Click);
+            // 
+            // tsbBuild
+            // 
+            this.tsbBuild.Image = ((System.Drawing.Image)(resources.GetObject("tsbBuild.Image")));
+            this.tsbBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbBuild.Name = "tsbBuild";
+            this.tsbBuild.Size = new System.Drawing.Size(65, 67);
+            this.tsbBuild.Text = "CHM导出";
+            this.tsbBuild.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbBuild.Click += new System.EventHandler(this.tsbBuild_Click);
+            // 
+            // tsWordExp
+            // 
+            this.tsWordExp.AutoSize = false;
+            this.tsWordExp.Image = ((System.Drawing.Image)(resources.GetObject("tsWordExp.Image")));
+            this.tsWordExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsWordExp.Name = "tsWordExp";
+            this.tsWordExp.Size = new System.Drawing.Size(60, 67);
+            this.tsWordExp.Text = "Word导出";
+            this.tsWordExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsWordExp.Click += new System.EventHandler(this.tsWordExp_Click);
+            // 
+            // tsExcelExp
+            // 
+            this.tsExcelExp.AutoSize = false;
+            this.tsExcelExp.Image = ((System.Drawing.Image)(resources.GetObject("tsExcelExp.Image")));
+            this.tsExcelExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsExcelExp.Name = "tsExcelExp";
+            this.tsExcelExp.Size = new System.Drawing.Size(60, 67);
+            this.tsExcelExp.Text = "Excel导出";
+            this.tsExcelExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsExcelExp.Click += new System.EventHandler(this.tsExcelExp_Click);
+            // 
+            // tsPdfExp
+            // 
+            this.tsPdfExp.AutoSize = false;
+            this.tsPdfExp.Image = ((System.Drawing.Image)(resources.GetObject("tsPdfExp.Image")));
+            this.tsPdfExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsPdfExp.Name = "tsPdfExp";
+            this.tsPdfExp.Size = new System.Drawing.Size(60, 67);
+            this.tsPdfExp.Text = "PDF导出";
+            this.tsPdfExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsPdfExp.Click += new System.EventHandler(this.tsPdfExp_Click);
+            // 
+            // tsHtmlExp
+            // 
+            this.tsHtmlExp.AutoSize = false;
+            this.tsHtmlExp.Image = ((System.Drawing.Image)(resources.GetObject("tsHtmlExp.Image")));
+            this.tsHtmlExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsHtmlExp.Name = "tsHtmlExp";
+            this.tsHtmlExp.Size = new System.Drawing.Size(64, 67);
+            this.tsHtmlExp.Text = "Html导出";
+            this.tsHtmlExp.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.tsHtmlExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsHtmlExp.ToolTipText = "Html导出";
+            this.tsHtmlExp.Click += new System.EventHandler(this.tsHtmlExp_Click);
+            // 
+            // tsXmlExp
+            // 
+            this.tsXmlExp.AutoSize = false;
+            this.tsXmlExp.Image = ((System.Drawing.Image)(resources.GetObject("tsXmlExp.Image")));
+            this.tsXmlExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsXmlExp.Name = "tsXmlExp";
+            this.tsXmlExp.Size = new System.Drawing.Size(60, 67);
+            this.tsXmlExp.Text = "XML导出";
+            this.tsXmlExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsXmlExp.Click += new System.EventHandler(this.tsXmlExp_Click);
+            // 
+            // toolStripButtonAbout
+            // 
+            this.toolStripButtonAbout.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAbout.Image")));
+            this.toolStripButtonAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAbout.Name = "toolStripButtonAbout";
+            this.toolStripButtonAbout.Size = new System.Drawing.Size(52, 67);
+            this.toolStripButtonAbout.Text = "About";
+            this.toolStripButtonAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
             // 
             // MainForm
             // 
@@ -565,5 +580,6 @@
         private System.Windows.Forms.Button BtnSaveGridData;
         private System.Windows.Forms.TextBox TxtTabName;
         private System.Windows.Forms.Panel RibbonPanel;
+        private System.Windows.Forms.ToolStripButton tsHtmlExp;
     }
 }
