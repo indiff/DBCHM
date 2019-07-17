@@ -51,6 +51,12 @@ namespace TryOpenXml.Text
                 html = html.Replace("{" + prop.Name + "}", val);
             }
 
+            //表比较多时，左侧目录取消 固定
+            if (this.Tables.Count > 20)
+            {
+                html = html.Replace("position: fixed;", "");
+            }
+
             return html;
         }
 
