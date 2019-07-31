@@ -238,6 +238,12 @@ namespace DBCHM
                 lblTip.ForeColor = System.Drawing.Color.Green;
                 GV_ColComments.Columns[1].ReadOnly = false;
             }
+
+            //除了列描述，其余列全部 都居中
+            for (int j = 0; j < GV_ColComments.Columns.Count - 1; j++)
+            {
+                GV_ColComments.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
         }
 
         /// <summary>
@@ -289,13 +295,13 @@ namespace DBCHM
                 LabCurrTabName.Text = checkedListBox1.SelectedItems[0].ToString();
                 TxtCurrTabComment.Text = DBUtils.Instance?.Info?.TableComments[LabCurrTabName.Text];
 
-                var nvc = DBUtils.Instance?.Info?.TableColumnComments[LabCurrTabName.Text];
-
-                if (nvc != null)
+                var columnInfos = DBUtils.Instance?.Info?.GetColumns(LabCurrTabName.Text);
+                
+                if (columnInfos != null)
                 {
-                    foreach (var colName in nvc.AllKeys)
+                    foreach (var colInfo in columnInfos)
                     {
-                        GV_ColComments.Rows.Add(colName, nvc[colName]);
+                        GV_ColComments.Rows.Add(colInfo.ColumnName, colInfo.TypeName, colInfo.Length, colInfo.DeText);
                     }
                 }
                 else
@@ -483,7 +489,7 @@ namespace DBCHM
                     return;
                 }
 
-                //设置要 滚动条 对应的执行方法，以及滚动条最大值
+                //设置要 进度条 对应的执行方法，以及进度条最大值
                 FormUtils.ProgArg = new ProgressArg(() =>
                 {
                     try
@@ -789,15 +795,13 @@ namespace DBCHM
 
         private void GV_ColComments_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex > 0 && e.RowIndex > -1)
+            if (GV_ColComments.Columns[e.ColumnIndex].Name.Equals("ColComment", StringComparison.OrdinalIgnoreCase))
             {
                 object obj = GV_ColComments.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (obj != null)
-                {
-                    string content = obj.ToString();
-                    this.GV_ColComments.CurrentCell = this.GV_ColComments[e.ColumnIndex, e.RowIndex];
-                    this.GV_ColComments.BeginEdit(true);
-                }
+                string content = obj.ToString();
+
+                this.GV_ColComments.CurrentCell = this.GV_ColComments[e.ColumnIndex, e.RowIndex];
+                this.GV_ColComments.BeginEdit(true);
             }
         }
 
@@ -869,8 +873,8 @@ namespace DBCHM
 
                 for (int j = 0; j < GV_ColComments.Rows.Count; j++)
                 {
-                    string columnName = GV_ColComments[0, j].Value.ToString();
-                    string colComment = (GV_ColComments[1, j].Value ?? string.Empty).ToString();
+                    string columnName = GV_ColComments.Rows[j].Cells["ColName"].Value.ToString();
+                    string colComment = (GV_ColComments.Rows[j].Cells["ColComment"].Value ?? string.Empty).ToString();
                     if (!string.IsNullOrEmpty(colComment))
                     {
                         blRes = DBUtils.Instance?.Info?.SetColumnComment(LabCurrTabName.Text, columnName, colComment);
