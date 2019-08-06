@@ -5,7 +5,7 @@
     <title>{DBName}数据库文档_v{Doc_Version}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <style type="text/css">
-        *{
+        * {
             margin: 0;
             padding: 0;
             border: 0;
@@ -386,55 +386,32 @@
             clear: both;
         }
 
-        /* 页面响应式样式 */
-        @media (min-width : 768px) {
-            #sidebar {
-                display: block;
-                float: left;
-                width: 20%;
-                margin: 0;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                position: fixed;
-            }
-
-            .outer {
-                width: 95%;
-                padding: 0 25px;
-            }
-
-            .page-content {
-                width: 80%;
-                float: right;
-            }
-
-            #main-nav {
-                display: block;
-            }
-
-            .version_s {
-                display: inline;
-            }
+        #sidebar {
+            display: block;
+            float: left;
+            width: 20%;
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        @media (max-width : 768px) {
-            #sidebar {
-                width: 90%;
-            }
+        .outer {
+            width: 95%;
+            padding: 0 25px;
+        }
 
-            .outer {
-                width: 95%;
-                padding: 0;
-            }
+        .page-content {
+            width: 80%;
+            float: right;
+        }
 
-            .page-content {
-                width: 95%;
-            }
+        #main-nav {
+            display: block;
+        }
 
-            .version_s {
-                display: none;
-            }
+        .version_s {
+            display: inline;
         }
 
         .tab-struct tr:first {
@@ -448,6 +425,48 @@
         .check-bg-color {
             background-color: #E6E6FA;
         }
+
+        /**返回置顶**/
+        #goto_top {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            width: 44px;
+            z-index: 1999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
+            background-color: #fff;
+            text-align: center;
+            height: 44px;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+        }
+
+            #goto_top img {
+                display: block;
+                width: 22px;
+                height: auto;
+                margin: auto 0;
+            }
+
+            #goto_top .show-txt {
+                display: none;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                font-size: 12px;
+                line-height: 14px;
+                background-color: #10af88;
+                color: #fff;
+                text-align: center;
+                width: 100%;
+                height: 100%;
+            }
     </style>
 </head>
 <body>
@@ -490,6 +509,10 @@
         </div>
     </article>
     <footer id="footer">
+        <a id="goto_top">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAOEAQAAADPYci2AAAA60lEQVQ4y2NgGEzA+qW+vt0DS0uaGG5XEBRkW/Drl23Vv382TXl5tDHc9v9/MKamJTY8gYFww72vXrXZfOgQzBLbBTk5lLncxcvL5tmPH2ADF9y4YVsgKWlszMVls3DfPrglArm5VDHcWlhKCiYHssR2+f79ZPvEeq6nJ9zwiJs3kQ2HAdeL3NxkWUKM4bgssTPJzsZv+HVfX9v1P38ihzlBBwnz8tomHzkCt0QpPR13ijnz4QO2MCfKEuGjR0F6bT7/+WP/X0QEuwWfJ0+2dduzhxTDYcDsNh+fzeq1a20TV68ODWVmZhg2AABK8aiBbcwodgAAAABJRU5ErkJggg==" />
+            <span class="show-txt">返回<br>顶部</span>
+        </a>
         <div class="outer">
             <div id="footer-copyright">
                 <div>
@@ -504,28 +527,65 @@
         </div>
     </footer>
     <script type="text/javascript">
-			window.onload = function() {
-				 let arrTR=[];
-				 let tabs = document.getElementsByClassName("tab-struct");
-				 for (let j = 0; j < tabs.length; j++) {
-				 	let tab = tabs[j];
-				 	let trs = tab.getElementsByTagName('tr');
-				 	for (let k = 0; k < trs.length; k++) {
-				 		if (k == 0) {
-				 			continue;
-				 		}
-				 		arrTR.push(trs[k]);
-				 	}
-				 }
-				 for (let i = 0; i < arrTR.length; i++) {
-				 	arrTR[i].onclick=function(){
-				 		for (var j = 0; j < arrTR.length; j++) {
-				 			arrTR[j].className = 'other-bg-color';
-				 		}
-				 		this.className = 'check-bg-color';
-				 	}
-				 }
-			}
+        window.onload = function () {
+
+            //20个表以内，左侧固定
+            var tab_trs = document.querySelectorAll("#dir .tab-struct tr");
+            if (tab_trs.length <= 21) {
+                document.getElementById("sidebar").style.position = 'fixed';
+            }
+
+            let arrTR = [];
+            let tabs = document.getElementsByClassName("tab-struct");
+            for (let j = 0; j < tabs.length; j++) {
+                let tab = tabs[j];
+                let trs = tab.getElementsByTagName('tr');
+                for (let k = 0; k < trs.length; k++) {
+                    if (k == 0) {
+                        continue;
+                    }
+                    arrTR.push(trs[k]);
+                }
+            }
+            for (let i = 0; i < arrTR.length; i++) {
+                arrTR[i].onclick = function () {
+                    for (var j = 0; j < arrTR.length; j++) {
+                        arrTR[j].className = 'other-bg-color';
+                    }
+                    this.className = 'check-bg-color';
+                }
+            }
+
+            document.getElementById("goto_top").onclick = function () {
+                timer = setInterval(function () {
+                    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                    var ispeed = Math.floor(-scrollTop / 6);
+                    if (scrollTop == 0) {
+                        clearInterval(timer);
+                    }
+                    document.documentElement.scrollTop = document.body.scrollTop = scrollTop + ispeed;
+                }, 50)
+            }
+
+            document.getElementById("goto_top").addEventListener('mouseover', function () {
+                this.getElementsByTagName("img")[0].style.display = 'none'
+                this.getElementsByTagName("span")[0].style.display = 'flex'
+            })
+
+            document.getElementById("goto_top").addEventListener('mouseout', function () {
+                this.getElementsByTagName("img")[0].style.display = 'block'
+                this.getElementsByTagName("span")[0].style.display = 'none'
+            })
+        }
+
+        window.onscroll = function () {
+            var scrollTop = document.documentElement.scrollTop;
+            if (scrollTop - document.getElementById("dir").clientHeight > 0) {
+                document.getElementById("goto_top").style.display = "flex"
+            } else {
+                document.getElementById("goto_top").style.display = "none"
+            }
+        }
     </script>
 </body>
 </html>
