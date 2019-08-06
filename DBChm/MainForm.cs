@@ -456,7 +456,6 @@ namespace DBCHM
             saveDia.OverwritePrompt = true;
             saveDia.ValidateNames = true;
             saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.chm";
-            bool isOpen = false;
             if (saveDia.ShowDialog(this) == DialogResult.OK)
             {
                 chm_path = saveDia.FileName;
@@ -468,7 +467,6 @@ namespace DBCHM
                     if (dia == DialogResult.OK)
                     {
                         process.Kill();
-                        isOpen = true;
                     }
                 }
 
@@ -523,12 +521,12 @@ namespace DBCHM
                         c3.SourcePath = dirPath;
                         c3.Compile();
 
-                        if (isOpen)
-                        {
-                            System.Diagnostics.Process.Start(chm_path);
-                        }
-
                         bgWork.ReportProgress(4);
+
+                        if (MessageBox.Show("生成CHM文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            System.Diagnostics.Process.Start(saveDia.FileName);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -576,6 +574,16 @@ namespace DBCHM
             saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.doc";
             if (saveDia.ShowDialog(this) == DialogResult.OK)
             {
+                //System.Diagnostics.Process process;
+                //if (IsExistProcess(Path.GetFileName(saveDia.FileName), out process))
+                //{
+                //    var dia = MessageBox.Show("文件已打开，导出前需关闭，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                //    if (dia == DialogResult.OK)
+                //    {
+                //        process.Kill();
+                //    }
+                //}
+
                 FormUtils.ShowProcessing("正在导出数据字典Word文档，请稍等......", this, arg =>
                 {
                     try
@@ -583,7 +591,10 @@ namespace DBCHM
                         System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
                         TryOpenXml.Text.WordUtils.ExportWordByAsposeWords(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
 
-                        MessageBox.Show("生成数据库字典Word文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        if (MessageBox.Show("生成数据库字典Word文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            System.Diagnostics.Process.Start(saveDia.FileName);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -610,6 +621,16 @@ namespace DBCHM
             saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.xlsx";
             if (saveDia.ShowDialog(this) == DialogResult.OK)
             {
+                //System.Diagnostics.Process process;
+                //if (IsExistProcess(Path.GetFileName(saveDia.FileName), out process))
+                //{
+                //    var dia = MessageBox.Show("文件已打开，导出前需关闭，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                //    if (dia == DialogResult.OK)
+                //    {
+                //        process.Kill();
+                //    }
+                //}
+
                 FormUtils.ShowProcessing("正在导出数据字典Excel文档，请稍等......", this, arg =>
                 {
                     try
@@ -617,7 +638,10 @@ namespace DBCHM
                         System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
                         TryOpenXml.Text.ExcelUtils.ExportExcelByEpplus(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
 
-                        MessageBox.Show("生成数据库字典Excel文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        if(MessageBox.Show("生成数据库字典Excel文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            System.Diagnostics.Process.Start(saveDia.FileName);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -644,6 +668,16 @@ namespace DBCHM
             saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.pdf";
             if (saveDia.ShowDialog(this) == DialogResult.OK)
             {
+                //System.Diagnostics.Process process;
+                //if (IsExistProcess(Path.GetFileName(saveDia.FileName), out process))
+                //{
+                //    var dia = MessageBox.Show("文件已打开，导出前需关闭，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                //    if (dia == DialogResult.OK)
+                //    {
+                //        process.Kill();
+                //    }
+                //}
+
                 FormUtils.ShowProcessing("正在导出数据字典PDF文档，请稍等......", this, arg =>
                 {
                     try
@@ -653,7 +687,10 @@ namespace DBCHM
                         System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
                         TryOpenXml.Text.PdfUtils.ExportPdfByITextSharp(saveDia.FileName, baseFontPath, DBUtils.Instance.Info.DBName, tableDtos);
 
-                        MessageBox.Show("生成数据库字典Pdf文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        if(MessageBox.Show("生成数据库字典PDF文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            System.Diagnostics.Process.Start(saveDia.FileName);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -687,7 +724,10 @@ namespace DBCHM
                         System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
                         TryOpenXml.Text.XmlUtils.ExportXml(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
 
-                        MessageBox.Show("生成数据库字典XML文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        if(MessageBox.Show("生成数据库字典XML文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            System.Diagnostics.Process.Start(saveDia.FileName);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -721,7 +761,10 @@ namespace DBCHM
                         System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
                         TryOpenXml.Text.HtmlUtils.ExportHtml(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
 
-                        MessageBox.Show("生成数据库字典html文档成功！", "操作提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        if (MessageBox.Show("生成数据库字典HTML文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            System.Diagnostics.Process.Start(saveDia.FileName);
+                        }
                     }
                     catch (Exception ex)
                     {
