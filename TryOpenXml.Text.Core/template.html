@@ -531,13 +531,6 @@
     </footer>
     <script type="text/javascript">
         window.onload = function () {
-
-            //20个表以内，左侧固定
-            var tab_trs = document.querySelectorAll("#dir .tab-struct tr");
-            if (tab_trs.length <= 21) {
-                document.getElementById("sidebar").style.position = 'fixed';
-            }
-
             let arrTR = [];
             let tabs = document.getElementsByClassName("tab-struct");
             for (let j = 0; j < tabs.length; j++) {

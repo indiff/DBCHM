@@ -61,13 +61,13 @@
             this.GpColumns = new System.Windows.Forms.GroupBox();
             this.lblTip = new System.Windows.Forms.Label();
             this.GV_ColComments = new System.Windows.Forms.DataGridView();
-            this.BtnSaveGridData = new System.Windows.Forms.Button();
-            this.TxtTabName = new System.Windows.Forms.TextBox();
-            this.RibbonPanel = new System.Windows.Forms.Panel();
             this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColDataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnSaveGridData = new System.Windows.Forms.Button();
+            this.TxtTabName = new System.Windows.Forms.TextBox();
+            this.RibbonPanel = new System.Windows.Forms.Panel();
             this.statusStripMain.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.ribbonPageAbout.SuspendLayout();
@@ -461,37 +461,6 @@
             this.GV_ColComments.TabIndex = 0;
             this.GV_ColComments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_ColComments_CellClick);
             // 
-            // BtnSaveGridData
-            // 
-            this.BtnSaveGridData.Location = new System.Drawing.Point(529, 400);
-            this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(2);
-            this.BtnSaveGridData.Name = "BtnSaveGridData";
-            this.BtnSaveGridData.Size = new System.Drawing.Size(98, 34);
-            this.BtnSaveGridData.TabIndex = 8;
-            this.BtnSaveGridData.Text = "保存";
-            this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
-            // 
-            // TxtTabName
-            // 
-            this.TxtTabName.Location = new System.Drawing.Point(40, 26);
-            this.TxtTabName.Margin = new System.Windows.Forms.Padding(2);
-            this.TxtTabName.Name = "TxtTabName";
-            this.TxtTabName.Size = new System.Drawing.Size(221, 21);
-            this.TxtTabName.TabIndex = 0;
-            this.TxtTabName.TextChanged += new System.EventHandler(this.TxtTabName_TextChanged);
-            // 
-            // RibbonPanel
-            // 
-            this.RibbonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RibbonPanel.Controls.Add(this.GpTableCol);
-            this.RibbonPanel.Location = new System.Drawing.Point(0, 98);
-            this.RibbonPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.RibbonPanel.Name = "RibbonPanel";
-            this.RibbonPanel.Size = new System.Drawing.Size(1070, 578);
-            this.RibbonPanel.TabIndex = 4;
-            // 
             // ColName
             // 
             this.ColName.Frozen = true;
@@ -521,6 +490,37 @@
             this.ColComment.Name = "ColComment";
             this.ColComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColComment.Width = 450;
+            // 
+            // BtnSaveGridData
+            // 
+            this.BtnSaveGridData.Location = new System.Drawing.Point(593, 400);
+            this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(2);
+            this.BtnSaveGridData.Name = "BtnSaveGridData";
+            this.BtnSaveGridData.Size = new System.Drawing.Size(98, 34);
+            this.BtnSaveGridData.TabIndex = 8;
+            this.BtnSaveGridData.Text = "保存";
+            this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
+            // 
+            // TxtTabName
+            // 
+            this.TxtTabName.Location = new System.Drawing.Point(40, 26);
+            this.TxtTabName.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtTabName.Name = "TxtTabName";
+            this.TxtTabName.Size = new System.Drawing.Size(221, 21);
+            this.TxtTabName.TabIndex = 0;
+            this.TxtTabName.TextChanged += new System.EventHandler(this.TxtTabName_TextChanged);
+            // 
+            // RibbonPanel
+            // 
+            this.RibbonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RibbonPanel.Controls.Add(this.GpTableCol);
+            this.RibbonPanel.Location = new System.Drawing.Point(0, 98);
+            this.RibbonPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RibbonPanel.Name = "RibbonPanel";
+            this.RibbonPanel.Size = new System.Drawing.Size(1070, 578);
+            this.RibbonPanel.TabIndex = 4;
             // 
             // MainForm
             // 
