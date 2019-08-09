@@ -1,6 +1,6 @@
 ﻿namespace DBCHM
 {
-    partial class ImportPDMForm
+    partial class ImportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,41 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportPDMForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportForm));
             this.txtMulItem = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BtnBrow = new System.Windows.Forms.Button();
             this.BtnUpdateDisplayName = new System.Windows.Forms.Button();
-            this.GP_PDM_Import = new System.Windows.Forms.GroupBox();
-            this.GP_PDM_Import.SuspendLayout();
+            this.GP_Import = new System.Windows.Forms.GroupBox();
+            this.GP_Import.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMulItem
             // 
-            this.txtMulItem.Location = new System.Drawing.Point(142, 32);
-            this.txtMulItem.Margin = new System.Windows.Forms.Padding(4);
+            this.txtMulItem.Location = new System.Drawing.Point(77, 26);
             this.txtMulItem.Multiline = true;
             this.txtMulItem.Name = "txtMulItem";
             this.txtMulItem.ReadOnly = true;
-            this.txtMulItem.Size = new System.Drawing.Size(570, 88);
+            this.txtMulItem.Size = new System.Drawing.Size(497, 71);
             this.txtMulItem.TabIndex = 7;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 62);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(6, 50);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 15);
+            this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 6;
-            this.label1.Text = "pdm 文件路径：";
+            this.label1.Text = "文件路径：";
             // 
             // BtnBrow
             // 
-            this.BtnBrow.Location = new System.Drawing.Point(267, 22);
-            this.BtnBrow.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnBrow.Location = new System.Drawing.Point(200, 18);
             this.BtnBrow.Name = "BtnBrow";
-            this.BtnBrow.Size = new System.Drawing.Size(109, 45);
+            this.BtnBrow.Size = new System.Drawing.Size(82, 36);
             this.BtnBrow.TabIndex = 5;
             this.BtnBrow.Text = "选择(可多选)";
             this.BtnBrow.UseVisualStyleBackColor = true;
@@ -70,44 +67,44 @@
             // 
             // BtnUpdateDisplayName
             // 
-            this.BtnUpdateDisplayName.Location = new System.Drawing.Point(512, 22);
-            this.BtnUpdateDisplayName.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnUpdateDisplayName.Location = new System.Drawing.Point(384, 18);
             this.BtnUpdateDisplayName.Name = "BtnUpdateDisplayName";
-            this.BtnUpdateDisplayName.Size = new System.Drawing.Size(119, 45);
+            this.BtnUpdateDisplayName.Size = new System.Drawing.Size(89, 36);
             this.BtnUpdateDisplayName.TabIndex = 8;
             this.BtnUpdateDisplayName.Text = "更新表列批注";
             this.BtnUpdateDisplayName.UseVisualStyleBackColor = true;
             this.BtnUpdateDisplayName.Click += new System.EventHandler(this.BtnUpdateDisplayName_Click);
             // 
-            // GP_PDM_Import
+            // GP_Import
             // 
-            this.GP_PDM_Import.Controls.Add(this.label1);
-            this.GP_PDM_Import.Controls.Add(this.txtMulItem);
-            this.GP_PDM_Import.Location = new System.Drawing.Point(12, 74);
-            this.GP_PDM_Import.Name = "GP_PDM_Import";
-            this.GP_PDM_Import.Size = new System.Drawing.Size(757, 141);
-            this.GP_PDM_Import.TabIndex = 9;
-            this.GP_PDM_Import.TabStop = false;
-            this.GP_PDM_Import.Text = "pdm文件导入";
+            this.GP_Import.Controls.Add(this.label1);
+            this.GP_Import.Controls.Add(this.txtMulItem);
+            this.GP_Import.Location = new System.Drawing.Point(5, 59);
+            this.GP_Import.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GP_Import.Name = "GP_Import";
+            this.GP_Import.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GP_Import.Size = new System.Drawing.Size(584, 113);
+            this.GP_Import.TabIndex = 9;
+            this.GP_Import.TabStop = false;
+            this.GP_Import.Text = "批注数据导入";
             // 
             // ImportPDMForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(793, 236);
-            this.Controls.Add(this.GP_PDM_Import);
+            this.ClientSize = new System.Drawing.Size(595, 189);
+            this.Controls.Add(this.GP_Import);
             this.Controls.Add(this.BtnUpdateDisplayName);
             this.Controls.Add(this.BtnBrow);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ImportPDMForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "pdm文件导入";
-            this.GP_PDM_Import.ResumeLayout(false);
-            this.GP_PDM_Import.PerformLayout();
+            this.Text = "批注上载";
+            this.GP_Import.ResumeLayout(false);
+            this.GP_Import.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -118,6 +115,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BtnBrow;
         private System.Windows.Forms.Button BtnUpdateDisplayName;
-        private System.Windows.Forms.GroupBox GP_PDM_Import;
+        private System.Windows.Forms.GroupBox GP_Import;
     }
 }

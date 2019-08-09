@@ -25,6 +25,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -77,6 +79,7 @@
     <Compile Include="Common\ConfigUtils.cs" />
     <Compile Include="Common\LogUtils.cs" />
     <Compile Include="Common\ProgressArg.cs" />
+    <Compile Include="Common\XmlAnalyze.cs" />
     <Compile Include="FrmProcessing.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,11 +98,11 @@
     <Compile Include="DBForm.Designer.cs">
       <DependentUpon>DBForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImportPDMForm.cs">
+    <Compile Include="ImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImportPDMForm.designer.cs">
-      <DependentUpon>ImportPDMForm.cs</DependentUpon>
+    <Compile Include="ImportForm.designer.cs">
+      <DependentUpon>ImportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PdmModels\ColumnInfo.cs" />
     <Compile Include="PdmModels\PdmKey.cs" />
@@ -129,8 +132,8 @@
     <EmbeddedResource Include="DBForm.resx">
       <DependentUpon>DBForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ImportPDMForm.resx">
-      <DependentUpon>ImportPDMForm.cs</DependentUpon>
+    <EmbeddedResource Include="ImportForm.resx">
+      <DependentUpon>ImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

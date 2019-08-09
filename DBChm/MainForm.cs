@@ -398,7 +398,7 @@ namespace DBCHM
         /// <param name="e"></param>
         private void tsbSaveUpload_Click(object sender, EventArgs e)
         {
-            ImportPDMForm pdmForm = new ImportPDMForm();
+            ImportForm pdmForm = new ImportForm();
             DialogResult dirRes = pdmForm.ShowDialog(this);
             if (dirRes == DialogResult.OK || FormUtils.IsOK_Close)
             {

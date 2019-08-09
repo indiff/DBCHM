@@ -45,17 +45,10 @@ namespace TryOpenXml.Text
         /// <returns></returns>
         public static object Deserialize(Type type, string xml)
         {
-            try
+            using (StringReader sr = new StringReader(xml))
             {
-                using (StringReader sr = new StringReader(xml))
-                {
-                    XmlSerializer xmldes = new XmlSerializer(type);
-                    return xmldes.Deserialize(sr);
-                }
-            }
-            catch (Exception e)
-            {
-                return null;
+                XmlSerializer xmldes = new XmlSerializer(type);
+                return xmldes.Deserialize(sr);
             }
         }
 
@@ -85,15 +78,8 @@ namespace TryOpenXml.Text
         {
             MemoryStream Stream = new MemoryStream();
             XmlSerializer xml = new XmlSerializer(type);
-            try
-            {
-                //序列化对象
-                xml.Serialize(Stream, obj);
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
-            }
+            //序列化对象
+            xml.Serialize(Stream, obj);
             Stream.Position = 0;
             StreamReader sr = new StreamReader(Stream);
             string str = sr.ReadToEnd();
