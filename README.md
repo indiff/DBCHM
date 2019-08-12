@@ -16,8 +16,8 @@
 - 文档信息包含：序号 | 列名 | 数据类型 | 长度 | 小数位数 | 主键 | 自增 | 允许空 | 默认值 | 列说明
 - 根据文件导入进行更新批注：
     - 	[x] pdm 由`powerdesigner`设计数据库时产生。
-    - 	[x] xml  由`visual studio`设置项目属性，勾选  XML文档文件后产生。
-	- 	[x] xml 由`dbchm`的 XML导出而产生。
+    - 	[x] xml 由`visual studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
+    - 	[x] xml 由`dbchm`的 XML导出 而产生。
 - 支持的导出的文件格式：
     - 	[x] chm
     - 	[x] word
