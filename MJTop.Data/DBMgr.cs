@@ -165,10 +165,10 @@ namespace MJTop.Data
             switch (dbType)
             {
                 case DBType.SqlServer:
-                    connectionString = string.Format(@"server={0},{1};database={2};uid={3};pwd={4}", server, (port ?? 1433), databBase, uid, pwd);
+                    connectionString = string.Format(@"server={0}{1};database={2};uid={3};pwd={4}", server, (port.HasValue ? ("," + port.Value) : string.Empty), databBase, uid, pwd);
                     break;
                 case DBType.MySql:
-                    connectionString = string.Format(@"Server={0};port={1};Database={2};User={3};Password={4};", server, (port ?? 3306), databBase, uid, pwd);
+                    connectionString = string.Format(@"Server={0};{1}Database={2};User={3};Password={4};", server, (port.HasValue ? ("Port=" + port.Value + ";") : string.Empty), databBase, uid, pwd);
                     break;
                 case DBType.Oracle:
                     connectionString = string.Format("Data Source={0}:{1}/{2};User Id={3};password={4};Pooling=true;", server, (port ?? 1521), databBase, uid, pwd);
@@ -177,7 +177,7 @@ namespace MJTop.Data
                     connectionString = string.Format("Host={0};Port={1};Service Name={2};User ID={3};Password={4};PERSIST SECURITY INFO=True;", server, (port ?? 1521), databBase, uid, pwd);
                     break;
                 case DBType.PostgreSql:
-                    connectionString = string.Format("host={0};port={1};database={2};user id={3};password={4};", server, (port ?? 5432), databBase, uid, pwd);
+                    connectionString = string.Format("host={0};{1}database={2};user id={3};password={4};", server, (port.HasValue ? ("port=" + port.Value + ";") : string.Empty), databBase, uid, pwd);
                     break;
                 case DBType.SQLite:
                     //connectionString = string.Format("Data Source={0};Pooling=True;BinaryGUID=True;Enlist=N;Synchronous=Off;Journal Mode=WAL;Cache Size=5000;", databBase);
