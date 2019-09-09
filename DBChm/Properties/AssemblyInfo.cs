@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("51Try.Top")]
 [assembly: AssemblyProduct("DBCHM")]
-[assembly: AssemblyCopyright("Copyright ©  2018 lztkdr")]
+[assembly: AssemblyCopyright("Copyright ©  2019 lztkdr")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 //
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”: :
-[assembly: AssemblyVersion("1.7.3.3")]
-[assembly: AssemblyFileVersion("1.7.3.3")]
+[assembly: AssemblyVersion("1.7.3.4")]
+[assembly: AssemblyFileVersion("1.7.3.4")]
