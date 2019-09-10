@@ -57,9 +57,9 @@
             // 
             // BtnBrow
             // 
-            this.BtnBrow.Location = new System.Drawing.Point(200, 18);
+            this.BtnBrow.Location = new System.Drawing.Point(178, 18);
             this.BtnBrow.Name = "BtnBrow";
-            this.BtnBrow.Size = new System.Drawing.Size(82, 36);
+            this.BtnBrow.Size = new System.Drawing.Size(104, 36);
             this.BtnBrow.TabIndex = 5;
             this.BtnBrow.Text = "选择(可多选)";
             this.BtnBrow.UseVisualStyleBackColor = true;
@@ -67,9 +67,9 @@
             // 
             // BtnUpdateDisplayName
             // 
-            this.BtnUpdateDisplayName.Location = new System.Drawing.Point(384, 18);
+            this.BtnUpdateDisplayName.Location = new System.Drawing.Point(371, 18);
             this.BtnUpdateDisplayName.Name = "BtnUpdateDisplayName";
-            this.BtnUpdateDisplayName.Size = new System.Drawing.Size(89, 36);
+            this.BtnUpdateDisplayName.Size = new System.Drawing.Size(104, 36);
             this.BtnUpdateDisplayName.TabIndex = 8;
             this.BtnUpdateDisplayName.Text = "更新表列批注";
             this.BtnUpdateDisplayName.UseVisualStyleBackColor = true;
@@ -80,15 +80,15 @@
             this.GP_Import.Controls.Add(this.label1);
             this.GP_Import.Controls.Add(this.txtMulItem);
             this.GP_Import.Location = new System.Drawing.Point(5, 59);
-            this.GP_Import.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GP_Import.Margin = new System.Windows.Forms.Padding(2);
             this.GP_Import.Name = "GP_Import";
-            this.GP_Import.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GP_Import.Padding = new System.Windows.Forms.Padding(2);
             this.GP_Import.Size = new System.Drawing.Size(584, 113);
             this.GP_Import.TabIndex = 9;
             this.GP_Import.TabStop = false;
             this.GP_Import.Text = "批注数据导入";
             // 
-            // ImportPDMForm
+            // ImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -100,7 +100,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ImportPDMForm";
+            this.Name = "ImportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "批注上载";
             this.GP_Import.ResumeLayout(false);
