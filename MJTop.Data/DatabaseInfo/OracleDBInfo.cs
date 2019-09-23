@@ -305,7 +305,7 @@ namespace MJTop.Data.DatabaseInfo
         {
             Db.CheckTabStuct(tableName);
 
-            tableName = (tableName ?? string.Empty).ToUpper();
+            //tableName = (tableName ?? string.Empty).ToUpper();
            
             string upsert_sql = string.Empty;
             comment = (comment ?? string.Empty).Replace("'", "");
@@ -332,8 +332,9 @@ namespace MJTop.Data.DatabaseInfo
         {
             Db.CheckTabStuct(tableName, columnName);
 
-            tableName = (tableName ?? string.Empty).ToUpper();
-            columnName = (columnName ?? string.Empty).ToUpper();
+            //tableName = (tableName ?? string.Empty).ToUpper();
+            //columnName = (columnName ?? string.Empty).ToUpper();
+
             string upsert_sql = string.Empty;
             comment = (comment ?? string.Empty).Replace("'", "");
             try
@@ -346,7 +347,7 @@ namespace MJTop.Data.DatabaseInfo
                 NameValueCollection nvcColDesc = new NameValueCollection();
                 lstColInfo.ForEach(t =>
                 {
-                    if (t.ColumnName.Equals(columnName))
+                    if (t.ColumnName.Equals(columnName,StringComparison.OrdinalIgnoreCase))
                     {
                         t.DeText = comment;
                     }
