@@ -139,7 +139,7 @@ namespace DBCHM
 
                 string strDBName = cboDBName.Text;
 
-                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))), strDBName, TxtUName.Text, TxtPwd.Text);
+                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))), strDBName, TxtUName.Text, TxtPwd.Text, 300);
 
                 var info = DBUtils.Instance.Info;
 

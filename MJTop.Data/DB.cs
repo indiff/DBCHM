@@ -348,13 +348,14 @@ namespace MJTop.Data
             var cmd = conn.CreateCommand();
             cmd.CommandText = cmdText;
             cmd.CommandType = cmdType;
-            if (timeOut > 0)//（以秒为单位）。默认为 30 秒
-            {
-                cmd.CommandTimeout = timeOut;
-            }
-            else
+
+            if (this.CmdTimeout != timeOut)
             {
                 cmd.CommandTimeout = this.CmdTimeout;
+            }
+            else //以秒为单位）。默认为 30 秒
+            {
+                cmd.CommandTimeout = timeOut;
             }
 
             if (cmdParms != null)
