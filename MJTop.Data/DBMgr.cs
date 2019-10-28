@@ -188,7 +188,7 @@ namespace MJTop.Data
                     }
                     break;
                 case DBType.DB2:
-                    connectionString = string.Format(@"server={0}:{1};Database={2};Uid={3};Pwd={4}", server, (port ?? 50000), databBase, uid, pwd);
+                    connectionString = string.Format(@"server={0}:{1};Database={2};Uid={3};Pwd={4};connection timeout={5}", server, (port ?? 50000), databBase, uid, pwd, connTimeOut);
                     break;
                 default:
                     throw new ArgumentException("未知数据库类型！");
