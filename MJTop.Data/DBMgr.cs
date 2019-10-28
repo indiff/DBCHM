@@ -134,9 +134,9 @@ namespace MJTop.Data
         /// <param name="pwd">密码</param>
         /// <param name="cmdTimeOut">执行超时时间（单位：秒）</param>
         /// <returns>数据库操作实例对象</returns>
-        public static DB UseDB(DBType dbType, string server, int? port, string databBase, string uid, string pwd, int cmdTimeOut = 30)
+        public static DB UseDB(DBType dbType, string server, int? port, string databBase, string uid, string pwd, int connTimeOut = 60, int cmdTimeOut = 30)
         {
-            return DBFactory.CreateInstance(dbType, GetConnectionString(dbType, server, port, databBase, uid, pwd), cmdTimeOut);
+            return DBFactory.CreateInstance(dbType, GetConnectionString(dbType, server, port, databBase, uid, pwd, connTimeOut), cmdTimeOut);
         }
 
         public static DB UseSqlite(string dbPath, string password = null, int cmdTimeOut = 30)
@@ -155,7 +155,7 @@ namespace MJTop.Data
         /// <param name="uid">用户名</param>
         /// <param name="pwd">密码</param>
         /// <returns>连接字符串</returns>
-        public static string GetConnectionString(DBType dbType, string server, int? port, string databBase, string uid, string pwd)
+        public static string GetConnectionString(DBType dbType, string server, int? port, string databBase, string uid, string pwd, int connTimeOut = 60)
         {
             server = (server ?? string.Empty).Trim();
             databBase = (databBase ?? string.Empty).Trim();
@@ -165,19 +165,19 @@ namespace MJTop.Data
             switch (dbType)
             {
                 case DBType.SqlServer:
-                    connectionString = string.Format(@"server={0}{1};database={2};uid={3};pwd={4}", server, (port.HasValue ? ("," + port.Value) : string.Empty), databBase, uid, pwd);
+                    connectionString = string.Format(@"server={0}{1};database={2};uid={3};pwd={4};connection timeout={5}", server, (port.HasValue ? ("," + port.Value) : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.MySql:
-                    connectionString = string.Format(@"Server={0};{1}Database={2};User={3};Password={4};OldGuids=True;", server, (port.HasValue ? ("Port=" + port.Value + ";") : string.Empty), databBase, uid, pwd);
+                    connectionString = string.Format(@"Server={0};{1}Database={2};User={3};Password={4};OldGuids=True;connection timeout={5}", server, (port.HasValue ? ("Port=" + port.Value + ";") : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.Oracle:
-                    connectionString = string.Format("Data Source={0}:{1}/{2};User Id={3};password={4};Pooling=true;", server, (port ?? 1521), databBase, uid, pwd);
+                    connectionString = string.Format("Data Source={0}:{1}/{2};User Id={3};password={4};Pooling=true;connection timeout={5}", server, (port ?? 1521), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.OracleDDTek:
-                    connectionString = string.Format("Host={0};Port={1};Service Name={2};User ID={3};Password={4};PERSIST SECURITY INFO=True;", server, (port ?? 1521), databBase, uid, pwd);
+                    connectionString = string.Format("Host={0};Port={1};Service Name={2};User ID={3};Password={4};PERSIST SECURITY INFO=True;connection timeout={5}", server, (port ?? 1521), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.PostgreSql:
-                    connectionString = string.Format("host={0};{1}database={2};user id={3};password={4};", server, (port.HasValue ? ("port=" + port.Value + ";") : string.Empty), databBase, uid, pwd);
+                    connectionString = string.Format("host={0};{1}database={2};user id={3};password={4};connection timeout={5}", server, (port.HasValue ? ("port=" + port.Value + ";") : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.SQLite:
                     //connectionString = string.Format("Data Source={0};Pooling=True;BinaryGUID=True;Enlist=N;Synchronous=Off;Journal Mode=WAL;Cache Size=5000;", databBase);

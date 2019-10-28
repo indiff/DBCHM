@@ -33,7 +33,13 @@ namespace DBCHM
         [DisplayName("密码")]
         public string Pwd { get; set; }
 
+        [DisplayName("连接超时")]
+        public int? ConnTimeOut { get; set; }
+
         [DisplayName("连接字符串")]
         public string ConnString { get; set; }
+
+        [DisplayName("最后使用时间")]
+        public DateTime Modified { get; set; }
     }
 }

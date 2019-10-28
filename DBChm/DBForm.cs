@@ -45,10 +45,11 @@ namespace DBCHM
                     TxtConnectName.Text = config.Name;
                     cboDBType.Text = config.DBType;
                     TxtHost.Text = config.Server;
-                    TxtPort.Text = config.Port.ToString();
+                    TxtPort.Text = config.Port?.ToString();
                     TxtUName.Text = config.Uid;
                     TxtPwd.Text = config.Pwd;
                     cboDBName.Text = config.DBName;
+                    txtConnTimeOut.Text = config.ConnTimeOut?.ToString();
 
                     if (this.OpType == OPType.克隆)
                     {
@@ -73,6 +74,11 @@ namespace DBCHM
                 else
                 {
                     btnSelectFile.Visible = false;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtConnTimeOut.Text))
+                {
+                    txtConnTimeOut.Text = "60";
                 }
             }
 
@@ -139,7 +145,11 @@ namespace DBCHM
 
                 string strDBName = cboDBName.Text;
 
-                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))), strDBName, TxtUName.Text, TxtPwd.Text, 300);
+                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, 
+                    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))), 
+                    strDBName, TxtUName.Text, TxtPwd.Text,
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                    , 300);
 
                 var info = DBUtils.Instance.Info;
 
@@ -179,16 +189,22 @@ namespace DBCHM
             {
                 if (string.IsNullOrWhiteSpace(TxtConnectName.Text))
                 {
-                    throw new Exception("请输入连接名！");
+                    MessageBox.Show("请输入连接名！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
                 if (string.IsNullOrWhiteSpace(cboDBName.Text))
                 {
-                    throw new Exception("请输入数据库名称！");
+                    MessageBox.Show("请输入数据库名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
                 DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
-                string connString = DBMgr.GetConnectionString(type, TxtHost.Text, (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))), cboDBName.Text, TxtUName.Text, TxtPwd.Text);
+                string connString = DBMgr.GetConnectionString(type, TxtHost.Text,
+                    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
+                    cboDBName.Text, TxtUName.Text, TxtPwd.Text,
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                    );
                 NameValueCollection nvc = new NameValueCollection();
                 if (OpType == OPType.新建 || OpType == OPType.克隆)
                 {
@@ -200,8 +216,9 @@ namespace DBCHM
                     nvc.Add("DBName", cboDBName.Text.Trim());
                     nvc.Add("Uid", TxtUName.Enabled ? TxtUName.Text.Trim() : string.Empty);
                     nvc.Add("Pwd", TxtPwd.Enabled ? TxtPwd.Text : string.Empty);
-
+                    nvc.Add("ConnTimeOut", txtConnTimeOut.Enabled ? txtConnTimeOut.Text : "60");
                     nvc.Add("ConnString", connString);
+                    nvc.Add("Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
                     ConfigUtils.Save(nvc);
 
@@ -219,8 +236,9 @@ namespace DBCHM
                     nvc.Add("DBName", cboDBName.Text.Trim());
                     nvc.Add("Uid", TxtUName.Enabled ? TxtUName.Text.Trim() : string.Empty);
                     nvc.Add("Pwd", TxtPwd.Enabled ? TxtPwd.Text : string.Empty);
-
+                    nvc.Add("ConnTimeOut", txtConnTimeOut.Enabled ? txtConnTimeOut.Text : "60");
                     nvc.Add("ConnString", connString);
+                    nvc.Add("Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     ConfigUtils.Save(nvc);
                 }
             }
@@ -313,6 +331,28 @@ namespace DBCHM
                     int maxPort = 0;
                     int.TryParse(TxtPort.Text + e.KeyChar.ToString(), out maxPort);
                     if (maxPort > 0 && maxPort <= 65535)
+                    {
+                        e.Handled = false;
+                    }
+                }
+            }
+
+        }
+
+        private void txtConnectionOut_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+            if (e.KeyChar == 8 || e.KeyChar == 127)//退格删除，delete删除
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                if (e.KeyChar >= '0' && e.KeyChar <= '9')//只能输入数字
+                {
+                    int timtOut = 0;
+                    int.TryParse(TxtPort.Text + e.KeyChar.ToString(), out timtOut);
+                    if (timtOut > -1)
                     {
                         e.Handled = false;
                     }

@@ -117,6 +117,7 @@ namespace DBCHM
                 try
                 {
                     DBUtils.Instance = DBMgr.UseDB((DBType)Enum.Parse(typeof(DBType), config.DBType), config.ConnString, 300);
+                    ConfigUtils.UpLastModified(Id);
                 }
                 catch (Exception ex)
                 {

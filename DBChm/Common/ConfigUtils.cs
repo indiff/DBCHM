@@ -61,26 +61,61 @@ namespace DBCHM
         private static void Init()
         {
             db = DBMgr.UseDB(DBType.SQLite, ConfigFilePath);
-            string strSql = string.Empty;
-            //表不存在则创建 连接字符串 配置表
-            if (db.Info.TableNames == null || !db.Info.TableNames.Contains("DBCHMConfig", StringComparer.OrdinalIgnoreCase))
-            {
-                strSql = @"create table DBCHMConfig
-(
-   Id integer PRIMARY KEY autoincrement,
-   Name nvarchar(200) unique,
-	 DBType varchar(30),
-   Server varchar(100),
-   Port integer,
-   DBName varchar(100),
-	 Uid varchar(50),
-   Pwd varchar(100),
-	 ConnString text 
-)";
-                db.ExecSql(strSql);
 
+            string strSql = @"create table DBCHMConfig
+            (
+               Id integer PRIMARY KEY autoincrement,
+               Name nvarchar(200) unique,
+	             DBType varchar(30),
+               Server varchar(100),
+               Port integer,
+               DBName varchar(100),
+	             Uid varchar(50),
+               Pwd varchar(100),
+                ConnTimeOut integer,
+	             ConnString text,
+                Modified text
+            )";
+
+            //表不存在则创建 连接字符串 配置表
+            if (db.Info.TableNames == null || !db.Info.TableNames.Contains(nameof(DBCHMConfig), StringComparer.OrdinalIgnoreCase))
+            {
+                db.ExecSql(strSql);
                 //执行后，刷新实例 表结构信息
                 db.Info.Refresh();
+            }
+            else
+            {
+                // v1.7.3.7 版本 增加 连接超时 与 最后连接时间
+                var info = db.Info;
+                if(!info.IsExistColumn(nameof(DBCHMConfig), nameof(DBCHMConfig.Modified)))
+                {
+                    var configs = db.GetListDictionary("select * from " + nameof(DBCHMConfig));
+
+                    db.Info.DropTable(nameof(DBCHMConfig));
+
+                    db.ExecSql(strSql);
+
+                    //执行后，刷新实例 表结构信息
+                    db.Info.Refresh();
+
+                    if (configs != null && configs.Count > 0)
+                    {
+                        foreach (var config in configs)
+                        {
+                            try
+                            {
+                                db.Insert(config, nameof(DBCHMConfig));
+                            }
+                            catch (Exception ex)
+                            {
+                                LogUtils.LogError("Init", Developer.SysDefault, ex, config);
+                            }
+                        }
+
+                        db.ExecSql("update " + nameof(DBCHMConfig) + " set ConnTimeOut = 120 ");
+                    }
+                }
             }
         }
 
@@ -222,6 +257,11 @@ namespace DBCHM
             db.Save(dbCHMConfig, "DBCHMConfig");
         }
 
+        public static void UpLastModified(int id)
+        {
+            db.ExecSql("update DBCHMConfig set Modified='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where id=" + id);
+        }
+
         /// <summary>
         /// 删除连接
         /// </summary>
@@ -237,7 +277,7 @@ namespace DBCHM
         /// <returns></returns>
         public static List<DBCHMConfig> SelectAll()
         {
-            return db.GetDataTable("select Id,Name,DBType,Server,Port,DBName,Uid,Pwd,ConnString from DBCHMConfig order by Id desc ").ConvertToListObject<DBCHMConfig>();
+            return db.GetDataTable("select * from DBCHMConfig order by Modified desc ").ConvertToListObject<DBCHMConfig>();
         }
 
         /// <summary>
@@ -247,7 +287,7 @@ namespace DBCHM
         /// <returns></returns>
         public static DBCHMConfig Get(int id)
         {
-            return db.GetDataTable("select Id,Name,DBType,Server,Port,DBName,Uid,Pwd,ConnString from DBCHMConfig where id = " + id).ConvertToListObject<DBCHMConfig>().FirstOrDefault();
+            return db.GetDataTable("select * from DBCHMConfig where id = " + id).ConvertToListObject<DBCHMConfig>().FirstOrDefault();
         }
 
         /// <summary>
