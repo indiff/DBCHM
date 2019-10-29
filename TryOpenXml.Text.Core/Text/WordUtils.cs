@@ -221,6 +221,9 @@ namespace TryOpenXml.Text
                 builder.Write("主键");
 
                 builder.InsertCell();
+                builder.Write("自增");
+
+                builder.InsertCell();
                 builder.Write("允许空");
 
                 builder.InsertCell();
