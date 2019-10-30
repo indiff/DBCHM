@@ -175,7 +175,6 @@ namespace DBCHM
                 MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            BtnOk.DialogResult = DialogResult.OK;
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -222,8 +221,6 @@ namespace DBCHM
 
                     ConfigUtils.Save(nvc);
 
-                    this.Close();
-
                 }
                 else if (OpType == OPType.编辑)
                 {
@@ -241,6 +238,9 @@ namespace DBCHM
                     nvc.Add("Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     ConfigUtils.Save(nvc);
                 }
+
+                this.DialogResult = DialogResult.OK;                
+                this.Close();
             }
             catch (Exception ex)
             {
