@@ -157,7 +157,7 @@ namespace MJTop.Data
             System.Reflection.PropertyInfo[] propInfo = TypeInfo<T>.Props;
             for (int i = 0; i < propInfo.Length; i++)
             {
-                if (row.Table.Columns[propInfo[i].Name] != null && row[propInfo[i].Name] != System.DBNull.Value)
+                if (row.Table.Columns[propInfo[i].Name] != null && row[propInfo[i].Name] != System.DBNull.Value && propInfo[i].CanWrite)
                 {
                     object objVal = row[propInfo[i].Name];
                     Type typeVal = Nullable.GetUnderlyingType(propInfo[i].PropertyType) ?? propInfo[i].PropertyType;
