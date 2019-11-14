@@ -272,8 +272,11 @@ namespace TryOpenXml.Text
                     builder.Write(column.CanNull); // 是否为空
 
                     builder.InsertCell();
+                    builder.Font.Size = 10;
                     builder.Write(column.DefaultVal); // 默认值
 
+                    builder.InsertCell();
+                    builder.Font.Size = 10;
                     builder.Write(column.Comment); // 列说明
 
                     builder.EndRow();

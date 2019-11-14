@@ -177,7 +177,7 @@ namespace MJTop.Data
                     connectionString = string.Format("Host={0};Port={1};Service Name={2};User ID={3};Password={4};PERSIST SECURITY INFO=True;connection timeout={5}", server, (port ?? 1521), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.PostgreSql:
-                    connectionString = string.Format("host={0};{1}database={2};user id={3};password={4};connection timeout={5}", server, (port.HasValue ? ("port=" + port.Value + ";") : string.Empty), databBase, uid, pwd, connTimeOut);
+                    connectionString = string.Format("host={0};{1}database={2};user id={3};password={4};timeout={5}", server, (port.HasValue ? ("port=" + port.Value + ";") : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.SQLite:
                     //connectionString = string.Format("Data Source={0};Pooling=True;BinaryGUID=True;Enlist=N;Synchronous=Off;Journal Mode=WAL;Cache Size=5000;", databBase);
