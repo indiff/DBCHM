@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aspose.Words.Tables;
+using System;
 using System.Collections.Generic;
 using TryOpenXml.Dtos;
 
@@ -191,7 +192,8 @@ namespace TryOpenXml.Text
                 // Set the left indent for the table. Table wide formatting must be applied after 
                 // at least one row is present in the table.
                 asposeTable.Alignment = Aspose.Words.Tables.TableAlignment.Center;
-
+                asposeTable.PreferredWidth = PreferredWidth.FromPercent(120);
+                asposeTable.AllowAutoFit = false;
                 // Set height and define the height rule for the header row.
                 builder.RowFormat.Height = 40.0;
                 builder.RowFormat.HeightRule = Aspose.Words.HeightRule.AtLeast;
@@ -201,35 +203,44 @@ namespace TryOpenXml.Text
                 builder.Font.Size = 14;
                 builder.Font.Name = "Arial";
                 builder.Font.Bold = true;
-                //builder.CellFormat.Width = 100.0;
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
                 builder.Write("序号");
 
                 // We don't need to specify the width of this cell because it's inherited from the previous cell.
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(20);
                 builder.Write("列名");
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(12);
                 builder.Write("数据类型");
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
                 builder.Write("长度");
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
                 builder.Write("小数位");
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
                 builder.Write("主键");
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
                 builder.Write("自增");
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
                 builder.Write("允许空");
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(10);
                 builder.Write("默认值");
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(30);
                 builder.Write("列说明");
                 builder.EndRow();
                 #endregion
@@ -244,6 +255,7 @@ namespace TryOpenXml.Text
                     //builder.CellFormat.FitText = true;
                     // Reset height and define a different height rule for table body
                     builder.RowFormat.Height = 60.0;
+                    builder.RowFormat.HeightRule = Aspose.Words.HeightRule.AtLeast;
                     builder.InsertCell();
                     // Reset font formatting.
                     builder.Font.Size = 12;
@@ -285,7 +297,7 @@ namespace TryOpenXml.Text
 
                 // TODO 表格创建完成，结束
                 //asposeTable.PreferredWidth = Aspose.Words.Tables.PreferredWidth.Auto;
-                asposeTable.AutoFit(Aspose.Words.Tables.AutoFitBehavior.AutoFitToContents);
+                //asposeTable.AutoFit(Aspose.Words.Tables.AutoFitBehavior.AutoFitToContents);
                 builder.EndTable();
 
                 i++;
