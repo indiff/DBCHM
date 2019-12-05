@@ -36,6 +36,8 @@ namespace MJTop.Data.DatabaseInfo
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
 
+        private NameValueCollection TableSchemas { get; set; } = new NameValueCollection();
+
         public List<string> TableNames { get; private set; } = new List<string>();
         
         public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; } 
@@ -86,8 +88,10 @@ namespace MJTop.Data.DatabaseInfo
             this.TableColumnInfoDict = new IgCaseDictionary<List<ColumnInfo>>();
             this.TableColumnComments = new IgCaseDictionary<NameValueCollection>();
 
-            string dbSql = "select datname from pg_catalog.pg_database order by datname asc";
-            string strSql = "select a.relname as name , b.description as value from pg_class a left join  (select * from pg_description where objsubid = 0 ) b on a.oid = b.objoid where a.relname in (select tablename from pg_tables where schemaname = 'public') order by a.relname asc";
+            string dbSql = "select datname from pg_database where  datistemplate=false  order by oid desc";
+            string strSql = @"select a.*,cast(obj_description(relfilenode,'pg_class') as varchar) as value from (
+select table_schema as scName,table_name as Name from information_schema.tables where table_schema not in ('pg_catalog','information_schema') and table_type='BASE TABLE'
+) a inner join pg_class b on a.name = b.relname order by scname asc";
 
             string viewSql = "SELECT viewname,definition FROM pg_views where schemaname='public' order by viewname asc";
             string procSql = "select proname,prosrc from  pg_proc where pronamespace=(SELECT pg_namespace.oid FROM pg_namespace WHERE nspname = 'public') order by proname asc";
@@ -96,8 +100,12 @@ namespace MJTop.Data.DatabaseInfo
             {
                
                 this.DBNames = Db.ReadList<string>(dbSql);
-               
-                this.TableComments = Db.ReadNameValues(strSql);
+                var data = Db.GetDataTable(strSql);
+                foreach (DataRow dr in data.Rows)
+                {
+                    this.TableComments[dr["name"].ToString()] = dr["value"].ToString();
+                    this.TableSchemas[dr["name"].ToString()] = dr["scname"].ToString();
+                }
 
                 //this.Views = Db.ReadNameValues(viewSql);
 
@@ -136,7 +144,7 @@ left join (
 	left join pg_description pg_desc on pg_desc.objoid = pg_attr.attrelid and pg_desc.objsubid=pg_attr.attnum
 	where pg_attr.attnum>0 and pg_attr.attrelid=pg_class.oid and pg_class.relname=:tableName
 )c on c.attname = information_schema.columns.column_name
-where table_schema='public' and table_name=:tableName order by ordinal_position asc";
+where table_schema not in ('pg_catalog','information_schema') and table_name=:tableName order by ordinal_position asc";
                             try
                             {
                                 tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();
@@ -259,7 +267,8 @@ where table_schema='public' and table_name=:tableName order by ordinal_position 
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
-                upsert_sql = "comment on table \"" + tableName + "\" is '" + comment + "'";
+                //切换schema，更新表描述
+                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on table " + tableName + " is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 TableComments[tableName] = comment;
@@ -287,7 +296,8 @@ where table_schema='public' and table_name=:tableName order by ordinal_position 
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
-                upsert_sql = "comment on column \"" + tableName + "\".\"" + columnName + "\" is '" + comment + "'";
+                //切换schema，更新列描述
+                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on column " + tableName + "." + columnName + " is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];
