@@ -125,7 +125,7 @@ select table_schema as scName,table_name as Name from information_schema.tables 
                             tabInfo.TableName = tableName;
                             tabInfo.TabComment = TableComments[tableName];
 
-                            strSql = @"select ordinal_position as Colorder,column_name as ColumnName,data_type as TypeName,
+                            strSql = @"set search_path to " + TableSchemas[tableName] + @";select ordinal_position as Colorder,column_name as ColumnName,data_type as TypeName,
 coalesce(character_maximum_length,numeric_precision,-1) as Length,numeric_scale as Scale,
 case is_nullable when 'NO' then 0 else 1 end as CanNull,column_default as DefaultVal,
 case  when position('nextval' in column_default)>0 then 1 else 0 end as IsIdentity, 
@@ -268,7 +268,7 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
             try
             {
                 //切换schema，更新表描述
-                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on table " + tableName + " is '" + comment + "'";
+                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on table \"" + tableName + "\" is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 TableComments[tableName] = comment;
@@ -297,7 +297,7 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
             try
             {
                 //切换schema，更新列描述
-                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on column " + tableName + "." + columnName + " is '" + comment + "'";
+                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on column \"" + tableName + "\".\"" + columnName + "\" is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];
