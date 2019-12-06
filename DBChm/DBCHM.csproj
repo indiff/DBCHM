@@ -172,9 +172,12 @@
     <Content Include="ico\about.png" />
     <Content Include="ico\connect.png" />
     <Content Include="ico\DBCHM.ico" />
+    <Content Include="ico\empty.png" />
     <Content Include="ico\excel.png" />
     <Content Include="ico\exp.png" />
     <Content Include="ico\html.png" />
+    <Content Include="ico\logo.png" />
+    <Content Include="ico\md.png" />
     <Content Include="ico\pdf.png" />
     <Content Include="ico\refresh_reload.png" />
     <Content Include="ico\upload.png" />

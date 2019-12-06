@@ -83,6 +83,7 @@ namespace MJTop.Data.DatabaseInfo
         public bool Refresh()
         {
             this.DictColumnInfo = new IgCaseDictionary<ColumnInfo>();
+            this.TableNames = new List<string>();
             this.TableInfoDict = new IgCaseDictionary<TableInfo>();
             this.TableColumnNameDict = new IgCaseDictionary<List<string>>();
             this.TableColumnInfoDict = new IgCaseDictionary<List<ColumnInfo>>();
@@ -90,8 +91,11 @@ namespace MJTop.Data.DatabaseInfo
 
             string dbSql = "select datname from pg_database where  datistemplate=false  order by oid desc";
             string strSql = @"select a.*,cast(obj_description(relfilenode,'pg_class') as varchar) as value from (
-select table_schema as scName,table_name as Name from information_schema.tables where table_schema not in ('pg_catalog','information_schema') and table_type='BASE TABLE'
-) a inner join pg_class b on a.name = b.relname order by scname asc";
+select b.oid as schid, a.table_schema as scName,a.table_name as Name from information_schema.tables  a
+left join pg_namespace b on b.nspname = a.table_schema
+where a.table_schema not in ('pg_catalog','information_schema') and a.table_type='BASE TABLE'
+) a inner join pg_class b on a.name = b.relname and a.schid = b.relnamespace
+order by schid asc";
 
             string viewSql = "SELECT viewname,definition FROM pg_views where schemaname='public' order by viewname asc";
             string procSql = "select proname,prosrc from  pg_proc where pronamespace=(SELECT pg_namespace.oid FROM pg_namespace WHERE nspname = 'public') order by proname asc";
@@ -101,11 +105,22 @@ select table_schema as scName,table_name as Name from information_schema.tables 
                
                 this.DBNames = Db.ReadList<string>(dbSql);
                 var data = Db.GetDataTable(strSql);
+
+                var dictGp = new Dictionary<string, List<string>>();
+
                 foreach (DataRow dr in data.Rows)
                 {
                     this.TableComments[dr["name"].ToString()] = dr["value"].ToString();
                     this.TableSchemas[dr["name"].ToString()] = dr["scname"].ToString();
+
+                    dictGp.AddRange(dr["scname"].ToString(), dr["name"].ToString());
                 }
+
+                foreach (var item in dictGp)
+                {
+                    this.TableNames.AddRange(item.Value.OrderBy(t => t));
+                }
+
 
                 //this.Views = Db.ReadNameValues(viewSql);
 
@@ -113,8 +128,6 @@ select table_schema as scName,table_name as Name from information_schema.tables 
 
                 if (this.TableComments != null && this.TableComments.Count > 0)
                 {
-                    this.TableNames = TableComments.AllKeys.ToList();
-
                     List<Task> lstTask = new List<Task>();
 
                     foreach (var tableName in this.TableNames)

@@ -82,6 +82,7 @@ namespace MJTop.Data.DatabaseInfo
         public bool Refresh()
         {
             this.DictColumnInfo = new IgCaseDictionary<ColumnInfo>();
+            this.TableNames = new List<string>();
             this.TableInfoDict = new IgCaseDictionary<TableInfo>();
             this.TableColumnNameDict = new IgCaseDictionary<List<string>>();
             this.TableColumnInfoDict = new IgCaseDictionary<List<ColumnInfo>>();
@@ -96,10 +97,20 @@ namespace MJTop.Data.DatabaseInfo
             {
                 this.DBNames = Db.ReadList<string>(dbSql);
                 var data = Db.GetDataTable(strSql);
+
+                var dictGp = new Dictionary<string, List<string>>();
+
                 foreach (DataRow dr in data.Rows)
                 {
                     this.TableComments[dr["name"].ToString()] = dr["value"].ToString();
                     this.TableSchemas[dr["name"].ToString()] = dr["scname"].ToString();
+
+                    dictGp.AddRange(dr["scname"].ToString(), dr["name"].ToString());
+                }
+
+                foreach (var item in dictGp)
+                {
+                    this.TableNames.AddRange(item.Value.OrderBy(t => t));
                 }
 
                 //this.Views = Db.ReadNameValues(viewSql);
@@ -107,8 +118,6 @@ namespace MJTop.Data.DatabaseInfo
 
                 if (this.TableComments != null && this.TableComments.Count > 0)
                 {
-                    this.TableNames = TableComments.AllKeys.ToList();
-
                     List<Task> lstTask = new List<Task>();
                     foreach (var tableName in this.TableNames)
                     {

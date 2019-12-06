@@ -8,6 +8,7 @@ namespace DBCHM
     using CHM;
     using ComponentFactory.Krypton.Toolkit;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.IO;
@@ -776,6 +777,45 @@ namespace DBCHM
         }
 
 
+        private void ExportToMarkDown()
+        {
+            string fileName = string.Empty;
+            SaveFileDialog saveDia = new SaveFileDialog();
+            saveDia.Filter = "markdown files (*.md)|*.md";
+            saveDia.Title = "另存文件为";
+            saveDia.CheckPathExists = true;
+            saveDia.AddExtension = true;
+            saveDia.AutoUpgradeEnabled = true;
+            saveDia.DefaultExt = ".md";
+            saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveDia.OverwritePrompt = true;
+            saveDia.ValidateNames = true;
+            saveDia.FileName = DBUtils.Instance.Info.DBName + "表结构信息.md";
+            if (saveDia.ShowDialog(this) == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在导出数据字典markdown文档，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
+
+                        TryOpenXml.Text.MarkDownUtils.Export(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
+
+                        if (MessageBox.Show("生成数据库字典markdown文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        {
+                            System.Diagnostics.Process.Start(saveDia.FileName);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("DBCHM执行出错", Developer.MJ, ex);
+                    }
+
+                }, null);
+            }
+        }
+
+
         /// <summary>
         /// chm文档导出
         /// </summary>
@@ -821,7 +861,7 @@ namespace DBCHM
         }
 
         /// <summary>
-        /// xml文档导出，预留（敬请期待）
+        /// xml文档导出
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -835,6 +875,12 @@ namespace DBCHM
         {
             ExportToHtml();
         }
+
+        private void tsMarkDownExp_Click(object sender, EventArgs e)
+        {
+            ExportToMarkDown();
+        }
+
 
         private void GV_ColComments_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1055,6 +1101,6 @@ namespace DBCHM
             return tables;
         }
 
-        
+
     }
 }

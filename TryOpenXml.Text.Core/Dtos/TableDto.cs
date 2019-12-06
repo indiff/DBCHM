@@ -1,4 +1,6 @@
-﻿namespace TryOpenXml.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TryOpenXml.Dtos
 {
     /// <summary>
     /// 数据库表dto
@@ -9,16 +11,19 @@
         /// <summary>
         /// 序号
         /// </summary>
+        [Display(Name = "序号")]
         public string TableOrder { get; set; }
 
         /// <summary>
         /// 表名
         /// </summary>
+        [Display(Name = "表名")]
         public string TableName { get; set; }
 
         /// <summary>
         /// 注释
         /// </summary>
+        [Display(Name = "表说明")]
         public string Comment { get; set; }
 
         /// <summary>

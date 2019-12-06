@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.Prog = new System.Windows.Forms.ToolStripProgressBar();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -68,6 +68,7 @@
             this.BtnSaveGridData = new System.Windows.Forms.Button();
             this.TxtTabName = new System.Windows.Forms.TextBox();
             this.RibbonPanel = new System.Windows.Forms.Panel();
+            this.tsMarkDownExp = new System.Windows.Forms.ToolStripButton();
             this.statusStripMain.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.ribbonPageAbout.SuspendLayout();
@@ -163,7 +164,8 @@
             this.tsExcelExp,
             this.tsPdfExp,
             this.tsHtmlExp,
-            this.tsXmlExp});
+            this.tsXmlExp,
+            this.tsMarkDownExp});
             this.ribbonPageFile.Location = new System.Drawing.Point(3, 2);
             this.ribbonPageFile.Name = "ribbonPageFile";
             this.ribbonPageFile.Size = new System.Drawing.Size(1063, 70);
@@ -333,7 +335,6 @@
             this.checkedListBox1.Location = new System.Drawing.Point(1, 80);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(273, 468);
-            this.checkedListBox1.Sorted = true;
             this.checkedListBox1.TabIndex = 8;
             this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
@@ -436,14 +437,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.GV_ColComments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColName,
@@ -521,6 +522,17 @@
             this.RibbonPanel.Name = "RibbonPanel";
             this.RibbonPanel.Size = new System.Drawing.Size(1070, 578);
             this.RibbonPanel.TabIndex = 4;
+            // 
+            // tsMarkDownExp
+            // 
+            this.tsMarkDownExp.AutoSize = false;
+            this.tsMarkDownExp.Image = ((System.Drawing.Image)(resources.GetObject("tsMarkDownExp.Image")));
+            this.tsMarkDownExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsMarkDownExp.Name = "tsMarkDownExp";
+            this.tsMarkDownExp.Size = new System.Drawing.Size(60, 67);
+            this.tsMarkDownExp.Text = "MD导出";
+            this.tsMarkDownExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsMarkDownExp.Click += new System.EventHandler(this.tsMarkDownExp_Click);
             // 
             // MainForm
             // 
@@ -603,5 +615,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColDataType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLength;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColComment;
+        private System.Windows.Forms.ToolStripButton tsMarkDownExp;
     }
 }

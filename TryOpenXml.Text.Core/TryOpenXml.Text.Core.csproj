@@ -53,6 +53,7 @@
       <HintPath>Library\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -64,6 +65,7 @@
   <ItemGroup>
     <Compile Include="AppConst.cs" />
     <Compile Include="Text\HtmlUtils.cs" />
+    <Compile Include="Text\MarkDownUtils.cs" />
     <Compile Include="Text\WordUtils.cs" />
     <Compile Include="Dtos\ColumnDto.cs" />
     <Compile Include="Dtos\TableDto.cs" />
