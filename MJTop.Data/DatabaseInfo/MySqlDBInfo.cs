@@ -314,7 +314,7 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
-                upsert_sql = "ALTER TABLE " + tableName + " COMMENT='" + comment + "';";
+                upsert_sql = "ALTER TABLE `" + tableName + "` COMMENT='" + comment + "';";
                 Db.ExecSql(upsert_sql);
 
                 TableComments[tableName] = comment;
@@ -362,7 +362,7 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 else
                 {
                     string col_type = dict["COLUMN_TYPE"].ToString();
-                    upsert_sql = "USE `" + DBName + "`;ALTER TABLE " + tableName + " MODIFY COLUMN " + columnName + " " + col_type + " " + setSql + " COMMENT '" + comment + "';";
+                    upsert_sql = "USE `" + DBName + "`;ALTER TABLE " + tableName + " MODIFY COLUMN `" + columnName + "` " + col_type + " " + setSql + " COMMENT '" + comment + "';";
                 }
                 Db.ExecSql(upsert_sql);
 
@@ -441,7 +441,7 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
 
             var strKey = (tableName + "@" + columnName);
 
-            string drop_sql = "alter table {0} drop column {1}";
+            string drop_sql = "alter table `{0}` drop column `{1}`";
             try
             {
                
