@@ -148,7 +148,7 @@ namespace DBCHM.CHM
             code.AppendLine(@"Compiled file=" + ChmFileName);//生成chm文件路径
             code.AppendLine("Contents file=chm.HHC");//hhc文件路径
             code.AppendLine("COPYRIGHT=www.51try.top");//版权所有
-            code.AppendLine(@"Default topic={1}");//CHM文件的首页
+            code.AppendLine($"Default topic={DefaultPage}");//CHM文件的首页
             code.AppendLine("Default Window=Main");//目标文件窗体控制参数,这里跳转到Windows小节中，与其一致即可
             code.AppendLine("Display compile notes=Yes");//显示编译信息
             code.AppendLine("Display compile progress=Yes");//显示编译进度
@@ -156,20 +156,20 @@ namespace DBCHM.CHM
             code.AppendLine("Full-text search=Yes");//是否支持全文检索信息
             code.AppendLine("Language=0x804 中文(中国)");// 国家语言代码Locale ID (LCID)
             code.AppendLine("Index file=chm.HHK");//hhk文件路径
-            code.AppendLine("Title={0}");//CHM文件标题
+            code.AppendLine($"Title={Title}");//CHM文件标题
             //code.AppendLine("Flat=NO");//编译文件不包括文件夹
             code.AppendLine("Enhanced decompilation=yes");//编译文件不包括文件夹
             code.AppendLine();
             code.AppendLine("[WINDOWS]");
             //例子中使用的参数 0x20 表示只显示目录和索引
-            code.AppendLine("Main=\"{0}\",\"chm.hhc\",\"chm.hhk\",\"{1}\",\"{1}\",,,,20000,0x63520,180,0x104E, [0,0,745,509],0x0,0x0,,,,,0");
+            code.AppendLine($"Main=\"{Title}\",\"chm.hhc\",\"chm.hhk\",\"{DefaultPage}\",\"{DefaultPage}\",,,,20000,0x63520,180,0x104E, [0,0,745,509],0x0,0x0,,,,,0");
             code.AppendLine();
             code.AppendLine("[MERGE FILES]");
             code.AppendLine();
             code.AppendLine("[FILES]");
             code.Append(hhpBody.ToString());
             
-            ZetaLongPaths.ZlpIOHelper.WriteAllText(Path.Combine(SourcePath, "chm.hhp"), code.ToString().FormatString(Title, DefaultPage), Encoding.GetEncoding("gbk"));
+            ZetaLongPaths.ZlpIOHelper.WriteAllText(Path.Combine(SourcePath, "chm.hhp"), code.ToString(), Encoding.GetEncoding("gbk"));
         }
         private void CreateHHK()
         {
