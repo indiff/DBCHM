@@ -165,13 +165,13 @@ namespace MJTop.Data.DatabaseInfo
                                 if (Db.DBType == DBType.OracleDDTek)
                                 {
                                     strSql = strSql.Replace("'{0}'", "?");
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql, new { t1 = tableName.ToUpper(), t2 = tableName.ToUpper(), t3 = tableName.ToUpper() }).ConvertToListObject<ColumnInfo>();
+                                    tabInfo.Colnumns = Db.GetDataTable(strSql, new { t1 = tableName, t2 = tableName, t3 = tableName }).ConvertToListObject<ColumnInfo>();
 
                                 }
                                 else
                                 {
                                     strSql = strSql.Replace("'{0}'", ":" + tableName);
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName.ToUpper() }).ConvertToListObject<ColumnInfo>();
+                                    tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();
                                 }
 
                                 List<string> lstColName = new List<string>();
@@ -240,8 +240,8 @@ namespace MJTop.Data.DatabaseInfo
 
         private void AddColSeq(string tableName,string colName)
         {
-            tableName = (tableName ?? string.Empty).ToUpper();
-            colName = (colName ?? string.Empty).ToUpper();
+            tableName = (tableName ?? string.Empty);
+            colName = (colName ?? string.Empty);
             string strSql = string.Empty;
             if (Sequences != null && Sequences.Count > 0)
             {
@@ -267,7 +267,7 @@ namespace MJTop.Data.DatabaseInfo
 
         public bool IsExistTable(string tableName)
         {
-            tableName = (tableName ?? string.Empty).ToUpper();
+            tableName = (tableName ?? string.Empty);
             return TableNames.Contains(tableName);
         }
 
@@ -301,17 +301,31 @@ namespace MJTop.Data.DatabaseInfo
             return colInfos;
         }
 
+        /// <summary>
+        /// 如果表名 或 列名 小写 则加双引号
+        /// </summary>
+        /// <param name="name">表名或列名</param>
+        /// <returns></returns>
+        private string FormatName(string name)
+        {
+            if (Regex.IsMatch(name, ".*?[a-z].*?", RegexOptions.Compiled))
+            {
+                return "\"" + name + "\"";
+            }
+            return name;
+        }
+
         public bool SetTableComment(string tableName, string comment)
         {
             Db.CheckTabStuct(tableName);
 
-            //tableName = (tableName ?? string.Empty).ToUpper();
+            //tableName = (tableName ?? string.Empty);
            
             string upsert_sql = string.Empty;
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
-                upsert_sql = @"comment on table " + tableName + " is '" + comment + "'";
+                upsert_sql = "comment on table \"" + tableName + "\" is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 TableComments[tableName] = comment;
@@ -332,14 +346,14 @@ namespace MJTop.Data.DatabaseInfo
         {
             Db.CheckTabStuct(tableName, columnName);
 
-            //tableName = (tableName ?? string.Empty).ToUpper();
-            //columnName = (columnName ?? string.Empty).ToUpper();
+            //tableName = (tableName ?? string.Empty);
+            //columnName = (columnName ?? string.Empty);
 
             string upsert_sql = string.Empty;
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
-                upsert_sql = @"comment on column " + tableName + "." + columnName + " is '" + comment + "'";
+                upsert_sql = "comment on column \"" + tableName + "\".\"" + columnName + "\" is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];
@@ -360,7 +374,7 @@ namespace MJTop.Data.DatabaseInfo
                 TableColumnComments.Remove(tableName);
                 TableColumnComments.Add(tableName, nvcColDesc);
 
-                var strKey = (tableName + "@" + columnName).ToUpper();
+                var strKey = (tableName + "@" + columnName);
                 ColumnInfo colInfo = DictColumnInfo[strKey];
                 colInfo.DeText = comment;
                 DictColumnInfo[strKey] = colInfo;
@@ -378,7 +392,7 @@ namespace MJTop.Data.DatabaseInfo
         {
             Db.CheckTabStuct(tableName);
 
-            tableName = (tableName ?? string.Empty).ToUpper();
+            tableName = (tableName ?? string.Empty);
             string drop_sql = string.Empty;
             try
             {
@@ -398,7 +412,7 @@ namespace MJTop.Data.DatabaseInfo
 
                 foreach (var colName in lstColName)
                 {
-                    var strKey = (tableName + "@" + colName).ToUpper();
+                    var strKey = (tableName + "@" + colName);
                     this.DictColumnInfo.Remove(strKey);
                 }
 
@@ -417,8 +431,8 @@ namespace MJTop.Data.DatabaseInfo
         {
             Db.CheckTabStuct(tableName, columnName);
 
-            tableName = (tableName ?? string.Empty).ToUpper();
-            columnName = (columnName ?? string.Empty).ToUpper();
+            tableName = (tableName ?? string.Empty);
+            columnName = (columnName ?? string.Empty);
 
             var strKey = (tableName + "@" + columnName);
             
