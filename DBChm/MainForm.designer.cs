@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.Prog = new System.Windows.Forms.ToolStripProgressBar();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -46,6 +46,7 @@
             this.tsPdfExp = new System.Windows.Forms.ToolStripButton();
             this.tsHtmlExp = new System.Windows.Forms.ToolStripButton();
             this.tsXmlExp = new System.Windows.Forms.ToolStripButton();
+            this.tsMarkDownExp = new System.Windows.Forms.ToolStripButton();
             this.RibbonTabContainer = new System.Windows.Forms.TabControl();
             this.bgWork = new System.ComponentModel.BackgroundWorker();
             this.lblMsg = new System.Windows.Forms.Label();
@@ -68,7 +69,7 @@
             this.BtnSaveGridData = new System.Windows.Forms.Button();
             this.TxtTabName = new System.Windows.Forms.TextBox();
             this.RibbonPanel = new System.Windows.Forms.Panel();
-            this.tsMarkDownExp = new System.Windows.Forms.ToolStripButton();
+            this.label3 = new System.Windows.Forms.Label();
             this.statusStripMain.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.ribbonPageAbout.SuspendLayout();
@@ -178,7 +179,7 @@
             this.tsbConnect.Image = ((System.Drawing.Image)(resources.GetObject("tsbConnect.Image")));
             this.tsbConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbConnect.Name = "tsbConnect";
-            this.tsbConnect.Size = new System.Drawing.Size(63, 67);
+            this.tsbConnect.Size = new System.Drawing.Size(59, 67);
             this.tsbConnect.Text = "数据连接";
             this.tsbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbConnect.Click += new System.EventHandler(this.tsbConnect_Click);
@@ -188,7 +189,7 @@
             this.tsbRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsbRefresh.Image")));
             this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Size = new System.Drawing.Size(63, 67);
+            this.tsbRefresh.Size = new System.Drawing.Size(59, 67);
             this.tsbRefresh.Text = "重新获取";
             this.tsbRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
@@ -198,7 +199,7 @@
             this.tsbPDMUpload.Image = ((System.Drawing.Image)(resources.GetObject("tsbPDMUpload.Image")));
             this.tsbPDMUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPDMUpload.Name = "tsbPDMUpload";
-            this.tsbPDMUpload.Size = new System.Drawing.Size(63, 67);
+            this.tsbPDMUpload.Size = new System.Drawing.Size(59, 67);
             this.tsbPDMUpload.Text = "批注上载";
             this.tsbPDMUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbPDMUpload.Click += new System.EventHandler(this.tsbSaveUpload_Click);
@@ -208,7 +209,7 @@
             this.tsbBuild.Image = ((System.Drawing.Image)(resources.GetObject("tsbBuild.Image")));
             this.tsbBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbBuild.Name = "tsbBuild";
-            this.tsbBuild.Size = new System.Drawing.Size(65, 67);
+            this.tsbBuild.Size = new System.Drawing.Size(63, 67);
             this.tsbBuild.Text = "CHM导出";
             this.tsbBuild.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbBuild.Click += new System.EventHandler(this.tsbBuild_Click);
@@ -270,6 +271,17 @@
             this.tsXmlExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsXmlExp.Click += new System.EventHandler(this.tsXmlExp_Click);
             // 
+            // tsMarkDownExp
+            // 
+            this.tsMarkDownExp.AutoSize = false;
+            this.tsMarkDownExp.Image = ((System.Drawing.Image)(resources.GetObject("tsMarkDownExp.Image")));
+            this.tsMarkDownExp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsMarkDownExp.Name = "tsMarkDownExp";
+            this.tsMarkDownExp.Size = new System.Drawing.Size(60, 67);
+            this.tsMarkDownExp.Text = "MD导出";
+            this.tsMarkDownExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsMarkDownExp.Click += new System.EventHandler(this.tsMarkDownExp_Click);
+            // 
             // RibbonTabContainer
             // 
             this.RibbonTabContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -300,6 +312,7 @@
             // 
             // GpTableCol
             // 
+            this.GpTableCol.Controls.Add(this.label3);
             this.GpTableCol.Controls.Add(this.checkBox1);
             this.GpTableCol.Controls.Add(this.checkedListBox1);
             this.GpTableCol.Controls.Add(this.gpCurrTable);
@@ -313,7 +326,7 @@
             this.GpTableCol.Size = new System.Drawing.Size(1051, 562);
             this.GpTableCol.TabIndex = 0;
             this.GpTableCol.TabStop = false;
-            this.GpTableCol.Text = "表列批注";
+            this.GpTableCol.Text = "表列批注（支持多个关键词查询，多个关键词以英文逗号“,”隔开）";
             // 
             // checkBox1
             // 
@@ -330,7 +343,7 @@
             // 
             this.checkedListBox1.CheckOnClick = true;
             this.checkedListBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.checkedListBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkedListBox1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point(1, 80);
             this.checkedListBox1.Name = "checkedListBox1";
@@ -437,14 +450,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.GV_ColComments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColName,
@@ -523,16 +536,14 @@
             this.RibbonPanel.Size = new System.Drawing.Size(1070, 578);
             this.RibbonPanel.TabIndex = 4;
             // 
-            // tsMarkDownExp
+            // label3
             // 
-            this.tsMarkDownExp.AutoSize = false;
-            this.tsMarkDownExp.Image = ((System.Drawing.Image)(resources.GetObject("tsMarkDownExp.Image")));
-            this.tsMarkDownExp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsMarkDownExp.Name = "tsMarkDownExp";
-            this.tsMarkDownExp.Size = new System.Drawing.Size(60, 67);
-            this.tsMarkDownExp.Text = "MD导出";
-            this.tsMarkDownExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsMarkDownExp.Click += new System.EventHandler(this.tsMarkDownExp_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(87, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 12);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "已选择0张表";
             // 
             // MainForm
             // 
@@ -616,5 +627,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLength;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColComment;
         private System.Windows.Forms.ToolStripButton tsMarkDownExp;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -21,6 +21,9 @@ namespace DBCHM
     /// </summary>
     public partial class MainForm : KryptonForm
     {
+        // TODO 已选择的表
+        private string selectedTableDesc = "已选择{0}张表";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainForm" /> class.
         /// </summary>
@@ -259,14 +262,42 @@ namespace DBCHM
 
             checkedListBox1.DataSource = null;
             checkedListBox1.Items.Clear();
+            this.label3.Text = string.Format(selectedTableDesc, 0);
 
             if (!string.IsNullOrWhiteSpace(strName))
             {
                 lstTableName.ForEach(t =>
                 {
-                    if (t.ToLower().Contains(strName))//模糊匹配
+                    if (strName.Contains(","))
                     {
-                        checkedListBox1.Items.Add(t);
+                        // TODO 多个关键词模糊匹配
+                        Dictionary<string, string> tableDic = new Dictionary<string, string>();
+                        string[] keys = strName.Split(',');
+                        foreach (string key in keys)
+                        {
+                            if (string.IsNullOrWhiteSpace(key)) {
+                                continue;
+                            }
+                            if (t.ToLower().Contains(key) && !tableDic.ContainsKey(t))
+                            {
+                                tableDic.Add(t, t);
+                            }
+                        }
+                        if (null != tableDic || tableDic.Count > 0)
+                        {
+                            foreach (KeyValuePair<string, string> kvp in tableDic)
+                            {
+                                checkedListBox1.Items.Add(kvp.Key);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // TODO 单个关键词模糊匹配
+                        if (t.ToLower().Contains(strName))
+                        {
+                            checkedListBox1.Items.Add(t);
+                        }
                     }
 
                 });
@@ -336,6 +367,7 @@ namespace DBCHM
             {
                 checkBox1.CheckState = CheckState.Unchecked;
             }
+            this.label3.Text = string.Format(selectedTableDesc, this.checkedListBox1.CheckedItems.Count + 1);
         }
 
         /// <summary>
@@ -362,6 +394,7 @@ namespace DBCHM
                     checkedListBox1.SetItemChecked(i, false);
                 }
             }
+            this.label3.Text = string.Format(selectedTableDesc, this.checkedListBox1.CheckedItems.Count);
         }
 
         /// <summary>
@@ -389,7 +422,9 @@ namespace DBCHM
                 TxtTabName_TextChanged(sender, e);
 
             }, null);
-
+            // TODO 重置
+            this.checkBox1.Checked = false;
+            this.label3.Text = string.Format(selectedTableDesc, 0);
         }
 
         /// <summary>
