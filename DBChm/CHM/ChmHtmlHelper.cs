@@ -6,20 +6,6 @@ using System.Text;
 
 namespace DBCHM.CHM
 {
-    public static class StringExt
-    {
-        public static string FormatString(this string s, params object[] args)
-        {
-            return string.Format(s, args);
-        }
-    }
-}
-
-
-
-
-namespace DBCHM.CHM
-{
     /// <summary>
     /// 常用功能类
     /// </summary>

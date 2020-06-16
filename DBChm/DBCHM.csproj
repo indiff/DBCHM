@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="CHM\ChmHelp.cs" />
     <Compile Include="CHM\ChmHtmlHelper.cs" />
+    <Compile Include="Common\CommonExtension.cs" />
     <Compile Include="Common\DBCHMConfig.cs" />
     <Compile Include="Common\DBUtils.cs" />
     <Compile Include="Common\EnumExtension.cs" />
