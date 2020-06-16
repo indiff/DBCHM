@@ -1,11 +1,9 @@
 ﻿using MJTop.Data.SPI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -35,16 +33,26 @@ namespace MJTop.Data.DatabaseInfo
         {
             get
             {
-                if (Db.ConnectionStringBuilder is Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder)
-                {
-                    //127.0.0.1:1521/CTMS
-                    string source = (Db.ConnectionStringBuilder as Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder).DataSource;
-                    return Regex.Replace(source, @"(.+/)(.+)", "$2");
-                }
-                else
-                {
-                    return (Db.ConnectionStringBuilder as DDTek.Oracle.OracleConnectionStringBuilder).ServiceName;
-                }
+                //127.0.0.1:1521/CTMS
+                string source = (Db.ConnectionStringBuilder as Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder).DataSource;
+                return Regex.Replace(source, @"(.+/)(.+)", "$2");
+            }
+        }
+
+        public string Version
+        {
+            get;
+            private set;
+        }
+
+        //Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production  =>  11.2
+        public double VersionNumber
+        {
+            get
+            {
+                var mat = Regex.Match(Version, @"\D*(\d{1,}\.\d{1,})\D*", RegexOptions.Compiled);
+                double.TryParse(mat?.Groups[1]?.Value, out var res);
+                return res;
             }
         }
 
@@ -116,7 +124,6 @@ namespace MJTop.Data.DatabaseInfo
             string sequence_Sql = "select sequence_name from user_sequences";
             string strSql = "Select table_Name As Name,Comments As Value From User_Tab_Comments Where table_Type='TABLE' Order By table_Name Asc";
 
-
             string viewSql = "select view_name,text from user_views order by view_name asc";
             //Oracle 11g 推出 LISTAGG 函数
             string procSql = "select * from (SELECT name,LISTAGG(text,' ') WITHIN  group (order by line asc) text FROM user_source  group by name ) order by name asc";
@@ -128,9 +135,18 @@ namespace MJTop.Data.DatabaseInfo
 
                 this.TableComments = Db.ReadNameValues(strSql);
 
-                //this.Views = Db.ReadNameValues(viewSql);
+                this.Version = Db.Scalar("select * from v$version where ROWNUM = 1", string.Empty);
 
-                //this.Procs = Db.ReadNameValues(procSql);
+                this.Views = Db.ReadNameValues(viewSql);
+
+                if (this.VersionNumber >= 11)
+                {
+                    this.Procs = Db.ReadNameValues(procSql);
+                }
+                else
+                {
+                    this.Procs = new NameValueCollection();
+                }
 
                 if (this.TableComments != null && this.TableComments.Count > 0)
                 {
@@ -162,13 +178,13 @@ namespace MJTop.Data.DatabaseInfo
 	Where b.COLUMN_NAME= a.COLUMN_NAME   and a.Table_Name='{0}'  order by a.column_ID Asc";
                             try
                             {
-                                if (Db.DBType == DBType.OracleDDTek)
-                                {
-                                    strSql = strSql.Replace("'{0}'", "?");
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql, new { t1 = tableName, t2 = tableName, t3 = tableName }).ConvertToListObject<ColumnInfo>();
+                                //if (Db.DBType == DBType.OracleDDTek)
+                                //{
+                                //    strSql = strSql.Replace("'{0}'", "?");
+                                //    tabInfo.Colnumns = Db.GetDataTable(strSql, new { t1 = tableName, t2 = tableName, t3 = tableName }).ConvertToListObject<ColumnInfo>();
 
-                                }
-                                else
+                                //}
+                                //else
                                 {
                                     strSql = strSql.Replace("'{0}'", ":" + tableName);
                                     tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();

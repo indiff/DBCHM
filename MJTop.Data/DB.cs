@@ -273,7 +273,7 @@ namespace MJTop.Data
             return dbparameter;
         }
 
-        internal void CheckTabStuct(string tableName, params string[] columnNames)
+        public void CheckTabStuct(string tableName, params string[] columnNames)
         {
             if (string.IsNullOrWhiteSpace(tableName))
             {

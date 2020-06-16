@@ -12,15 +12,6 @@ namespace MJTop.Data
     /// </summary>
     public class Global
     {
-        static Global()
-        {
-
-        }
-
-
-
-
-
         /// <summary>
         /// Type类型对应的DbType类型 字典
         /// </summary>
@@ -71,12 +62,10 @@ namespace MJTop.Data
         public readonly static Dictionary<DBType, string> ParameterCharMap = new Dictionary<DBType, string>
         {
           { DBType.SqlServer,"@" },
-          { DBType.MySql,"?" },
+          { DBType.MySql,"@" },
           { DBType.Oracle,":" },
-          { DBType.OracleDDTek,":" },
           { DBType.PostgreSql,":" },
           { DBType.SQLite,"@" },
-          { DBType.DB2,":" },
         };
 
 
@@ -351,7 +340,8 @@ namespace MJTop.Data
         /// </summary>
         public readonly static Dictionary<string, string> Dict_MySql_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            {"CURRENT_TIMESTAMP","DateTime.Now" }
+            {"CURRENT_TIMESTAMP","DateTime.Now" },
+            {"CURRENT_TIMESTAMP(6)","DateTime.Now" }
         };
 
 

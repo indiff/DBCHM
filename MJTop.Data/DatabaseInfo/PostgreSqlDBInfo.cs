@@ -1,11 +1,10 @@
 ﻿using MJTop.Data.SPI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MJTop.Data.DatabaseInfo
@@ -32,6 +31,23 @@ namespace MJTop.Data.DatabaseInfo
         public string DBName
         {
             get { return (Db.ConnectionStringBuilder as Npgsql.NpgsqlConnectionStringBuilder).Database; }
+        }
+
+        public string Version
+        {
+            get;
+            private set;
+        }
+
+        // PostgreSQL 9.6.3, compiled by Visual C++ build 1800, 32-bit => 9.6
+        public double VersionNumber
+        {
+            get
+            {
+                var mat = Regex.Match(Version, @"\D*(\d{1,}\.\d{1,})\D*", RegexOptions.Compiled);
+                double.TryParse(mat?.Groups[1]?.Value, out var res);
+                return res;
+            }
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
@@ -104,6 +120,9 @@ order by schid asc";
             {
                
                 this.DBNames = Db.ReadList<string>(dbSql);
+
+                this.Version = Db.Scalar("select version()", string.Empty);
+
                 var data = Db.GetDataTable(strSql);
 
                 var dictGp = new Dictionary<string, List<string>>();
@@ -121,10 +140,9 @@ order by schid asc";
                     this.TableNames.AddRange(item.Value.OrderBy(t => t));
                 }
 
+                this.Views = Db.ReadNameValues(viewSql);
 
-                //this.Views = Db.ReadNameValues(viewSql);
-
-                //this.Procs = Db.ReadNameValues(procSql);
+                this.Procs = Db.ReadNameValues(procSql);
 
                 if (this.TableComments != null && this.TableComments.Count > 0)
                 {

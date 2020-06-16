@@ -46,49 +46,50 @@ namespace MJTop.Data.SPI
 
         bool ValidateSql(string strSql, out Exception ex);
 
+        void CheckTabStuct(string tableName, params string[] columnNames);
 
         #endregion
 
 
-        int RunStoreProc(string storeProcName, object parameters = null);
+        int RunStoreProc(string storeProcName, object parms = null);
 
-        DataTable RunStoreProcGetDT(string storeProcName, object parameters = null);
+        DataTable RunStoreProcGetDT(string storeProcName, object parms = null);
 
-        DataSet RunStoreProcGetDS(string storeProcName, object parameters = null);
+        DataSet RunStoreProcGetDS(string storeProcName, object parms = null);
 
 
         #region 基础查询
 
-        TRet Scalar<TRet>(string strSql, TRet defRet, object parameters = null);
+        TRet Scalar<TRet>(string strSql, TRet defRet, object parms = null);
 
-        NameValueCollection GetFirstRow(string strSql, object parameters = null);
+        NameValueCollection GetFirstRow(string strSql, object parms = null);
 
-        DataTable GetDataTable(string strSql, object parameters = null);
+        DataTable GetDataTable(string strSql, object parms = null);
 
-        List<DataTable> GetListTable(string strSql, object parameters = null);
+        List<DataTable> GetListTable(string strSql, object parms = null);
 
-        DataSet GetDataSet(string strSql, object parameters = null);
+        DataSet GetDataSet(string strSql, object parms = null);
         
-        DbDataReader ExecReader(string commandText, object parameters = null, CommandType commandType = CommandType.Text);
+        DbDataReader ExecReader(string commandText, object parms = null, CommandType commandType = CommandType.Text);
 
-        TRet Single<TRet>(string strSql, TRet defRet, object parameters = null);
+        TRet Single<TRet>(string strSql, TRet defRet, object parms = null);
 
-        List<Dictionary<string, object>> GetListDictionary(string strSql, object parameters = null);
+        List<Dictionary<string, object>> GetListDictionary(string strSql, object parms = null);
 
-        DataTable ReadTable(string strSql, object parameters = null);
+        DataTable ReadTable(string strSql, object parms = null);
 
-        List<TRet> ReadList<TRet>(string strSql, object parameters = null);
+        List<TRet> ReadList<TRet>(string strSql, object parms = null);
 
-        NameValueCollection ReadNameValues(string strSql, object parameters = null);
+        NameValueCollection ReadNameValues(string strSql, object parms = null);
 
-        Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(string strSql, object parameters = null, IEqualityComparer<TKey> comparer = null);
+        Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(string strSql, object parms = null, IEqualityComparer<TKey> comparer = null);
 
         #endregion
 
         #region 执行
 
-        int ExecSql(string strSql, object parameters = null);
-        int ExecSqlTran(string strSql, object parameters = null);
+        int ExecSql(string strSql, object parms = null);
+        int ExecSqlTran(string strSql, object parms = null);
         int ExecSqlTran(params string[] sqlCmds);
         int ExecSqlTran(List<KeyValuePair<string, List<DbParameter>>> strSqlList);
 
@@ -118,21 +119,21 @@ namespace MJTop.Data.SPI
 
         bool DeleteAll(string tableName);
 
-        int Delete(string tableName, object pkColName);
+        int Delete(string tableName, object pkOrUniqueColName);
 
         int Delete(string tableName, string columnName, params object[] columnValues);
 
         #endregion
 
-        TEntity Get<TEntity>(string tableName, object whereParameters) where TEntity : class, new();
+        T Get<T>(string tableName, object parms) where T : class, new();
 
-        TEntity GetById<TEntity>(string tableName, object pkValue) where TEntity : class, new();
+        T GetById<T>(string tableName, object pkValue) where T : class, new();
 
-        List<TEntity> GetByIds<TEntity>(string tableName, object[] pkValues) where TEntity : class, new();
+        List<T> GetByIds<T>(string tableName, object[] pkValues) where T : class, new();
 
-        List<TEntity> GetList<TEntity>(string tableName, object whereParameters) where TEntity : class, new();
+        List<T> GetList<T>(string tableName, object parms) where T : class, new();
 
-        List<TEntity> GetList<TEntity>(string strSql) where TEntity : class, new();
+        List<T> GetList<T>(string strSql) where T : class, new();
 
         DataTable SelectAll(string tableName, string orderbyStr = null);
 

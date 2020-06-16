@@ -35,6 +35,23 @@ namespace MJTop.Data.DatabaseInfo
             get { return (Db.ConnectionStringBuilder as DB2ConnectionStringBuilder).Database; }
         }
 
+        public string Version
+        {
+            get;
+            private set;
+        }
+
+        // 8.0.19 => 8.0
+        public double VersionNumber
+        {
+            get
+            {
+                var mat = Regex.Match(Version, @"\D*(\d{1,}\.\d{1,})\D*", RegexOptions.Compiled);
+                double.TryParse(mat?.Groups[1]?.Value, out var res);
+                return res;
+            }
+        }
+
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
 
         private NameValueCollection TableSchemas { get; set; } = new NameValueCollection();
@@ -99,6 +116,8 @@ namespace MJTop.Data.DatabaseInfo
             {
                 this.DBNames = new List<string>() { this.DBName };
 
+                this.Version = Db.Scalar("SELECT SERVICE_LEVEL FROM SYSIBMADM.ENV_INST_INFO", string.Empty);
+
                 var data = Db.GetDataTable(strSql);
                 foreach (DataRow dr in data.Rows)
                 {
@@ -106,9 +125,9 @@ namespace MJTop.Data.DatabaseInfo
                     this.TableSchemas[dr["tabname"].ToString()] = dr["tabschema"].ToString();
                 }
 
-                //this.Views = Db.ReadNameValues(viewSql);
+                this.Views = Db.ReadNameValues(viewSql);
 
-                //this.Procs = Db.ReadNameValues(procSql);
+                this.Procs = Db.ReadNameValues(procSql);
 
                 if (this.TableComments != null && this.TableComments.Count > 0)
                 {

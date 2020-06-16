@@ -1,12 +1,10 @@
 ﻿using MJTop.Data.SPI;
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MJTop.Data.DatabaseInfo
@@ -34,6 +32,23 @@ namespace MJTop.Data.DatabaseInfo
         public string DBName
         {
             get { return (Db.ConnectionStringBuilder as System.Data.SqlClient.SqlConnectionStringBuilder).InitialCatalog; }
+        }
+
+        public string Version
+        {
+            get;
+            private set;
+        }
+
+        //Microsoft SQL Server 2016 (RTM) - 13.0.1601.5 (X64)  =>  2016
+        public double VersionNumber
+        {
+            get
+            {
+                var mat = Regex.Match(Version, @"\D*(\d{4})\D*", RegexOptions.Compiled);
+                double.TryParse(mat?.Groups[1]?.Value, out var res);
+                return res;
+            }
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
@@ -96,6 +111,9 @@ namespace MJTop.Data.DatabaseInfo
             try
             {
                 this.DBNames = Db.ReadList<string>(dbSql);
+
+                this.Version = Db.Scalar("select @@version", string.Empty)?.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)?[0];
+
                 var data = Db.GetDataTable(strSql);
 
                 var dictGp = new Dictionary<string, List<string>>();
@@ -113,8 +131,8 @@ namespace MJTop.Data.DatabaseInfo
                     this.TableNames.AddRange(item.Value.OrderBy(t => t));
                 }
 
-                //this.Views = Db.ReadNameValues(viewSql);
-                //this.Procs = Db.ReadNameValues(procSql);
+                this.Views = Db.ReadNameValues(viewSql);
+                this.Procs = Db.ReadNameValues(procSql);
 
                 if (this.TableComments != null && this.TableComments.Count > 0)
                 {

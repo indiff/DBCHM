@@ -1,12 +1,9 @@
 ﻿using MJTop.Data.SPI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
-using System.Data.Common;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -35,6 +32,23 @@ namespace MJTop.Data.DatabaseInfo
         public string DBName
         {
             get { return (Db.ConnectionStringBuilder as MySql.Data.MySqlClient.MySqlConnectionStringBuilder).Database; }
+        }
+
+        public string Version
+        {
+            get;
+            private set;
+        }
+
+        // 8.0.19 => 8.0
+        public double VersionNumber
+        {
+            get
+            {
+                var mat = Regex.Match(Version, @"\D*(\d{1,}\.\d{1,})\D*", RegexOptions.Compiled);
+                double.TryParse(mat?.Groups[1]?.Value, out var res);
+                return res;
+            }
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
@@ -97,11 +111,13 @@ namespace MJTop.Data.DatabaseInfo
             {
                 this.DBNames = Db.ReadList<string>(dbSql);
 
+                this.Version = Db.Scalar("select @@version", string.Empty);
+
                 this.TableComments = Db.ReadNameValues(strSql);
 
-                //this.Views = Db.ReadNameValues(viewSql);
+                this.Views = Db.ReadNameValues(viewSql);
 
-                //this.Procs = Db.ReadNameValues(procSql);
+                this.Procs = Db.ReadNameValues(procSql);
 
                 if (this.TableComments != null && this.TableComments.Count > 0)
                 {

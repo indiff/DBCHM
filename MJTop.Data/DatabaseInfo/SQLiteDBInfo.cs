@@ -1,12 +1,11 @@
 ﻿using MJTop.Data.SPI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
+using System.Data.SQLite;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace MJTop.Data.DatabaseInfo
 {
@@ -31,7 +30,24 @@ namespace MJTop.Data.DatabaseInfo
 
         public string DBName
         {
-            get { return System.IO.Path.GetFileNameWithoutExtension((Db.ConnectionStringBuilder as System.Data.SQLite.SQLiteConnectionStringBuilder).DataSource); }
+            get { return System.IO.Path.GetFileNameWithoutExtension((Db.ConnectionStringBuilder as SQLiteConnectionStringBuilder).DataSource); }
+        }
+
+        public string Version
+        {
+            get;
+            private set;
+        }
+
+        // 3.31.1 => 3.31
+        public double VersionNumber
+        {
+            get
+            {
+                var mat = Regex.Match(Version, @"\D*(\d{1,}\.\d{1,})\D*", RegexOptions.Compiled);
+                double.TryParse(mat?.Groups[1]?.Value, out var res);
+                return res;
+            }
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
@@ -90,7 +106,7 @@ namespace MJTop.Data.DatabaseInfo
             {
                 this.TableComments = Db.GetDataTable(strSql).MapperNameValues("name", "desc");
 
-                //this.Views = Db.ReadNameValues(viewSql);
+                this.Views = Db.ReadNameValues(viewSql);
 
                 this.Procs = new NameValueCollection();
 
@@ -100,6 +116,9 @@ namespace MJTop.Data.DatabaseInfo
                     
                     var dbConn = Db.CreateConn();
                     dbConn.Open();
+
+                    this.Version = dbConn.ServerVersion;
+
                     foreach (string tableName in TableNames)
                     {
                         TableInfo tabInfo = new TableInfo();

@@ -14,6 +14,10 @@ namespace MJTop.Data.SPI
 
         string DBName { get; }
 
+        string Version { get; }
+
+        double VersionNumber { get; }
+
         /// <summary>
         /// 注意：刷新数据失败的情况，根据返回值做对应处理。
         /// </summary>
