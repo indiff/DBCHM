@@ -520,6 +520,7 @@ namespace DBCHM
                 catch (Exception ex)
                 {
                     LogUtils.LogError("文件目录创建出错", Developer.SysDefault, ex, dirPath);
+                    MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
