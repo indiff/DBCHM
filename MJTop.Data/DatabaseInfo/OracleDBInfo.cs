@@ -33,9 +33,16 @@ namespace MJTop.Data.DatabaseInfo
         {
             get
             {
-                //127.0.0.1:1521/CTMS
-                string source = (Db.ConnectionStringBuilder as Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder).DataSource;
-                return Regex.Replace(source, @"(.+/)(.+)", "$2");
+                if (Db.ConnectionStringBuilder is Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder)
+                {
+                    //127.0.0.1:1521/CTMS
+                    string source = (Db.ConnectionStringBuilder as Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder).DataSource;
+                    return Regex.Replace(source, @"(.+/)(.+)", "$2");
+                }
+                else
+                {
+                    return (Db.ConnectionStringBuilder as DDTek.Oracle.OracleConnectionStringBuilder).ServiceName;
+                }
             }
         }
 
@@ -178,13 +185,12 @@ namespace MJTop.Data.DatabaseInfo
 	Where b.COLUMN_NAME= a.COLUMN_NAME   and a.Table_Name='{0}'  order by a.column_ID Asc";
                             try
                             {
-                                //if (Db.DBType == DBType.OracleDDTek)
-                                //{
-                                //    strSql = strSql.Replace("'{0}'", "?");
-                                //    tabInfo.Colnumns = Db.GetDataTable(strSql, new { t1 = tableName, t2 = tableName, t3 = tableName }).ConvertToListObject<ColumnInfo>();
-
-                                //}
-                                //else
+                                if (Db.DBType == DBType.OracleDDTek)
+                                {
+                                    strSql = strSql.Replace("'{0}'", "?");
+                                    tabInfo.Colnumns = Db.GetDataTable(strSql, new { t1 = tableName, t2 = tableName, t3 = tableName }).ConvertToListObject<ColumnInfo>();
+                                }
+                                else
                                 {
                                     strSql = strSql.Replace("'{0}'", ":" + tableName);
                                     tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();
