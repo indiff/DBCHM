@@ -46,6 +46,21 @@ namespace MJTop.Data.DatabaseInfo
             }
         }
 
+        public string User
+        {
+            get
+            {
+                if (Db.ConnectionStringBuilder is Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder)
+                {
+                    return (Db.ConnectionStringBuilder as Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder).UserID?.ToUpper();
+                }
+                else
+                {
+                    return (Db.ConnectionStringBuilder as DDTek.Oracle.OracleConnectionStringBuilder).UserID?.ToUpper();
+                }
+            }
+        }
+
         public string Version
         {
             get;
@@ -128,12 +143,14 @@ namespace MJTop.Data.DatabaseInfo
             this.TableColumnInfoDict = new IgCaseDictionary<List<ColumnInfo>>(KeyCase.Upper);
             this.TableColumnComments = new IgCaseDictionary<NameValueCollection>(KeyCase.Upper);
 
-            string sequence_Sql = "select sequence_name from user_sequences";
-            string strSql = "Select table_Name As Name,Comments As Value From User_Tab_Comments Where table_Type='TABLE' Order By table_Name Asc";
+            string sequence_Sql = string.Format("SELECT SEQUENCE_NAME FROM ALL_SEQUENCES WHERE SEQUENCE_OWNER = '{0}' ORDER BY SEQUENCE_NAME", User);
+            
+            string strSql = string.Format("SELECT T.TABLE_NAME as Name, TC.COMMENTS  as Value FROM SYS.ALL_ALL_TABLES T, SYS.ALL_TAB_COMMENTS TC WHERE T.IOT_NAME IS NULL  AND T.NESTED = 'NO'  AND T.SECONDARY = 'N'  AND NOT EXISTS ( SELECT 1 FROM SYS.ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME ) AND TC.OWNER ( + ) = T.OWNER  AND TC.TABLE_NAME ( + ) = T.TABLE_NAME  AND T.OWNER = '{0}' ORDER BY T.TABLE_NAME ASC", User);
 
-            string viewSql = "select view_name,text from user_views order by view_name asc";
+            string viewSql = string.Format("select view_name,text from ALL_VIEWS WHERE OWNER = '{0}' order by view_name asc", User);
+            
             //Oracle 11g 推出 LISTAGG 函数
-            string procSql = "select * from (SELECT name,LISTAGG(text,' ') WITHIN  group (order by line asc) text FROM user_source  group by name ) order by name asc";
+            string procSql = string.Format("select * from (SELECT name,LISTAGG(text,' ') WITHIN  group (order by line asc) text FROM all_source where OWNER = '{0}'  group by name ) order by name asc", User);
             
             try
             {
@@ -172,28 +189,28 @@ namespace MJTop.Data.DatabaseInfo
                             /** 该语句，包含某列是否自增列，查询慢 **/
 
                             strSql = @"select a.COLUMN_ID As Colorder,a.COLUMN_NAME As ColumnName,a.DATA_TYPE As TypeName,b.comments As DeText,(Case When a.DATA_TYPE='NUMBER' Then a.DATA_PRECISION When a.DATA_TYPE='NVARCHAR2' Then a.DATA_LENGTH/2 Else a.DATA_LENGTH End )As Length,a.DATA_SCALE As Scale,
-	(Case When (select Count(1)  from user_cons_columns aa, user_constraints bb where aa.constraint_name = bb.constraint_name 
-	 and bb.constraint_type = 'P' and aa.table_name = '{0}' And aa.column_name=a.COLUMN_NAME)>0 Then 1 Else 0 End
+	(Case When (select Count(1)  from all_cons_columns aa, all_constraints bb where aa.OWNER = '{0}' and bb.OWNER = '{0}' and aa.constraint_name = bb.constraint_name and bb.constraint_type = 'P' and aa.table_name = '{1}' And aa.column_name=a.COLUMN_NAME)>0 Then 1 Else 0 End
 	 ) As IsPK,(
-			 case when (select count(1) from user_triggers tri INNER JOIN user_source src on tri.trigger_Name=src.Name 
-				where (triggering_Event='INSERT' and table_name='{0}')
+			 case when (select count(1) from all_triggers tri INNER JOIN all_source src on tri.trigger_Name=src.Name 
+				where tri.OWNER = '{0}' and src.OWNER = '{0}' and (triggering_Event='INSERT' and table_name='{1}')
 			and regexp_like(text,	concat(concat('nextval\s+into\s*?:\s*?new\s*?\.\s*?',a.COLUMN_NAME),'\s+?'),'i'))>0 
 			then 1 else 0 end 
 	) As IsIdentity, 
 		Case a.NULLABLE  When 'Y' Then 1 Else 0 End As CanNull,
-		a.data_default As DefaultVal from user_tab_columns a Inner Join user_col_comments b On a.TABLE_NAME=b.table_name 
-	Where b.COLUMN_NAME= a.COLUMN_NAME   and a.Table_Name='{0}'  order by a.column_ID Asc";
+		a.data_default As DefaultVal from all_tab_columns a Inner Join all_col_comments b On a.TABLE_NAME=b.table_name 
+	Where a.OWNER = '{0}' and b.OWNER = '{0}' and b.COLUMN_NAME= a.COLUMN_NAME and a.Table_Name='{1}'  order by a.column_ID Asc";
+
+                            strSql = string.Format(strSql, User, tableName);
+
                             try
                             {
                                 if (Db.DBType == DBType.OracleDDTek)
                                 {
-                                    strSql = strSql.Replace("'{0}'", "?");
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql, new { t1 = tableName, t2 = tableName, t3 = tableName }).ConvertToListObject<ColumnInfo>();
+                                    tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
                                 }
                                 else
                                 {
-                                    strSql = strSql.Replace("'{0}'", ":" + tableName);
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();
+                                    tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
                                 }
 
                                 List<string> lstColName = new List<string>();
@@ -260,17 +277,17 @@ namespace MJTop.Data.DatabaseInfo
             return this.TableComments.Count == this.TableInfoDict.Count;
         }
 
-        private void AddColSeq(string tableName,string colName)
+        private void AddColSeq(string tableName, string colName)
         {
             tableName = (tableName ?? string.Empty);
             colName = (colName ?? string.Empty);
             string strSql = string.Empty;
             if (Sequences != null && Sequences.Count > 0)
             {
-                foreach (string  seqName in Sequences)
+                foreach (string seqName in Sequences)
                 {
-                    strSql = @"select count(1) from user_triggers tri INNER JOIN user_source src on tri.trigger_Name=src.Name where (triggering_Event='INSERT' and table_name='" + tableName + "') and regexp_like(text,concat(concat('" + seqName + @"\s*?\.\s*?nextval\s+into\s*?:\s*?new\s*?\.\s*?','" + colName + @"'),'\s+?'),'i')";
-                    int res = Db.Single<int>(strSql,0);
+                    strSql = @"select count(1) from all_triggers tri INNER JOIN all_source src on tri.trigger_Name=src.Name where tri.OWNER = '" + User + "' and src.OWNER = '" + User + "'  and (triggering_Event='INSERT' and table_name='" + tableName + "') and regexp_like(text,concat(concat('" + seqName + @"\s*?\.\s*?nextval\s+into\s*?:\s*?new\s*?\.\s*?','" + colName + @"'),'\s+?'),'i')";
+                    int res = Db.Single<int>(strSql, 0);
                     if (res > 0)
                     {
                         Dict_Table_Sequence[tableName] = seqName;
@@ -282,7 +299,7 @@ namespace MJTop.Data.DatabaseInfo
 
         public Dictionary<string, DateTime> GetTableStruct_Modify()
         {
-            string strSql = "select object_name as name ,last_ddl_time as modify_date from user_objects Where object_Type='TABLE' Order By last_ddl_time Desc";
+            string strSql = "select object_name as name ,last_ddl_time as modify_date from all_objects Where OWNER = '" + User + "' and object_Type='TABLE' Order By last_ddl_time Desc";
             return Db.ReadDictionary<string, DateTime>(strSql);
         }
 
