@@ -56,7 +56,7 @@ DBCHM效果展示：
 - 导出chm文件时，电脑需`htmlhelp.exe`，[见附件](https://gitee.com/lztkdr/DBCHM/attach_files)
 - 电脑需`.net framework 4.5.2`
 - 源码编印环境：`Visual Studio 2017 以上`版本
-- 导出文档前，数据库使用账号要给予`sa级别`的权限，不然表结构可能因查询权限不足，会查不出来数据
+- 导出文档前，数据库使用账号要给予`sa级别`的权限，可能会出现`表数据显示不全`或数据查询因权限不足，会`查不出来数据`！
 - 新功能内测，最新功能尝鲜，请在Q群共享中获取:yum:！
 ### DBCHM社群
 - QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
