@@ -364,12 +364,18 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 {
                     setSql += " not null ";
                 }
+
+                if (colInfo.IsIdentity)
+                {
+                    setSql += " auto_increment ";
+                }
+
                 if (!string.IsNullOrWhiteSpace(colInfo.DefaultVal))
                 {
                     setSql += " default '" + colInfo.DefaultVal + "' ";
                 }
 
-                selsql = "USE INFORMATION_SCHEMA;SELECT COLUMN_TYPE,EXTRA FROM COLUMNS WHERE TABLE_NAME = '" + tableName + "' AND COLUMN_NAME = '" + columnName + "';";
+                selsql = "use information_schema;SELECT COLUMN_TYPE,EXTRA FROM COLUMNS WHERE TABLE_SCHEMA='" + DBName + "' and TABLE_NAME = '" + tableName + "' AND COLUMN_NAME = '" + columnName + "';";
                 var dict = Db.GetFirstRow(selsql);
                 if (colInfo.DefaultVal != null && colInfo.DefaultVal.Equals("CURRENT_TIMESTAMP", StringComparison.OrdinalIgnoreCase))
                 {
