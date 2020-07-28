@@ -168,7 +168,7 @@ namespace MJTop.Data
                     connectionString = string.Format(@"server={0}{1};database={2};uid={3};pwd={4};connection timeout={5}", server, (port.HasValue ? ("," + port.Value) : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.MySql:
-                    connectionString = string.Format(@"Server={0};{1}Database={2};User={3};Password={4};OldGuids=True;connection timeout={5}", server, (port.HasValue ? ("Port=" + port.Value + ";") : string.Empty), databBase, uid, pwd, connTimeOut);
+                    connectionString = string.Format(@"Server={0};{1}Database={2};User={3};Password={4};OldGuids=True;connection timeout={5};SslMode=None;", server, (port.HasValue ? ("Port=" + port.Value + ";") : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
                 case DBType.Oracle:
                     connectionString = string.Format("Data Source={0}:{1}/{2};User Id={3};password={4};Pooling=true;connection timeout={5}", server, (port ?? 1521), databBase, uid, pwd, connTimeOut);
