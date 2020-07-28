@@ -52,11 +52,12 @@ DBCHM效果展示：
 - @[空无一物](https://gitee.com/lztkdr/) 先驱者
 
 ###  使用前提/源码编译/注意事项
-- [最新发行版本下载](https://gitee.com/lztkdr/DBCHM/releases)
+- **[最新发行版本下载](https://gitee.com/lztkdr/DBCHM/releases)**
 - 导出chm文件时，电脑需`htmlhelp.exe`，[见附件](https://gitee.com/lztkdr/DBCHM/attach_files)
 - 电脑需`.net framework 4.5.2`
 - 源码编印环境：`Visual Studio 2017 以上`版本
-- 导出文档前，数据库使用账号要给予`sa级别`的权限，可能会出现`表数据显示不全`或数据查询因权限不足，会`查不出来数据`！
+- 导出文档前，数据库使用账号要给予`sa级别`的权限，非sa级别账号连接，可能会出现`表数据显示不全`或数据查询因权限不足，会`查不出来数据`！
+- <font color='red'>关于 `oracle数据库一直未响应，连不上 `原因：oracle的 `列是否自增` 的sql查询语句效率比较低导致，程序查的比较慢，没有卡死！请耐心等待！！</font> 
 - 新功能内测，最新功能尝鲜，请在Q群共享中获取:yum:！
 ### DBCHM社群
 - QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
