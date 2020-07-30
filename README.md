@@ -5,7 +5,8 @@
   让数据库文档生成更简单一些吧！
 </p>
 <p align="center">
-<img alt="visual studio 2019" src="https://img.shields.io/badge/Visual Studio-2019-blue.svg"><img alt="csharp" src="https://img.shields.io/badge/ language -csharp-green.svg">
+<img alt="visual studio 2019" src="https://img.shields.io/badge/Visual Studio-2019-blue.svg">
+<img alt="csharp" src="https://img.shields.io/badge/ language-csharp-brightgreen.svg">
 <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
 </p>
 
@@ -76,7 +77,7 @@ DBHCM 是一个对数据库文档生成工具！
 - 连接数据库时，点了 `连接/测试` ，半天没响应？可能是连接远程数据库网络不好的原因，可以把`连接超时`设置的小一些。
 - 导出文档前，数据库使用账号要给予`root级别`的权限，非root级别账号连接，可能会出现`表数据显示不全`或数据查询因权限不足，会`查不出来数据`！
 - 不支持老版本数据库，如  `Sql Server 2000 `，建议先用 `Navicat软件 `将数据库表结构脚本导出，再从安装高版本数据库服务器上 创建 空数据库，导入表结构脚本后，再用DBCHM去导出文档。
-- <font color='red'>关于 `oracle数据库一直未响应，连不上 `原因：oracle的 `列是否自增` 的sql查询语句效率比较低导致，程序查的比较慢，没有卡死！请耐心等待！！</font> 
+- 关于 `oracle数据库一直未响应，连不上 `原因：oracle的 `列是否自增` 的sql查询语句效率比较低导致，程序查的比较慢，没有卡死！请耐心等待！！
 
-### DBCHM社群
+### 交流
 - QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
