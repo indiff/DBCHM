@@ -148,10 +148,13 @@ namespace MJTop.Data.DatabaseInfo
             string strSql = string.Format("SELECT T.TABLE_NAME as Name, TC.COMMENTS  as Value FROM SYS.ALL_ALL_TABLES T, SYS.ALL_TAB_COMMENTS TC WHERE T.IOT_NAME IS NULL  AND T.NESTED = 'NO'  AND T.SECONDARY = 'N'  AND NOT EXISTS ( SELECT 1 FROM SYS.ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME ) AND TC.OWNER ( + ) = T.OWNER  AND TC.TABLE_NAME ( + ) = T.TABLE_NAME  AND T.OWNER = '{0}' ORDER BY T.TABLE_NAME ASC", User);
 
             string viewSql = string.Format("select view_name,text from ALL_VIEWS WHERE OWNER = '{0}' order by view_name asc", User);
-            
-            //Oracle 11g 推出 LISTAGG 函数
+
+            //Oracle 11g 推出 LISTAGG 函数，有可能会报：ora-01489 字符串连接的结果过长
             string procSql = string.Format("select * from (SELECT name,LISTAGG(text,' ') WITHIN  group (order by line asc) text FROM all_source where OWNER = '{0}'  group by name ) order by name asc", User);
-            
+
+            //https://blog.csdn.net/rczrj/article/details/74977010
+            procSql = string.Format("select * from (SELECT name,xmlagg(xmlparse(content text||' ' wellformed) order by line asc).getclobval() text FROM all_source where OWNER = '{0}' group by name ) order by name asc", User);
+
             try
             {
                 //查询Oracle的所有序列
@@ -163,12 +166,13 @@ namespace MJTop.Data.DatabaseInfo
 
                 this.Views = Db.ReadNameValues(viewSql);
 
-                if (this.VersionNumber >= 11)
+                try
                 {
                     this.Procs = Db.ReadNameValues(procSql);
                 }
-                else
+                catch (Exception e)
                 {
+                    LogUtils.LogError("查询存储过程报错", Developer.SysDefault, e, this.Version, procSql);
                     this.Procs = new NameValueCollection();
                 }
 
