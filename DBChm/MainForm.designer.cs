@@ -51,8 +51,9 @@
             this.bgWork = new System.ComponentModel.BackgroundWorker();
             this.lblMsg = new System.Windows.Forms.Label();
             this.GpTableCol = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.lblSelectRes = new System.Windows.Forms.Label();
+            this.CkAll = new System.Windows.Forms.CheckBox();
+            this.CkListBox = new System.Windows.Forms.CheckedListBox();
             this.gpCurrTable = new System.Windows.Forms.GroupBox();
             this.labCurrTabComment = new System.Windows.Forms.Label();
             this.TxtCurrTabComment = new System.Windows.Forms.TextBox();
@@ -67,9 +68,9 @@
             this.ColLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnSaveGridData = new System.Windows.Forms.Button();
-            this.TxtTabName = new System.Windows.Forms.TextBox();
+            this.TxtSearchWords = new System.Windows.Forms.TextBox();
             this.RibbonPanel = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.CkReverse = new System.Windows.Forms.CheckBox();
             this.statusStripMain.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.ribbonPageAbout.SuspendLayout();
@@ -179,7 +180,7 @@
             this.tsbConnect.Image = ((System.Drawing.Image)(resources.GetObject("tsbConnect.Image")));
             this.tsbConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbConnect.Name = "tsbConnect";
-            this.tsbConnect.Size = new System.Drawing.Size(59, 67);
+            this.tsbConnect.Size = new System.Drawing.Size(63, 67);
             this.tsbConnect.Text = "数据连接";
             this.tsbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbConnect.Click += new System.EventHandler(this.tsbConnect_Click);
@@ -189,7 +190,7 @@
             this.tsbRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsbRefresh.Image")));
             this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Size = new System.Drawing.Size(59, 67);
+            this.tsbRefresh.Size = new System.Drawing.Size(63, 67);
             this.tsbRefresh.Text = "重新获取";
             this.tsbRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
@@ -199,7 +200,7 @@
             this.tsbPDMUpload.Image = ((System.Drawing.Image)(resources.GetObject("tsbPDMUpload.Image")));
             this.tsbPDMUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPDMUpload.Name = "tsbPDMUpload";
-            this.tsbPDMUpload.Size = new System.Drawing.Size(59, 67);
+            this.tsbPDMUpload.Size = new System.Drawing.Size(63, 67);
             this.tsbPDMUpload.Text = "批注上载";
             this.tsbPDMUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbPDMUpload.Click += new System.EventHandler(this.tsbSaveUpload_Click);
@@ -209,7 +210,7 @@
             this.tsbBuild.Image = ((System.Drawing.Image)(resources.GetObject("tsbBuild.Image")));
             this.tsbBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbBuild.Name = "tsbBuild";
-            this.tsbBuild.Size = new System.Drawing.Size(63, 67);
+            this.tsbBuild.Size = new System.Drawing.Size(65, 67);
             this.tsbBuild.Text = "CHM导出";
             this.tsbBuild.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbBuild.Click += new System.EventHandler(this.tsbBuild_Click);
@@ -312,13 +313,14 @@
             // 
             // GpTableCol
             // 
-            this.GpTableCol.Controls.Add(this.label3);
-            this.GpTableCol.Controls.Add(this.checkBox1);
-            this.GpTableCol.Controls.Add(this.checkedListBox1);
+            this.GpTableCol.Controls.Add(this.CkReverse);
+            this.GpTableCol.Controls.Add(this.lblSelectRes);
+            this.GpTableCol.Controls.Add(this.CkAll);
+            this.GpTableCol.Controls.Add(this.CkListBox);
             this.GpTableCol.Controls.Add(this.gpCurrTable);
             this.GpTableCol.Controls.Add(this.label1);
             this.GpTableCol.Controls.Add(this.GpColumns);
-            this.GpTableCol.Controls.Add(this.TxtTabName);
+            this.GpTableCol.Controls.Add(this.TxtSearchWords);
             this.GpTableCol.Location = new System.Drawing.Point(6, 7);
             this.GpTableCol.Margin = new System.Windows.Forms.Padding(2);
             this.GpTableCol.Name = "GpTableCol";
@@ -328,29 +330,37 @@
             this.GpTableCol.TabStop = false;
             this.GpTableCol.Text = "表列批注（支持多个关键词查询，多个关键词以英文逗号“,”隔开）";
             // 
-            // checkBox1
+            // label3
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 55);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(78, 16);
-            this.checkBox1.TabIndex = 9;
-            this.checkBox1.Text = "全选/反选";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
+            this.lblSelectRes.AutoSize = true;
+            this.lblSelectRes.Location = new System.Drawing.Point(146, 57);
+            this.lblSelectRes.Name = "label3";
+            this.lblSelectRes.Size = new System.Drawing.Size(71, 12);
+            this.lblSelectRes.TabIndex = 10;
+            this.lblSelectRes.Text = "已选择0张表";
             // 
-            // checkedListBox1
+            // CkAll
             // 
-            this.checkedListBox1.CheckOnClick = true;
-            this.checkedListBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.checkedListBox1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(1, 80);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(273, 468);
-            this.checkedListBox1.TabIndex = 8;
-            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            this.CkAll.AutoSize = true;
+            this.CkAll.Location = new System.Drawing.Point(3, 55);
+            this.CkAll.Name = "CkAll";
+            this.CkAll.Size = new System.Drawing.Size(48, 16);
+            this.CkAll.TabIndex = 9;
+            this.CkAll.Text = "全选";
+            this.CkAll.UseVisualStyleBackColor = true;
+            this.CkAll.Click += new System.EventHandler(this.CkAll_Click);
+            // 
+            // CkListBox
+            // 
+            this.CkListBox.CheckOnClick = true;
+            this.CkListBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.CkListBox.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CkListBox.FormattingEnabled = true;
+            this.CkListBox.Location = new System.Drawing.Point(1, 80);
+            this.CkListBox.Name = "CkListBox";
+            this.CkListBox.Size = new System.Drawing.Size(273, 468);
+            this.CkListBox.TabIndex = 8;
+            this.CkListBox.SelectedIndexChanged += new System.EventHandler(this.CkListBox_SelectedIndexChanged);
             // 
             // gpCurrTable
             // 
@@ -452,7 +462,7 @@
             this.GV_ColComments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -515,14 +525,14 @@
             this.BtnSaveGridData.Text = "保存";
             this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
             // 
-            // TxtTabName
+            // TxtSearchWords
             // 
-            this.TxtTabName.Location = new System.Drawing.Point(40, 26);
-            this.TxtTabName.Margin = new System.Windows.Forms.Padding(2);
-            this.TxtTabName.Name = "TxtTabName";
-            this.TxtTabName.Size = new System.Drawing.Size(221, 21);
-            this.TxtTabName.TabIndex = 0;
-            this.TxtTabName.TextChanged += new System.EventHandler(this.TxtTabName_TextChanged);
+            this.TxtSearchWords.Location = new System.Drawing.Point(40, 26);
+            this.TxtSearchWords.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtSearchWords.Name = "TxtSearchWords";
+            this.TxtSearchWords.Size = new System.Drawing.Size(221, 21);
+            this.TxtSearchWords.TabIndex = 0;
+            this.TxtSearchWords.TextChanged += new System.EventHandler(this.TxtSearchWords_TextChanged);
             // 
             // RibbonPanel
             // 
@@ -536,14 +546,16 @@
             this.RibbonPanel.Size = new System.Drawing.Size(1070, 578);
             this.RibbonPanel.TabIndex = 4;
             // 
-            // label3
+            // CkReverse
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(87, 56);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 12);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "已选择0张表";
+            this.CkReverse.AutoSize = true;
+            this.CkReverse.Location = new System.Drawing.Point(57, 56);
+            this.CkReverse.Name = "CkReverse";
+            this.CkReverse.Size = new System.Drawing.Size(48, 16);
+            this.CkReverse.TabIndex = 11;
+            this.CkReverse.Text = "反选";
+            this.CkReverse.UseVisualStyleBackColor = true;
+            this.CkReverse.Click += new System.EventHandler(this.CkReverse_Click);
             // 
             // MainForm
             // 
@@ -607,8 +619,8 @@
         private System.Windows.Forms.ToolStripButton tsPdfExp;
         private System.Windows.Forms.ToolStripButton tsXmlExp;
         private System.Windows.Forms.GroupBox GpTableCol;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckBox CkAll;
+        private System.Windows.Forms.CheckedListBox CkListBox;
         private System.Windows.Forms.GroupBox gpCurrTable;
         private System.Windows.Forms.Label labCurrTabComment;
         private System.Windows.Forms.TextBox TxtCurrTabComment;
@@ -619,7 +631,7 @@
         private System.Windows.Forms.Label lblTip;
         private System.Windows.Forms.DataGridView GV_ColComments;
         private System.Windows.Forms.Button BtnSaveGridData;
-        private System.Windows.Forms.TextBox TxtTabName;
+        private System.Windows.Forms.TextBox TxtSearchWords;
         private System.Windows.Forms.Panel RibbonPanel;
         private System.Windows.Forms.ToolStripButton tsHtmlExp;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
@@ -627,6 +639,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLength;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColComment;
         private System.Windows.Forms.ToolStripButton tsMarkDownExp;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblSelectRes;
+        private System.Windows.Forms.CheckBox CkReverse;
     }
 }

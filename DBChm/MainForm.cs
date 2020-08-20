@@ -9,9 +9,11 @@ namespace DBCHM
     using ComponentFactory.Krypton.Toolkit;
     using System;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
     using TryOpenXml.Dtos;
@@ -203,23 +205,29 @@ namespace DBCHM
             var diaRes = conMgrForm.ShowDialog(this);
             if (diaRes == DialogResult.OK || FormUtils.IsOK_Close) //当前窗体 是正常关闭的情况下
             {
-                checkedListBox1.DataSource = DBUtils.Instance?.Info?.TableNames;
+                CkListBox.DataSource = DBUtils.Instance?.Info?.TableNames;
                 FormUtils.IsOK_Close = false;
             }
             else
             {
                 return;
             }
-            if (checkedListBox1.Items.Count > 0)//默认选择第一张表
+
+            //默认全选
+            this.CkAll.Checked = true;
+            CkAll_Click(null, null);
+
+            if (CkListBox.Items.Count > 0)//默认选择第一张表
             {
-                checkedListBox1.SelectedIndex = 0;
-                LabCurrTabName.Text = checkedListBox1.SelectedItems[0].ToString();
+                CkListBox.SelectedIndex = 0;
+                LabCurrTabName.Text = CkListBox.SelectedItems[0].ToString();
                 TxtCurrTabComment.Text = DBUtils.Instance?.Info?.TableComments[LabCurrTabName.Text];
             }
             else//无数据表时，清空 Gird列表
             {
                 GV_ColComments.Rows.Clear();
             }
+
             if (!string.IsNullOrWhiteSpace(DBUtils.Instance?.Info?.DBName))
             {
                 this.Text = DBUtils.Instance?.Info?.DBName + "(" + DBUtils.Instance.DBType.ToString() + ") - " + "DBCHM v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace(".0.0", "");
@@ -255,80 +263,122 @@ namespace DBCHM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TxtTabName_TextChanged(object sender, EventArgs e)
+        private void TxtSearchWords_TextChanged(object sender, EventArgs e)
         {
-            string strName = TxtTabName.Text.Trim().ToLower();
-            var lstTableName = DBUtils.Instance?.Info?.TableNames;
+            string searchWords = TxtSearchWords.Text.Trim().ToLower();
+            var lstTableName = DBUtils.Instance?.Info?.TableNames ?? new List<string>();
+            this.lblSelectRes.Text = string.Format(selectedTableDesc, 0);
 
-            checkedListBox1.DataSource = null;
-            checkedListBox1.Items.Clear();
-            this.label3.Text = string.Format(selectedTableDesc, 0);
-
-            if (!string.IsNullOrWhiteSpace(strName))
+            if (!string.IsNullOrWhiteSpace(searchWords))
             {
-                lstTableName.ForEach(t =>
+                var lstContains = new HashSet<string>();
+                
+                var words = searchWords.Split(new string[] { ",", "，" }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var word in words)
                 {
-                    if (strName.Contains(","))
+                    foreach (var tabName in lstTableName)
                     {
-                        // TODO 多个关键词模糊匹配
-                        Dictionary<string, string> tableDic = new Dictionary<string, string>();
-                        string[] keys = strName.Split(',');
-                        foreach (string key in keys)
+                        if (tabName.ToLower().Contains(word.ToLower()))
                         {
-                            if (string.IsNullOrWhiteSpace(key)) {
-                                continue;
-                            }
-                            if (t.ToLower().Contains(key) && !tableDic.ContainsKey(t))
-                            {
-                                tableDic.Add(t, t);
-                            }
-                        }
-                        if (null != tableDic || tableDic.Count > 0)
-                        {
-                            foreach (KeyValuePair<string, string> kvp in tableDic)
-                            {
-                                checkedListBox1.Items.Add(kvp.Key);
-                            }
+                            lstContains.Add(tabName);
                         }
                     }
-                    else
+                }
+
+                //清空重置
+                CkListBox.DataSource = null;
+                CkListBox.Items.Clear();
+
+                var lstNotContains = lstTableName.Except(lstContains).ToList();
+
+                if (lstContains.Any())
+                {
+                    CkAll.Checked = false;
+                    //搜索到的表名 靠前显示
+                    CkListBox.Items.AddRange(lstContains.ToArray());
+                    CkListBox.Items.AddRange(lstNotContains.ToArray());
+
+                    for (int j = 0; j < CkListBox.Items.Count; j++)
                     {
-                        // TODO 单个关键词模糊匹配
-                        if (t.ToLower().Contains(strName))
+                        var item = CkListBox.Items[j].ToString();
+
+                        //作为排除 参与导出的表名 并且默认不选中
+                        if (lstContains.Contains(item))
                         {
-                            checkedListBox1.Items.Add(t);
+                            CkListBox.SetItemChecked(j, false);
+                        }
+                        else
+                        {
+                            CkListBox.SetItemChecked(j, true);
                         }
                     }
 
-                });
+                    this.lblSelectRes.Text = string.Format(selectedTableDesc, CkListBox.CheckedItems.Count);
+                }
             }
-            else//默认所有数据表
+            else
             {
-                checkedListBox1.DataSource = DBUtils.Instance?.Info?.TableNames;
+                CkListBox.DataSource = DBUtils.Instance?.Info?.TableNames;
+                CkAll.Checked = true;
+                CkAll_Click(null, null);
             }
 
-            if (checkedListBox1.Items.Count > 0)//默认选择第一张表
+            if (CkListBox.Items.Count > 0)
             {
-                checkedListBox1.SelectedIndex = 0;
-                LabCurrTabName.Text = checkedListBox1.SelectedItems[0].ToString();
+                //默认选择第一张表
+                CkListBox.SelectedIndex = 0;
+                LabCurrTabName.Text = CkListBox.SelectedItems[0].ToString();
                 TxtCurrTabComment.Text = DBUtils.Instance?.Info?.TableComments[LabCurrTabName.Text];
             }
         }
 
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+
+        /// <summary>
+        /// 全选
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CkAll_Click(object sender, EventArgs e)
         {
-            if (checkedListBox1.SelectedItems.Count > 0)
+            for (int j = 0; j < CkListBox.Items.Count; j++)
+            {
+                CkListBox.SetItemChecked(j, CkAll.Checked);
+            }
+            this.lblSelectRes.Text = string.Format(selectedTableDesc, CkListBox.CheckedItems.Count);
+        }
+
+        /// <summary>
+        /// 反选
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CkReverse_Click(object sender, EventArgs e)
+        {
+            for (int j = 0; j < CkListBox.Items.Count; j++)
+            {
+                var ck = CkListBox.GetItemChecked(j);
+                CkListBox.SetItemChecked(j, !ck);
+            }
+            CkAll.Checked = CkListBox.Items.Count == CkListBox.CheckedItems.Count;
+            this.lblSelectRes.Text = string.Format(selectedTableDesc, CkListBox.CheckedItems.Count);
+        }
+
+
+        private void CkListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CkListBox.SelectedItems.Count > 0)
             {
                 //数据重置 
                 Prog.Value = 0;
                 lblMsg.Text = string.Empty;
                 GV_ColComments.Rows.Clear();
 
-                LabCurrTabName.Text = checkedListBox1.SelectedItems[0].ToString();
+                LabCurrTabName.Text = CkListBox.SelectedItems[0].ToString();
                 TxtCurrTabComment.Text = DBUtils.Instance?.Info?.TableComments[LabCurrTabName.Text];
 
                 var columnInfos = DBUtils.Instance?.Info?.GetColumns(LabCurrTabName.Text);
-                
+
                 if (columnInfos != null)
                 {
                     foreach (var colInfo in columnInfos)
@@ -336,67 +386,11 @@ namespace DBCHM
                         GV_ColComments.Rows.Add(colInfo.ColumnName, colInfo.TypeName, colInfo.Length, colInfo.DeText);
                     }
                 }
-                else
-                {
-                    DBUtils.Instance?.Info?.Refresh();
-                    TxtTabName_TextChanged(sender, e);
-                }
+                this.lblSelectRes.Text = string.Format(selectedTableDesc, CkListBox.CheckedItems.Count);
             }
         }
 
-        /// <summary>
-        /// 数据库表名选中事件响应
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (e.NewValue == CheckState.Checked)
-            {
-                // TODO 首次选中第一个时checkedListBox1.CheckedItems.Count好像为0，所以此处+1表示选中了一个值
-                if (checkedListBox1.CheckedItems.Count + 1 == checkedListBox1.Items.Count)
-                {
-                    checkBox1.CheckState = CheckState.Checked;
-                }
-                else
-                {
-                    checkBox1.CheckState = CheckState.Unchecked;
-                }
-            }
-            else
-            {
-                checkBox1.CheckState = CheckState.Unchecked;
-            }
-            this.label3.Text = string.Format(selectedTableDesc, this.checkedListBox1.CheckedItems.Count + 1);
-        }
-
-        /// <summary>
-        /// 全选/反选
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkBox1_Click(object sender, EventArgs e)
-        {
-            CheckBox ck = sender as CheckBox;
-            if (ck.CheckState == CheckState.Checked)
-            {
-                // 全选
-                for (var i = 0; i < checkedListBox1.Items.Count; i++)
-                {
-                    checkedListBox1.SetItemChecked(i, true);
-                }
-            }
-            else
-            {
-                // 反选
-                for (var i = 0; i < checkedListBox1.Items.Count; i++)
-                {
-                    checkedListBox1.SetItemChecked(i, false);
-                }
-            }
-            this.label3.Text = string.Format(selectedTableDesc, this.checkedListBox1.CheckedItems.Count);
-        }
-
+        
         /// <summary>
         /// 数据连接
         /// </summary>
@@ -418,13 +412,9 @@ namespace DBCHM
             FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
             {
                 DBUtils.Instance?.Info?.Refresh();
-
-                TxtTabName_TextChanged(sender, e);
+                TxtSearchWords_TextChanged(sender, e);
 
             }, null);
-            // TODO 重置
-            this.checkBox1.Checked = false;
-            this.label3.Text = string.Format(selectedTableDesc, 0);
         }
 
         /// <summary>
@@ -439,7 +429,7 @@ namespace DBCHM
             if (dirRes == DialogResult.OK || FormUtils.IsOK_Close)
             {
                 FormUtils.IsOK_Close = false;
-                TxtTabName_TextChanged(sender, e);
+                TxtSearchWords_TextChanged(sender, e);
             }
         }
 
@@ -460,6 +450,7 @@ namespace DBCHM
         /// </summary>
         private string indexHtmlpath = string.Empty;
 
+        #region 导出方法
         private void ExportToChm()
         {
             #region 使用 HTML Help Workshop 的 hhc.exe 编译 ,先判断系统中是否已经安装有  HTML Help Workshop 
@@ -675,7 +666,7 @@ namespace DBCHM
                         System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
                         TryOpenXml.Text.ExcelUtils.ExportExcelByEpplus(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
 
-                        if(MessageBox.Show("生成数据库字典Excel文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        if (MessageBox.Show("生成数据库字典Excel文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                         {
                             System.Diagnostics.Process.Start(saveDia.FileName);
                         }
@@ -724,7 +715,7 @@ namespace DBCHM
                         System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
                         TryOpenXml.Text.PdfUtils.ExportPdfByITextSharp(saveDia.FileName, baseFontPath, DBUtils.Instance.Info.DBName, tableDtos);
 
-                        if(MessageBox.Show("生成数据库字典PDF文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        if (MessageBox.Show("生成数据库字典PDF文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                         {
                             System.Diagnostics.Process.Start(saveDia.FileName);
                         }
@@ -761,7 +752,7 @@ namespace DBCHM
                         System.Collections.Generic.List<TableDto> tableDtos = DBInstanceTransToDto();
                         TryOpenXml.Text.XmlUtils.ExportXml(saveDia.FileName, DBUtils.Instance.Info.DBName, tableDtos);
 
-                        if(MessageBox.Show("生成数据库字典XML文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        if (MessageBox.Show("生成数据库字典XML文档成功，是否打开？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                         {
                             System.Diagnostics.Process.Start(saveDia.FileName);
                         }
@@ -812,7 +803,6 @@ namespace DBCHM
             }
         }
 
-
         private void ExportToMarkDown()
         {
             string fileName = string.Empty;
@@ -850,8 +840,9 @@ namespace DBCHM
                 }, null);
             }
         }
+        #endregion
 
-
+        #region 导出方法
         /// <summary>
         /// chm文档导出
         /// </summary>
@@ -915,8 +906,8 @@ namespace DBCHM
         private void tsMarkDownExp_Click(object sender, EventArgs e)
         {
             ExportToMarkDown();
-        }
-
+        } 
+        #endregion
 
         private void GV_ColComments_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1057,36 +1048,25 @@ namespace DBCHM
             return false;
         }
 
+
         /// <summary>
         /// MJTop.Data数据库对象Instance转TableDto
         /// </summary>
         /// <returns>tables</returns>
-        private System.Collections.Generic.List<TableDto> DBInstanceTransToDto()
+        private List<TableDto> DBInstanceTransToDto()
         {
-            System.Collections.Generic.List<TableDto> tables = new System.Collections.Generic.List<TableDto>();
+            List<TableDto> tables = new System.Collections.Generic.List<TableDto>();
 
             // TODO 查询数据库表集合
-            System.Collections.Specialized.NameValueCollection dict_tabs = DBUtils.Instance.Info.TableComments;
+            NameValueCollection dict_tabs = DBUtils.Instance.Info.TableComments;
 
             // TODO 根据选择的表名进行导出相关处理
-            System.Collections.Generic.List<string> checkedTableNames = new System.Collections.Generic.List<string>();
-            for (var j = 0; j < checkedListBox1.Items.Count; j++)
-            {
-                if (checkedListBox1.GetItemChecked(j))
-                {
-                    // TODO 选中的表名
-                    string checkedTableName = checkedListBox1.GetItemText(checkedListBox1.Items[j]);
-                    checkedTableNames.Add(checkedTableName);
-                }
-            }
+            List<string> checkedTableNames = CkListBox.CheckedItems.Cast<string>().ToList();
+
+
             if (checkedTableNames.Count == 0)
             {
-                // TODO 未选择指定表，默认全部表处理
-                for (var j = 0; j < checkedListBox1.Items.Count; j++)
-                {
-                    string checkedTableName = checkedListBox1.GetItemText(checkedListBox1.Items[j]);
-                    checkedTableNames.Add(checkedTableName);
-                }
+                checkedTableNames = DBUtils.Instance?.Info?.TableNames ?? new List<string>();
             }
 
             int i = 1; // 计数器
@@ -1137,6 +1117,6 @@ namespace DBCHM
             return tables;
         }
 
-
+        
     }
 }
