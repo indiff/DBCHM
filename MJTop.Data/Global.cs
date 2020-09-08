@@ -66,6 +66,7 @@ namespace MJTop.Data
           { DBType.Oracle,":" },
           { DBType.PostgreSql,":" },
           { DBType.SQLite,"@" },
+          { DBType.DB2,":" },
         };
 
 
