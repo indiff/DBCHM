@@ -78,23 +78,28 @@ DBHCM 是一个对数据库文档生成工具！
 	1. `连接数据库`界面填写的`连接信息`真的正确无误?
 	2. `数据库服务器`有`防火墙/安全组`限制？
 	3. 用 [Navicat Premium](https://gitee.com/lztkdr/DBCHM/attach_files) 连接数据库服务器试试！
+	
 - 连接数据库时，点了 `连接/测试` ，半天没响应？
 	可能是连接远程数据库网络不好的原因，可以把`连接超时`设置的小一些。
+	
 - dbchm可以连接上，但显示不了数据怎么办？
 	- 导出文档前，数据库使用账号要给予`root级别`的权限，非root级别账号连接，可能会出现`表数据显示不全`或数据查询因权限不足，会`查不出来数据`！
 	- dbchm有Bug， [提Issue](https://gitee.com/lztkdr/DBCHM/issues/new) 或 [进群里](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) 反馈。
+	
 - 表列的批注数据我想迁移，怎么办？
 	1. 使用 dbchm 的 `XML导出`，对当前数据库的批注数据 就会导出一个xml文件。
 	2. 点`数据连接`， 切换至 目标数据库连
 	3. 再用`批注上载` 就可以选择刚刚的xml文件，如果数据库表结构相同，批注就会更新到目标数据库服上。
+	
 - 数据库比较老，如  `Sql Server 2000 `，怎么使用dbchm？
-	1. 下载安装 [Navicat软件](https://gitee.com/lztkdr/DBCHM/attach_files)，
+	1. 下载安装 [Navicat Premium](https://gitee.com/lztkdr/DBCHM/attach_files)
 	2. 连接上老旧的数据库服务器，将数据库表结构脚本导出。
 	3. 找一台高版本的数据库服务器，新建一个临时数据库，将导出的脚本导入。
 	4. 然后用dbchm连接高版本的数据库服务器。
+	
 - Oracle数据库连上之后，一直未响应，像卡死了一样，怎么办？
 	因为Oracle的 `列是否自增` 的sql语句，查询效率比较低，查的比较慢，没有卡死！！请耐心等待！！
-	PS：如果您能提供更高效的查询方案，欢迎提供改善建议，助力该工具越来越好使。
+	PS：如果您能提供更高效的查询方案，欢迎提供改善建议，助力该工具越来越好使:fist:！
 
 ### 交流
 - QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
