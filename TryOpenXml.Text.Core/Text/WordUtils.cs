@@ -134,11 +134,6 @@ namespace TryOpenXml.Text
             // Add a paragraph with text to the header.
             header.AppendParagraph("51Try.Top数据库字典文档").ParagraphFormat.Alignment =
                 Aspose.Words.ParagraphAlignment.Right;
-            Aspose.Words.HeaderFooter footer = new Aspose.Words.HeaderFooter(doc, Aspose.Words.HeaderFooterType.FooterPrimary);
-            doc.FirstSection.HeadersFooters.Add(footer);
-            // Add a paragraph with text to the footer.
-            footer.AppendParagraph("DBCHM-51Try.Top  https://gitee.com/lztkdr/DBCHM").ParagraphFormat.Alignment = 
-                Aspose.Words.ParagraphAlignment.Center;
 
             Aspose.Words.DocumentBuilder builder = new Aspose.Words.DocumentBuilder(doc);
 
@@ -309,10 +304,36 @@ namespace TryOpenXml.Text
                 }
             }
 
+            // TODO 生成页码
+            AutoGenPageNum(doc, builder);
+
             // TODO 添加水印
             //InsertWatermarkText(doc, "DBCHM-51Try.Top");
 
             doc.Save(fileName);
+        }
+
+        /// <summary>
+        /// 生成页码
+        /// </summary>
+        /// <param name="builder"></param>
+        public static void AutoGenPageNum(Aspose.Words.Document doc, Aspose.Words.DocumentBuilder builder) {
+            Aspose.Words.HeaderFooter footer = new Aspose.Words.HeaderFooter(doc, Aspose.Words.HeaderFooterType.FooterPrimary);
+            doc.FirstSection.HeadersFooters.Add(footer);
+            // Add a paragraph with text to the footer.
+            footer.AppendParagraph("").ParagraphFormat.Alignment = Aspose.Words.ParagraphAlignment.Center;
+            // We want to insert a field like this: {PAGE} / {NUMPAGES}
+            // TODO Go to the primary footer
+            builder.MoveToHeaderFooter(Aspose.Words.HeaderFooterType.FooterPrimary);
+            // TODO Add fields for current page number
+            builder.InsertField("PAGE");
+            // TODO Add any custom text formatter
+            builder.Write(" / ");
+            // TODO Add field for total page numbers in document
+            builder.InsertField("NUMPAGES");
+            // Finally update the outer field to recalcaluate the final value. 
+            // Doing this will automatically update the inner fields at the same time.
+            // field.Update();
         }
 
         /// <summary>
