@@ -21,7 +21,7 @@ DBHCM 是一个对数据库文档生成工具！
 - [x] SqlServer
 - [x] MySQL
 - [x] Oracle
-- [x]  PostgreSQL
+- [x] PostgreSQL
 - [x] DB2
 - [x] SQLite
 
@@ -42,22 +42,26 @@ DBHCM 是一个对数据库文档生成工具！
     - 	[x] markdown
 
 ### 效果展示
-#### 1 数据库连接管理
+
+#### 1 数据库连接配置示例
+![数据库连接配置](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM000.png)
+
+#### 2 数据库连接管理
 ![数据库连接管理](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM001.png)
 
-#### 2 表名模糊匹配
+#### 3 表名模糊匹配
 ![表名模糊搜索](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
 
-#### 3 执行批注更新
+#### 4 执行批注更新
 ![表批注更新](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
 
-#### 4 导出CHM文件
+#### 5 导出CHM文件
 ![导出CHM文件](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM004.png)
 
-#### 5 表结构信息
+#### 6 表结构信息
 ![表结构信息](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM005.png)
 
-### 6 更多格式的效果，请[下载体验](https://gitee.com/lztkdr/DBCHM/releases)哈:wink:！！
+### 7 更多格式的效果，请[下载体验](https://gitee.com/lztkdr/DBCHM/releases)哈:wink:！！
 
 ### 贡献者
 - @[trycache](https://gitee.com/trycache) 主要开发者
@@ -100,6 +104,26 @@ DBHCM 是一个对数据库文档生成工具！
 - Oracle数据库连上之后，一直未响应，像卡死了一样，怎么办？<br/>
 &emsp;因为Oracle的 `列是否自增` 的sql语句，查询效率比较低，查的比较慢，没有卡死！！请耐心等待！！<br/>
 &emsp;PS：如果你有更好方法，欢迎提供改善建议，助力:fist:该工具越来越好使！
+
+- Oracle 11g、Oracle 12c测试连接显示“[28040]ORA-28040:没有匹配的验证协议”，目前群里及isuues反馈的问题
+
+	可能11g以后的版本均会出现此项问题。
+
+	该问题描述：navicat等工具可以直接连接，但是本程序连接不上有上述问题。
+
+	目前想到的解决问题办法是，需在sqlnet.ora添加设置
+
+		SQLNET.ALLOWED_LOGON_VERSION=8
+		SQLNET.ALLOWED_LOGON_VERSION_SERVER=8
+		SQLNET.ALLOWED_LOGON_VERSION_CLIENT=8
+
+	参数值可设置8、10等，使用者可根据需要自行设置。
+	
+	注意：改完后其他相关用户的密码必须重置,或直接更新为原来的密码也是可以的（修改密码sql示例：alter user System identified by oldpassword;），此项操作慎重。
+
+	要么在建库的初期添加此参数，然后重置相关密码；要么新建测试环境，进行此项操作。
+
+	如果你有更好的解决方法，欢迎提供改善建议
 
 ### 交流
 - QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
