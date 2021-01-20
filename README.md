@@ -124,6 +124,12 @@ DBHCM 是一个对数据库文档生成工具！
 	要么在建库的初期添加此参数，然后重置相关密码；要么新建测试环境，进行此项操作。
 
 	如果你有更好的解决方法，欢迎提供改善建议
+	
+### 也可以请作者喝一杯咖啡
+- 任意金额扫码捐赠
+
+![微信捐赠](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/wxpay01.png)
+![支付宝捐赠](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/alipay01.png)
 
 ### 交流
 - QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
