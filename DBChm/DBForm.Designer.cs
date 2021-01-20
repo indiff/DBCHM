@@ -51,12 +51,15 @@
             this.txtConnTimeOut = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.noneSSLCB = new System.Windows.Forms.CheckBox();
+            this.requiredSSLCB = new System.Windows.Forms.CheckBox();
+            this.sslLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelControl1
             // 
             this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl1.Location = new System.Drawing.Point(85, 24);
+            this.labelControl1.Location = new System.Drawing.Point(85, 59);
             this.labelControl1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(122, 18);
@@ -66,7 +69,7 @@
             // TxtConnectName
             // 
             this.TxtConnectName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtConnectName.Location = new System.Drawing.Point(177, 22);
+            this.TxtConnectName.Location = new System.Drawing.Point(177, 57);
             this.TxtConnectName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtConnectName.Name = "TxtConnectName";
             this.TxtConnectName.Size = new System.Drawing.Size(213, 21);
@@ -75,7 +78,7 @@
             // labelControl2
             // 
             this.labelControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl2.Location = new System.Drawing.Point(84, 101);
+            this.labelControl2.Location = new System.Drawing.Point(84, 136);
             this.labelControl2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(144, 14);
@@ -85,7 +88,7 @@
             // TxtHost
             // 
             this.TxtHost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtHost.Location = new System.Drawing.Point(176, 98);
+            this.TxtHost.Location = new System.Drawing.Point(176, 133);
             this.TxtHost.Margin = new System.Windows.Forms.Padding(2);
             this.TxtHost.Name = "TxtHost";
             this.TxtHost.Size = new System.Drawing.Size(213, 21);
@@ -94,7 +97,7 @@
             // labelControl3
             // 
             this.labelControl3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl3.Location = new System.Drawing.Point(84, 138);
+            this.labelControl3.Location = new System.Drawing.Point(84, 173);
             this.labelControl3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(100, 18);
@@ -104,7 +107,7 @@
             // TxtPort
             // 
             this.TxtPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtPort.Location = new System.Drawing.Point(176, 135);
+            this.TxtPort.Location = new System.Drawing.Point(176, 170);
             this.TxtPort.Margin = new System.Windows.Forms.Padding(2);
             this.TxtPort.Name = "TxtPort";
             this.TxtPort.Size = new System.Drawing.Size(213, 21);
@@ -114,7 +117,7 @@
             // labelControl4
             // 
             this.labelControl4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl4.Location = new System.Drawing.Point(85, 204);
+            this.labelControl4.Location = new System.Drawing.Point(85, 239);
             this.labelControl4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(100, 14);
@@ -124,7 +127,7 @@
             // TxtUName
             // 
             this.TxtUName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtUName.Location = new System.Drawing.Point(177, 202);
+            this.TxtUName.Location = new System.Drawing.Point(177, 237);
             this.TxtUName.Margin = new System.Windows.Forms.Padding(2);
             this.TxtUName.Name = "TxtUName";
             this.TxtUName.Size = new System.Drawing.Size(213, 21);
@@ -133,7 +136,7 @@
             // labelControl5
             // 
             this.labelControl5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl5.Location = new System.Drawing.Point(85, 235);
+            this.labelControl5.Location = new System.Drawing.Point(85, 270);
             this.labelControl5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(107, 18);
@@ -143,7 +146,7 @@
             // TxtPwd
             // 
             this.TxtPwd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtPwd.Location = new System.Drawing.Point(177, 233);
+            this.TxtPwd.Location = new System.Drawing.Point(177, 268);
             this.TxtPwd.Margin = new System.Windows.Forms.Padding(2);
             this.TxtPwd.Name = "TxtPwd";
             this.TxtPwd.PasswordChar = '*';
@@ -153,7 +156,7 @@
             // labelControl6
             // 
             this.labelControl6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl6.Location = new System.Drawing.Point(83, 63);
+            this.labelControl6.Location = new System.Drawing.Point(83, 98);
             this.labelControl6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelControl6.Name = "labelControl6";
             this.labelControl6.Size = new System.Drawing.Size(134, 15);
@@ -163,7 +166,7 @@
             // BtnOk
             // 
             this.BtnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnOk.Location = new System.Drawing.Point(346, 309);
+            this.BtnOk.Location = new System.Drawing.Point(346, 380);
             this.BtnOk.Margin = new System.Windows.Forms.Padding(2);
             this.BtnOk.Name = "BtnOk";
             this.BtnOk.Size = new System.Drawing.Size(61, 28);
@@ -175,7 +178,7 @@
             // 
             this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BtnCancel.Location = new System.Drawing.Point(423, 309);
+            this.BtnCancel.Location = new System.Drawing.Point(423, 380);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(57, 28);
@@ -187,7 +190,7 @@
             // 
             this.cboDBType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cboDBType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboDBType.Location = new System.Drawing.Point(176, 58);
+            this.cboDBType.Location = new System.Drawing.Point(176, 93);
             this.cboDBType.Margin = new System.Windows.Forms.Padding(2);
             this.cboDBType.Name = "cboDBType";
             this.cboDBType.Size = new System.Drawing.Size(214, 20);
@@ -197,7 +200,7 @@
             // labDBName
             // 
             this.labDBName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labDBName.Location = new System.Drawing.Point(84, 169);
+            this.labDBName.Location = new System.Drawing.Point(84, 204);
             this.labDBName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labDBName.Name = "labDBName";
             this.labDBName.Size = new System.Drawing.Size(108, 20);
@@ -207,7 +210,7 @@
             // BtnTestConnect
             // 
             this.BtnTestConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnTestConnect.Location = new System.Drawing.Point(32, 309);
+            this.BtnTestConnect.Location = new System.Drawing.Point(32, 380);
             this.BtnTestConnect.Margin = new System.Windows.Forms.Padding(2);
             this.BtnTestConnect.Name = "BtnTestConnect";
             this.BtnTestConnect.Size = new System.Drawing.Size(70, 28);
@@ -218,7 +221,7 @@
             // cboDBName
             // 
             this.cboDBName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboDBName.Location = new System.Drawing.Point(177, 169);
+            this.cboDBName.Location = new System.Drawing.Point(177, 204);
             this.cboDBName.Margin = new System.Windows.Forms.Padding(2);
             this.cboDBName.Name = "cboDBName";
             this.cboDBName.Size = new System.Drawing.Size(214, 20);
@@ -228,7 +231,7 @@
             // lblMsg
             // 
             this.lblMsg.AutoSize = true;
-            this.lblMsg.Location = new System.Drawing.Point(105, 324);
+            this.lblMsg.Location = new System.Drawing.Point(116, 386);
             this.lblMsg.Name = "lblMsg";
             this.lblMsg.Size = new System.Drawing.Size(41, 12);
             this.lblMsg.TabIndex = 10;
@@ -247,7 +250,7 @@
             // txtConnTimeOut
             // 
             this.txtConnTimeOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtConnTimeOut.Location = new System.Drawing.Point(178, 268);
+            this.txtConnTimeOut.Location = new System.Drawing.Point(178, 303);
             this.txtConnTimeOut.Margin = new System.Windows.Forms.Padding(2);
             this.txtConnTimeOut.Name = "txtConnTimeOut";
             this.txtConnTimeOut.Size = new System.Drawing.Size(66, 21);
@@ -258,7 +261,7 @@
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(86, 270);
+            this.label1.Location = new System.Drawing.Point(86, 305);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 18);
@@ -268,11 +271,44 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(249, 273);
+            this.label2.Location = new System.Drawing.Point(249, 306);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(17, 12);
             this.label2.TabIndex = 14;
             this.label2.Text = "秒";
+            // 
+            // noneSSLCB
+            // 
+            this.noneSSLCB.AutoSize = true;
+            this.noneSSLCB.Checked = true;
+            this.noneSSLCB.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.noneSSLCB.Location = new System.Drawing.Point(176, 341);
+            this.noneSSLCB.Name = "noneSSLCB";
+            this.noneSSLCB.Size = new System.Drawing.Size(48, 16);
+            this.noneSSLCB.TabIndex = 15;
+            this.noneSSLCB.Text = "None";
+            this.noneSSLCB.UseVisualStyleBackColor = true;
+            this.noneSSLCB.Click += new System.EventHandler(this.noneSSLCB_Click);
+            // 
+            // requiredSSLCB
+            // 
+            this.requiredSSLCB.AutoSize = true;
+            this.requiredSSLCB.Location = new System.Drawing.Point(230, 341);
+            this.requiredSSLCB.Name = "requiredSSLCB";
+            this.requiredSSLCB.Size = new System.Drawing.Size(72, 16);
+            this.requiredSSLCB.TabIndex = 16;
+            this.requiredSSLCB.Text = "Required";
+            this.requiredSSLCB.UseVisualStyleBackColor = true;
+            this.requiredSSLCB.Click += new System.EventHandler(this.requiredSSLCB_Click);
+            // 
+            // sslLabel
+            // 
+            this.sslLabel.AutoSize = true;
+            this.sslLabel.Location = new System.Drawing.Point(86, 341);
+            this.sslLabel.Name = "sslLabel";
+            this.sslLabel.Size = new System.Drawing.Size(47, 12);
+            this.sslLabel.TabIndex = 17;
+            this.sslLabel.Text = "SSL连接";
             // 
             // DBForm
             // 
@@ -280,7 +316,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BtnCancel;
-            this.ClientSize = new System.Drawing.Size(516, 372);
+            this.ClientSize = new System.Drawing.Size(516, 443);
+            this.Controls.Add(this.sslLabel);
+            this.Controls.Add(this.requiredSSLCB);
+            this.Controls.Add(this.noneSSLCB);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtConnTimeOut);
             this.Controls.Add(this.label1);
@@ -341,5 +380,8 @@
         private System.Windows.Forms.TextBox txtConnTimeOut;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox noneSSLCB;
+        private System.Windows.Forms.CheckBox requiredSSLCB;
+        private System.Windows.Forms.Label sslLabel;
     }
 }

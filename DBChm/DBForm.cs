@@ -145,11 +145,13 @@ namespace DBCHM
 
                 string strDBName = cboDBName.Text;
 
-                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text, 
-                    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))), 
-                    strDBName, TxtUName.Text, TxtPwd.Text,
-                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
-                    , 300);
+                //DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text,
+                //    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
+                //    strDBName, TxtUName.Text, TxtPwd.Text,
+                //    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                //    , 300);
+
+                this.InitDb(type, strDBName);
 
                 var info = DBUtils.Instance.Info;
 
@@ -199,12 +201,20 @@ namespace DBCHM
                 }
 
                 DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
-                string connString = DBMgr.GetConnectionString(type, TxtHost.Text,
-                    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
-                    cboDBName.Text, TxtUName.Text, TxtPwd.Text,
-                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
-                    );
-                NameValueCollection nvc = new NameValueCollection();
+                //string connString = DBMgr.GetConnectionString(type, TxtHost.Text,
+                //    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
+                //    cboDBName.Text, TxtUName.Text, TxtPwd.Text,
+                //    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                //    );
+
+                string connString = InitConnectionStr(type);
+
+                if (type == DBType.MySql)
+                {
+
+                }
+
+                    NameValueCollection nvc = new NameValueCollection();
                 if (OpType == OPType.新建 || OpType == OPType.克隆)
                 {
                     nvc.Add("Name", TxtConnectName.Text.Trim());
@@ -272,6 +282,10 @@ namespace DBCHM
             TxtPort.Enabled = true;
             TxtUName.Enabled = true;
 
+            sslLabel.Visible = false;
+            noneSSLCB.Visible = false;
+            requiredSSLCB.Visible = false;
+
             labDBName.Text = "数据库";
             DBType dbtype = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text.ToString());
             if (dbtype == DBType.SqlServer)
@@ -281,6 +295,11 @@ namespace DBCHM
             else if (dbtype == DBType.MySql)
             {
                 TxtUName.Text = "root";
+
+                sslLabel.Visible = true;
+                noneSSLCB.Visible = true;
+                requiredSSLCB.Visible = true;
+
             }
             else if (dbtype == DBType.Oracle || dbtype == DBType.OracleDDTek)
             {
@@ -366,6 +385,103 @@ namespace DBCHM
             this.Text = "连接数据库";
         }
 
-       
+        private void noneSSLCB_Click(object sender, EventArgs e)
+        {
+            if ((sender as CheckBox).Checked == true)
+            {
+                requiredSSLCB.Checked = false;
+            }
+            else
+            {
+                requiredSSLCB.Checked = true;
+            }
+        }
+
+        private void requiredSSLCB_Click(object sender, EventArgs e)
+        {
+            if ((sender as CheckBox).Checked == true)
+            {
+                noneSSLCB.Checked = false;
+            }
+            else
+            {
+                noneSSLCB.Checked = true;
+            }
+        }
+
+        private string extraParam = ""; // 额外参数
+
+        /// <summary>
+        /// 临时处理
+        /// TODO 创建额外参数
+        /// </summary>
+        private void CreateExtraParam()
+        {
+            // TODO 额外参数
+            if (noneSSLCB.Checked == true)
+            {
+                this.extraParam = "SslMode=None;";
+            }
+            else if (requiredSSLCB.Checked == true)
+            {
+                this.extraParam = "SslMode=Required;";
+            }
+            else
+            {
+                this.extraParam = "";
+            }
+        }
+
+        /// <summary>
+        /// 临时处理
+        /// TODO 初始化DB连接
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="strDBName"></param>
+        private void InitDb(DBType type, string strDBName) {
+            if (type == DBType.MySql)
+            {
+                CreateExtraParam();
+                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text,
+                    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
+                    strDBName, TxtUName.Text, TxtPwd.Text,
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                    , 300, this.extraParam);
+            }
+            else
+            {
+                DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text,
+                    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
+                    strDBName, TxtUName.Text, TxtPwd.Text,
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                    , 300);
+            }
+        }
+
+        /// <summary>
+        /// 临时处理
+        /// TODO 初始化连接串
+        /// </summary>
+        private string InitConnectionStr(DBType type) {
+            CreateExtraParam();
+            string connString = "";
+            if (type == DBType.MySql)
+            {
+                connString = DBMgr.GetConnectionString(type, TxtHost.Text,
+                    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
+                    cboDBName.Text, TxtUName.Text, TxtPwd.Text,
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text)), 
+                    this.extraParam);
+            }
+            else
+            {
+                connString = DBMgr.GetConnectionString(type, TxtHost.Text,
+                    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
+                    cboDBName.Text, TxtUName.Text, TxtPwd.Text,
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                    );
+            }
+            return connString;
+        }
     }
 }
