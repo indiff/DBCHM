@@ -268,13 +268,10 @@ namespace DBCHM
             string searchWords = TxtSearchWords.Text.Trim().ToLower();
             var lstTableName = DBUtils.Instance?.Info?.TableNames ?? new List<string>();
             this.lblSelectRes.Text = string.Format(selectedTableDesc, 0);
-
             if (!string.IsNullOrWhiteSpace(searchWords))
             {
                 var lstContains = new HashSet<string>();
-                
                 var words = searchWords.Split(new string[] { ",", "，" }, StringSplitOptions.RemoveEmptyEntries);
-
                 foreach (var word in words)
                 {
                     foreach (var tabName in lstTableName)
@@ -285,35 +282,29 @@ namespace DBCHM
                         }
                     }
                 }
-
-                //清空重置
+                // TODO 清空重置
                 CkListBox.DataSource = null;
                 CkListBox.Items.Clear();
-
                 var lstNotContains = lstTableName.Except(lstContains).ToList();
-
                 if (lstContains.Any())
                 {
                     CkAll.Checked = false;
-                    //搜索到的表名 靠前显示
+                    // TODO 搜索到的表名 靠前显示
                     CkListBox.Items.AddRange(lstContains.ToArray());
                     CkListBox.Items.AddRange(lstNotContains.ToArray());
-
                     for (int j = 0; j < CkListBox.Items.Count; j++)
                     {
                         var item = CkListBox.Items[j].ToString();
-
-                        //作为排除 参与导出的表名 并且默认不选中
+                        // TODO 作为排除 参与导出的表名 并且默认不选中
                         if (lstContains.Contains(item))
-                        {
-                            CkListBox.SetItemChecked(j, false);
-                        }
-                        else
                         {
                             CkListBox.SetItemChecked(j, true);
                         }
+                        else
+                        {
+                            CkListBox.SetItemChecked(j, false);
+                        }
                     }
-
                     this.lblSelectRes.Text = string.Format(selectedTableDesc, CkListBox.CheckedItems.Count);
                 }
             }
@@ -1084,10 +1075,18 @@ namespace DBCHM
                 MJTop.Data.TableInfo tabInfo = null;
                 if (dictTabs.Case == MJTop.Data.KeyCase.Lower)
                 {
+                    if (!dictTabs.ContainsKey(tableName.ToLower()))
+                    {
+                        throw new Exception(tableName.ToLower());
+                    }
                     tabInfo = dictTabs[tableName.ToLower()]; 
                 }
                 else
                 {
+                    if (!dictTabs.ContainsKey(tableName.ToUpper()))
+                    {
+                        throw new Exception(tableName.ToUpper());
+                    }
                     tabInfo = dictTabs[tableName.ToUpper()];
                 }                
                 // TODO 添加数据字段行,循环数据库表字段集合
