@@ -119,6 +119,8 @@ DBHCM 是一个对数据库文档生成工具！
 
 	参数值可设置8、10等，使用者可根据需要自行设置。
 	
+	![ORA-28040修改兼容](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/ORA-28040.png)
+	
 	注意：改完后其他相关用户的密码必须重置,或直接更新为原来的密码也是可以的（修改密码sql示例：alter user System identified by oldpassword;），此项操作慎重。
 
 	要么在建库的初期添加此参数，然后重置相关密码；要么新建测试环境，进行此项操作。
