@@ -104,7 +104,7 @@ namespace MJTop.Data.DatabaseInfo
             this.TableColumnComments = new IgCaseDictionary<NameValueCollection>();
 
             string dbSql = "select name from sys.sysdatabases Order By name asc";
-            string strSql = "SELECT '[' + (Select Top 1 c.name From sys.schemas c Where c.schema_id = a.schema_id) + '].[' + a.Name + ']' as Name,(SELECT TOP 1 Value FROM sys.extended_properties b WHERE b.major_id=a.object_id and b.minor_id=0) AS value,(Select top 1 c.name From sys.schemas c Where c.schema_id = a.schema_id) scName From sys.objects a WHERE a.type = 'U' AND a.name <> 'sysdiagrams' AND a.name <> 'dtproperties' ORDER BY a.name asc";
+            string strSql = "SELECT * FROM (SELECT '[' + (Select Top 1 c.name From sys.schemas c Where c.schema_id = a.schema_id) + '].[' + a.Name + ']' as Name,(SELECT TOP 1 Value FROM sys.extended_properties b WHERE b.major_id=a.object_id and b.minor_id=0) AS value,(Select top 1 c.name From sys.schemas c Where c.schema_id = a.schema_id) scName From sys.objects a WHERE a.type = 'U' AND a.name <> 'sysdiagrams' AND a.name <> 'dtproperties' )K WHERE K.scName <> 'cdc' ORDER BY K.name ASC;";
 
             string viewSql = "SELECT TABLE_NAME,VIEW_DEFINITION FROM INFORMATION_SCHEMA.VIEWS Order By TABLE_NAME asc";
             string procSql = "select name,[definition] from sys.objects a Left Join sys.sql_modules b On a.[object_id]=b.[object_id] Where a.type='P' And a.is_ms_shipped=0 And b.execute_as_principal_id Is Null And name !='sp_upgraddiagrams' Order By a.name asc";
