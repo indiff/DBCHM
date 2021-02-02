@@ -60,7 +60,8 @@ namespace TryOpenXml.Text
             foreach (var table in Tables)
             {
                 code.Append("<div class=\"page-content\" id=\"" + table.TableName + "\">");
-                code.Append("<div style=\"padding: 20px 0; border-bottom: 1px dashed #ccc\"><h1 style=\"float:left;\">" + table.Comment + "</h1><h1 id=\"page-title\">" + table.TableName + "</h1></div>");
+                code.Append("<div style=\"font-weight: bold\">表名:" + table.TableName + "<a href=\"#dir\" style =\"float:right; margin-top:6px;color: #33CCFF;text-decoration:none\" > 返回目录</a></div>");
+                code.Append("<div>表注释:" + table.Comment + "</div>");
                 code.Append("<div class=\"page-entry\">");
 
                 code.Append("<table class=\"tab-struct\" cellspacing=\"0\" cellpadding=\"5\" border=\"1\" width=\"100%\" bordercolorlight=\"#D7D7E5\" bordercolordark=\"#D3D8E0\">");
@@ -73,7 +74,7 @@ namespace TryOpenXml.Text
                 foreach (var column in table.Columns)
                 {
                     code.Append("<tr class=\"other-bg-color\">");
-                    code.Append($"<td>{num}</td><td>{column.ColumnName}</td><td>{column.ColumnTypeName}</td><td>{column.Length}</td><td>{column.Scale}</td><td>{column.IsPK}</td><td>{column.IsIdentity}</td><td>{column.CanNull}</td><td>{column.DefaultVal}</td><td>{column.Comment}</td>");
+                    code.Append($"<td>{num}</td><td style=\"text-align:left\">{column.ColumnName}</td><td>{column.ColumnTypeName}</td><td>{column.Length}</td><td>{column.Scale}</td><td>{column.IsPK}</td><td>{column.IsIdentity}</td><td>{column.CanNull}</td><td>{column.DefaultVal}</td><td>{column.Comment}</td>");
                     code.Append("</tr>");
                     num++;
                 }
@@ -87,7 +88,7 @@ namespace TryOpenXml.Text
 
         private string ReadHtml()
         {
-            using (var stmReader= new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("TryOpenXml.template.html")))
+            using (var stmReader = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("TryOpenXml.template.html")))
             {
                 return stmReader.ReadToEnd();
             }

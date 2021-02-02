@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -168,13 +168,13 @@
             }
 
             .page-entry a {
-                color: #666;
+                color: #33CCFF;
                 text-decoration: none;
             }
 
                 .page-entry a:hover {
-                    color: #10af88;
-                    border-color: #10af88;
+                    color: #33CCFF;
+                    border-color: #33CCFF;
                     text-decoration: none;
                 }
 
@@ -228,7 +228,7 @@
         #page-footer-next {
             font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 1em;
-            color: #10af88;
+            color: #33CCFF;
             font-weight: bold;
             text-transform: uppercase;
             text-decoration: none;
@@ -261,8 +261,8 @@
         #sidebar {
             font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
             padding: 0px;
-            position:fixed;
-            max-height:740px;
+            position: fixed;
+            max-height: 740px;
             display: block;
             float: left;
             width: 17%;
@@ -270,7 +270,7 @@
             overflow-x: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            overflow-y:auto;
+            overflow-y: auto;
         }
 
         .sidebar-title {
@@ -311,13 +311,13 @@
 
             .sidebar-link:hover,
             .sidebar-link.current {
-                color: #10af88;
-                border-color: #10af88;
+                color: #33CCFF;
+                border-color: #33CCFF;
             }
 
             .sidebar-link.current {
                 font-weight: bold;
-                border-left-color: #10af88;
+                border-left-color: #33CCFF;
             }
 
         #footer {
@@ -345,7 +345,7 @@
 
                 #footer-copyright a:hover {
                     text-decoration: underline;
-                    color: #10af88;
+                    color: #33CCFF;
                 }
 
 
@@ -371,7 +371,7 @@
         }
 
             .footer-link:hover {
-                color: #10af88;
+                color: #33CCFF;
             }
 
             .footer-link span {
@@ -400,8 +400,10 @@
         }
 
         .page-content {
-            width: 80%;
-            float: right;
+            width: 60%;
+            display: inline-block;
+            margin: 0 auto;
+            margin-left: 30%;
         }
 
         #main-nav {
@@ -459,7 +461,7 @@
                 align-content: center;
                 font-size: 12px;
                 line-height: 14px;
-                background-color: #10af88;
+                background-color: #33CCFF;
                 color: #fff;
                 text-align: center;
                 width: 100%;
@@ -567,8 +569,8 @@
                 this.getElementsByTagName("img")[0].style.display = 'block'
                 this.getElementsByTagName("span")[0].style.display = 'none'
             })
-			// Austin.Young add for adjust sidebar height
-            setTimeout( changebleWidthHeight,100);
+            // Austin.Young add for adjust sidebar height
+            setTimeout(changebleWidthHeight, 100);
         }
 
         window.onscroll = function () {
@@ -579,23 +581,21 @@
                 document.getElementById("goto_top").style.display = "none"
             }
         }
-		// Austin.Young add for adjust sidebar height
+        // Austin.Young add for adjust sidebar height
         function changebleWidthHeight() {
             var winHeight = 0;
             if (window.innerHeight)
                 winHeight = window.innerHeight;
             else if ((document.body) && (document.body.clientHeight))
                 winHeight = document.body.clientHeight;
-            if (document.documentElement && document.documentElement.clientHeight)
-            {
+            if (document.documentElement && document.documentElement.clientHeight) {
                 winHeight = document.documentElement.clientHeight;
             }
-            try{
+            try {
                 var obj = document.getElementById("sidebar");
                 var objTop = obj.getBoundingClientRect().top;
-                obj.style.height = (winHeight - objTop)+'px';
-            }catch(e)
-            {}
+                obj.style.height = (winHeight - objTop) + 'px';
+            } catch (e) { }
         }
         window.onresize = changebleWidthHeight;
     </script>
