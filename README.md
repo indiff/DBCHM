@@ -1,5 +1,5 @@
 <p align="center">
-   <img alt="DBCHM" src="https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/dbchm.png">
+   <img alt="DBCHM" src="https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/dbchm.png">
 </p>
 <p align="center">
   让数据库文档生成更简单一些吧！
@@ -44,51 +44,51 @@ DBHCM 是一个对数据库文档生成工具！
 ### 效果展示
 
 #### 1 数据库连接配置示例
-![数据库连接配置](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM000.png)
+![数据库连接配置](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM000.png)
 
 #### 2 数据库连接管理
-![数据库连接管理](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM001.png)
+![数据库连接管理](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM001.png)
 
 #### 3 表名模糊匹配
-![表名模糊搜索](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
+![表名模糊搜索](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
 
 #### 4 执行批注更新
-![表批注更新](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
+![表批注更新](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
 
 #### 5 导出CHM文件
-![导出CHM文件](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM004.png)
+![导出CHM文件](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM004.png)
 
 #### 6 表结构信息
-![表结构信息](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/DBCHM005.png)
+![表结构信息](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM005.png)
 
-### 7 更多格式的效果，请[下载体验](https://gitee.com/lztkdr/DBCHM/releases)哈:wink:！！
+### 7 更多格式的效果，请[下载体验](https://gitee.com/dotnetchina/DBCHM/releases)哈:wink:！！
 
 ### 贡献者
 - @[trycache](https://gitee.com/trycache) 主要开发者
-- @[空无一物](https://gitee.com/lztkdr/) 先驱者
+- @[空无一物](https://gitee.com/dotnetchina/) 先驱者
 
 ###  下载使用
-- **[下载最新发行版本](https://gitee.com/lztkdr/DBCHM/releases)**，下载解压后，双击运行 `DBCHM.exe`。
+- **[下载最新发行版本](https://gitee.com/dotnetchina/DBCHM/releases)**，下载解压后，双击运行 `DBCHM.exe`。
 
 - 新功能内测，Bug修复早知道，最新功能尝鲜，请在[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)共享中获取:yum:！
 
 ### 其他工具
-- [htmlhelp](https://gitee.com/lztkdr/DBCHM/attach_files)，生成chm文件时，需提前安装。
-- [PDMToCHM](https://gitee.com/lztkdr/DBCHM/attach_files)，将PDM表结构文件导出到CHM文件。
+- [htmlhelp](https://gitee.com/dotnetchina/DBCHM/attach_files)，生成chm文件时，需提前安装。
+- [PDMToCHM](https://gitee.com/dotnetchina/DBCHM/attach_files)，将PDM表结构文件导出到CHM文件。
 
 
 ### 常见问题
 - 连接不上，怎么办？
 	1. `连接数据库`界面填写的`连接信息`真的正确无误?
 	2. `数据库服务器`有`防火墙/安全组`限制？
-	3. 用 [Navicat Premium](https://gitee.com/lztkdr/DBCHM/attach_files) 连接数据库服务器试试！
+	3. 用 [Navicat Premium](https://gitee.com/dotnetchina/DBCHM/attach_files) 连接数据库服务器试试！
 	
 - 连接数据库时，点了 `连接/测试` ，半天没响应？<br/>
 &emsp;可能是连接远程数据库网络不好的原因，可以把`连接超时`设置的小一些。
 	
 - dbchm可以连接上，但显示不了数据怎么办？
 	- 导出文档前，数据库使用账号要给予`root级别`的权限，非root级别账号连接，可能会出现`表数据显示不全`或数据查询因权限不足，会`查不出来数据`！
-	- dbchm有Bug， [提Issue](https://gitee.com/lztkdr/DBCHM/issues/new) 或 [进群里](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) 反馈。
+	- dbchm有Bug， [提Issue](https://gitee.com/dotnetchina/DBCHM/issues/new) 或 [进群里](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) 反馈。
 	
 - 表列的批注数据我想迁移，怎么办？
 	1. 使用 dbchm 的 `XML导出`，对当前数据库的批注数据 就会导出一个xml文件。
@@ -96,7 +96,7 @@ DBHCM 是一个对数据库文档生成工具！
 	3. 再用`批注上载` 就可以选择刚刚的xml文件，如果数据库表结构相同，批注就会更新到目标数据库服上。
 	
 - 数据库比较老，如  `Sql Server 2000 `，怎么使用dbchm？
-	1. 下载安装 [Navicat Premium](https://gitee.com/lztkdr/DBCHM/attach_files)
+	1. 下载安装 [Navicat Premium](https://gitee.com/dotnetchina/DBCHM/attach_files)
 	2. 连接上老旧的数据库服务器，将数据库表结构脚本导出。
 	3. 找一台高版本的数据库服务器，新建一个临时数据库，将导出的脚本导入。
 	4. 然后用dbchm连接高版本的数据库服务器。
@@ -119,7 +119,7 @@ DBHCM 是一个对数据库文档生成工具！
 
 	参数值可设置8、10等，使用者可根据需要自行设置。
 	
-	![ORA-28040修改兼容](https://gitee.com/lztkdr/DBCHM/raw/master/DBChm/Images/ORA-28040.png)
+	![ORA-28040修改兼容](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/ORA-28040.png)
 	
 	注意：改完后其他相关用户的密码必须重置,或直接更新为原来的密码也是可以的（修改密码sql示例：alter user System identified by oldpassword;），此项操作慎重。
 
