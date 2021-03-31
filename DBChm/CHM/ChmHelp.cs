@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -14,6 +15,7 @@ namespace DBCHM.CHM
     public class ChmHelp
     {
 
+       
         public ChmHelp()
         {
             string logDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
@@ -39,6 +41,9 @@ namespace DBCHM.CHM
         public string HHCPath { get; set; }
 
         private string sourcePath;
+
+
+        private Hashtable map = new Hashtable();
         /// <summary>
         /// 编印所在目录
         /// </summary>
@@ -79,6 +84,8 @@ namespace DBCHM.CHM
             //给该目录添加UL标记
             if (strFileNames.Length > 0 || strDirectories.Length > 0)
                 hhcBody.AppendLine("	<UL>");
+
+            Hashtable ht = new Hashtable();
             //处理获取的文件
             foreach (string filename in strFileNames)
             {
@@ -110,6 +117,14 @@ namespace DBCHM.CHM
             }
         }
 
+        private string guessSuffix(string filenameWithoutExt)
+        {
+            throw new NotImplementedException();
+        }
+
+
+       
+
         /// <summary>
         /// 创建HHC文件：列表文件,确定目标文件中左侧树形列表中"目录"选项卡下的内容.
         /// </summary>
@@ -119,7 +134,7 @@ namespace DBCHM.CHM
             code.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
             code.AppendLine("<HTML>");
             code.AppendLine("<HEAD>");
-            code.AppendLine("<meta name=\"GENERATOR\" content=\"DBCHM.exe  www.51try.top\">");
+            code.AppendLine("<meta name=\"GENERATOR\" content=\"indiff\">");
             code.AppendLine("<!-- Sitemap 1.0 -->");
             code.AppendLine("</HEAD><BODY>");
             code.AppendLine("<OBJECT type=\"text/site properties\">");
@@ -143,11 +158,11 @@ namespace DBCHM.CHM
             var code = new StringBuilder();
             code.AppendLine("[OPTIONS]");
             code.AppendLine("Auto Index=Yes");
-            code.AppendLine("CITATION=Made by lztkdr");//制作人
+            code.AppendLine("CITATION=Made by indiff");//制作人
             code.AppendLine("Compatibility=1.1 or later");//版本
             code.AppendLine(@"Compiled file=" + ChmFileName);//生成chm文件路径
             code.AppendLine("Contents file=chm.HHC");//hhc文件路径
-            code.AppendLine("COPYRIGHT=www.51try.top");//版权所有
+            code.AppendLine("COPYRIGHT=indiff");//版权所有
             code.AppendLine($"Default topic={DefaultPage}");//CHM文件的首页
             code.AppendLine("Default Window=Main");//目标文件窗体控制参数,这里跳转到Windows小节中，与其一致即可
             code.AppendLine("Display compile notes=Yes");//显示编译信息
@@ -177,7 +192,7 @@ namespace DBCHM.CHM
             code.AppendLine("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">");
             code.AppendLine("<HTML>");
             code.AppendLine("<HEAD>");
-            code.AppendLine("<meta name=\"GENERATOR\" content=\"DBCHM.exe  www.51try.top\">");
+            code.AppendLine("<meta name=\"GENERATOR\" content=\"indiff\">");
             code.AppendLine("<!-- Sitemap 1.0 -->");
             code.AppendLine("</HEAD><BODY>");
             code.AppendLine("<OBJECT type=\"text/site properties\">");

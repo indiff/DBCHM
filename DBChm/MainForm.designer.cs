@@ -1,4 +1,7 @@
-﻿namespace DBCHM
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace DBCHM
 {
     partial class MainForm
     {
@@ -21,6 +24,31 @@
         }
 
         #region Windows Form Designer generated code
+
+
+        class ColorCodedCheckedListBox : CheckedListBox
+        {
+            //Color.Orange为颜色，你可修改
+            protected override void OnDrawItem(DrawItemEventArgs e)
+            {
+                if (!this.GetItemChecked(e.Index))
+                {
+                    DrawItemEventArgs e2 = new DrawItemEventArgs(e.Graphics, e.Font,
+                        new Rectangle(e.Bounds.Location, e.Bounds.Size),
+                        e.Index,
+                        (e.State & DrawItemState.Focus) == DrawItemState.Focus ? DrawItemState.Focus : DrawItemState.None,
+                        Color.Gold,
+                        Color.Silver);
+                    base.OnDrawItem(e2);
+                }
+                else
+                {
+                    base.OnDrawItem(e);
+                }
+                
+            }
+        }
+
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -51,9 +79,14 @@
             this.bgWork = new System.ComponentModel.BackgroundWorker();
             this.lblMsg = new System.Windows.Forms.Label();
             this.GpTableCol = new System.Windows.Forms.GroupBox();
+            this.filterTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.CkReverse = new System.Windows.Forms.CheckBox();
             this.lblSelectRes = new System.Windows.Forms.Label();
             this.CkAll = new System.Windows.Forms.CheckBox();
-            this.CkListBox = new System.Windows.Forms.CheckedListBox();
+           // this.CkListBox = new System.Windows.Forms.CheckedListBox();
+            this.CkListBox = new ColorCodedCheckedListBox();
+            
             this.gpCurrTable = new System.Windows.Forms.GroupBox();
             this.labCurrTabComment = new System.Windows.Forms.Label();
             this.TxtCurrTabComment = new System.Windows.Forms.TextBox();
@@ -70,7 +103,6 @@
             this.BtnSaveGridData = new System.Windows.Forms.Button();
             this.TxtSearchWords = new System.Windows.Forms.TextBox();
             this.RibbonPanel = new System.Windows.Forms.Panel();
-            this.CkReverse = new System.Windows.Forms.CheckBox();
             this.statusStripMain.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.ribbonPageAbout.SuspendLayout();
@@ -89,9 +121,9 @@
             this.statusStripMain.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Prog});
-            this.statusStripMain.Location = new System.Drawing.Point(0, 678);
+            this.statusStripMain.Location = new System.Drawing.Point(0, 743);
             this.statusStripMain.Name = "statusStripMain";
-            this.statusStripMain.Size = new System.Drawing.Size(1076, 22);
+            this.statusStripMain.Size = new System.Drawing.Size(1092, 22);
             this.statusStripMain.TabIndex = 2;
             this.statusStripMain.Text = "statusStripMain";
             // 
@@ -108,7 +140,7 @@
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(1069, 73);
+            this.tabPage3.Size = new System.Drawing.Size(1085, 73);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "关于";
             this.tabPage3.ToolTipText = "关于";
@@ -124,7 +156,7 @@
             this.toolStripButtonAbout});
             this.ribbonPageAbout.Location = new System.Drawing.Point(3, 2);
             this.ribbonPageAbout.Name = "ribbonPageAbout";
-            this.ribbonPageAbout.Size = new System.Drawing.Size(1063, 70);
+            this.ribbonPageAbout.Size = new System.Drawing.Size(1079, 70);
             this.ribbonPageAbout.TabIndex = 0;
             this.ribbonPageAbout.Text = "toolStripAbout";
             // 
@@ -145,7 +177,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(1069, 73);
+            this.tabPage1.Size = new System.Drawing.Size(1085, 73);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "文件";
             this.tabPage1.ToolTipText = "文件";
@@ -170,7 +202,7 @@
             this.tsMarkDownExp});
             this.ribbonPageFile.Location = new System.Drawing.Point(3, 2);
             this.ribbonPageFile.Name = "ribbonPageFile";
-            this.ribbonPageFile.Size = new System.Drawing.Size(1063, 70);
+            this.ribbonPageFile.Size = new System.Drawing.Size(1079, 70);
             this.ribbonPageFile.TabIndex = 0;
             this.ribbonPageFile.Text = "toolStripFile";
             this.ribbonPageFile.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ribbonPageFile_ItemClicked);
@@ -294,7 +326,7 @@
             this.RibbonTabContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RibbonTabContainer.Name = "RibbonTabContainer";
             this.RibbonTabContainer.SelectedIndex = 0;
-            this.RibbonTabContainer.Size = new System.Drawing.Size(1077, 101);
+            this.RibbonTabContainer.Size = new System.Drawing.Size(1093, 101);
             this.RibbonTabContainer.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.RibbonTabContainer.TabIndex = 3;
             this.RibbonTabContainer.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.RibbonTabContainer_Selecting);
@@ -313,6 +345,8 @@
             // 
             // GpTableCol
             // 
+            this.GpTableCol.Controls.Add(this.filterTextBox);
+            this.GpTableCol.Controls.Add(this.label3);
             this.GpTableCol.Controls.Add(this.CkReverse);
             this.GpTableCol.Controls.Add(this.lblSelectRes);
             this.GpTableCol.Controls.Add(this.CkAll);
@@ -325,16 +359,44 @@
             this.GpTableCol.Margin = new System.Windows.Forms.Padding(2);
             this.GpTableCol.Name = "GpTableCol";
             this.GpTableCol.Padding = new System.Windows.Forms.Padding(2);
-            this.GpTableCol.Size = new System.Drawing.Size(1051, 562);
+            this.GpTableCol.Size = new System.Drawing.Size(1075, 624);
             this.GpTableCol.TabIndex = 0;
             this.GpTableCol.TabStop = false;
             this.GpTableCol.Text = "表列批注（支持多个关键词查询，多个关键词以英文逗号“,”隔开）";
             // 
+            // filterTextBox
+            // 
+            this.filterTextBox.Location = new System.Drawing.Point(40, 54);
+            this.filterTextBox.Name = "filterTextBox";
+            this.filterTextBox.Size = new System.Drawing.Size(221, 21);
+            this.filterTextBox.TabIndex = 13;
+            this.filterTextBox.Text = "copy,bak";
+            // 
             // label3
             // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 60);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 12);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "过滤:";
+            // 
+            // CkReverse
+            // 
+            this.CkReverse.AutoSize = true;
+            this.CkReverse.Location = new System.Drawing.Point(62, 95);
+            this.CkReverse.Name = "CkReverse";
+            this.CkReverse.Size = new System.Drawing.Size(48, 16);
+            this.CkReverse.TabIndex = 11;
+            this.CkReverse.Text = "反选";
+            this.CkReverse.UseVisualStyleBackColor = true;
+            this.CkReverse.Click += new System.EventHandler(this.CkReverse_Click);
+            // 
+            // lblSelectRes
+            // 
             this.lblSelectRes.AutoSize = true;
-            this.lblSelectRes.Location = new System.Drawing.Point(146, 57);
-            this.lblSelectRes.Name = "label3";
+            this.lblSelectRes.Location = new System.Drawing.Point(134, 96);
+            this.lblSelectRes.Name = "lblSelectRes";
             this.lblSelectRes.Size = new System.Drawing.Size(71, 12);
             this.lblSelectRes.TabIndex = 10;
             this.lblSelectRes.Text = "已选择0张表";
@@ -342,7 +404,7 @@
             // CkAll
             // 
             this.CkAll.AutoSize = true;
-            this.CkAll.Location = new System.Drawing.Point(3, 55);
+            this.CkAll.Location = new System.Drawing.Point(8, 95);
             this.CkAll.Name = "CkAll";
             this.CkAll.Size = new System.Drawing.Size(48, 16);
             this.CkAll.TabIndex = 9;
@@ -356,9 +418,9 @@
             this.CkListBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.CkListBox.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CkListBox.FormattingEnabled = true;
-            this.CkListBox.Location = new System.Drawing.Point(1, 80);
+            this.CkListBox.Location = new System.Drawing.Point(6, 126);
             this.CkListBox.Name = "CkListBox";
-            this.CkListBox.Size = new System.Drawing.Size(273, 468);
+            this.CkListBox.Size = new System.Drawing.Size(273, 484);
             this.CkListBox.TabIndex = 8;
             this.CkListBox.SelectedIndexChanged += new System.EventHandler(this.CkListBox_SelectedIndexChanged);
             // 
@@ -438,7 +500,7 @@
             this.GpColumns.Margin = new System.Windows.Forms.Padding(2);
             this.GpColumns.Name = "GpColumns";
             this.GpColumns.Padding = new System.Windows.Forms.Padding(2);
-            this.GpColumns.Size = new System.Drawing.Size(733, 453);
+            this.GpColumns.Size = new System.Drawing.Size(737, 515);
             this.GpColumns.TabIndex = 2;
             this.GpColumns.TabStop = false;
             this.GpColumns.Text = "列批注";
@@ -446,7 +508,7 @@
             // lblTip
             // 
             this.lblTip.AutoSize = true;
-            this.lblTip.Location = new System.Drawing.Point(53, 411);
+            this.lblTip.Location = new System.Drawing.Point(45, 460);
             this.lblTip.Name = "lblTip";
             this.lblTip.Size = new System.Drawing.Size(41, 12);
             this.lblTip.TabIndex = 9;
@@ -481,7 +543,7 @@
             this.GV_ColComments.RowHeadersVisible = false;
             this.GV_ColComments.RowTemplate.Height = 27;
             this.GV_ColComments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.GV_ColComments.Size = new System.Drawing.Size(722, 363);
+            this.GV_ColComments.Size = new System.Drawing.Size(729, 392);
             this.GV_ColComments.TabIndex = 0;
             this.GV_ColComments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_ColComments_CellClick);
             // 
@@ -517,7 +579,7 @@
             // 
             // BtnSaveGridData
             // 
-            this.BtnSaveGridData.Location = new System.Drawing.Point(593, 400);
+            this.BtnSaveGridData.Location = new System.Drawing.Point(615, 460);
             this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(2);
             this.BtnSaveGridData.Name = "BtnSaveGridData";
             this.BtnSaveGridData.Size = new System.Drawing.Size(98, 34);
@@ -543,25 +605,14 @@
             this.RibbonPanel.Location = new System.Drawing.Point(0, 98);
             this.RibbonPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RibbonPanel.Name = "RibbonPanel";
-            this.RibbonPanel.Size = new System.Drawing.Size(1070, 578);
+            this.RibbonPanel.Size = new System.Drawing.Size(1086, 643);
             this.RibbonPanel.TabIndex = 4;
-            // 
-            // CkReverse
-            // 
-            this.CkReverse.AutoSize = true;
-            this.CkReverse.Location = new System.Drawing.Point(57, 56);
-            this.CkReverse.Name = "CkReverse";
-            this.CkReverse.Size = new System.Drawing.Size(48, 16);
-            this.CkReverse.TabIndex = 11;
-            this.CkReverse.Text = "反选";
-            this.CkReverse.UseVisualStyleBackColor = true;
-            this.CkReverse.Click += new System.EventHandler(this.CkReverse_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1076, 700);
+            this.ClientSize = new System.Drawing.Size(1092, 765);
             this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.RibbonPanel);
             this.Controls.Add(this.RibbonTabContainer);
@@ -641,5 +692,7 @@
         private System.Windows.Forms.ToolStripButton tsMarkDownExp;
         private System.Windows.Forms.Label lblSelectRes;
         private System.Windows.Forms.CheckBox CkReverse;
+        private System.Windows.Forms.TextBox filterTextBox;
+        private System.Windows.Forms.Label label3;
     }
 }

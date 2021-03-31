@@ -1,8 +1,12 @@
-﻿using MJTop.Data;
+﻿using System;
+using MJTop.Data;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace DBCHM.CHM
 {
@@ -20,7 +24,7 @@ namespace DBCHM.CHM
             code.AppendLine("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
             code.AppendLine("<head>");
             code.AppendLine("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=gbk\" />");
-            code.AppendLine("    <title>{0}</title>".FormatString(tabDirName));
+            code.AppendLine("    <title>{0}1</title>".FormatString(tabDirName));
             code.AppendLine("    <style type=\"text/css\">");
             code.AppendLine("        *");
             code.AppendLine("        {");
@@ -210,9 +214,11 @@ namespace DBCHM.CHM
             //构建数据行
             foreach (var table in tables)
             {
+                string dirStr = getDirStr(table.TableName);
+
                 code.AppendLine("            <tr>");
                 code.AppendLine("            <td>{0}</td>".FormatString(j));
-                code.AppendLine("            <td>{0}</td>".FormatString("<a href=\"表结构\\" + table.TableName + " " + FilterIllegalDir(table.Comment) + ".html\">" + table.TableName + "</a>"));
+                code.AppendLine("            <td>{0}</td>".FormatString("<a href=\"表结构\\" + dirStr + "\\" +  table.TableName + " " + FilterIllegalDir(table.Comment) + ".html\">" + table.TableName + "</a>"));
                 code.AppendLine("            <td>{0}</td>".FormatString(!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "&nbsp;"));
                 code.AppendLine("            </tr>");
                 j++;
@@ -228,6 +234,55 @@ namespace DBCHM.CHM
             ZetaLongPaths.ZlpIOHelper.WriteAllText(indexHtmlpath, code.ToString(), Encoding.GetEncoding("gbk"));
         }
 
+        private static Dictionary<string, string>  ht = new Dictionary<string, string>();
+
+        private static string getDirStr(string tableName)
+        {
+            if (ht.Count == 0)
+            {
+                foreach (var row in File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "\\config.txt"))
+                {
+                    var key = row.Split('=')[0];
+                    if (!ht.ContainsKey(key))
+                    {
+                        ht.Add(key, string.Join("=", row.Split('=').Skip(1).ToArray()));
+                    }
+                }
+            }
+
+            string prefix = getPrefix( tableName );
+            string dirStr = "未知";
+
+            if (ht.ContainsKey(prefix))
+            {
+                dirStr = ht[prefix].ToString();
+            }
+
+            return dirStr;
+        }
+
+
+        private static string getPrefix(string filenameWithoutExt)
+        {
+            int indexOf = filenameWithoutExt.IndexOf("_");
+            if (indexOf > 0)
+            {
+                string substring = filenameWithoutExt.Substring(0, indexOf);
+                return substring;
+            }
+            else
+            {
+                indexOf = filenameWithoutExt.IndexOf(" ");
+                if (indexOf > 0)
+                {
+                    string substring = filenameWithoutExt.Substring(0, indexOf);
+                    return substring;
+                }
+            }
+
+            return filenameWithoutExt;
+        }
+
         /// <summary>
         /// 重载CreateHtml(Dictionary<string, TableInfo> dictTabs, string tabsdir)方法
         /// 导出指定表处理
@@ -236,10 +291,32 @@ namespace DBCHM.CHM
         /// <param name="tabsdir"></param>
         public static void CreateHtml(List<TryOpenXml.Dtos.TableDto> tables, string tabsdir)
         {
-
+            /*
+            Hashtable ht = new Hashtable();
+            ht.Add("activity", "活动");
+            ht.Add("admin", "后台管理");
+            ht.Add("advertorial", "推文");
+            ht.Add("album", "相册");
+            ht.Add("api", "接口");
+            ht.Add("app", "APP");
+            ht.Add("article", "文章");
+            ht.Add("attribute", "属性");
+            ht.Add("bank", "银行");
+            ht.Add("bargain", "砍价");
+            ht.Add("bill", "结算");
+            */
             foreach (var tab in tables)
             {
-                string tabPath = tabsdir + "\\" + tab.TableName + " " + FilterIllegalDir(tab.Comment) + ".html";
+                string dirStr = getDirStr(tab.TableName);
+
+                string newTabsdir = tabsdir + "\\" + dirStr;
+
+                if (!ZetaLongPaths.ZlpIOHelper.DirectoryExists(newTabsdir))
+                {
+                    ZetaLongPaths.ZlpIOHelper.CreateDirectory(newTabsdir);
+                }
+
+                string tabPath = newTabsdir + "\\" + tab.TableName + " " + FilterIllegalDir(tab.Comment) + ".html";
 
                 var code = new StringBuilder();
                 code.AppendLine("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");

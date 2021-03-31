@@ -332,11 +332,51 @@ namespace DBCHM
         /// <param name="e"></param>
         private void CkAll_Click(object sender, EventArgs e)
         {
+            int count = 0;
             for (int j = 0; j < CkListBox.Items.Count; j++)
             {
-                CkListBox.SetItemChecked(j, CkAll.Checked);
+               // string itemText = CkListBox.GetItemText(j);
+                string itemText = CkListBox.Items[j].ToString();
+                // 需要判断文本框里面有的值则过滤
+                // if (0 == j)
+                // {
+                //   MessageBox.Show( itemText + "->" + filterTextBox.Text);
+                // }
+                if (acceptFilter(itemText))
+                {
+                    CkListBox.SetItemChecked(j, CkAll.Checked);
+                    count++;
+                }
+                else
+                {
+                    
+                }
             }
-            this.lblSelectRes.Text = string.Format(selectedTableDesc, CkListBox.CheckedItems.Count);
+           // this.lblSelectRes.Text = string.Format(selectedTableDesc, CkListBox.CheckedItems.Count);
+            this.lblSelectRes.Text = string.Format(selectedTableDesc, count);
+        }
+
+        // 包含字符串的则过滤不选择
+        private bool acceptFilter(string itemText)
+        {
+            string filterText = filterTextBox.Text.Trim();
+            itemText = itemText.Trim();
+            if ("".Equals(itemText))
+            {
+                return false;
+            }
+            if (!"".Equals(filterText))
+            {
+                string[] texts = filterText.Split(',');
+                foreach (var text in texts)
+                {
+                    if (itemText.Contains(text))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         /// <summary>
