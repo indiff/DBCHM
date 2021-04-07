@@ -56,8 +56,6 @@ jobs:
 #       with:
 #         args: zip -qq -r DBCHM.zip DBCHM\bin\Release        
 
-    - run: dir /b
-
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
