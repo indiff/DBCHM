@@ -61,8 +61,8 @@ jobs:
       with:
         name: DBCHM
         path: |
-          'D:\a\DBCHM\DBCHM\DBChm\bin\Release\**\*'
-          !'D:\a\DBCHM\DBCHM\DBChm\bin\Release\**\*.pdb'
+          D:\a\DBCHM\DBCHM\DBChm\bin\Release\**\*
+          !D:\a\DBCHM\DBCHM\DBChm\bin\Release\**\*.pdb
         
         
         
