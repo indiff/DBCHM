@@ -30,6 +30,21 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
+    - name: setup nuget
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: '5.x'
+        
+    - uses: actions/cache@v1
+      id: cache
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        
+    - name: NuGet Restore
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: nuget restore $env:Solution_Name
+  
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Rebuild the application
       run: msbuild $env:Solution_Name /t:Rebuild /p:Configuration=$env:Configuration
