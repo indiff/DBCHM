@@ -85,8 +85,8 @@ jobs:
       with:
         name: DBCHM
         path: |
-          DBChm/bin/Release/**/*
-          !DBChm/**/*.pdb        
+          '~/DBChm/bin/Release/**/*'
+          !'~/DBChm/**/*.pdb'
         
         
         
