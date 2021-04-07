@@ -81,7 +81,7 @@ jobs:
 #         args: zip -qq -r DBCHM.zip DBCHM\bin\Release        
 
     - name: Upload artifact
-    - uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2
       with:
         name: DBCHM
         path: |
