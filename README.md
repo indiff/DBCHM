@@ -1,3 +1,5 @@
+[![DBCHM](https://github.com/indiff/DBCHM/actions/workflows/build.yml/badge.svg)](https://github.com/indiff/DBCHM/actions/workflows/build.yml)
+
 <p align="center">
    <img alt="DBCHM" src="https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/dbchm.png">
 </p>
