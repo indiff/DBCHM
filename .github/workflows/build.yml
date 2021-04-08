@@ -75,18 +75,26 @@ jobs:
         draft: false
         prerelease: false
         
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#     - name: Upload Release Asset
+#       id: upload-release-asset 
+#       uses: actions/upload-release-asset@v1
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       with:
+#         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+#         asset_path: D:\a\DBCHM\DBCHM\DBChm\bin\Release\DBCHM.exe
+#         asset_name: DBCHM.exe
+#         asset_content_type: application/zip        
+        
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./DBCHM.zip
-        asset_name: DBCHM.zip
-        asset_content_type: application/zip        
-        
-        
+        files: |
+          D:\a\DBCHM\DBCHM\DBChm\bin\Release\DBCHM.exe
+          D:\a\DBCHM\DBCHM\DBChm\bin\Release\MJTop.Data.dll
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
         
         
         
