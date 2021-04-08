@@ -22,15 +22,15 @@ jobs:
       Solution_Name: DBCHM_Sln.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
 
     steps:
-    - name: Checkout
+    - name: 拉取代码
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
         
-    - name: Add msbuild to PATH
+    - name: 配置msbuild
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: setup nuget
+    - name: 配置nuget
       uses: nuget/setup-nuget@v1
       with:
         nuget-version: '5.x'
