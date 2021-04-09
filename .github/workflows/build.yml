@@ -2,9 +2,7 @@
 
 name: DBCHM
 
-on:
-  push:
-    branches: [ master ]
+on: push
 
 
 jobs:
@@ -88,7 +86,7 @@ jobs:
         
     - name: Release
       uses: softprops/action-gh-release@v1
-#       if: ${{ github.ref == 'refs/heads/main' }}
+      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
           D:\a\DBCHM\DBCHM\DBChm\bin\Release\DBCHM.exe
