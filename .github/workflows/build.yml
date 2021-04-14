@@ -93,6 +93,7 @@ jobs:
         files: |
           D:\a\DBCHM\DBCHM\DBChm\bin\Release\DBCHM.exe
           D:\a\DBCHM\DBCHM\DBChm\bin\Release\MJTop.Data.dll
+          D:\a\DBCHM\DBCHM\DBChm\bin\Release\Config.txt
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
         
