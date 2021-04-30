@@ -396,7 +396,7 @@ namespace DBCHM.CHM
                 code.AppendLine("        <div class=\"styletab\">{0}</div>{1}{2}".FormatString(
                     tab.TableName,
                     "<span style='float: left; margin-top: 6px;font-size:16px;'>" + tab.Comment + "</span>",
-                    "<a href='../数据库表目录.html' style='float: right; margin-top: 6px;font-size:16px;'>返回目录</a>"));
+                    "<a href='../../数据库表目录.html' style='float: right; margin-top: 6px;font-size:16px;'>返回目录</a>"));
                 code.AppendLine("                        </caption>");
 
 
@@ -537,7 +537,7 @@ namespace DBCHM.CHM
                 code.AppendLine("        <div class=\"styletab\">{0}</div>{1}{2}".FormatString(
                     tabInfo.TableName,
                     "<span style='float: left; margin-top: 6px;font-size:16px;'>" + tabInfo.TabComment + "</span>",
-                    "<a href='../数据库表目录.html' style='float: right; margin-top: 6px;font-size:16px;'>返回目录</a>"));
+                    "<a href='../../数据库表目录.html' style='float: right; margin-top: 6px;font-size:16px;'>返回目录</a>"));
                 code.AppendLine("                        </caption>");
 
 
