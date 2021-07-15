@@ -4,8 +4,10 @@ name: DBCHM
 
 on:
   push:
+    tags:
+    - 'v*'
     branches:
-    - dev
+    - dev    
 
 jobs:
 
