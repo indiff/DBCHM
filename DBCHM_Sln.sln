@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBCHM", "DBChm\DBCHM.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MJTop.Data", "MJTop.Data\MJTop.Data.csproj", "{3D36CDC9-E989-465B-A9F1-AD85DC42F242}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryOpenXml.Text.Core", "TryOpenXml.Text.Core\TryOpenXml.Text.Core.csproj", "{0461B8AA-BAF6-4ED0-9826-046E86463B4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocTools", "DocTools\DocTools.csproj", "{130A8861-0C39-4933-9DE8-AA9525488211}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{3D36CDC9-E989-465B-A9F1-AD85DC42F242}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D36CDC9-E989-465B-A9F1-AD85DC42F242}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D36CDC9-E989-465B-A9F1-AD85DC42F242}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0461B8AA-BAF6-4ED0-9826-046E86463B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0461B8AA-BAF6-4ED0-9826-046E86463B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0461B8AA-BAF6-4ED0-9826-046E86463B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0461B8AA-BAF6-4ED0-9826-046E86463B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{130A8861-0C39-4933-9DE8-AA9525488211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130A8861-0C39-4933-9DE8-AA9525488211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130A8861-0C39-4933-9DE8-AA9525488211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{130A8861-0C39-4933-9DE8-AA9525488211}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

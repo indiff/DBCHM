@@ -197,9 +197,17 @@ namespace MJTop.Data.DatabaseInfo
 	 ) As IsPK,(
 			 case when (select count(1) from all_triggers tri INNER JOIN all_source src on tri.trigger_Name=src.Name 
 				where tri.OWNER = '{0}' and src.OWNER = '{0}' and (triggering_Event='INSERT' and table_name='{1}')
-			and regexp_like(text,	concat(concat('nextval\s+into\s*?:\s*?new\s*?\.\s*?',a.COLUMN_NAME),'\s+?'),'i'))>0 
+			and regexp_like(text,concat(concat('into\s*?:\s*?new\s*?\.\s*?',a.COLUMN_NAME),'\s+?'),'i'))>0 
 			then 1 else 0 end 
 	) As IsIdentity, 
+		Case a.NULLABLE  When 'Y' Then 1 Else 0 End As CanNull,
+		a.data_default As DefaultVal from all_tab_columns a Inner Join all_col_comments b On a.TABLE_NAME=b.table_name 
+	Where a.OWNER = '{0}' and b.OWNER = '{0}' and b.COLUMN_NAME= a.COLUMN_NAME and a.Table_Name='{1}'  order by a.column_ID Asc";
+
+                            // 忽略 IsIdentity 查询
+                            strSql = @"select a.COLUMN_ID As Colorder,a.COLUMN_NAME As ColumnName,a.DATA_TYPE As TypeName,b.comments As DeText,(Case When a.DATA_TYPE='NUMBER' Then a.DATA_PRECISION When a.DATA_TYPE='NVARCHAR2' Then a.DATA_LENGTH/2 Else a.DATA_LENGTH End )As Length,a.DATA_SCALE As Scale,
+	(Case When (select Count(1)  from all_cons_columns aa, all_constraints bb where aa.OWNER = '{0}' and bb.OWNER = '{0}' and aa.constraint_name = bb.constraint_name and bb.constraint_type = 'P' and aa.table_name = '{1}' And aa.column_name=a.COLUMN_NAME)>0 Then 1 Else 0 End
+	 ) As IsPK,0 As IsIdentity, 
 		Case a.NULLABLE  When 'Y' Then 1 Else 0 End As CanNull,
 		a.data_default As DefaultVal from all_tab_columns a Inner Join all_col_comments b On a.TABLE_NAME=b.table_name 
 	Where a.OWNER = '{0}' and b.OWNER = '{0}' and b.COLUMN_NAME= a.COLUMN_NAME and a.Table_Name='{1}'  order by a.column_ID Asc";
@@ -208,14 +216,7 @@ namespace MJTop.Data.DatabaseInfo
 
                             try
                             {
-                                if (Db.DBType == DBType.OracleDDTek)
-                                {
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
-                                }
-                                else
-                                {
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
-                                }
+                                tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
 
                                 List<string> lstColName = new List<string>();
                                 NameValueCollection nvcColDeText = new NameValueCollection();
@@ -257,7 +258,7 @@ namespace MJTop.Data.DatabaseInfo
                             }
                             catch (Exception ex)
                             {
-                                LogUtils.LogError("DB", Developer.SysDefault, ex);
+                                LogUtils.LogError("DB", Developer.SysDefault, ex, strSql);
                             }
                         });
 

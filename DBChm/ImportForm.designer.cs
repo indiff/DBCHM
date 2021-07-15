@@ -34,7 +34,10 @@
             this.BtnBrow = new System.Windows.Forms.Button();
             this.BtnUpdateDisplayName = new System.Windows.Forms.Button();
             this.GP_Import = new System.Windows.Forms.GroupBox();
+            this.gpxDesc = new System.Windows.Forms.GroupBox();
+            this.txtExplain = new System.Windows.Forms.TextBox();
             this.GP_Import.SuspendLayout();
+            this.gpxDesc.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMulItem
@@ -88,11 +91,32 @@
             this.GP_Import.TabStop = false;
             this.GP_Import.Text = "批注数据导入";
             // 
+            // gpxDesc
+            // 
+            this.gpxDesc.Controls.Add(this.txtExplain);
+            this.gpxDesc.Location = new System.Drawing.Point(5, 177);
+            this.gpxDesc.Name = "gpxDesc";
+            this.gpxDesc.Size = new System.Drawing.Size(584, 100);
+            this.gpxDesc.TabIndex = 10;
+            this.gpxDesc.TabStop = false;
+            this.gpxDesc.Text = "使用说明";
+            // 
+            // txtExplain
+            // 
+            this.txtExplain.ForeColor = System.Drawing.Color.Black;
+            this.txtExplain.Location = new System.Drawing.Point(7, 20);
+            this.txtExplain.Multiline = true;
+            this.txtExplain.Name = "txtExplain";
+            this.txtExplain.ReadOnly = true;
+            this.txtExplain.Size = new System.Drawing.Size(571, 73);
+            this.txtExplain.TabIndex = 0;
+            // 
             // ImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(595, 189);
+            this.ClientSize = new System.Drawing.Size(595, 282);
+            this.Controls.Add(this.gpxDesc);
             this.Controls.Add(this.GP_Import);
             this.Controls.Add(this.BtnUpdateDisplayName);
             this.Controls.Add(this.BtnBrow);
@@ -103,8 +127,11 @@
             this.Name = "ImportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "批注上载";
+            this.Load += new System.EventHandler(this.ImportForm_Load);
             this.GP_Import.ResumeLayout(false);
             this.GP_Import.PerformLayout();
+            this.gpxDesc.ResumeLayout(false);
+            this.gpxDesc.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -116,5 +143,7 @@
         private System.Windows.Forms.Button BtnBrow;
         private System.Windows.Forms.Button BtnUpdateDisplayName;
         private System.Windows.Forms.GroupBox GP_Import;
+        private System.Windows.Forms.GroupBox gpxDesc;
+        private System.Windows.Forms.TextBox txtExplain;
     }
 }

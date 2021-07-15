@@ -104,7 +104,10 @@ namespace MJTop.Data.DatabaseInfo
             this.TableColumnComments = new IgCaseDictionary<NameValueCollection>();
 
             string dbSql = "select name from sys.sysdatabases Order By name asc";
-            string strSql = "SELECT * FROM (SELECT '[' + (Select Top 1 c.name From sys.schemas c Where c.schema_id = a.schema_id) + '].[' + a.Name + ']' as Name,(SELECT TOP 1 Value FROM sys.extended_properties b WHERE b.major_id=a.object_id and b.minor_id=0) AS value,(Select top 1 c.name From sys.schemas c Where c.schema_id = a.schema_id) scName From sys.objects a WHERE a.type = 'U' AND a.name <> 'sysdiagrams' AND a.name <> 'dtproperties' )K WHERE K.scName <> 'cdc' ORDER BY K.name ASC;";
+
+            //var schemaSql = "Select distinct a.name From sys.schemas a left join sys.objects b on a.schema_id = b.schema_id WHERE b.type = 'U'";
+
+            string strSql = "SELECT * FROM (SELECT (Select Top 1 c.name From sys.schemas c Where c.schema_id = a.schema_id) + '.' + a.Name + '' as Name,(SELECT TOP 1 Value FROM sys.extended_properties b WHERE b.major_id=a.object_id and b.minor_id=0) AS value,(Select top 1 c.name From sys.schemas c Where c.schema_id = a.schema_id) scName From sys.objects a WHERE a.type = 'U' AND a.name <> 'sysdiagrams' AND a.name <> 'dtproperties' )K WHERE K.scName <> 'cdc' ORDER BY K.name ASC;";
 
             string viewSql = "SELECT TABLE_NAME,VIEW_DEFINITION FROM INFORMATION_SCHEMA.VIEWS Order By TABLE_NAME asc";
             string procSql = "select name,[definition] from sys.objects a Left Join sys.sql_modules b On a.[object_id]=b.[object_id] Where a.type='P' And a.is_ms_shipped=0 And b.execute_as_principal_id Is Null And name !='sp_upgraddiagrams' Order By a.name asc";
@@ -113,6 +116,8 @@ namespace MJTop.Data.DatabaseInfo
                 this.DBNames = Db.ReadList<string>(dbSql);
 
                 this.Version = Db.Scalar("select @@version", string.Empty)?.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)?[0];
+
+                //var lstSechma = Db.ReadList<string>(schemaSql);
 
                 var data = Db.GetDataTable(strSql);
 
@@ -145,11 +150,11 @@ namespace MJTop.Data.DatabaseInfo
                             tabInfo.TableName = tableName;
                             tabInfo.TabComment = TableComments[tableName];
 
-                            strSql = @"select s.* FROM (SELECT a.colorder Colorder,a.name ColumnName,b.name TypeName,row_number() over (partition by a.name order by b.name) as group_idx,(case when (SELECT count(*) FROM sysobjects  WHERE (name in (SELECT name FROM sysindexes  WHERE (id = a.id) AND (indid in  (SELECT indid FROM sysindexkeys  WHERE (id = a.id) AND (colid in  (SELECT colid FROM syscolumns WHERE (id = a.id) AND (name = a.name)))))))  AND (xtype = 'PK'))>0 then 1 else 0 end) IsPK,(case when COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 then 1 else 0 end) IsIdentity,  CASE When b.name ='uniqueidentifier' Then 36  WHEN (charindex('int',b.name)>0) OR (charindex('time',b.name)>0) THEN NULL ELSE  COLUMNPROPERTY(a.id,a.name,'PRECISION') end as [Length], CASE WHEN ((charindex('int',b.name)>0) OR (charindex('time',b.name)>0)) THEN NULL ELSE isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),null) end as Scale,(case when a.isnullable=1 then 1 else 0 end) CanNull,Replace(Replace(IsNull(e.text,''),'(',''),')','') DefaultVal,isnull(g.[value], ' ') AS DeText FROM  syscolumns a left join systypes b on a.xtype=b.xusertype inner join sysobjects d on a.id=d.id and d.xtype='U' and d.name<>'dtproperties' left join syscomments e on a.cdefault=e.id left join sys.extended_properties g on a.id=g.major_id AND a.colid=g.minor_id  And g.class=1 left join sys.extended_properties f on d.id=f.class and f.minor_id=0 left join sys.schemas c on d.uid = c.schema_id where b.name is not NULL and '[' + c.name + '].[' + d.name + ']'=@tableName ) s WHERE s.group_idx = 1 order by s.colorder";
+                           var colSql = @"select s.* FROM (SELECT a.colorder Colorder,a.name ColumnName,b.name TypeName,row_number() over (partition by a.name order by b.name) as group_idx,(case when (SELECT count(*) FROM sysobjects  WHERE (name in (SELECT name FROM sysindexes  WHERE (id = a.id) AND (indid in  (SELECT indid FROM sysindexkeys  WHERE (id = a.id) AND (colid in  (SELECT colid FROM syscolumns WHERE (id = a.id) AND (name = a.name)))))))  AND (xtype = 'PK'))>0 then 1 else 0 end) IsPK,(case when COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 then 1 else 0 end) IsIdentity,  CASE When b.name ='uniqueidentifier' Then 36  WHEN (charindex('int',b.name)>0) OR (charindex('time',b.name)>0) THEN NULL ELSE  COLUMNPROPERTY(a.id,a.name,'PRECISION') end as [Length], CASE WHEN ((charindex('int',b.name)>0) OR (charindex('time',b.name)>0)) THEN NULL ELSE isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),null) end as Scale,(case when a.isnullable=1 then 1 else 0 end) CanNull,Replace(Replace(IsNull(e.text,''),'(',''),')','') DefaultVal,isnull(g.[value], ' ') AS DeText FROM  syscolumns a left join systypes b on a.xtype=b.xusertype inner join sysobjects d on a.id=d.id and d.xtype='U' and d.name<>'dtproperties' left join syscomments e on a.cdefault=e.id left join sys.extended_properties g on a.id=g.major_id AND a.colid=g.minor_id  And g.class=1 left join sys.extended_properties f on d.id=f.class and f.minor_id=0 left join sys.schemas c on d.uid = c.schema_id where b.name is not NULL and  c.name + '.' + d.name = @tableName ) s WHERE s.group_idx = 1 order by s.colorder";
 
                             try
                             {
-                                tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();
+                                tabInfo.Colnumns = Db.GetDataTable(colSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();
                                 List<string> lstColName = new List<string>();
                                 NameValueCollection nvcColDeText = new NameValueCollection();
                                 foreach (ColumnInfo colInfo in tabInfo.Colnumns)
@@ -267,12 +272,14 @@ namespace MJTop.Data.DatabaseInfo
                        left join sys.extended_properties   f 
                          on a.id = f.major_id 
                             and f.minor_id = 0
-                 where a.colorder = 1 and d.name<>'sysdiagrams'  and d.name='{0}' and f.value is not null
+                 where a.colorder = 1 and d.name<>'sysdiagrams'  and d.name=N'{0}' and f.value is not null
                  )
                  exec sp_updateextendedproperty N'MS_Description', N'{1}', N'schema', N'{2}', N'table', N'{0}', NULL, NULL
                  else
                 exec sp_addextendedproperty N'MS_Description', N'{1}', N'schema', N'{2}', N'table', N'{0}', NULL, NULL";
-                upsert_sql = string.Format(upsert_sql, tableName, comment, TableSchemas[tableName]);
+
+                var tabName = tableName.Split('.').LastOrDefault();
+                upsert_sql = string.Format(upsert_sql, tabName, comment, TableSchemas[tableName]);
                 Db.ExecSql(upsert_sql);
 
                 TableComments[tableName] = comment;
@@ -297,8 +304,9 @@ namespace MJTop.Data.DatabaseInfo
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
-                upsert_sql = @"if exists (select * from   ::fn_listextendedproperty (NULL, 'schema', '{3}', 'table', '{0}', 'column', default) where objname = '{1}') EXEC sp_updateextendedproperty   'MS_Description','{2}','schema',{3},'table','{0}','column',{1} else EXEC sp_addextendedproperty @name=N'MS_Description' , @value=N'{2}' ,@level0type=N'SCHEMA', @level0name=N'{3}', @level1type=N'TABLE', @level1name=N'{0}', @level2type=N'COLUMN', @level2name=N'{1}' ";
-                upsert_sql = string.Format(upsert_sql, tableName, columnName, comment, this.TableSchemas[tableName]);
+                upsert_sql = @"if exists (select * from   ::fn_listextendedproperty (NULL, 'schema', N'{3}', 'table', N'{0}', 'column', default) where objname = N'{1}') EXEC sp_updateextendedproperty   'MS_Description',N'{2}','schema',{3},'table',N'{0}','column',{1} else EXEC sp_addextendedproperty @name=N'MS_Description' , @value=N'{2}' ,@level0type=N'SCHEMA', @level0name=N'{3}', @level1type=N'TABLE', @level1name=N'{0}', @level2type=N'COLUMN', @level2name=N'{1}' ";
+                var tabName = tableName.Split('.').LastOrDefault();
+                upsert_sql = string.Format(upsert_sql, tabName, columnName, comment, this.TableSchemas[tableName]);
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];

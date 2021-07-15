@@ -107,10 +107,10 @@ namespace MJTop.Data.DatabaseInfo
 
             string dbSql = "select datname from pg_database where  datistemplate=false  order by oid desc";
             string strSql = @"select a.*,cast(obj_description(relfilenode,'pg_class') as varchar) as value from (
-select b.oid as schid, a.table_schema as scName,a.table_name as Name from information_schema.tables  a
+select b.oid as schid, a.table_schema as scName,concat(a.table_schema,'.',a.table_name) as Name,a.table_name from information_schema.tables  a
 left join pg_namespace b on b.nspname = a.table_schema
 where a.table_schema not in ('pg_catalog','information_schema') and a.table_type='BASE TABLE'
-) a inner join pg_class b on a.name = b.relname and a.schid = b.relnamespace
+) a inner join pg_class b on a.table_name = b.relname and a.schid = b.relnamespace
 order by schid asc";
 
             string viewSql = "SELECT viewname,definition FROM pg_views where schemaname='public' order by viewname asc";
@@ -175,10 +175,13 @@ left join (
 	left join pg_description pg_desc on pg_desc.objoid = pg_attr.attrelid and pg_desc.objsubid=pg_attr.attnum
 	where pg_attr.attnum>0 and pg_attr.attrelid=pg_class.oid and pg_class.relname=:tableName
 )c on c.attname = information_schema.columns.column_name
-where table_schema not in ('pg_catalog','information_schema') and table_name=:tableName order by ordinal_position asc";
+where table_schema not in ('pg_catalog','information_schema') and table_name=:tableName and table_schema = :schema order by ordinal_position asc";
                             try
                             {
-                                tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();
+                                var arr = tableName.Split('.');
+                                var scName = arr.FirstOrDefault();
+                                var tabName = arr.LastOrDefault();
+                                tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tabName, schema = scName }).ConvertToListObject<ColumnInfo>();
                                 List<string> lstColName = new List<string>();
                                 NameValueCollection nvcColDeText = new NameValueCollection();
                                 foreach (ColumnInfo colInfo in tabInfo.Colnumns)
@@ -298,8 +301,9 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
+                var tabName = tableName.Split('.').LastOrDefault();
                 //切换schema，更新表描述
-                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on table \"" + tableName + "\" is '" + comment + "'";
+                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on table \"" + tabName + "\" is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 TableComments[tableName] = comment;
@@ -327,8 +331,9 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
+                var tabName = tableName.Split('.').LastOrDefault();
                 //切换schema，更新列描述
-                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on column \"" + tableName + "\".\"" + columnName + "\" is '" + comment + "'";
+                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on column \"" + tabName + "\".\"" + columnName + "\" is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];

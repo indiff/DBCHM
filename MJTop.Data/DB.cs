@@ -341,7 +341,7 @@ namespace MJTop.Data
         }
 
         static ConcurrentDictionary<Type, PropertyInfo[]> Dict_Type_Props = new ConcurrentDictionary<Type, PropertyInfo[]>();
-        internal DbCommand BuildCommandByParam(DbConnection conn, string cmdText, object cmdParms, int timeOut = 30, CommandType cmdType = CommandType.Text, string tableName = null)
+        internal DbCommand BuildCommandByParam(DbConnection conn, string cmdText, object cmdParms, int timeOut = 60, CommandType cmdType = CommandType.Text, string tableName = null)
         {
             if (conn.State != ConnectionState.Open)
                 conn.Open();

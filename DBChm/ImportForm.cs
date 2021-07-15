@@ -1,5 +1,7 @@
 ﻿using ComponentFactory.Krypton.Toolkit;
 using DBCHM.Common;
+using DocTools;
+using DocTools.Dtos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,8 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using TryOpenXml.Dtos;
-using TryOpenXml.Text;
 
 namespace DBCHM
 {
@@ -35,6 +35,14 @@ namespace DBCHM
             {
                 this.Close();
             }
+        }
+
+        private void ImportForm_Load(object sender, EventArgs e)
+        {
+            txtExplain.Text = @"本工具目前支持 pdm/xml 文件来 进行更新批注(注释)：
+ pdm 由powerdesigner设计数据库时产生。
+ xml 由visual studio设置 实体类库的项目属性，勾选 XML文档文件 后生成项目时产生。
+ xml 由dbchm的 XML导出 而产生。";
         }
 
         private void BtnBrow_Click(object sender, EventArgs e)
@@ -168,7 +176,7 @@ namespace DBCHM
                     }
                 }
 
-                var lstDTO = XmlUtils.Deserialize(typeof(List<TableDto>), xmlContent) as List<TableDto>;
+                var lstDTO = typeof(List<TableDto>).DeserializeXml(xmlContent) as List<TableDto>;
 
                 foreach (var tabInfo in lstDTO)
                 {

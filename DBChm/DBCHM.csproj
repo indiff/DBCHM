@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DBCHM</RootNamespace>
     <AssemblyName>DBCHM</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -27,6 +27,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>
     </DocumentationFile>
+    <NoWarn>CS7035</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,6 +47,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\ComponentFactory.Krypton.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.TextEditor, Version=4.2.0.0, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.TextEditor.Extended.4.2.4\lib\net45\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -58,8 +62,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZetaLongPaths, Version=1.0.0.29, Culture=neutral, PublicKeyToken=b764f59068f31f38, processorArchitecture=MSIL">
-      <HintPath>..\packages\ZetaLongPaths.1.0.0.29\lib\net452-full\ZetaLongPaths.dll</HintPath>
+    <Reference Include="ZetaLongPaths, Version=1.0.0.38, Culture=neutral, PublicKeyToken=b764f59068f31f38, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZetaLongPaths.1.0.0.38\lib\net452-full\ZetaLongPaths.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,8 +73,6 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="CHM\ChmHelp.cs" />
-    <Compile Include="CHM\ChmHtmlHelper.cs" />
     <Compile Include="Common\CommonExtension.cs" />
     <Compile Include="Common\DBCHMConfig.cs" />
     <Compile Include="Common\DBUtils.cs" />
@@ -78,7 +80,6 @@
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\FormUtils.cs" />
     <Compile Include="Common\ConfigUtils.cs" />
-    <Compile Include="Common\LogUtils.cs" />
     <Compile Include="Common\ProgressArg.cs" />
     <Compile Include="Common\XmlAnalyze.cs" />
     <Compile Include="FrmProcessing.cs">
@@ -110,9 +111,6 @@
     <Compile Include="PdmModels\PdmModels.cs" />
     <Compile Include="PdmModels\TableInfo.cs" />
     <Compile Include="PDM\PdmReader.cs" />
-    <Compile Include="PerformanceChart.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainForm.cs">
@@ -120,6 +118,9 @@
     </Compile>
     <Compile Include="MainForm.designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreeViewEnhanced.cs">
+      <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
@@ -146,12 +147,6 @@
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Fonts\msyh.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="config.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -196,13 +191,13 @@
     <EmbeddedResource Include="lib\ComponentFactory.Krypton.Toolkit.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DocTools\DocTools.csproj">
+      <Project>{130a8861-0c39-4933-9de8-aa9525488211}</Project>
+      <Name>DocTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MJTop.Data\MJTop.Data.csproj">
       <Project>{3d36cdc9-e989-465b-a9f1-ad85dc42f242}</Project>
       <Name>MJTop.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TryOpenXml.Text.Core\TryOpenXml.Text.Core.csproj">
-      <Project>{0461b8aa-baf6-4ed0-9826-046e86463b4e}</Project>
-      <Name>TryOpenXml.Text.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

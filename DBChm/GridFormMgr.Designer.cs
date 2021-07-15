@@ -34,9 +34,9 @@
             this.linkEdit = new System.Windows.Forms.LinkLabel();
             this.linkRemove = new System.Windows.Forms.LinkLabel();
             this.linkClone = new System.Windows.Forms.LinkLabel();
-            this.BtnConnect = new System.Windows.Forms.Button();
-            this.BtnCancel = new System.Windows.Forms.Button();
             this.GV_DBConfigs = new System.Windows.Forms.DataGridView();
+            this.BtnConnect = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.BtnCancel = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.GV_DBConfigs)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,36 +88,12 @@
             this.linkClone.Text = "克隆";
             this.linkClone.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkClone_LinkClicked);
             // 
-            // BtnConnect
-            // 
-            this.BtnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnConnect.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.BtnConnect.Location = new System.Drawing.Point(602, 302);
-            this.BtnConnect.Margin = new System.Windows.Forms.Padding(2);
-            this.BtnConnect.Name = "BtnConnect";
-            this.BtnConnect.Size = new System.Drawing.Size(60, 26);
-            this.BtnConnect.TabIndex = 3;
-            this.BtnConnect.Text = "连接";
-            this.BtnConnect.Click += new System.EventHandler(this.btnConnect_Click);
-            // 
-            // BtnCancel
-            // 
-            this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BtnCancel.Location = new System.Drawing.Point(701, 302);
-            this.BtnCancel.Margin = new System.Windows.Forms.Padding(2);
-            this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(58, 26);
-            this.BtnCancel.TabIndex = 4;
-            this.BtnCancel.Text = "取消";
-            this.BtnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // GV_DBConfigs
             // 
             this.GV_DBConfigs.AllowUserToAddRows = false;
             this.GV_DBConfigs.AllowUserToDeleteRows = false;
-            this.GV_DBConfigs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.GV_DBConfigs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GV_DBConfigs.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.GV_DBConfigs.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
@@ -142,6 +118,32 @@
             this.GV_DBConfigs.TabIndex = 5;
             this.GV_DBConfigs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_DBConfigs_CellDoubleClick);
             this.GV_DBConfigs.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GV_DBConfigs_CellFormatting);
+            // 
+            // BtnConnect
+            // 
+            this.BtnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnConnect.AutoSize = true;
+            this.BtnConnect.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.BtnConnect.Location = new System.Drawing.Point(525, 302);
+            this.BtnConnect.Margin = new System.Windows.Forms.Padding(2);
+            this.BtnConnect.Name = "BtnConnect";
+            this.BtnConnect.Size = new System.Drawing.Size(90, 26);
+            this.BtnConnect.TabIndex = 6;
+            this.BtnConnect.Values.Text = "连接";
+            this.BtnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
+            // BtnCancel
+            // 
+            this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnCancel.AutoSize = true;
+            this.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.BtnCancel.Location = new System.Drawing.Point(652, 302);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(2);
+            this.BtnCancel.Name = "BtnCancel";
+            this.BtnCancel.Size = new System.Drawing.Size(90, 26);
+            this.BtnCancel.TabIndex = 7;
+            this.BtnCancel.Values.Text = "取消";
+            this.BtnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // GridFormMgr
             // 
@@ -176,8 +178,8 @@
         private System.Windows.Forms.LinkLabel linkEdit;
         private System.Windows.Forms.LinkLabel linkRemove;
         private System.Windows.Forms.LinkLabel linkClone;
-        private System.Windows.Forms.Button BtnConnect;
-        private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.DataGridView GV_DBConfigs;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton BtnConnect;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton BtnCancel;
     }
 }

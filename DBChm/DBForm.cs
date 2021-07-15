@@ -1,6 +1,7 @@
 ﻿using ComponentFactory.Krypton.Toolkit;
 using MJTop.Data;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 
@@ -78,7 +79,7 @@ namespace DBCHM
 
                 if (string.IsNullOrWhiteSpace(txtConnTimeOut.Text))
                 {
-                    txtConnTimeOut.Text = "60";
+                    txtConnTimeOut.Text = "30";
                 }
             }
 
@@ -143,32 +144,20 @@ namespace DBCHM
                     throw new Exception("Oracle没有提供数据库名称查询支持，请输入服务名！");
                 }
 
-                string strDBName = cboDBName.Text;
+                var connString = InitConnectionStr(type);
 
-                //DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text,
-                //    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
-                //    strDBName, TxtUName.Text, TxtPwd.Text,
-                //    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
-                //    , 300);
+                List<string> dbNames = null;
 
-                this.InitDb(type, strDBName);
+                DBMgr.TryConnect(type, connString, out dbNames);
 
-                var info = DBUtils.Instance.Info;
-
-                cboDBName.Items.Clear();
-                foreach (var dbName in info.DBNames)
+                if (dbNames != null && dbNames.Count > 0)
                 {
-                    cboDBName.Items.Add(dbName);
+                    cboDBName.Items.Clear();
+                    foreach (var dbName in dbNames)
+                    {
+                        cboDBName.Items.Add(dbName);
+                    }
                 }
-                cboDBName.SelectedItem = strDBName;
-
-                // TODO 此段代码需注释，连接测试成功会触发数据库类型下拉框控件事件 2019-01-24 21:14
-                //cboDBType.Items.Clear();
-                //foreach (var item in FormUtils.DictDBType)
-                //{
-                //    cboDBType.Items.Add(item.Value.ToString());
-                //}
-                //cboDBType.SelectedItem = type.ToString();
 
                 this.Text = "连接服务器成功！";
             }
@@ -201,20 +190,10 @@ namespace DBCHM
                 }
 
                 DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
-                //string connString = DBMgr.GetConnectionString(type, TxtHost.Text,
-                //    (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
-                //    cboDBName.Text, TxtUName.Text, TxtPwd.Text,
-                //    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
-                //    );
+
 
                 string connString = InitConnectionStr(type);
-
-                if (type == DBType.MySql)
-                {
-
-                }
-
-                    NameValueCollection nvc = new NameValueCollection();
+                NameValueCollection nvc = new NameValueCollection();
                 if (OpType == OPType.新建 || OpType == OPType.克隆)
                 {
                     nvc.Add("Name", TxtConnectName.Text.Trim());
@@ -225,7 +204,7 @@ namespace DBCHM
                     nvc.Add("DBName", cboDBName.Text.Trim());
                     nvc.Add("Uid", TxtUName.Enabled ? TxtUName.Text.Trim() : string.Empty);
                     nvc.Add("Pwd", TxtPwd.Enabled ? TxtPwd.Text : string.Empty);
-                    nvc.Add("ConnTimeOut", txtConnTimeOut.Enabled ? txtConnTimeOut.Text : "60");
+                    nvc.Add("ConnTimeOut", txtConnTimeOut.Enabled ? txtConnTimeOut.Text : "30");
                     nvc.Add("ConnString", connString);
                     nvc.Add("Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
@@ -243,11 +222,25 @@ namespace DBCHM
                     nvc.Add("DBName", cboDBName.Text.Trim());
                     nvc.Add("Uid", TxtUName.Enabled ? TxtUName.Text.Trim() : string.Empty);
                     nvc.Add("Pwd", TxtPwd.Enabled ? TxtPwd.Text : string.Empty);
-                    nvc.Add("ConnTimeOut", txtConnTimeOut.Enabled ? txtConnTimeOut.Text : "60");
+                    nvc.Add("ConnTimeOut", txtConnTimeOut.Enabled ? txtConnTimeOut.Text : "30");
                     nvc.Add("ConnString", connString);
                     nvc.Add("Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     ConfigUtils.Save(nvc);
                 }
+
+
+                FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        InitDb(type);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("BtnOk_Click", Developer.SysDefault, ex, connString);
+                    }
+
+                }, null);
 
                 this.DialogResult = DialogResult.OK;                
                 this.Close();
@@ -438,22 +431,23 @@ namespace DBCHM
         /// </summary>
         /// <param name="type"></param>
         /// <param name="strDBName"></param>
-        private void InitDb(DBType type, string strDBName) {
+        private void InitDb(DBType type) 
+        {
             if (type == DBType.MySql)
             {
                 CreateExtraParam();
                 DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text,
                     (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
-                    strDBName, TxtUName.Text, TxtPwd.Text,
-                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                    cboDBName.Text.Trim(), TxtUName.Text, TxtPwd.Text,
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 30 : Convert.ToInt32(txtConnTimeOut.Text))
                     , 300, this.extraParam);
             }
             else
             {
                 DBUtils.Instance = DBMgr.UseDB(type, TxtHost.Text,
                     (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
-                    strDBName, TxtUName.Text, TxtPwd.Text,
-                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                    cboDBName.Text.Trim(), TxtUName.Text, TxtPwd.Text,
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 30 : Convert.ToInt32(txtConnTimeOut.Text))
                     , 300);
             }
         }
@@ -470,7 +464,7 @@ namespace DBCHM
                 connString = DBMgr.GetConnectionString(type, TxtHost.Text,
                     (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
                     cboDBName.Text, TxtUName.Text, TxtPwd.Text,
-                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text)), 
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 30 : Convert.ToInt32(txtConnTimeOut.Text)), 
                     this.extraParam);
             }
             else
@@ -478,7 +472,7 @@ namespace DBCHM
                 connString = DBMgr.GetConnectionString(type, TxtHost.Text,
                     (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
                     cboDBName.Text, TxtUName.Text, TxtPwd.Text,
-                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 60 : Convert.ToInt32(txtConnTimeOut.Text))
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 30 : Convert.ToInt32(txtConnTimeOut.Text))
                     );
             }
             return connString;
