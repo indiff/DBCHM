@@ -30,19 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.tlTip = new System.Windows.Forms.ToolTip(this.components);
             this.TxtSearchWords = new System.Windows.Forms.TextBox();
+            this.filterTextBox = new System.Windows.Forms.TextBox();
             this.tabLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
             this.mainPnl = new System.Windows.Forms.Panel();
             this.treePnl = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.treeDB = new DBCHM.TreeViewEnhanced();
             this.lblTongJi = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.CkAll = new System.Windows.Forms.CheckBox();
@@ -77,7 +80,8 @@
             this.tsPdfExp = new System.Windows.Forms.ToolStripButton();
             this.tsHtmlExp = new System.Windows.Forms.ToolStripButton();
             this.tsXmlExp = new System.Windows.Forms.ToolStripButton();
-            this.tsMarkDownExp = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.loadConfig = new System.Windows.Forms.ToolStripButton();
             this.tptool = new System.Windows.Forms.TabPage();
             this.tsbPDMUpload = new System.Windows.Forms.ToolStrip();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
@@ -85,7 +89,6 @@
             this.ribbonPageAbout = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.treeDB = new DBCHM.TreeViewEnhanced();
             this.tabLayoutPnl.SuspendLayout();
             this.mainPnl.SuspendLayout();
             this.treePnl.SuspendLayout();
@@ -133,6 +136,16 @@
             this.tlTip.SetToolTip(this.TxtSearchWords, "多个关键字搜索用英文逗号(,)隔开！");
             this.TxtSearchWords.TextChanged += new System.EventHandler(this.TxtSearchWords_TextChanged);
             // 
+            // filterTextBox
+            // 
+            this.filterTextBox.Location = new System.Drawing.Point(58, 34);
+            this.filterTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.filterTextBox.Name = "filterTextBox";
+            this.filterTextBox.Size = new System.Drawing.Size(221, 21);
+            this.filterTextBox.TabIndex = 20;
+            this.filterTextBox.Text = "copy,bak";
+            this.tlTip.SetToolTip(this.filterTextBox, "多个关键字搜索用英文逗号(,)隔开！");
+            // 
             // tabLayoutPnl
             // 
             this.tabLayoutPnl.AutoSize = true;
@@ -165,6 +178,8 @@
             // 
             this.treePnl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.treePnl.Controls.Add(this.label4);
+            this.treePnl.Controls.Add(this.filterTextBox);
             this.treePnl.Controls.Add(this.label2);
             this.treePnl.Controls.Add(this.treeDB);
             this.treePnl.Controls.Add(this.lblTongJi);
@@ -178,6 +193,15 @@
             this.treePnl.Size = new System.Drawing.Size(324, 589);
             this.treePnl.TabIndex = 20;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 39);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 12);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "过滤";
+            // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -186,6 +210,23 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 12);
             this.label2.TabIndex = 19;
+            // 
+            // treeDB
+            // 
+            this.treeDB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeDB.CheckBoxes = true;
+            this.treeDB.HideSelection = false;
+            this.treeDB.ImageIndex = 0;
+            this.treeDB.ImageList = this.imgList;
+            this.treeDB.Indent = 16;
+            this.treeDB.Location = new System.Drawing.Point(0, 78);
+            this.treeDB.Name = "treeDB";
+            this.treeDB.SelectedImageIndex = 0;
+            this.treeDB.Size = new System.Drawing.Size(321, 490);
+            this.treeDB.TabIndex = 18;
+            this.treeDB.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterCheck);
+            this.treeDB.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterSelect);
             // 
             // lblTongJi
             // 
@@ -208,7 +249,7 @@
             // CkAll
             // 
             this.CkAll.AutoSize = true;
-            this.CkAll.Location = new System.Drawing.Point(16, 34);
+            this.CkAll.Location = new System.Drawing.Point(16, 55);
             this.CkAll.Name = "CkAll";
             this.CkAll.Size = new System.Drawing.Size(48, 16);
             this.CkAll.TabIndex = 15;
@@ -219,7 +260,7 @@
             // CkReverse
             // 
             this.CkReverse.AutoSize = true;
-            this.CkReverse.Location = new System.Drawing.Point(70, 35);
+            this.CkReverse.Location = new System.Drawing.Point(70, 56);
             this.CkReverse.Name = "CkReverse";
             this.CkReverse.Size = new System.Drawing.Size(48, 16);
             this.CkReverse.TabIndex = 17;
@@ -230,7 +271,7 @@
             // lblSelectRes
             // 
             this.lblSelectRes.AutoSize = true;
-            this.lblSelectRes.Location = new System.Drawing.Point(191, 36);
+            this.lblSelectRes.Location = new System.Drawing.Point(191, 57);
             this.lblSelectRes.Name = "lblSelectRes";
             this.lblSelectRes.Size = new System.Drawing.Size(83, 12);
             this.lblSelectRes.TabIndex = 16;
@@ -381,14 +422,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GV_ColComments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColXuHao,
@@ -409,8 +450,8 @@
             // 
             // ColXuHao
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColXuHao.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColXuHao.DefaultCellStyle = dataGridViewCellStyle8;
             this.ColXuHao.FillWeight = 10F;
             this.ColXuHao.HeaderText = "序号";
             this.ColXuHao.MinimumWidth = 30;
@@ -420,8 +461,8 @@
             // 
             // ColName
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColName.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColName.DefaultCellStyle = dataGridViewCellStyle9;
             this.ColName.FillWeight = 20F;
             this.ColName.HeaderText = "列名";
             this.ColName.MinimumWidth = 150;
@@ -431,8 +472,8 @@
             // 
             // ColDataType
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColDataType.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColDataType.DefaultCellStyle = dataGridViewCellStyle10;
             this.ColDataType.FillWeight = 23F;
             this.ColDataType.HeaderText = "数据类型";
             this.ColDataType.MinimumWidth = 110;
@@ -442,8 +483,8 @@
             // 
             // ColLength
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColLength.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColLength.DefaultCellStyle = dataGridViewCellStyle11;
             this.ColLength.FillWeight = 12F;
             this.ColLength.HeaderText = "长度";
             this.ColLength.MinimumWidth = 30;
@@ -454,8 +495,8 @@
             // ColComment
             // 
             this.ColComment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.ColComment.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColComment.DefaultCellStyle = dataGridViewCellStyle12;
             this.ColComment.FillWeight = 35F;
             this.ColComment.HeaderText = "列批注";
             this.ColComment.MinimumWidth = 320;
@@ -521,7 +562,8 @@
             this.tsPdfExp,
             this.tsHtmlExp,
             this.tsXmlExp,
-            this.tsMarkDownExp});
+            this.toolStripButton1,
+            this.loadConfig});
             this.ribbonPageFile.Location = new System.Drawing.Point(3, 2);
             this.ribbonPageFile.Name = "ribbonPageFile";
             this.ribbonPageFile.Size = new System.Drawing.Size(1056, 69);
@@ -576,7 +618,7 @@
             this.tsExcelExp.Image = ((System.Drawing.Image)(resources.GetObject("tsExcelExp.Image")));
             this.tsExcelExp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsExcelExp.Name = "tsExcelExp";
-            this.tsExcelExp.Size = new System.Drawing.Size(63, 66);
+            this.tsExcelExp.Size = new System.Drawing.Size(64, 66);
             this.tsExcelExp.Tag = "excel";
             this.tsExcelExp.Text = "Excel导出";
             this.tsExcelExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -617,16 +659,27 @@
             this.tsXmlExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsXmlExp.Click += new System.EventHandler(this.tsbBuild_Click);
             // 
-            // tsMarkDownExp
+            // toolStripButton1
             // 
-            this.tsMarkDownExp.Image = ((System.Drawing.Image)(resources.GetObject("tsMarkDownExp.Image")));
-            this.tsMarkDownExp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsMarkDownExp.Name = "tsMarkDownExp";
-            this.tsMarkDownExp.Size = new System.Drawing.Size(56, 66);
-            this.tsMarkDownExp.Tag = "markdown";
-            this.tsMarkDownExp.Text = "MD导出";
-            this.tsMarkDownExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsMarkDownExp.Click += new System.EventHandler(this.tsbBuild_Click);
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(56, 66);
+            this.toolStripButton1.Tag = "markdown";
+            this.toolStripButton1.Text = "MD导出";
+            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // loadConfig
+            // 
+            this.loadConfig.Image = ((System.Drawing.Image)(resources.GetObject("loadConfig.Image")));
+            this.loadConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.loadConfig.Name = "loadConfig";
+            this.loadConfig.Size = new System.Drawing.Size(63, 66);
+            this.loadConfig.Tag = "markdown";
+            this.loadConfig.Text = "加载配置";
+            this.loadConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.loadConfig.ToolTipText = "加载数据库分类配置";
+            this.loadConfig.Click += new System.EventHandler(this.loadConfig_Click);
             // 
             // tptool
             // 
@@ -720,23 +773,6 @@
             this.miniToolStrip.Size = new System.Drawing.Size(894, 70);
             this.miniToolStrip.TabIndex = 0;
             // 
-            // treeDB
-            // 
-            this.treeDB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.treeDB.CheckBoxes = true;
-            this.treeDB.HideSelection = false;
-            this.treeDB.ImageIndex = 0;
-            this.treeDB.ImageList = this.imgList;
-            this.treeDB.Indent = 16;
-            this.treeDB.Location = new System.Drawing.Point(0, 57);
-            this.treeDB.Name = "treeDB";
-            this.treeDB.SelectedImageIndex = 0;
-            this.treeDB.Size = new System.Drawing.Size(321, 511);
-            this.treeDB.TabIndex = 18;
-            this.treeDB.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterCheck);
-            this.treeDB.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterSelect);
-            // 
             // MainForm
             // 
             this.AcceptButton = this.BtnSaveGridData;
@@ -797,7 +833,7 @@
         private System.Windows.Forms.ToolStripButton tsPdfExp;
         private System.Windows.Forms.ToolStripButton tsHtmlExp;
         private System.Windows.Forms.ToolStripButton tsXmlExp;
-        private System.Windows.Forms.ToolStripButton tsMarkDownExp;
+        private System.Windows.Forms.ToolStripButton loadConfig;
         private System.Windows.Forms.TabPage tptool;
         private System.Windows.Forms.TabPage apabout;
         private System.Windows.Forms.ToolStrip ribbonPageAbout;
@@ -833,5 +869,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColDataType;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColLength;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColComment;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox filterTextBox;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

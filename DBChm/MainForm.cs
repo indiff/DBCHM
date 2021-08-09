@@ -696,6 +696,31 @@ namespace DBCHM
 
         #region 勾选选中
 
+        // 包含字符串的则过滤不选择
+
+        // 包含字符串的则过滤不选择
+        private bool acceptFilter(string itemText)
+        {
+            string filterText = filterTextBox.Text.Trim();
+            itemText = itemText.Trim();
+            if ("".Equals(itemText))
+            {
+                return false;
+            }
+            if (!"".Equals(filterText))
+            {
+                string[] texts = filterText.Split(',');
+                foreach (var text in texts)
+                {
+                    if (itemText.Contains(text))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         private void CkAll_CheckedChanged(object sender, EventArgs e)
         {
             HandleNode(treeDB.Nodes, CkAll.Checked);
@@ -708,10 +733,18 @@ namespace DBCHM
             {
                 foreach (TreeNode node in nodeColl)
                 {
-                    node.Checked = cked;
-                    if (node.Nodes != null && node.Nodes.Count > 0)
+                    if (acceptFilter(node.Text))
                     {
-                        HandleNode(node.Nodes, cked);
+                        node.Checked = cked;
+                        if (node.Nodes != null && node.Nodes.Count > 0)
+                        {
+                            HandleNode(node.Nodes, cked);
+                        }
+                    }
+                    else
+                    {
+                        node.Checked = !cked;
+                        node.ForeColor = Color.Pink;
                     }
                 }
             }
@@ -723,31 +756,41 @@ namespace DBCHM
             ReverseHandleNode(treeDB.Nodes);
             TongJi();
         }
+
         void ReverseHandleNode(TreeNodeCollection nodeColl)
         {
             if (nodeColl != null)
             {
                 foreach (TreeNode node in nodeColl)
                 {
-                    if (node.Nodes != null && node.Nodes.Count > 0)
+                    if (acceptFilter(node.Text))
                     {
-                        ReverseHandleNode(node.Nodes);
-
-                        //处理受影响的父节点
-                        int ckCount = 0;
-                        foreach (TreeNode childNode in node.Nodes)
+                        if (node.Nodes != null && node.Nodes.Count > 0)
                         {
-                            if (childNode.Checked)
+                            ReverseHandleNode(node.Nodes);
+
+                            //处理受影响的父节点
+                            int ckCount = 0;
+                            foreach (TreeNode childNode in node.Nodes)
                             {
-                                ckCount++;
+                                if (childNode.Checked)
+                                {
+                                    ckCount++;
+                                }
                             }
+                            // 子节点个数 与 选中的子节点个数 比较
+                            node.Checked = node.Nodes.Count == ckCount;
+
                         }
-                        // 子节点个数 与 选中的子节点个数 比较
-                        node.Checked = node.Nodes.Count == ckCount;
+                        else
+                        {
+                            node.Checked = !node.Checked;
+                        }
                     }
                     else
                     {
-                        node.Checked = !node.Checked;
+                        node.Checked = false;
+                        node.ForeColor = Color.Pink;
                     }
                 }
             }
@@ -867,6 +910,42 @@ namespace DBCHM
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        ///  加载数据库分类配置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loadConfig_Click(object sender, EventArgs e)
+        {
+            // this.DbDto
+
+            OpenFileDialog openDia = new OpenFileDialog();
+            openDia.Title = "加载配置";
+            //这是系统提供的桌面路径，还可以是其他的路径：比如文档、音乐等文件夹
+            openDia.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //过滤不同类型的文件
+            openDia.Filter = "(*.txt)|*.txt";
+            openDia.FileName = this.DbDto.DBName + "_config.txt";
+
+            var diaResult = openDia.ShowDialog();
+
+            if (diaResult == DialogResult.OK)
+            {
+                FormUtils.ShowProcessing("正在加载配置，请稍等......", this, arg =>
+                {
+                    try
+                    {
+                        var i = 100 + 100;
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("loadConfig_Click", Developer.SysDefault, ex, openDia.FileName, DBUtils.Instance.Info);
+                    }
+
+                }, null);
             }
         }
     }

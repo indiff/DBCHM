@@ -13,7 +13,7 @@
 </OBJECT>
     <UL>
         <LI><OBJECT type="text/sitemap">
-                <param name="Name" value="数据库目录">
+                <param name="Name" value="数据库目录  by tyj">
                 <param name="Local" value="数据库目录.html">
                 <param name="ImageNumber" value="11">
             </OBJECT>
@@ -21,7 +21,7 @@
         @if (Model.Tables != null && Model.Tables.Count > 0)
         {
             <LI><OBJECT type="text/sitemap">
-                    <param name="Name" value="表结构">
+                    <param name="Name" value="表结构(@(Model.Tables.Count))">
                     <param name="ImageNumber" value="1">
                 </OBJECT>
                 <UL>
@@ -29,7 +29,7 @@
                     {
                         <LI><OBJECT type="text/sitemap">
                                 <param name="Name" value="@(table.TableName+" "+table.Comment)">
-                                <param name="Local" value="表结构\@(table.TableName+" "+table.Comment).html">
+                                <param name="Local" value="表结构(@(Model.Tables.Count))\@(table.TableName+" "+table.Comment).html">
                                 <param name="ImageNumber" value="11">
                             </OBJECT>
                         </LI>
@@ -41,7 +41,7 @@
         @if (Model.Views != null && Model.Views.Count > 0)
         {
             <LI><OBJECT type="text/sitemap">
-                    <param name="Name" value="视图">
+                    <param name="Name" value="视图(@(Model.Views.Count))">
                     <param name="ImageNumber" value="1">
                 </OBJECT>
                 <UL>
@@ -49,7 +49,7 @@
                     {
                         <LI><OBJECT type="text/sitemap">
                                 <param name="Name" value="@(item.Key)">
-                                <param name="Local" value="视图\@(item.Key).html">
+                                <param name="Local" value="视图(@(Model.Views.Count))\@(item.Key).html">
                                 <param name="ImageNumber" value="11">
                             </OBJECT>
                         </LI>
@@ -63,7 +63,7 @@
         @if (Model.Procs != null && Model.Procs.Count > 0)
         {
             <LI><OBJECT type="text/sitemap">
-                    <param name="Name" value="存储过程">
+                    <param name="Name" value="存储过程(@(Model.Procs.Count))">
                     <param name="ImageNumber" value="1">
                 </OBJECT>
                 <UL>
@@ -71,7 +71,7 @@
                     {
                         <LI><OBJECT type="text/sitemap">
                                 <param name="Name" value="@(item.Key)">
-                                <param name="Local" value="存储过程\@(item.Key).html">
+                                <param name="Local" value="存储过程(@(Model.Procs.Count))\@(item.Key).html">
                                 <param name="ImageNumber" value="11">
                             </OBJECT>
                         </LI>

@@ -40,12 +40,13 @@ namespace DocTools.DBDoc
             }
         }
 
-        void InitDirFiles()
+        // 创建目录结构
+        void InitDirFiles(string tableStr, string viewStr, string procStr)
         {
-            var dirNames = new string[] { 
-                "表结构", 
-                "视图", 
-                "存储过程",
+            var dirNames = new string[] {
+                tableStr,
+                viewStr,
+                procStr,
                 //"函数", 
                 "resources\\js"
             };
@@ -93,8 +94,11 @@ namespace DocTools.DBDoc
             }
 
             #endregion
-                       
-            this.InitDirFiles();
+
+            var tableStr = "表结构(" + this.Dto.Tables.Count + ")";
+            var viewStr = "视图(" + this.Dto.Views.Count + ")";
+            var procStr = "存储过程(" + this.Dto.Procs.Count + ")";
+            this.InitDirFiles(tableStr,viewStr,procStr);
 
             var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\chm");
 
@@ -117,7 +121,7 @@ namespace DocTools.DBDoc
 
             foreach (var tab in this.Dto.Tables)
             {
-                var tab_path = Path.Combine(this.WorkTmpDir, "表结构", $"{tab.TableName} {tab.Comment}.html");
+                var tab_path = Path.Combine(this.WorkTmpDir, tableStr, $"{tab.TableName} {tab.Comment}.html");
                 var content = table_tpl.RazorRender(tab);
                 ZlpIOHelper.WriteAllText(tab_path, content, CurrEncoding);
             }
@@ -125,7 +129,7 @@ namespace DocTools.DBDoc
 
             foreach (var item in Dto.Views)
             {
-                var vw_path = Path.Combine(this.WorkTmpDir, "视图", $"{item.Key}.html");
+                var vw_path = Path.Combine(this.WorkTmpDir, viewStr, $"{item.Key}.html");
                 var content = sqlcode_tpl.RazorRender(
                      new SqlCode() { DBType = Dto.DBType, CodeName = item.Key, Content = item.Value.Trim() }
                      );
@@ -135,7 +139,7 @@ namespace DocTools.DBDoc
 
             foreach (var item in Dto.Procs)
             {
-                var proc_path = Path.Combine(this.WorkTmpDir, "存储过程", $"{item.Key}.html");
+                var proc_path = Path.Combine(this.WorkTmpDir, procStr, $"{item.Key}.html");
                 var content = sqlcode_tpl.RazorRender(
                     new SqlCode() { DBType = Dto.DBType, CodeName = item.Key, Content = item.Value.Trim() }
                     );

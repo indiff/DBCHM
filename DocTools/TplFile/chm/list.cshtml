@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=gbk" />
-    <title>数据库目录</title>
+    <title>数据库目录 by tyj</title>
     <style type="text/css">
         * {
             padding: 0;
@@ -83,7 +83,7 @@
                     <tr>
                         <td>@item.TableOrder</td>
                         <td colspan="3">
-                            <a href="表结构/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
+                            <a href="表结构(@(Model.Tables.Count))/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
                         </td>
                         <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
                     </tr>
@@ -108,7 +108,7 @@
                     <tr>
                         <td>@vwIndex</td>
                         <td colspan="5">
-                            <a href="视图/@(item.Key).html">@item.Key</a>
+                            <a href="视图(@(Model.Views.Count))/@(item.Key).html">@item.Key</a>
                         </td>
                     </tr>
                     vwIndex++;
@@ -134,7 +134,7 @@
                     <tr>
                         <td>@procIndex</td>
                         <td colspan="5">
-                            <a href="存储过程/@(item.Key).html">@item.Key</a>
+                            <a href="存储过程(@(Model.Procs.Count))/@(item.Key).html">@item.Key</a>
                         </td>
                     </tr>
                     procIndex++;
