@@ -16,6 +16,12 @@ namespace DocTools.Dtos
         public string TableOrder { get; set; }
 
         /// <summary>
+        /// 模块
+        /// </summary>
+        [Display(Name = "模块")]
+        public string TableModule { get; set; }
+
+        /// <summary>
         /// 表名
         /// </summary>
         [Display(Name = "表名")]

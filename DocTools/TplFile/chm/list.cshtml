@@ -68,17 +68,28 @@
     <div class="container">
         @if (Model.Tables != null && Model.Tables.Count > 0)
         {
-            <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
-                <caption>
-                    表
-                </caption>
-                <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
-                    <td>序号</td>
-                    <td colspan="3">表名</td>
-                    <td colspan="2">表说明</td>
-                </tr>
-
-                @foreach (var item in Model.Tables)
+        <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
+            <caption>
+                表
+            </caption>
+            <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
+                <td>序号</td>
+                <td colspan="3">表名</td>
+                <td colspan="2">表说明</td>
+            </tr>
+            @foreach (var item in Model.Tables)
+            {
+                if (item != null && item.TableModule != null)
+                {
+                    <tr>
+                        <td>@item.TableOrder</td>
+                        <td colspan="3">
+                            <a href="表结构(@(Model.Tables.Count))/@(item.TableModule)/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
+                        </td>
+                        <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
+                    </tr>
+                }
+                if (item != null && item.TableModule == null)
                 {
                     <tr>
                         <td>@item.TableOrder</td>
@@ -88,7 +99,8 @@
                         <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
                     </tr>
                 }
-            </table>
+            }
+        </table>
         }
 
         @if (Model.Views != null && Model.Views.Count > 0)

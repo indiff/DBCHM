@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DocTools.Dtos;
 using ZetaLongPaths;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DocTools.DBDoc
 {
@@ -100,6 +101,8 @@ namespace DocTools.DBDoc
             var procStr = "存储过程(" + this.Dto.Procs.Count + ")";
             this.InitDirFiles(tableStr,viewStr,procStr);
 
+            //MessageBox.Show("InitDirFiles");
+
             var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\chm");
 
             var hhc_tpl = File.ReadAllText(Path.Combine(dir, "hhc.cshtml"), CurrEncoding);
@@ -108,22 +111,52 @@ namespace DocTools.DBDoc
             var list_tpl = File.ReadAllText(Path.Combine(dir, "list.cshtml"), CurrEncoding);
             var table_tpl = File.ReadAllText(Path.Combine(dir, "table.cshtml"), CurrEncoding);
             var sqlcode_tpl = File.ReadAllText(Path.Combine(dir, "sqlcode.cshtml"), CurrEncoding);
+            // MessageBox.Show("ReadAllText");
 
-            var hhc = hhc_tpl.RazorRender(this.Dto).Replace("</LI>", "");
 
-            var hhk = hhk_tpl.RazorRender(this.Dto).Replace("</LI>", "");
+            
+          //  MessageBox.Show(" hhk_tpl RazorRender LI");
 
-            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhc"), hhc, CurrEncoding);
+           try
+            {
+                var hhk = hhk_tpl.RazorRender(this.Dto).Replace("</LI>", "");
+                var  hhc = hhc_tpl.RazorRender(this.Dto).Replace("</LI>", "");
+                ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhc"), hhc, CurrEncoding);
+                ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhk"), hhk, CurrEncoding);
+                ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "数据库目录.html"), list_tpl.RazorRender(this.Dto), CurrEncoding);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
-            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhk"), hhk, CurrEncoding);
-
-            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "数据库目录.html"), list_tpl.RazorRender(this.Dto), CurrEncoding);
-
+           // MessageBox.Show("write all text");
             foreach (var tab in this.Dto.Tables)
             {
-                var tab_path = Path.Combine(this.WorkTmpDir, tableStr, $"{tab.TableName} {tab.Comment}.html");
-                var content = table_tpl.RazorRender(tab);
-                ZlpIOHelper.WriteAllText(tab_path, content, CurrEncoding);
+                if ( !String.IsNullOrWhiteSpace( tab.TableModule ))
+                {
+                    // 文件实际目录
+                    var tab_path_dir = Path.Combine(this.WorkTmpDir, tableStr, tab.TableModule);
+                    var tab_path = Path.Combine(tab_path_dir, $"{tab.TableName} {tab.Comment}.html");
+                    // 如果目录不存在则创建目录
+                    if (!ZlpIOHelper.DirectoryExists(tab_path_dir))
+                    {
+                        ZlpIOHelper.CreateDirectory(tab_path_dir);
+                       //  ZlpIOHelper.DeleteDirectory(tab_path_dir, true);
+                    }
+                    // 输出文件内容
+                    var content = table_tpl.RazorRender(tab);
+                   //  File.WriteAllText(Path.Combine(this.WorkTmpDir, tableStr, tab.TableModule, "content.html"), content);
+                    ZlpIOHelper.WriteAllText(tab_path, content, CurrEncoding);
+                  //   MessageBox.Show(content);
+                }
+                else
+                {
+                   // MessageBox.Show( " table module is empty ");
+                    var tab_path = Path.Combine(this.WorkTmpDir, tableStr, $"{tab.TableName} {tab.Comment}.html");
+                    var content = table_tpl.RazorRender(tab);
+                    ZlpIOHelper.WriteAllText(tab_path, content, CurrEncoding);
+                }
             }
 
 

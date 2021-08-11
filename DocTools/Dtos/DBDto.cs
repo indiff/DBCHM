@@ -30,8 +30,71 @@ namespace DocTools.Dtos
         /// </summary>
         public string DBType { get; set; }
 
-
         private List<TableDto> _Tables = null;
+
+        private SortedDictionary<string, List<TableDto>> _TableDict = null;
+
+        public SortedDictionary<string, List<TableDto>> TableDict {
+           get
+            {
+                // 数据库表信息是否包含模块信息
+                bool isModule = false;
+                foreach ( var t in Tables)
+                {
+                    if (!String.IsNullOrEmpty(t.TableModule))
+                    {
+                        isModule = true;
+                    }
+                }
+
+                if ( isModule )
+                {
+                    _TableDict = new SortedDictionary<string, List<TableDto>>();
+                    Tables.ForEach(t => {
+                        if (String.IsNullOrEmpty(t.TableModule))
+                        {
+                            List<TableDto> list = null;
+                            if (!_TableDict.ContainsKey("未知"))
+                            {
+                                list = new List<TableDto>();
+                                _TableDict.Add("未知", list);
+                            } else
+                            {
+                                list = _TableDict["未知"];
+                            }
+                            t.TableModule = "未知";
+                            list.Add(t);
+                            
+                        }
+                        else
+                        {
+                            List<TableDto> list = null;
+                            if (!_TableDict.ContainsKey( t.TableModule ))
+                            {
+                                list = new List<TableDto>();
+                                _TableDict.Add(t.TableModule, list);
+                            }
+                            else
+                            {
+                                list = _TableDict[t.TableModule];
+                            }
+                            list.Add(t);
+                            
+                        }
+                    });
+                    return _TableDict;
+                } else
+                {
+                    return null;
+                }
+                
+            }
+            set
+            {
+                _TableDict = value;
+            }
+        }
+
         /// <summary>
         /// 表结构信息
         /// </summary>

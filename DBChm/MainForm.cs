@@ -2,6 +2,8 @@
 using DocTools;
 using DocTools.DBDoc;
 using DocTools.Dtos;
+using IniParser.Model;
+using IniParser;
 using MJTop.Data;
 using System;
 using System.Collections.Generic;
@@ -184,6 +186,9 @@ namespace DBCHM
 
         public DBDto DbDto { get; set; }
 
+        // INI 配置数据
+        public IniData iniData {  get; set; }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.Hide();
@@ -242,14 +247,38 @@ namespace DBCHM
                         {
                             if (tbName.ToLower().Contains(word.ToLower()))
                             {
-                                tnTable.Nodes.Add(tbName, tbName, 1, 1);
-                                break;
+                                var module = getModule(tbName);
+                                if (module != null)
+                                {
+                                    TreeNode moduleNode = createOrGetParent(tnTable, tbName, module);
+                                    //   MessageBox.Show(" invoke set module " + tbName + " module " + module + this.DbDto.Tables[0].TableName);
+                                    //  setTableModule(tbName,module);
+                                    //  MessageBox.Show(" invoke set module " + tbName + " module " + module + this.DbDto.Tables[0].TableModule);
+                                    moduleNode.Nodes.Add(tbName, tbName, 1, 1);
+                                    break;
+                                }
+                                else
+                                {
+                                    tnTable.Nodes.Add(tbName, tbName, 1, 1);
+                                    break;
+                                }
                             }
                         }
                     }
                     else
                     {
-                        tnTable.Nodes.Add(tbName, tbName, 1, 1);
+                        var module = getModule(tbName);
+                        if (!String.IsNullOrEmpty( module ) )
+                        {
+                            TreeNode moduleNode = createOrGetParent(tnTable, tbName, module);
+                            // MessageBox.Show(" invoke set module " + tbName + " module " + module + this.DbDto);
+                            // setTableModule(tbName, module);
+                            moduleNode.Nodes.Add(tbName, tbName, 1, 1);
+                        }
+                        else
+                        {
+                            tnTable.Nodes.Add(tbName, tbName, 1, 1);
+                        }
                     }
                 }
 
@@ -324,6 +353,114 @@ namespace DBCHM
             //treeDB.ExpandAll();
             this.TransToDto();
         }
+        
+        // 创建或者获取对应的父节点 by tyj
+        private TreeNode createOrGetParent(TreeNode tnTable, string tableName, string module)
+        {
+            foreach (TreeNode node in tnTable.Nodes)
+            {
+                if ( node.Text.Equals( module ))
+                {
+                    setTableModule(tableName, module);
+                    return node;
+                }
+            }
+            // not found.
+            tnTable.Nodes.Add(module, module, 0, 0);
+            var moduleNode = tnTable.Nodes[module];
+            setTableModule(tableName, module);
+            moduleNode.Name = "module";
+            return moduleNode;
+        }
+
+        // 设置表模块名称
+        private void setTableModule(string tbName, string module)
+        {
+         /*   
+            this.DbDto.Tables.ForEach(t => { 
+                 if ( t.TableName.Equals( tbName ))
+                {
+                    t.TableModule = module;
+                    return;
+                }
+            });
+         */
+            try
+            {
+                var tableDto = this.DbDto.Tables.Where(t => t.TableName == tbName).FirstOrDefault();
+                if (tableDto != null)
+                {
+                    tableDto.TableModule = module;
+                }
+               //  MessageBox.Show(" set TableName " + tbName + " ,set module " + module);
+            }
+            catch (Exception ex)
+            {
+                LogUtils.LogError("Save TableModule", Developer.SysDefault, ex, tbName, module);
+                SetMsg(ex.Message, false);
+                return;
+            }
+        }
+
+        private string getModule(string tbName)
+        {
+            if ( null != this.iniData )
+            {
+                var type = this.iniData["config"]["type"];
+               // MessageBox.Show("tableName : " + tbName + " type:" + type);
+                if ( "1".Equals( type.Trim()))  // 标识表名匹配模式
+                {
+                    //通过所有的段迭代
+                    foreach (SectionData section in this.iniData.Sections)
+                    {
+                        if ( !"config".Equals(section.SectionName ))
+                        {
+                            //遍历当前节中的所有键以打印值
+                            foreach (KeyData key in section.Keys)
+                            {
+
+                                if ("1".Equals(key.Value.Trim()))
+                                {
+                                    if (tbName.Trim().ToLower().Equals(key.KeyName.Trim().ToLower()))
+                                    {
+                                      //  MessageBox.Show("section.SectionName : " + section.SectionName.Trim() + "key.KeyName : " + key.KeyName.Trim() + " key.Value : " + key.Value.Trim());
+                                        return section.SectionName.Trim();
+                                    }
+                                }
+                            }
+                           
+                        }
+                    }
+                }
+
+                if ("0".Equals(type.Trim()))  // 标识表前缀方式
+                {
+                    //通过所有的段迭代
+                    foreach (SectionData section in this.iniData.Sections)
+                    {
+                        if (!"config".Equals(section.SectionName))
+                        {
+                            //遍历当前节中的所有键以打印值
+                            foreach (KeyData key in section.Keys)
+                            {
+                                if ("1".Equals(key.Value.Trim()))
+                                {
+                                    var keyTable = key.KeyName.Trim().ToLower();
+                                    var tableName = tbName.ToLower();
+                                    if (tableName.StartsWith( keyTable ))
+                                    {
+                                      //  MessageBox.Show("section.SectionName : " + section.SectionName.Trim() + "key.KeyName : " + key.KeyName.Trim() + " key.Value : " + key.Value.Trim());
+                                        return section.SectionName;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            return null;
+        }
 
         /// <summary>
         /// 根据选择项转换为DTO数据
@@ -370,7 +507,23 @@ namespace DBCHM
                     {
                         if (node.Checked)
                         {
-                            tables.Add(Trans2Table(node, ref xh));
+                            if (node.Name.Equals("module")) { 
+
+                                foreach (TreeNode leafNode in node.Nodes)
+                                {
+                                    if (leafNode.Checked)
+                                    {
+                                        // 需要判断是否为叶子节点
+                                        tables.Add(Trans2Table(leafNode, ref xh));
+                                    }
+                                }
+
+                            } else
+                            {
+                                // 需要判断是否为叶子节点
+                                tables.Add(Trans2Table(node, ref xh));
+                            }
+                            
                         }
                     }
                 }
@@ -379,7 +532,25 @@ namespace DBCHM
                     var xh = 1;
                     foreach (TreeNode node in tableNode.Nodes)
                     {
-                        tables.Add(Trans2Table(node, ref xh));
+                        // 需要判断是否为叶子节点
+                        if (node.Name.Equals("module"))
+                        {
+
+                            foreach (TreeNode leafNode in node.Nodes)
+                            {
+                                if (leafNode.Checked)
+                                {
+                                    // 需要判断是否为叶子节点
+                                    tables.Add(Trans2Table(leafNode, ref xh));
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            // 需要判断是否为叶子节点
+                            tables.Add(Trans2Table(node, ref xh));
+                        }
                     }
                 }
             }
@@ -430,10 +601,17 @@ namespace DBCHM
             TableDto tbDto = new TableDto();
             tbDto.TableOrder = xh.ToString();
             tbDto.TableName = node.Name;
+            // 设置表模块信息
+            if ( node.Parent != null && !"表".Equals( node.Parent.Text))
+            {
+                // MessageBox.Show(" set table module : " + node.Parent.Text);
+                tbDto.TableModule = node.Parent.Text;
+            }
             tbDto.Comment = DBUtils.Instance.Info.TableComments[node.Name];
             tbDto.DBType = DBUtils.Instance.DBType.ToString();
 
             var lst_col_dto = new List<ColumnDto>();
+            // 查找不到表字典数据
             var columns = DBUtils.Instance.Info.TableColumnInfoDict[node.Name];
             foreach (var col in columns)
             {
@@ -658,6 +836,9 @@ namespace DBCHM
             }
         }
 
+        /**
+         *   统计表的个数  视图的个数 存储过程个数
+         */
         void TongJi()
         {
             // 不是无限级，不需要用递归
@@ -697,8 +878,6 @@ namespace DBCHM
         #region 勾选选中
 
         // 包含字符串的则过滤不选择
-
-        // 包含字符串的则过滤不选择
         private bool acceptFilter(string itemText)
         {
             string filterText = filterTextBox.Text.Trim();
@@ -721,12 +900,14 @@ namespace DBCHM
             return true;
         }
 
+        // 全选操作
         private void CkAll_CheckedChanged(object sender, EventArgs e)
         {
             HandleNode(treeDB.Nodes, CkAll.Checked);
             TongJi();
         }
 
+        // 处理节点
         void HandleNode(TreeNodeCollection nodeColl, bool cked)
         {
             if (nodeColl != null)
@@ -850,7 +1031,8 @@ namespace DBCHM
             // 都是子项
             if (e.Node.Parent != null)
             {
-                if (e.Node.Parent.Name == "table")
+                if ( ( e.Node.Parent.Name == "table" && !e.Node.Name.Equals( "module") ) ||
+                    (e.Node.Parent.Name == "module" && e.Node.Nodes == null ) )
                 {
                     PiZhuAreaShow();
 
@@ -921,32 +1103,60 @@ namespace DBCHM
         private void loadConfig_Click(object sender, EventArgs e)
         {
             // this.DbDto
-
+            
             OpenFileDialog openDia = new OpenFileDialog();
             openDia.Title = "加载配置";
             //这是系统提供的桌面路径，还可以是其他的路径：比如文档、音乐等文件夹
             openDia.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             //过滤不同类型的文件
-            openDia.Filter = "(*.txt)|*.txt";
-            openDia.FileName = this.DbDto.DBName + "_config.txt";
-
+            openDia.Filter = "(*.ini)|*.ini";
+            openDia.InitialDirectory = Environment.CurrentDirectory;
+            openDia.FileName = DBUtils.Instance.DBType.ToString() + "_" + this.DbDto.DBName + "_config.ini";
+            
             var diaResult = openDia.ShowDialog();
-
             if (diaResult == DialogResult.OK)
             {
-                FormUtils.ShowProcessing("正在加载配置，请稍等......", this, arg =>
-                {
-                    try
-                    {
-                        var i = 100 + 100;
-                    }
-                    catch (Exception ex)
-                    {
-                        LogUtils.LogError("loadConfig_Click", Developer.SysDefault, ex, openDia.FileName, DBUtils.Instance.Info);
-                    }
 
-                }, null);
+                //Get the path of specified file
+             
+               var filePath = openDia.FileName;
+               var parser = new FileIniDataParser();
+               try
+               {
+                   // 读取Ini数据信息
+                   iniData = parser.ReadFile(filePath, System.Text.Encoding.UTF8);
+                   InitTree();
+               }
+               catch (Exception ex)
+               {
+                   MessageBox.Show("" + ex);
+               }
+
+
+                /*
+             FormUtils.ShowProcessing("正在加载自定义数据库INI配置，请稍等......", this, arg =>
+            {
+                try
+                {
+                    //Get the path of specified file
+                    var filePath = openDia.FileName;
+                    var parser = new FileIniDataParser();
+                    // 读取Ini数据信息
+                    iniData = parser.ReadFile(filePath, System.Text.Encoding.UTF8);
+                    InitTree();
+                }
+                catch (Exception ex)
+                {
+                    LogUtils.LogError("loadConfig_Click", Developer.SysDefault, ex, openDia.FileName, DBUtils.Instance.Info);
+                }
+
+            }, null);  */
             }
+        }
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            filterTextBox.Text = "";
         }
     }
 }

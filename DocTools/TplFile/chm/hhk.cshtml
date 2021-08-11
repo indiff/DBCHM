@@ -12,8 +12,7 @@
     <param name="Font" value="MS Sans Serif,9,0">
 </OBJECT>
 <UL>
-    <LI>
-        <OBJECT type="text/sitemap">
+    <LI><OBJECT type="text/sitemap">
             <param name="Name" value="数据库目录">
             <param name="Local" value="数据库目录.html">
             <param name="ImageNumber" value="11">
@@ -23,13 +22,25 @@
     {
         foreach (var tab in Model.Tables)
         {
-            <LI>
-                <OBJECT type="text/sitemap">
-                    <param name="Name" value="@tab.TableName">
-                    <param name="Local" value="表结构(@(Model.Tables.Count))\@(tab.TableName + " " + tab.Comment).html">
-                    <param name="ImageNumber" value="11">
-                </OBJECT>
-            </LI>
+            if (tab != null && tab.TableModule != null)
+            {
+                <LI><OBJECT type="text/sitemap">
+                        <param name="Name" value="@tab.TableName">
+                        <param name="Local" value="表结构(@(Model.Tables.Count))\@(tab.TableModule)\@(tab.TableName + " " + tab.Comment).html">
+                        <param name="ImageNumber" value="11">
+                    </OBJECT>
+                </LI>
+            }
+            if (tab != null && tab.TableModule == null)
+            {
+                <LI><OBJECT type="text/sitemap">
+                        <param name="Name" value="@tab.TableName">
+                        <param name="Local" value="表结构(@(Model.Tables.Count))\@(tab.TableName + " " + tab.Comment).html">
+                        <param name="ImageNumber" value="11">
+                    </OBJECT>
+                </LI>
+            }
+
             //hhk文件不能太大，不然hhc编译时，会报提示 ：An internal error has occurred.An error record has been saved to ..
             //https://documentation.red-gate.com/sdoc5/troubleshooting/error-messages/assertion-failure-outputting-in-chm-format
             @*foreach (var column in tab.Columns)
@@ -48,8 +59,7 @@
     {
         foreach (var item in Model.Views)
         {
-            <LI>
-                <OBJECT type="text/sitemap">
+            <LI><OBJECT type="text/sitemap">
                     <param name="Name" value="@item.Key">
                     <param name="Local" value="视图(@(Model.Views.Count))\@(item.Key).html">
                     <param name="ImageNumber" value="11">
@@ -63,8 +73,7 @@
     {
         foreach (var item in Model.Procs)
         {
-            <LI>
-                <OBJECT type="text/sitemap">
+            <LI><OBJECT type="text/sitemap">
                     <param name="Name" value="@item.Key">
                     <param name="Local" value="存储过程(@(Model.Procs.Count))\@(item.Key).html">
                     <param name="ImageNumber" value="11">

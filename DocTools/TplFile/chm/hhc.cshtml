@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <HTML>
 <HEAD>
-    <meta name="GENERATOR" content="DBCHM.exe by lztkdr">
+    <meta name="GENERATOR" content="Generate By tyj">
     <!-- Sitemap 1.0 -->
     <!-- hhk文件渲染后，需 Replace("</LI>", "") -->
 </HEAD>
@@ -20,21 +20,46 @@
         </LI>
         @if (Model.Tables != null && Model.Tables.Count > 0)
         {
-            <LI><OBJECT type="text/sitemap">
+                <LI><OBJECT type="text/sitemap">
                     <param name="Name" value="表结构(@(Model.Tables.Count))">
                     <param name="ImageNumber" value="1">
                 </OBJECT>
-                <UL>
-                    @foreach (var table in Model.Tables)
-                    {
-                        <LI><OBJECT type="text/sitemap">
-                                <param name="Name" value="@(table.TableName+" "+table.Comment)">
-                                <param name="Local" value="表结构(@(Model.Tables.Count))\@(table.TableName+" "+table.Comment).html">
-                                <param name="ImageNumber" value="11">
-                            </OBJECT>
-                        </LI>
-                    }
-                </UL>
+                    <UL>
+                        @if (Model.TableDict != null ){
+                            foreach (var pair in Model.TableDict)
+                            {
+                                <LI><OBJECT type="text/sitemap">
+                                        <param name="Name" value="@(pair.Key)">
+                                        <param name="ImageNumber" value="1">
+                                    </OBJECT>
+                                </LI>
+
+                                <UL>
+                                    @foreach (var t in pair.Value) { 
+                                        <LI><OBJECT type="text/sitemap">
+                                                <param name="Name" value="@(t.TableName+" "+t.Comment)">
+                                                <param name="Local" value="表结构(@(Model.Tables.Count))\@(t.TableModule)\@(t.TableName+" "+t.Comment).html">
+                                                <param name="ImageNumber" value="11">
+                                            </OBJECT>
+                                        </LI>
+                                    }
+                                </UL>
+                            }
+                        }
+                        @if (Model.TableDict == null ){
+                            foreach (var table in Model.Tables)
+                            {
+                                <LI><OBJECT type="text/sitemap">
+                                        <param name="Name" value="@(table.TableName+" "+table.Comment)">
+                                        <param name="Local" value="表结构(@(Model.Tables.Count))\@(table.TableName+" "+table.Comment).html">
+                                        <param name="ImageNumber" value="11">
+                                    </OBJECT>
+                                </LI>
+                            }
+                        }
+
+
+                    </UL>
             </LI>
         }
 
