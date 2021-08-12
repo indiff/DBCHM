@@ -128,7 +128,7 @@ namespace MJTop.Data
                     }
                     catch (Exception ex)
                     {
-
+                        LogUtils.LogError("TryConnect", Developer.SysDefault, ex, dbType, connectionString, dbNames );
                     }
                 }
             }

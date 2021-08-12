@@ -1,16 +1,17 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("DBCHM - 51Try.Top")]
+[assembly: AssemblyTitle("DBCHM - tyj")]
 [assembly: AssemblyDescription("数据库CHM生成工具")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("51Try.Top")]
+[assembly: AssemblyCompany("Ensure Cloud")]
 [assembly: AssemblyProduct("DBCHM")]
-[assembly: AssemblyCopyright("Copyright ©2018-2021 lztkdr")]
+[assembly: AssemblyCopyright("Copyright ©2018-2021 by tyj")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,3 +34,4 @@ using System.Runtime.InteropServices;
 // 方法是按如下所示使用“*”: :
 [assembly: AssemblyVersion("1.8.0.3")]
 [assembly: AssemblyFileVersion("1.8.0.3-beta")]
+[assembly: NeutralResourcesLanguage("zh-CN")]
