@@ -239,6 +239,10 @@ namespace DBCHM
             if (DBUtils.Instance.Info.TableNames.Count > 0)
             {
                 TreeNode tnTable = new TreeNode("表", 0, 0) { Name = "table" };
+                // 需要添加的模块节点
+
+                // 最后添加表节点
+                List<string> theTables = new List<string>();
                 foreach (var tbName in DBUtils.Instance.Info.TableNames)
                 {
                     if (SearchWords.Any())
@@ -259,7 +263,8 @@ namespace DBCHM
                                 }
                                 else
                                 {
-                                    tnTable.Nodes.Add(tbName, tbName, 1, 1);
+                                    theTables.Add(tbName);
+                                    // tnTable.Nodes.Add(tbName, tbName, 1, 1);
                                     break;
                                 }
                             }
@@ -277,8 +282,17 @@ namespace DBCHM
                         }
                         else
                         {
-                            tnTable.Nodes.Add(tbName, tbName, 1, 1);
+                            theTables.Add(tbName);
+                            //tnTable.Nodes.Add(tbName, tbName, 1, 1);
                         }
+                    }
+                }
+                // 如果不为空
+                if (theTables.Count > 0)
+                {
+                    foreach( var tbName in theTables)
+                    {
+                        tnTable.Nodes.Add(tbName, tbName, 1, 1);
                     }
                 }
 
@@ -366,6 +380,9 @@ namespace DBCHM
                 }
             }
             // not found.
+            //  TreeNode theModuleNode = new TreeNode(module, 0, 0);
+            //   theModuleNode.Name = "module";
+            // tnTable.Nodes.Insert(0, theModuleNode); // 插入到头部节点
             tnTable.Nodes.Add(module, module, 0, 0);
             var moduleNode = tnTable.Nodes[module];
             setTableModule(tableName, module);
