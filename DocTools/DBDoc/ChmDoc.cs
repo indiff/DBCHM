@@ -169,14 +169,16 @@ namespace DocTools.DBDoc
                 ZlpIOHelper.WriteAllText(vw_path, content, CurrEncoding);
             }
 
-
+            int i = 0;
             foreach (var item in Dto.Procs)
             {
+                Console.WriteLine("start :" + item.Key  + (i++) );
                 var proc_path = Path.Combine(this.WorkTmpDir, procStr, $"{item.Key}.html");
                 var content = sqlcode_tpl.RazorRender(
                     new SqlCode() { DBType = Dto.DBType, CodeName = item.Key, Content = item.Value.Trim() }
                     );
                 ZlpIOHelper.WriteAllText(proc_path, content, CurrEncoding);
+                Console.WriteLine("end :" + item.Key);
             }
 
             var hhp_Path = Path.Combine(this.WorkTmpDir, "chm.hhp");

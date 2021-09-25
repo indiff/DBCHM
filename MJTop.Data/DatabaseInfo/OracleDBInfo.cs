@@ -154,7 +154,8 @@ namespace MJTop.Data.DatabaseInfo
 
             //https://blog.csdn.net/rczrj/article/details/74977010
             procSql = string.Format("select * from (SELECT name,xmlagg(xmlparse(content text||' ' wellformed) order by line asc).getclobval() text FROM all_source where OWNER = '{0}' group by name ) order by name asc", User);
-
+            procSql = string.Format("select(name || '(' || type || ')') as name , text from(SELECT name, type, xmlagg(xmlparse(content text|| ' ' wellformed) order by line asc).getclobval() text FROM all_source where OWNER = '{0}' group by name, type ) order by type,   name asc", User);
+            
             try
             {
                 //查询Oracle的所有序列
@@ -169,6 +170,7 @@ namespace MJTop.Data.DatabaseInfo
                 try
                 {
                     this.Procs = Db.ReadNameValues(procSql);
+                    handleProcsByIndiff();
                 }
                 catch (Exception e)
                 {
@@ -280,6 +282,45 @@ namespace MJTop.Data.DatabaseInfo
                 return false;
             }
             return this.TableComments.Count == this.TableInfoDict.Count;
+        }
+        
+        /**
+         * 处理存储过程的名称
+         */
+        private void handleProcsByIndiff()
+        {
+            NameValueCollection nvc = new NameValueCollection();
+            foreach (string k in this.Procs)
+            {
+                foreach (string v in this.Procs.GetValues(k))
+                {
+                    // Console.WriteLine("{0} {1}", s, v);
+                    nvc.Add(getComment(k, v), v);
+                }
+            }
+            if (this.Procs.Count == nvc.Count)
+            {
+                this.Procs = nvc;
+            }
+        }
+        /**
+         * 提取功能描述
+         */
+        private string getComment(string k, string v)
+        {
+            string pattern = @"功能描述：(.+)\s+";
+
+            Match match = Regex.Match(v, pattern);
+            if (match.Success && match.Groups.Count > 1)
+            {
+                Group g = match.Groups[1];
+                string comment = g.ToString().Trim();
+                // /SO关闭后更新OCS状态, 
+                comment = comment.Replace("/", "");
+                comment = comment.Replace(@"\", "");
+                return k.Trim() + "_" + comment;
+            }
+            return k.Trim();
         }
 
         private void AddColSeq(string tableName, string colName)

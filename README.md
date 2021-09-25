@@ -1,25 +1,8 @@
-<div align="center">
-   <img alt="DBCHM" src="https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/dbchm.png">
-	<h2 align="center">DBCHM</a></h2>
-</div>
-<div align="center">
-<h3 align="center">最简单、最实用的数据库文档生成工具</h3>
-</div>
+## 更新日志
+- [x] 支持 Oracle 存储过程，按type分类， 名称获取类型和相应的功能描述 2021/9/25 1.8.0.4 (文件名不能包含/ 或者 \ 字符)
+- [x] 支持表结构进行分组
 
-<p align="center">
-<img alt="visual studio 2019" src="https://img.shields.io/badge/Visual Studio-2019-blue.svg">
-<img alt="csharp" src="https://img.shields.io/badge/ language-csharp-brightgreen.svg">
-<img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-</p>
-
-## 🚩 项目介绍
-
-DBCHM 是一款数据库文档生成工具！
-该工具从最初支持chm文档格式开始，通过开源，集思广益，不断改进，又陆续支持word、excel、pdf、html、xml、markdown等文档格式的导出。
-
-### 🎯 本项目力求做最简单、最实用的数据库文档(字典)生成工具！
-
-## 🍀支持的数据库
+## 🎯�支持的数据库
 - [x] SqlServer
 - [x] MySQL
 - [x] Oracle
@@ -27,79 +10,13 @@ DBCHM 是一款数据库文档生成工具！
 - [x] DB2
 - [x] SQLite
 
-## 🥝主要功能 
-
-### 文档的内容都包含什么？
-- 序号 | 列名 | 数据类型 | 长度 | 小数位数 | 主键 | 自增 | 允许空 | 默认值 | 列说明
-- 视图 视图具体内容
-- 存储过程 存储过程具体内容
-
-🔹注：Oracle在v1.8.0.3-beta版本及以后暂不会查询显示自增数据。
-
-### 支持哪些文档格式的导出？
-- [x] chm
-- [x] word
-- [x] excel
-- [x] pdf
-- [x] html
-- [x] xml
-- [x] markdown
-### 更新表列的注释，有哪些方式？
-- 通过 工具-批注上载，选择文件导入进行更新批注(注释)：
-    - 	[x] pdm 由`powerdesigner`设计数据库时产生。
-    - 	[x] xml 由`visual studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
-    - 	[x] xml 由`dbchm`的 XML导出 而产生。
-- 列批注 在编辑前的选中状态下，可以从 选定行开始 粘贴多行文本内容 对多个列注释批量赋值。
-
-## 🎉效果展示
-
-### 1 数据库连接配置示例
-![数据库连接配置](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM000.png)
-
-### 2 数据库连接管理
-![数据库连接管理](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM001.png)
-
-### 3 表名模糊匹配
-![表名模糊搜索](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
-
-### 4 执行批注更新
-![表批注更新](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
-
-### 5 导出CHM文件
-![导出CHM文件](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM004.png)
-
-### 6 表结构信息
-![表结构信息](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM005.png)
-
-### 7 更多格式的效果，请[下载体验](https://gitee.com/dotnetchina/DBCHM/releases)哈:wink:！！
-
-查看chm效果：[某微信开发框架表结构信息(示例).chm](https://gitee.com/dotnetchina/DBCHM/attach_files)
-
-## 📘发行历史
-
-​	<a target='_blank' href ='./ReleaseNote.md'>ReleaseNote</a>
 
 ## 💪贡献者
 
 - @[trycache](https://gitee.com/trycache) 主要开发者
 - @[空无一物](https://gitee.com/dotnetchina/) 先驱者
+- @[indiff](https://github.com/indiff/) indiff
 
-##  ⬇️下载使用
-- **[下载发行版本](https://gitee.com/dotnetchina/DBCHM/releases)**，下载解压后，双击运行 `DBCHM.exe`。
-
-- **[下载最新功能的内测版本](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)**，Bug修复早知道，最新功能尝鲜，请在[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)共享中获取:yum:！
-
-## 🍄 其他工具
-- [htmlhelp](https://gitee.com/dotnetchina/DBCHM/attach_files)，生成chm文件时，需提前安装。
-- [PDMToCHM](https://gitee.com/dotnetchina/DBCHM/attach_files)，将PDM表结构文件导出到CHM文件。
-
-##  🌱开发计划
-
-- [x] 收集问题，修复完善基础功能
-- [x] MJTop.Data 类库完善
-- [ ]  测试数据生成器
-- [ ]  C#实体代码生成器
-- [ ]  ...
 
 ## 📖常见问题
 - **连接不上，怎么办？**
@@ -171,5 +88,3 @@ PS：如果你有更好方法，欢迎提供改善建议，助力✊该工具越
 	
 	如果你有更好的解决方法，欢迎提供改善建议或直接提pr，我们一起完善该工具！
 
-## 🔗交流
-- QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
