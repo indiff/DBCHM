@@ -6,6 +6,8 @@
 ```
 git tag -a v1.8.0.4 -m '支持 Oracle 存储过程，按type分类,添加注释'
 git push origin v1.8.0.4
+
+删除标签 git push origin --delete v1.8.0.4
 ```
 ## 🎯�支持的数据库
 - [x] SqlServer
