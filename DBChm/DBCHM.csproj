@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DBCHM</RootNamespace>
     <AssemblyName>DBCHM</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -160,6 +160,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="MySql_dbchm_config.ini" />
+    <None Include="MySql_oms_config.ini" />
+    <None Include="OracleDDTek_dswms_config.ini" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

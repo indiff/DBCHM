@@ -312,12 +312,13 @@ namespace MJTop.Data.DatabaseInfo
 
             Match match = Regex.Match(v, pattern);
             if (match.Success && match.Groups.Count > 1)
-            {
+            {   // 判断是否找到功能描述，进行提取日志
                 Group g = match.Groups[1];
                 string comment = g.ToString().Trim();
-                // /SO关闭后更新OCS状态, 
+                // 影响文件名的字符进行替换
                 comment = comment.Replace("/", "");
                 comment = comment.Replace(@"\", "");
+                comment = comment.Replace(@"&", "_");
                 return k.Trim() + "_" + comment;
             }
             return k.Trim();

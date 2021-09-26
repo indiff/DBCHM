@@ -4,12 +4,14 @@
 
 ## 发布版本
 ```
-git tag -a v1.8.0.4 -m '支持 Oracle 存储过程，按type分类,添加注释'
+git tag -a v1.8.0.4 -m "Oracle存储过程分类,提取功能注释"
 git push origin v1.8.0.4
 
-删除标签 git push origin --delete v1.8.0.4
+删除标签 
+git push origin --delete v1.8.0.4
+git tag -d v1.8.0.4
 ```
-## 🎯�支持的数据库
+## 🎯 支持的数据库
 - [x] SqlServer
 - [x] MySQL
 - [x] Oracle
