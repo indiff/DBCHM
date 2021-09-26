@@ -90,7 +90,7 @@ jobs:
     - name: Package
       shell: bash
       run: |
-        7z a -t7z DBCHM.7z D:\a\DBCHM\DBCHM\DBChm\bin\Release -xr!*.log -xr!*bak -xr!*pdb
+        7z a -t7z DBCHM.7z D:/a/DBCHM/DBCHM/DBChm/bin/Release -xr!*.log -xr!*bak -xr!*pdb
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
