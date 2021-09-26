@@ -17,7 +17,7 @@ jobs:
       matrix:
         configuration: [Release]
 
-    runs-on: windows-latest  # For a list of available runner types, refer to
+    runs-on: 	windows-latest  # For a list of available runner types, refer to # https://github.com/actions/virtual-environments
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
@@ -30,7 +30,7 @@ jobs:
         fetch-depth: 0
         
     - name: 配置msbuild
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.0.3
 
     - name: 配置nuget
       uses: nuget/setup-nuget@v1
@@ -87,15 +87,16 @@ jobs:
 #         asset_path: D:\a\DBCHM\DBCHM\DBChm\bin\Release\DBCHM.exe
 #         asset_name: DBCHM.exe
 #         asset_content_type: application/zip        
-        
+    - name: Package
+      shell: bash
+      run: |
+        7z a -t7z DBCHM.7z D:/a/DBCHM/DBCHM/DBChm/bin/Release -xr!*.log -xr!*bak -xr!*pdb
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
-          D:\a\DBCHM\DBCHM\DBChm\bin\Release\DBCHM.exe
-          D:\a\DBCHM\DBCHM\DBChm\bin\Release\MJTop.Data.dll
-          !D:\a\DBCHM\DBCHM\DBChm\bin\Release\Config.txt
+          DBCHM.7z
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
   
