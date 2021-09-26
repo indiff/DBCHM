@@ -15,7 +15,7 @@ namespace DocTools
             jt = new Jint.Engine(cfg =>
             {
                 //cfg.LimitRecursion();
-                cfg.Strict();
+                // cfg.Strict();
             });
             jt.SetValue("log", new Action<object>(Console.WriteLine)); 
             
