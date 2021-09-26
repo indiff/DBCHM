@@ -30,7 +30,7 @@ jobs:
         fetch-depth: 0
         
     - name: 配置msbuild
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.0.3
 
     - name: 配置nuget
       uses: nuget/setup-nuget@v1
@@ -90,7 +90,7 @@ jobs:
     - name: Package
       shell: bash
       run: |
-        7z a -t7z DBCHM.7z D:\a\DBCHM\DBCHM\DBChm\bin\Release\*.* -r -x!*.log -x!*bak -x!*pdb     
+        7z a -t7z DBCHM.7z D:\a\DBCHM\DBCHM\DBChm\bin\Release\ -xr!*.log -xr!*bak -xr!*pdb     
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
