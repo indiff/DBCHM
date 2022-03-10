@@ -50,6 +50,11 @@ namespace MJTop.Data.DatabaseInfo
             }
         }
 
+        public string User
+        {
+            get { return (Db.ConnectionStringBuilder as Npgsql.NpgsqlConnectionStringBuilder).Username; }
+        }
+
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
 
         private NameValueCollection TableSchemas { get; set; } = new NameValueCollection();
@@ -107,11 +112,11 @@ namespace MJTop.Data.DatabaseInfo
 
             string dbSql = "select datname from pg_database where  datistemplate=false  order by oid desc";
             string strSql = @"select a.*,cast(obj_description(relfilenode,'pg_class') as varchar) as value from (
-select b.oid as schid, a.table_schema as scName,a.table_name as Name from information_schema.tables  a
+select b.oid as schid, a.table_schema as scName,concat(a.table_schema,'.',a.table_name) as Name,a.table_name from information_schema.tables  a
 left join pg_namespace b on b.nspname = a.table_schema
-where a.table_schema not in ('pg_catalog','information_schema') and a.table_type='BASE TABLE'
-) a inner join pg_class b on a.name = b.relname and a.schid = b.relnamespace
-order by schid asc";
+where a.table_schema not in ('pg_catalog','information_schema') and a.table_schema=:schema and a.table_type='BASE TABLE'
+) a inner join pg_class b on a.table_name = b.relname and a.schid = b.relnamespace
+order by name asc";
 
             string viewSql = "SELECT viewname,definition FROM pg_views where schemaname='public' order by viewname asc";
             string procSql = "select proname,prosrc from  pg_proc where pronamespace=(SELECT pg_namespace.oid FROM pg_namespace WHERE nspname = 'public') order by proname asc";
@@ -123,7 +128,7 @@ order by schid asc";
 
                 this.Version = Db.Scalar("select version()", string.Empty);
 
-                var data = Db.GetDataTable(strSql);
+                var data = Db.GetDataTable(strSql, new { schema = User });
 
                 var dictGp = new Dictionary<string, List<string>>();
 
@@ -156,29 +161,49 @@ order by schid asc";
                             tabInfo.TableName = tableName;
                             tabInfo.TabComment = TableComments[tableName];
 
-                            strSql = @"set search_path to " + TableSchemas[tableName] + @";select ordinal_position as Colorder,column_name as ColumnName,data_type as TypeName,
-coalesce(character_maximum_length,numeric_precision,-1) as Length,numeric_scale as Scale,
-case is_nullable when 'NO' then 0 else 1 end as CanNull,column_default as DefaultVal,
-case  when position('nextval' in column_default)>0 then 1 else 0 end as IsIdentity, 
-case when b.pk_name is null then 0 else 1 end as IsPK,c.DeText
-from information_schema.columns 
-left join (
-	select pg_attr.attname as colname,pg_constraint.conname as pk_name from pg_constraint  
-	inner join pg_class on pg_constraint.conrelid = pg_class.oid 
-	inner join pg_attribute pg_attr on pg_attr.attrelid = pg_class.oid and  pg_attr.attnum = pg_constraint.conkey[1] 
-	inner join pg_type on pg_type.oid = pg_attr.atttypid
-	where pg_class.relname =:tableName and pg_constraint.contype='p' 
-) b on b.colname = information_schema.columns.column_name
-left join (
-	select attname,description as DeText from pg_class
-	left join pg_attribute pg_attr on pg_attr.attrelid= pg_class.oid
-	left join pg_description pg_desc on pg_desc.objoid = pg_attr.attrelid and pg_desc.objsubid=pg_attr.attnum
-	where pg_attr.attnum>0 and pg_attr.attrelid=pg_class.oid and pg_class.relname=:tableName
-)c on c.attname = information_schema.columns.column_name
-where table_schema not in ('pg_catalog','information_schema') and table_name=:tableName order by ordinal_position asc";
+                            strSql = @"SELECT
+	col.ordinal_position AS Colorder,
+	col.table_schema AS SCHEMA_NAME,
+	col.TABLE_NAME,
+	col.COLUMN_NAME AS ColumnName,
+	col.udt_name AS TypeName,
+	col_description ( C.oid, col.ordinal_position ) AS DeText,	
+	COALESCE(col.character_maximum_length, col.numeric_precision, -1) AS Length,
+	col.numeric_scale AS Scale,
+	(CASE col.is_identity WHEN 'YES' THEN 1 ELSE 0 END) AS IsIdentity,	
+	CASE
+		col.is_nullable 
+		WHEN 'NO' THEN
+		0 ELSE 1 
+	END AS CanNull,
+	col.column_default AS DefaultVal
+FROM
+	information_schema.COLUMNS AS col
+	LEFT JOIN pg_namespace ns ON ns.nspname = col.table_schema
+	LEFT JOIN pg_class C ON col.TABLE_NAME = C.relname 
+	AND C.relnamespace = ns.oid
+	LEFT JOIN pg_attrdef A ON C.oid = A.adrelid 
+	AND col.ordinal_position = A.adnum
+	LEFT JOIN pg_attribute b ON b.attrelid = C.oid 
+	AND b.attname = col.
+	COLUMN_NAME LEFT JOIN pg_type et ON et.oid = b.atttypid
+	LEFT JOIN pg_collation coll ON coll.oid = b.attcollation
+	LEFT JOIN pg_namespace colnsp ON coll.collnamespace = colnsp.oid
+	LEFT JOIN pg_type bt ON et.typelem = bt.oid
+	LEFT JOIN pg_namespace nbt ON bt.typnamespace = nbt.oid
+WHERE
+	col.table_schema = :schema 
+	AND col.TABLE_NAME = :tableName
+ORDER BY
+	col.table_schema,
+	col.TABLE_NAME,
+	col.ordinal_position";
                             try
                             {
-                                tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tableName }).ConvertToListObject<ColumnInfo>();
+                                var arr = tableName.Split('.');
+                                var scName = arr.FirstOrDefault();
+                                var tabName = arr.LastOrDefault();
+                                tabInfo.Colnumns = Db.GetDataTable(strSql, new { tableName = tabName, schema = scName }).ConvertToListObject<ColumnInfo>();
                                 List<string> lstColName = new List<string>();
                                 NameValueCollection nvcColDeText = new NameValueCollection();
                                 foreach (ColumnInfo colInfo in tabInfo.Colnumns)
@@ -298,8 +323,9 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
+                var tabName = tableName.Split('.').LastOrDefault();
                 //切换schema，更新表描述
-                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on table \"" + tableName + "\" is '" + comment + "'";
+                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on table \"" + tabName + "\" is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 TableComments[tableName] = comment;
@@ -327,8 +353,9 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
             comment = (comment ?? string.Empty).Replace("'", "");
             try
             {
+                var tabName = tableName.Split('.').LastOrDefault();
                 //切换schema，更新列描述
-                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on column \"" + tableName + "\".\"" + columnName + "\" is '" + comment + "'";
+                upsert_sql = "set search_path to " + TableSchemas[tableName] + ";comment on column \"" + tabName + "\".\"" + columnName + "\" is '" + comment + "'";
                 Db.ExecSql(upsert_sql);
 
                 List<ColumnInfo> lstColInfo = TableColumnInfoDict[tableName];
