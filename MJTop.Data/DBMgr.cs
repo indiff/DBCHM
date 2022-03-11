@@ -27,7 +27,7 @@ namespace MJTop.Data
     {
         static DBMgr()
         {
-            InitDLL();
+           InitDLL();
         }
         static void InitDLL()
         {
