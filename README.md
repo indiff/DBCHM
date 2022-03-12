@@ -26,4 +26,4 @@ git tag -d v1.8.0.4
 
 - [trycache](https://gitee.com/trycache) 主要开发者
 - [空无一物](https://gitee.com/dotnetchina/) 先驱者
-- [indiff](https://github.com/indiff/) indiff
+- [indiff](https://github.com/indiff/) 扩展支持分组功能
