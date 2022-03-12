@@ -56,15 +56,15 @@ jobs:
 #     - name: Zip the release dir   
 #     - uses: montudor/action-zip@v0.1.1
 #       with:
-#         args: zip -qq -r DBCHM.zip DBCHM\bin\Release        
+#         args: zip -qq -r DBCHM.zip DBCHM\bin\x64\Release     
 
 #     - name: Upload artifact
 #       uses: actions/upload-artifact@v2
 #       with:
 #         name: DBCHM
 #         path: |
-#           D:\a\DBCHM\DBCHM\DBChm\bin\Release\**\*
-#           !D:\a\DBCHM\DBCHM\DBChm\bin\Release\**\*.pdb
+#           D:\a\DBCHM\DBCHM\DBChm\bin\x64\Release\**\*
+#           !D:\a\DBCHM\DBCHM\DBChm\bin\x64\Release\**\*.pdb
         
 #     - name: Create Release
 #       id: create_release
