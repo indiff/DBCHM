@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("DBCHM - tyj")]
 [assembly: AssemblyDescription("数据库CHM生成工具")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ensure Cloud")]
+[assembly: AssemblyCompany("indiff")]
 [assembly: AssemblyProduct("DBCHM")]
-[assembly: AssemblyCopyright("Copyright ©2018-2021 by tyj")]
+[assembly: AssemblyCopyright("Copyright ©2018-2022 by lztkdr modify by tyj")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

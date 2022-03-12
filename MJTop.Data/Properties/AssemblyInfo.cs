@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MJTop.Data")]
 [assembly: AssemblyDescription("https://gitee.com/qwop/DBCHM")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ensure Cloud")]
+[assembly: AssemblyCompany("indiff")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

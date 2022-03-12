@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.tlTip = new System.Windows.Forms.ToolTip(this.components);
             this.TxtSearchWords = new System.Windows.Forms.TextBox();
@@ -43,6 +43,7 @@
             this.tabLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
             this.mainPnl = new System.Windows.Forms.Panel();
             this.treePnl = new System.Windows.Forms.Panel();
+            this.clearBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.treeDB = new DBCHM.TreeViewEnhanced();
@@ -89,7 +90,6 @@
             this.ribbonPageAbout = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.clearBtn = new System.Windows.Forms.Button();
             this.tabLayoutPnl.SuspendLayout();
             this.mainPnl.SuspendLayout();
             this.treePnl.SuspendLayout();
@@ -194,6 +194,17 @@
             this.treePnl.Name = "treePnl";
             this.treePnl.Size = new System.Drawing.Size(324, 589);
             this.treePnl.TabIndex = 20;
+            // 
+            // clearBtn
+            // 
+            this.clearBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.clearBtn.Location = new System.Drawing.Point(252, 33);
+            this.clearBtn.Name = "clearBtn";
+            this.clearBtn.Size = new System.Drawing.Size(56, 22);
+            this.clearBtn.TabIndex = 22;
+            this.clearBtn.Text = "清空";
+            this.clearBtn.UseVisualStyleBackColor = true;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
             // 
             // label4
             // 
@@ -424,14 +435,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GV_ColComments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColXuHao,
@@ -452,8 +463,8 @@
             // 
             // ColXuHao
             // 
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColXuHao.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColXuHao.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColXuHao.FillWeight = 10F;
             this.ColXuHao.HeaderText = "序号";
             this.ColXuHao.MinimumWidth = 30;
@@ -463,8 +474,8 @@
             // 
             // ColName
             // 
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColName.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColName.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColName.FillWeight = 20F;
             this.ColName.HeaderText = "列名";
             this.ColName.MinimumWidth = 150;
@@ -474,8 +485,8 @@
             // 
             // ColDataType
             // 
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColDataType.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColDataType.DefaultCellStyle = dataGridViewCellStyle4;
             this.ColDataType.FillWeight = 23F;
             this.ColDataType.HeaderText = "数据类型";
             this.ColDataType.MinimumWidth = 110;
@@ -485,8 +496,8 @@
             // 
             // ColLength
             // 
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColLength.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColLength.DefaultCellStyle = dataGridViewCellStyle5;
             this.ColLength.FillWeight = 12F;
             this.ColLength.HeaderText = "长度";
             this.ColLength.MinimumWidth = 30;
@@ -497,8 +508,8 @@
             // ColComment
             // 
             this.ColComment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.ColComment.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColComment.DefaultCellStyle = dataGridViewCellStyle6;
             this.ColComment.FillWeight = 35F;
             this.ColComment.HeaderText = "列批注";
             this.ColComment.MinimumWidth = 320;
@@ -754,7 +765,7 @@
             this.toolStripButtonAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAbout.Name = "toolStripButtonAbout";
             this.toolStripButtonAbout.Size = new System.Drawing.Size(52, 66);
-            this.toolStripButtonAbout.Text = "About";
+            this.toolStripButtonAbout.Text = "关于";
             this.toolStripButtonAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
             // 
@@ -774,17 +785,6 @@
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(894, 70);
             this.miniToolStrip.TabIndex = 0;
-            // 
-            // clearBtn
-            // 
-            this.clearBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.clearBtn.Location = new System.Drawing.Point(252, 33);
-            this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(56, 22);
-            this.clearBtn.TabIndex = 22;
-            this.clearBtn.Text = "清空";
-            this.clearBtn.UseVisualStyleBackColor = true;
-            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
             // 
             // MainForm
             // 

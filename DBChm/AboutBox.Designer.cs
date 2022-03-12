@@ -129,7 +129,7 @@ namespace DBCHM
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.textBoxDescription.Cursor = System.Windows.Forms.Cursors.Help;
             this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxDescription.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -142,7 +142,13 @@ namespace DBCHM
             this.textBoxDescription.Size = new System.Drawing.Size(271, 119);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "有问题，我要反馈！";
+            this.textBoxDescription.Text = @"有问题，我要反馈！
+支持 Oracle 存储过程，按type分类， 名称获取类型
+支持表结构进行分组
+修复分组后不能显示批注的bug
+更新packages
+调整关于页面和皮肤
+";
             this.textBoxDescription.Click += new System.EventHandler(this.textBoxDescription_Click);
             // 
             // okButton
@@ -183,7 +189,6 @@ namespace DBCHM
         }
 
         #endregion
-
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label labelProductName;

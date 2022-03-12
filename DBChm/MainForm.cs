@@ -28,7 +28,7 @@ namespace DBCHM
             KryptonManager kryptonManager = new KryptonManager();
             this.InitializeComponent();
             this.InitializeRibbonTabContainer();
-            kryptonManager.GlobalPaletteMode = PaletteModeManager.Office2010Blue;
+            kryptonManager.GlobalPaletteMode = PaletteModeManager.Office2007Blue;
         }
 
 
@@ -993,7 +993,7 @@ namespace DBCHM
                 }
             }
         }
-
+        // 节点被勾选中后  by tyj 
         private void treeDB_AfterCheck(object sender, TreeViewEventArgs e)
         {
             if (e.Action == TreeViewAction.ByMouse || e.Action == TreeViewAction.ByKeyboard)
@@ -1038,6 +1038,7 @@ namespace DBCHM
             codePnl.Visible = false;
         }
 
+        // 节点被选中后， 展示表结构信息
         private void treeDB_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (DBUtils.Instance.DBType != MJTop.Data.DBType.SQLite)
@@ -1048,8 +1049,14 @@ namespace DBCHM
             // 都是子项
             if (e.Node.Parent != null)
             {
-                if ( ( e.Node.Parent.Name == "table" && !e.Node.Name.Equals( "module") ) ||
-                    (e.Node.Parent.Name == "module" && e.Node.Nodes == null ) )
+                // if ( ( e.Node.Parent.Name == "table" && !e.Node.Name.Equals( "module") ) ||
+                //     (e.Node.Parent.Name == "module" && e.Node.Nodes == null ) )
+
+                // 判断是否为表节点
+                if( 
+                    (e.Node.Parent.Name == "table" && e.Node.Nodes.Count == 0) ||
+                     (e.Node.Parent.Name == "module" && e.Node.Nodes.Count == 0)
+                  )
                 {
                     PiZhuAreaShow();
 
