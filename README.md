@@ -4,7 +4,7 @@
 - [x] 修复分组后不能显示批注的bug
 - [ ] 更新packages
 - [ ] 调整关于页面和皮肤
-## 发布版本
+## 👍发布版本
 ```
 git tag -a v1.8.0.4 -m "Oracle存储过程分类,提取功能注释"
 git push origin v1.8.0.4
