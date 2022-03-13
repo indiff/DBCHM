@@ -1,3 +1,5 @@
+![GitHub all releases](https://img.shields.io/github/downloads/indiff/DBCHM/total)
+
 ## 🧨操作方法
 ![GIF 2022-3-12 23-20-18](https://user-images.githubusercontent.com/501276/158024086-a74b1709-109e-4e7d-abf3-c82e47b8681c.gif)
 ![image](https://user-images.githubusercontent.com/501276/158024130-be80481e-6524-4be2-afdd-533e96d1a911.png)
