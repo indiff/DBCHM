@@ -1,4 +1,4 @@
-![GitHub all releases](https://img.shields.io/github/downloads/indiff/DBCHM/total)
+[![GitHub all releases](https://img.shields.io/github/downloads/indiff/DBCHM/total)](https://github.com/indiff/DBCHM/releases/tag/v1.8.0.4)
 
 ## 🧨操作方法
 ![GIF 2022-3-12 23-20-18](https://user-images.githubusercontent.com/501276/158024086-a74b1709-109e-4e7d-abf3-c82e47b8681c.gif)
