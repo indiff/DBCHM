@@ -33,3 +33,12 @@ git tag -d v1.8.0.4
 - [trycache](https://gitee.com/trycache) 主要开发者
 - [空无一物](https://gitee.com/dotnetchina/) 先驱者
 - [indiff](https://github.com/indiff/) 扩展支持分组功能
+
+
+## 配置方法
+- 表名匹配
+![1658281570966](https://user-images.githubusercontent.com/501276/179877968-71d97d1b-35e6-4053-8820-600792a711b7.png)
+- 表前缀匹配
+![image](https://user-images.githubusercontent.com/501276/179878028-701bf656-69ca-44c7-96f7-6ab6360acd5f.png)
+
+
