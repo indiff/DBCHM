@@ -41,4 +41,6 @@ git tag -d v1.8.0.4
 - 表前缀匹配
 ![image](https://user-images.githubusercontent.com/501276/179878028-701bf656-69ca-44c7-96f7-6ab6360acd5f.png)
 
+## 欢迎关注
+- [qttabbar](https://github.com/indiff/qttabbar)
 
