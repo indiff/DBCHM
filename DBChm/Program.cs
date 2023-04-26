@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace DBCHM
 {
-    static class Program
+    internal static class Program
     {
         public static bool IsAdministrator()
         {
@@ -18,14 +18,12 @@ namespace DBCHM
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
             Application.ThreadException += Application_ThreadException;
-
 
             //判断当前登录用户是否为管理员
             if (IsAdministrator())
@@ -57,7 +55,7 @@ namespace DBCHM
 
         private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
-            LogUtils.LogError("Application_ThreadException", Developer. MJ, e.Exception);
+            LogUtils.LogError("Application_ThreadException", Developer.MJ, e.Exception);
         }
     }
 }

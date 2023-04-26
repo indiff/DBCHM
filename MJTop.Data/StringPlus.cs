@@ -11,6 +11,7 @@ namespace MJTop.Data
             this.str.Append(Text);
             return this.str.ToString();
         }
+
         /// <summary>
         /// 添加空行
         /// </summary>
@@ -20,6 +21,7 @@ namespace MJTop.Data
             this.str.Append("\r\n");
             return this.str.ToString();
         }
+
         /// <summary>
         /// 添加一行字符串
         /// </summary>
@@ -30,6 +32,7 @@ namespace MJTop.Data
             this.str.Append(Text + "\r\n");
             return this.str.ToString();
         }
+
         /// <summary>
         /// 添加若干个空格符后的文本内容
         /// </summary>
@@ -42,6 +45,7 @@ namespace MJTop.Data
             this.str.Append(Text);
             return this.str.ToString();
         }
+
         /// <summary>
         /// 添加若干个空格符后的文本，并换行
         /// </summary>
@@ -55,6 +59,7 @@ namespace MJTop.Data
             this.str.Append("\r\n");
             return this.str.ToString();
         }
+
         /// <summary>
         /// 删除末尾指定字符串
         /// </summary>
@@ -69,6 +74,7 @@ namespace MJTop.Data
                 this.str.Append(str.Substring(0, length));
             }
         }
+
         /// <summary>
         /// 删除最后一个逗号
         /// </summary>
@@ -87,6 +93,7 @@ namespace MJTop.Data
         {
             this.str.Remove(Start, Num);
         }
+
         /// <summary>
         /// 空格串
         /// </summary>
@@ -116,4 +123,3 @@ namespace MJTop.Data
         }
     }
 }
-

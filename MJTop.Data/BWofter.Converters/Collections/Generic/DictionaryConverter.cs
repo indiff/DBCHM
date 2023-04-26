@@ -27,8 +27,9 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace BWofter.Converters.Collections.Generic
 {
     using BWofter.Converters.Data;
@@ -37,6 +38,7 @@ namespace BWofter.Converters.Collections.Generic
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+
     /// <summary><para>A static class used to convert dictionaries into entities.</para></summary>
     /// <typeparam name="TEntity"><para>The entity type to convert to.</para></typeparam>
     public static class DictionaryConverter<TEntity> where TEntity : class, new()
@@ -51,6 +53,7 @@ namespace BWofter.Converters.Collections.Generic
             if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
             return ToEntities(new[] { dictionary }).FirstOrDefault();
         }
+
         /// <summary><para>Iterates over the <see cref="IDictionary{TKey, TValue}"/> of <see cref="string"/> keys and <see cref="object"/> values in the
         /// <paramref name="dictionary"/>, mapping their fields to the entity type.</para></summary>
         /// <param name="dictionary"><para>The <see cref="IDictionary{TKey, TValue}"/> instance of <see cref="string"/> keys and <see cref="object"/> values
@@ -63,6 +66,7 @@ namespace BWofter.Converters.Collections.Generic
             if (columnToMemberMap == null) throw new ArgumentNullException(nameof(columnToMemberMap));
             return ToEntities(new[] { dictionary }, columnToMemberMap).FirstOrDefault();
         }
+
         /// <summary><para>Iterates over the <see cref="IDictionary{TKey, TValue}"/> of <see cref="string"/> keys and <see cref="object"/> values in the
         /// <paramref name="dictionaries"/>, mapping their fields to the entity type.</para></summary>
         /// <param name="dictionaries"><para>The <see cref="IDictionary{TKey, TValue}"/> instances of <see cref="string"/> keys and <see cref="object"/> values
@@ -77,6 +81,7 @@ namespace BWofter.Converters.Collections.Generic
             DataTable dataTable = first.AsDataTableDefinition();
             return DataTableConverter<TEntity>.ToEntities(dictionaries.Select(d => DictionaryToDataRow(d, dataTable)));
         }
+
         /// <summary><para>Iterates over the <see cref="IDictionary{TKey, TValue}"/> of <see cref="string"/> keys and <see cref="object"/> values in the
         /// <paramref name="dictionaries"/>, mapping their fields to the entity type.</para></summary>
         /// <param name="dictionaries"><para>The <see cref="IDictionary{TKey, TValue}"/> instances of <see cref="string"/> keys and <see cref="object"/> values
@@ -99,6 +104,7 @@ namespace BWofter.Converters.Collections.Generic
             }
             return DataTableConverter<TEntity>.ToEntities(dictionaries.Select(d => DictionaryToDataRow(d, dataTable)), translatedColumnToMemberMap);
         }
+
         //Generates a new data row for each dictionary in the the ienumerable.
         private static DataRow DictionaryToDataRow(IDictionary<string, object> rowData, DataTable dataTable)
         {

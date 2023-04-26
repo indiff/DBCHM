@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MJTop.Data
 {
@@ -16,14 +14,17 @@ namespace MJTop.Data
         private IDBInfo Info = null;
         private NameValueCollection TableComments = null;
         private NameValueCollection ExcludeTableCols = null;
+
         /// <summary>
         /// 处理 数据库数据类型 对应的 C#代码的数据类型 （不同数据库 对 默认值的写法不同）
         /// </summary>
         private Dictionary<string, string> Dict_CSharpType = new Dictionary<string, string>();
+
         /// <summary>
         /// 处理 默认值 对应的 C#代码 值生成方式（不同数据库 对 默认值的写法不同）
         /// </summary>
         private Dictionary<string, string> Dict_Data_DefValue = new Dictionary<string, string>();
+
         internal Tool(DB db, IDBInfo info)
         {
             this.Db = db;
@@ -37,27 +38,33 @@ namespace MJTop.Data
                     this.Dict_CSharpType = Global.Dict_SqlServer_CSharpType;
                     this.Dict_Data_DefValue = Global.Dict_SqlServer_DefValue;
                     break;
+
                 case DBType.MySql:
                     this.Dict_CSharpType = Global.Dict_MySql_CSharpType;
                     this.Dict_Data_DefValue = Global.Dict_MySql_DefValue;
                     break;
+
                 case DBType.Oracle:
                 case DBType.OracleDDTek:
                     this.Dict_CSharpType = Global.Dict_Oracle_CSharpType;
                     this.Dict_Data_DefValue = Global.Dict_Oracle_DefValue;
                     break;
+
                 case DBType.PostgreSql:
                     this.Dict_CSharpType = Global.Dict_PostgreSql_CSharpType;
                     this.Dict_Data_DefValue = Global.Dict_PostgreSql_DefValue;
                     break;
+
                 case DBType.SQLite:
                     this.Dict_CSharpType = Global.Dict_Sqlite_CSharpType;
                     this.Dict_Data_DefValue = Global.Dict_Sqlite_DefValue;
                     break;
+
                 case DBType.DB2:
                     this.Dict_CSharpType = Global.Dict_DB2_CSharpType;
                     this.Dict_Data_DefValue = Global.Dict_DB2_DefValue;
                     break;
+
                 default:
                     throw new Exception("未指定Charp类型字典！");
             }
@@ -128,7 +135,6 @@ namespace MJTop.Data
             }
         }
 
-
         /// <summary>
         /// 单表生成实体类
         /// </summary>
@@ -149,14 +155,14 @@ namespace MJTop.Data
             {
                 plus.AppendLine("namespace " + strNamespace);
                 plus.AppendLine("{");
-            }           
-            
+            }
+
             if (!string.IsNullOrWhiteSpace(TableComments[tableName]))
             {
                 plus.AppendSpaceLine(1, "/// <summary>");
 
                 string comment = TableComments[tableName];
-                string[] strs = comment.Split(new string[] { "\r\n" }, StringSplitOptions.None);               
+                string[] strs = comment.Split(new string[] { "\r\n" }, StringSplitOptions.None);
                 foreach (var str in strs)
                 {
                     plus.AppendSpaceLine(1, "/// " + str.Trim());
@@ -181,7 +187,7 @@ namespace MJTop.Data
 
             foreach (var colInfo in columns)
             {
-                if (ExcludeTableCols[tableName] != null 
+                if (ExcludeTableCols[tableName] != null
                     && ExcludeTableCols.ContainsValue(colInfo.ColumnName))
                 {
                     continue;
@@ -199,7 +205,6 @@ namespace MJTop.Data
             File.WriteAllText(filePath, plus.Value, Encoding.UTF8);
         }
 
-
         /// <summary>
         /// 处理单个 属性 列
         /// </summary>
@@ -211,7 +216,7 @@ namespace MJTop.Data
             if (!string.IsNullOrWhiteSpace(colInfo.DeText))
             {
                 plus.AppendSpaceLine(SpaceNum, "/// <summary>");
-                
+
                 string[] strs = colInfo.DeText.Split(new string[] { "\r\n" }, StringSplitOptions.None);
                 foreach (var str in strs)
                 {
@@ -225,7 +230,7 @@ namespace MJTop.Data
             strType = strType ?? "object";
 
             //可以为空,并且默认值也为空
-            if (strType != "string" && strType != "object" && colInfo.CanNull 
+            if (strType != "string" && strType != "object" && colInfo.CanNull
                 && string.IsNullOrWhiteSpace(colInfo.DefaultVal))
             {
                 strType += "?";
@@ -259,7 +264,7 @@ namespace MJTop.Data
                 {
                     newValue = "\"" + newValue + "\"";
                 }
-                else if(strType == "decimal")
+                else if (strType == "decimal")
                 {
                     newValue = newValue + "m";
                 }

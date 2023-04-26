@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MJTop.Data
 {
@@ -15,7 +12,7 @@ namespace MJTop.Data
         /// <summary>
         /// Type类型对应的DbType类型 字典
         /// </summary>
-        public readonly static Dictionary<Type, DbType> TypeMap = new Dictionary<Type, DbType>
+        public static readonly Dictionary<Type, DbType> TypeMap = new Dictionary<Type, DbType>
         {
             [typeof(byte)] = DbType.Byte,
             [typeof(sbyte)] = DbType.SByte,
@@ -59,7 +56,7 @@ namespace MJTop.Data
         /// <summary>
         /// 不同数据库 参数化 时所使用的字符
         /// </summary>
-        public readonly static Dictionary<DBType, string> ParameterCharMap = new Dictionary<DBType, string>
+        public static readonly Dictionary<DBType, string> ParameterCharMap = new Dictionary<DBType, string>
         {
           { DBType.SqlServer,"@" },
           { DBType.MySql,"@" },
@@ -69,12 +66,12 @@ namespace MJTop.Data
           { DBType.DB2,":" },
         };
 
-
         #region 各种数据库
+
         /// <summary>
         /// SqlServer的 数据类型对应DbType字典
         /// </summary>
-        public readonly static Dictionary<string, DbType> Dict_SqlServer_DbType = new Dictionary<string, DbType>()
+        public static readonly Dictionary<string, DbType> Dict_SqlServer_DbType = new Dictionary<string, DbType>()
         {
             { "bigint",DbType.Int64 },
             { "binary",DbType.Binary },
@@ -115,7 +112,7 @@ namespace MJTop.Data
         /// <summary>
         /// SqlServer的 数据类型对应CSharpType 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_SqlServer_CSharpType = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> Dict_SqlServer_CSharpType = new Dictionary<string, string>()
         {
             { "bigint","long" },
             { "binary","byte[]" },
@@ -156,17 +153,16 @@ namespace MJTop.Data
         /// <summary>
         /// SqlServer的 数据类型对应 默认值 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_SqlServer_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, string> Dict_SqlServer_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             { "getdate","DateTime.Now" },
             { "newid","Guid.NewGuid()" }
         };
 
-
         /// <summary>
         /// Oracle的 数据类型对应DbType字典
         /// </summary>
-        public readonly static Dictionary<string, DbType> Dict_Oracle_DbType = new Dictionary<string, DbType>()
+        public static readonly Dictionary<string, DbType> Dict_Oracle_DbType = new Dictionary<string, DbType>()
         {
             { "BOOLEAN",DbType.Boolean },
 
@@ -200,7 +196,7 @@ namespace MJTop.Data
         /// <summary>
         /// Oracle的 数据类型对应CSharpType 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_Oracle_CSharpType = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> Dict_Oracle_CSharpType = new Dictionary<string, string>()
         {
             { "BOOLEAN","bool"},
             { "CHAR","string" },
@@ -233,15 +229,14 @@ namespace MJTop.Data
         /// <summary>
         /// Oracle的 数据类型对应 默认值 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_Oracle_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, string> Dict_Oracle_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-           
         };
 
         /// <summary>
         /// MySql的 数据类型对应DbType字典
         /// </summary>
-        public readonly static Dictionary<string, DbType> Dict_MySql_DbType = new Dictionary<string, DbType>()
+        public static readonly Dictionary<string, DbType> Dict_MySql_DbType = new Dictionary<string, DbType>()
         {
             { "bit",DbType.Boolean },
             { "bool",DbType.Boolean },
@@ -284,13 +279,12 @@ namespace MJTop.Data
             { "text",DbType.String },
             { "mediumtext",DbType.String },
             { "longtext",DbType.String }
-
         };
 
         /// <summary>
         /// MySql的 数据类型对应CSharpType 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_MySql_CSharpType = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> Dict_MySql_CSharpType = new Dictionary<string, string>()
         {
             { "bit","bool" },
             { "bool","bool"  },
@@ -333,23 +327,21 @@ namespace MJTop.Data
             { "text","string"  },
             { "mediumtext","string"  },
             { "longtext","string"  }
-
         };
 
         /// <summary>
         /// MySql的 数据类型对应 默认值 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_MySql_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, string> Dict_MySql_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             {"CURRENT_TIMESTAMP","DateTime.Now" },
             {"CURRENT_TIMESTAMP(6)","DateTime.Now" }
         };
 
-
         /// <summary>
         /// PostgreSQL的 数据类型对应DbType字典
         /// </summary>
-        public readonly static Dictionary<string, DbType> Dict_PostgreSql_DbType = new Dictionary<string, DbType>()
+        public static readonly Dictionary<string, DbType> Dict_PostgreSql_DbType = new Dictionary<string, DbType>()
         {
             { "smallint",DbType.Int16 },
             { "integer",DbType.Int32 },
@@ -410,13 +402,12 @@ namespace MJTop.Data
             { "tsrange",DbType.String},
             { "tstzrange",DbType.String},
             { "daterange",DbType.String}
-
         };
 
         /// <summary>
         /// PostgreSQL的 数据类型对应CSharpype 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_PostgreSql_CSharpType = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> Dict_PostgreSql_CSharpType = new Dictionary<string, string>()
         {
             { "smallint","int" },
             { "integer","int"},
@@ -477,21 +468,19 @@ namespace MJTop.Data
             { "tsrange","string"},
             { "tstzrange","string"},
             { "daterange","string"}
-
         };
 
         /// <summary>
         /// PostgreSql的 数据类型对应 默认值 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_PostgreSql_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, string> Dict_PostgreSql_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-
         };
 
         /// <summary>
         /// Sqlite的 数据类型对应DbType字典
         /// </summary>
-        public readonly static Dictionary<string, DbType> Dict_Sqlite_DbType = new Dictionary<string, DbType>()
+        public static readonly Dictionary<string, DbType> Dict_Sqlite_DbType = new Dictionary<string, DbType>()
         {
             { "int",DbType.Int32},
             { "integer",DbType.Int32},
@@ -512,7 +501,6 @@ namespace MJTop.Data
             { "text",DbType.String},
             { "clob",DbType.String},
 
-
             { "blob",DbType.Binary},
             { "no datatype specified",DbType.Object},
 
@@ -531,7 +519,7 @@ namespace MJTop.Data
         /// <summary>
         /// Sqlite的 数据类型对应CSharpType 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_Sqlite_CSharpType = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> Dict_Sqlite_CSharpType = new Dictionary<string, string>()
         {
             { "int","int"},
             { "integer","int"},
@@ -552,7 +540,6 @@ namespace MJTop.Data
             { "text","string"},
             { "clob","string"},
 
-
             { "blob","byte[]"},
             { "no datatype specified","object"},
 
@@ -568,19 +555,17 @@ namespace MJTop.Data
             { "datetime","DateTime"}
         };
 
-
         /// <summary>
         /// Sqlite的 数据类型对应 默认值 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_Sqlite_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, string> Dict_Sqlite_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-
         };
 
         /// <summary>
         /// DB2的 数据类型对应DbType字典
         /// </summary>
-        public readonly static Dictionary<string, DbType> Dict_DB2_DbType = new Dictionary<string, DbType>()
+        public static readonly Dictionary<string, DbType> Dict_DB2_DbType = new Dictionary<string, DbType>()
         {
             { "CHAR",DbType.AnsiStringFixedLength },
             { "CHARACTER",DbType.AnsiStringFixedLength },
@@ -590,10 +575,10 @@ namespace MJTop.Data
             { "GRAPHIC",DbType.String },
             { "VARGRAPHIC",DbType.String },
             { "LONG GRAPHIC",DbType.String },
-            
+
             { "DATE",DbType.DateTime },
             { "TIMESTAMP",DbType.DateTime },
-            
+
             { "SMALLINT",DbType.Int32 },
             { "INTEGER",DbType.Int32 },
             { "BIGINT",DbType.Int64 },
@@ -601,10 +586,10 @@ namespace MJTop.Data
             { "BLOB",DbType.Binary },//保存2GB长度以内的二进制数据。
             { "CLOB",DbType.AnsiString },//保存2GB长度以内的单字节文本数据
             { "DBCLOB",DbType.String },//保存1GB长度以内的双字节文本数据。
-            
+
             { "NUMBER",DbType.Decimal },
             { "DOUBLE",DbType.Decimal },
-            { "DECIMAL",DbType.Decimal },            
+            { "DECIMAL",DbType.Decimal },
             { "FLOAT",DbType.Decimal },
             { "REAL",DbType.Decimal }
         };
@@ -612,7 +597,7 @@ namespace MJTop.Data
         /// <summary>
         /// DB2的 数据类型对应CSharpType 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_DB2_CSharpType = new Dictionary<string, string>()
+        public static readonly Dictionary<string, string> Dict_DB2_CSharpType = new Dictionary<string, string>()
         {
             { "CHAR","string" },
             { "CHARACTER","string"  },
@@ -633,7 +618,7 @@ namespace MJTop.Data
             { "BLOB","byte[]" },//保存2GB长度以内的二进制数据。
             { "CLOB","string" },//保存2GB长度以内的单字节文本数据
             { "DBCLOB","string" },//保存1GB长度以内的双字节文本数据。
-            
+
             { "NUMBER","decimal" },
             { "DOUBLE","decimal" },
             { "DECIMAL","decimal" },
@@ -644,17 +629,16 @@ namespace MJTop.Data
         /// <summary>
         /// DB2的 数据类型对应 默认值 字典
         /// </summary>
-        public readonly static Dictionary<string, string> Dict_DB2_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, string> Dict_DB2_DefValue = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-
         };
 
-        #endregion
+        #endregion 各种数据库
 
         /// <summary>
         /// DbType对应的转换方法
         /// </summary>
-        public readonly static Dictionary<DbType, Func<object, object>> Dict_Convert_Type = new Dictionary<DbType, Func<object, object>>()
+        public static readonly Dictionary<DbType, Func<object, object>> Dict_Convert_Type = new Dictionary<DbType, Func<object, object>>()
         {
                 { DbType.AnsiString,
                     (obj) => obj.ToString()

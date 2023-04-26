@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DocTools
 {
     public class JS
     {
         private static Jint.Engine jt = null;
+
         static JS()
         {
             jt = new Jint.Engine(cfg =>
@@ -17,8 +15,8 @@ namespace DocTools
                 //cfg.LimitRecursion();
                 // cfg.Strict();
             });
-            jt.SetValue("log", new Action<object>(Console.WriteLine)); 
-            
+            jt.SetValue("log", new Action<object>(Console.WriteLine));
+
             var text = string.Empty;
             var names = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
             foreach (var name in names)
@@ -80,7 +78,7 @@ namespace DocTools
             }
 
             sql = sql.Replace("`", "");
-            var code = $@"var fmtSql = sqlFormatter.format(`{ sql }`, {{language: ""{ lang }"",uppercase: true }});";
+            var code = $@"var fmtSql = sqlFormatter.format(`{sql}`, {{language: ""{lang}"",uppercase: true }});";
             var res = sql;
             try
             {
@@ -117,7 +115,7 @@ namespace DocTools
             //}
 
             sql = sql.Replace("`", "");
-            var code = $@"var hlhtml = hljs.highlight(""{ lang }"",`{ sql }`,true).value;";
+            var code = $@"var hlhtml = hljs.highlight(""{lang}"",`{sql}`,true).value;";
             var res = sql;
             try
             {
@@ -131,7 +129,6 @@ namespace DocTools
             return res;
         }
 
-
         public static string RunStyleSql(string sql, string dbtype)
         {
             var fmtSql = RunFmtSql(sql, dbtype);
@@ -142,4 +139,3 @@ namespace DocTools
         }
     }
 }
-

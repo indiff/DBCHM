@@ -129,22 +129,22 @@
             // 
             // TxtSearchWords
             // 
-            this.TxtSearchWords.Location = new System.Drawing.Point(58, 9);
-            this.TxtSearchWords.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtSearchWords.Location = new System.Drawing.Point(77, 11);
+            this.TxtSearchWords.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtSearchWords.Name = "TxtSearchWords";
-            this.TxtSearchWords.Size = new System.Drawing.Size(221, 21);
+            this.TxtSearchWords.Size = new System.Drawing.Size(293, 25);
             this.TxtSearchWords.TabIndex = 13;
             this.tlTip.SetToolTip(this.TxtSearchWords, "多个关键字搜索用英文逗号(,)隔开！");
             this.TxtSearchWords.TextChanged += new System.EventHandler(this.TxtSearchWords_TextChanged);
             // 
             // filterTextBox
             // 
-            this.filterTextBox.Location = new System.Drawing.Point(58, 34);
-            this.filterTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.filterTextBox.Location = new System.Drawing.Point(77, 42);
+            this.filterTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filterTextBox.Name = "filterTextBox";
-            this.filterTextBox.Size = new System.Drawing.Size(186, 21);
+            this.filterTextBox.Size = new System.Drawing.Size(247, 25);
             this.filterTextBox.TabIndex = 20;
-            this.filterTextBox.Text = "copy,bak";
+            this.filterTextBox.Text = "copy,bak,$,2021";
             this.tlTip.SetToolTip(this.filterTextBox, "多个关键字搜索用英文逗号(,)隔开！");
             // 
             // tabLayoutPnl
@@ -156,11 +156,12 @@
             this.tabLayoutPnl.Controls.Add(this.RibbonTabContainer, 0, 0);
             this.tabLayoutPnl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabLayoutPnl.Location = new System.Drawing.Point(0, 0);
+            this.tabLayoutPnl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabLayoutPnl.Name = "tabLayoutPnl";
             this.tabLayoutPnl.RowCount = 2;
             this.tabLayoutPnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tabLayoutPnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tabLayoutPnl.Size = new System.Drawing.Size(1076, 700);
+            this.tabLayoutPnl.Size = new System.Drawing.Size(1435, 875);
             this.tabLayoutPnl.TabIndex = 5;
             // 
             // mainPnl
@@ -170,9 +171,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPnl.Controls.Add(this.treePnl);
             this.mainPnl.Controls.Add(this.gpxHandle);
-            this.mainPnl.Location = new System.Drawing.Point(3, 108);
+            this.mainPnl.Location = new System.Drawing.Point(4, 135);
+            this.mainPnl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mainPnl.Name = "mainPnl";
-            this.mainPnl.Size = new System.Drawing.Size(1070, 589);
+            this.mainPnl.Size = new System.Drawing.Size(1427, 736);
             this.mainPnl.TabIndex = 14;
             // 
             // treePnl
@@ -190,17 +192,19 @@
             this.treePnl.Controls.Add(this.TxtSearchWords);
             this.treePnl.Controls.Add(this.CkReverse);
             this.treePnl.Controls.Add(this.lblSelectRes);
-            this.treePnl.Location = new System.Drawing.Point(3, 0);
+            this.treePnl.Location = new System.Drawing.Point(4, 0);
+            this.treePnl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.treePnl.Name = "treePnl";
-            this.treePnl.Size = new System.Drawing.Size(324, 589);
+            this.treePnl.Size = new System.Drawing.Size(432, 736);
             this.treePnl.TabIndex = 20;
             // 
             // clearBtn
             // 
             this.clearBtn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.clearBtn.Location = new System.Drawing.Point(252, 33);
+            this.clearBtn.Location = new System.Drawing.Point(336, 41);
+            this.clearBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(56, 22);
+            this.clearBtn.Size = new System.Drawing.Size(75, 28);
             this.clearBtn.TabIndex = 22;
             this.clearBtn.Text = "清空";
             this.clearBtn.UseVisualStyleBackColor = true;
@@ -209,9 +213,10 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 39);
+            this.label4.Location = new System.Drawing.Point(19, 49);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 12);
+            this.label4.Size = new System.Drawing.Size(37, 15);
             this.label4.TabIndex = 21;
             this.label4.Text = "过滤";
             // 
@@ -219,9 +224,10 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 571);
+            this.label2.Location = new System.Drawing.Point(7, 714);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 12);
+            this.label2.Size = new System.Drawing.Size(0, 15);
             this.label2.TabIndex = 19;
             // 
             // treeDB
@@ -233,10 +239,11 @@
             this.treeDB.ImageIndex = 0;
             this.treeDB.ImageList = this.imgList;
             this.treeDB.Indent = 16;
-            this.treeDB.Location = new System.Drawing.Point(0, 78);
+            this.treeDB.Location = new System.Drawing.Point(0, 98);
+            this.treeDB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.treeDB.Name = "treeDB";
             this.treeDB.SelectedImageIndex = 0;
-            this.treeDB.Size = new System.Drawing.Size(321, 490);
+            this.treeDB.Size = new System.Drawing.Size(427, 612);
             this.treeDB.TabIndex = 18;
             this.treeDB.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterCheck);
             this.treeDB.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterSelect);
@@ -245,26 +252,29 @@
             // 
             this.lblTongJi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTongJi.AutoSize = true;
-            this.lblTongJi.Location = new System.Drawing.Point(5, 571);
+            this.lblTongJi.Location = new System.Drawing.Point(7, 714);
+            this.lblTongJi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTongJi.Name = "lblTongJi";
-            this.lblTongJi.Size = new System.Drawing.Size(0, 12);
+            this.lblTongJi.Size = new System.Drawing.Size(0, 15);
             this.lblTongJi.TabIndex = 19;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 14);
+            this.label1.Location = new System.Drawing.Point(19, 18);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.Size = new System.Drawing.Size(37, 15);
             this.label1.TabIndex = 16;
             this.label1.Text = "搜索";
             // 
             // CkAll
             // 
             this.CkAll.AutoSize = true;
-            this.CkAll.Location = new System.Drawing.Point(16, 55);
+            this.CkAll.Location = new System.Drawing.Point(21, 69);
+            this.CkAll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CkAll.Name = "CkAll";
-            this.CkAll.Size = new System.Drawing.Size(48, 16);
+            this.CkAll.Size = new System.Drawing.Size(59, 19);
             this.CkAll.TabIndex = 15;
             this.CkAll.Text = "全选";
             this.CkAll.UseVisualStyleBackColor = true;
@@ -273,9 +283,10 @@
             // CkReverse
             // 
             this.CkReverse.AutoSize = true;
-            this.CkReverse.Location = new System.Drawing.Point(70, 56);
+            this.CkReverse.Location = new System.Drawing.Point(93, 70);
+            this.CkReverse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CkReverse.Name = "CkReverse";
-            this.CkReverse.Size = new System.Drawing.Size(48, 16);
+            this.CkReverse.Size = new System.Drawing.Size(59, 19);
             this.CkReverse.TabIndex = 17;
             this.CkReverse.Text = "反选";
             this.CkReverse.UseVisualStyleBackColor = true;
@@ -284,9 +295,10 @@
             // lblSelectRes
             // 
             this.lblSelectRes.AutoSize = true;
-            this.lblSelectRes.Location = new System.Drawing.Point(191, 57);
+            this.lblSelectRes.Location = new System.Drawing.Point(255, 71);
+            this.lblSelectRes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSelectRes.Name = "lblSelectRes";
-            this.lblSelectRes.Size = new System.Drawing.Size(83, 12);
+            this.lblSelectRes.Size = new System.Drawing.Size(105, 15);
             this.lblSelectRes.TabIndex = 16;
             this.lblSelectRes.Text = "已选择0个项目";
             // 
@@ -297,9 +309,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gpxHandle.Controls.Add(this.codePnl);
             this.gpxHandle.Controls.Add(this.pizhuPnl);
-            this.gpxHandle.Location = new System.Drawing.Point(330, 3);
+            this.gpxHandle.Location = new System.Drawing.Point(440, 4);
+            this.gpxHandle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gpxHandle.Name = "gpxHandle";
-            this.gpxHandle.Size = new System.Drawing.Size(737, 583);
+            this.gpxHandle.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpxHandle.Size = new System.Drawing.Size(983, 729);
             this.gpxHandle.TabIndex = 21;
             this.gpxHandle.TabStop = false;
             this.gpxHandle.Text = "操作";
@@ -310,9 +324,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.codePnl.Controls.Add(this.txtCode);
-            this.codePnl.Location = new System.Drawing.Point(8000, 20);
+            this.codePnl.Location = new System.Drawing.Point(10667, 25);
+            this.codePnl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.codePnl.Name = "codePnl";
-            this.codePnl.Size = new System.Drawing.Size(725, 557);
+            this.codePnl.Size = new System.Drawing.Size(967, 696);
             this.codePnl.TabIndex = 1;
             // 
             // txtCode
@@ -321,10 +336,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCode.Highlighting = "SQL";
-            this.txtCode.Location = new System.Drawing.Point(13, 13);
+            this.txtCode.Location = new System.Drawing.Point(17, 16);
+            this.txtCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtCode.Name = "txtCode";
             this.txtCode.ShowSpaces = true;
-            this.txtCode.Size = new System.Drawing.Size(700, 530);
+            this.txtCode.Size = new System.Drawing.Size(933, 662);
             this.txtCode.TabIndex = 0;
             this.txtCode.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
             // 
@@ -335,9 +351,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pizhuPnl.Controls.Add(this.gpCurrTable);
             this.pizhuPnl.Controls.Add(this.GpColumns);
-            this.pizhuPnl.Location = new System.Drawing.Point(6, 20);
+            this.pizhuPnl.Location = new System.Drawing.Point(8, 25);
+            this.pizhuPnl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pizhuPnl.Name = "pizhuPnl";
-            this.pizhuPnl.Size = new System.Drawing.Size(725, 557);
+            this.pizhuPnl.Size = new System.Drawing.Size(967, 696);
             this.pizhuPnl.TabIndex = 0;
             // 
             // gpCurrTable
@@ -348,11 +365,11 @@
             this.gpCurrTable.Controls.Add(this.TxtCurrTabComment);
             this.gpCurrTable.Controls.Add(this.LabCurrTabName);
             this.gpCurrTable.Controls.Add(this.label3);
-            this.gpCurrTable.Location = new System.Drawing.Point(8, 13);
-            this.gpCurrTable.Margin = new System.Windows.Forms.Padding(2);
+            this.gpCurrTable.Location = new System.Drawing.Point(11, 16);
+            this.gpCurrTable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gpCurrTable.Name = "gpCurrTable";
-            this.gpCurrTable.Padding = new System.Windows.Forms.Padding(2);
-            this.gpCurrTable.Size = new System.Drawing.Size(705, 73);
+            this.gpCurrTable.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gpCurrTable.Size = new System.Drawing.Size(940, 91);
             this.gpCurrTable.TabIndex = 11;
             this.gpCurrTable.TabStop = false;
             this.gpCurrTable.Text = "表批注";
@@ -361,30 +378,28 @@
             // 
             this.labCurrTabComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.labCurrTabComment.AutoSize = true;
-            this.labCurrTabComment.Location = new System.Drawing.Point(199, 42);
-            this.labCurrTabComment.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labCurrTabComment.Location = new System.Drawing.Point(265, 52);
             this.labCurrTabComment.Name = "labCurrTabComment";
-            this.labCurrTabComment.Size = new System.Drawing.Size(53, 12);
+            this.labCurrTabComment.Size = new System.Drawing.Size(67, 15);
             this.labCurrTabComment.TabIndex = 7;
             this.labCurrTabComment.Text = "表批注：";
             // 
             // TxtCurrTabComment
             // 
             this.TxtCurrTabComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.TxtCurrTabComment.Location = new System.Drawing.Point(254, 39);
-            this.TxtCurrTabComment.Margin = new System.Windows.Forms.Padding(2);
+            this.TxtCurrTabComment.Location = new System.Drawing.Point(339, 49);
+            this.TxtCurrTabComment.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TxtCurrTabComment.Name = "TxtCurrTabComment";
-            this.TxtCurrTabComment.Size = new System.Drawing.Size(300, 21);
+            this.TxtCurrTabComment.Size = new System.Drawing.Size(399, 25);
             this.TxtCurrTabComment.TabIndex = 3;
             // 
             // LabCurrTabName
             // 
             this.LabCurrTabName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.LabCurrTabName.AutoSize = true;
-            this.LabCurrTabName.Location = new System.Drawing.Point(259, 17);
-            this.LabCurrTabName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LabCurrTabName.Location = new System.Drawing.Point(345, 21);
             this.LabCurrTabName.Name = "LabCurrTabName";
-            this.LabCurrTabName.Size = new System.Drawing.Size(0, 12);
+            this.LabCurrTabName.Size = new System.Drawing.Size(0, 15);
             this.LabCurrTabName.TabIndex = 5;
             this.LabCurrTabName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -392,10 +407,9 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(212, 17);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(283, 21);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.Size = new System.Drawing.Size(52, 15);
             this.label3.TabIndex = 6;
             this.label3.Text = "表名：";
             // 
@@ -407,11 +421,11 @@
             this.GpColumns.Controls.Add(this.lblTip);
             this.GpColumns.Controls.Add(this.GV_ColComments);
             this.GpColumns.Controls.Add(this.BtnSaveGridData);
-            this.GpColumns.Location = new System.Drawing.Point(8, 90);
-            this.GpColumns.Margin = new System.Windows.Forms.Padding(2);
+            this.GpColumns.Location = new System.Drawing.Point(11, 112);
+            this.GpColumns.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GpColumns.Name = "GpColumns";
-            this.GpColumns.Padding = new System.Windows.Forms.Padding(2);
-            this.GpColumns.Size = new System.Drawing.Size(705, 453);
+            this.GpColumns.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.GpColumns.Size = new System.Drawing.Size(940, 566);
             this.GpColumns.TabIndex = 10;
             this.GpColumns.TabStop = false;
             this.GpColumns.Text = "列批注";
@@ -421,9 +435,10 @@
             this.lblTip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTip.AutoSize = true;
             this.lblTip.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblTip.Location = new System.Drawing.Point(22, 411);
+            this.lblTip.Location = new System.Drawing.Point(29, 514);
+            this.lblTip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTip.Name = "lblTip";
-            this.lblTip.Size = new System.Drawing.Size(0, 21);
+            this.lblTip.Size = new System.Drawing.Size(0, 27);
             this.lblTip.TabIndex = 9;
             // 
             // GV_ColComments
@@ -450,13 +465,14 @@
             this.ColDataType,
             this.ColLength,
             this.ColComment});
-            this.GV_ColComments.Location = new System.Drawing.Point(4, 18);
-            this.GV_ColComments.Margin = new System.Windows.Forms.Padding(2);
+            this.GV_ColComments.Location = new System.Drawing.Point(5, 22);
+            this.GV_ColComments.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GV_ColComments.MultiSelect = false;
             this.GV_ColComments.Name = "GV_ColComments";
+            this.GV_ColComments.RowHeadersWidth = 51;
             this.GV_ColComments.RowTemplate.Height = 27;
             this.GV_ColComments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.GV_ColComments.Size = new System.Drawing.Size(697, 363);
+            this.GV_ColComments.Size = new System.Drawing.Size(929, 454);
             this.GV_ColComments.TabIndex = 0;
             this.GV_ColComments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_ColComments_CellClick);
             this.GV_ColComments.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GV_ColComments_PreviewKeyDown);
@@ -470,7 +486,7 @@
             this.ColXuHao.MinimumWidth = 30;
             this.ColXuHao.Name = "ColXuHao";
             this.ColXuHao.ReadOnly = true;
-            this.ColXuHao.Width = 54;
+            this.ColXuHao.Width = 66;
             // 
             // ColName
             // 
@@ -503,7 +519,7 @@
             this.ColLength.MinimumWidth = 30;
             this.ColLength.Name = "ColLength";
             this.ColLength.ReadOnly = true;
-            this.ColLength.Width = 54;
+            this.ColLength.Width = 66;
             // 
             // ColComment
             // 
@@ -519,10 +535,10 @@
             // BtnSaveGridData
             // 
             this.BtnSaveGridData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnSaveGridData.Location = new System.Drawing.Point(593, 400);
-            this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(2);
+            this.BtnSaveGridData.Location = new System.Drawing.Point(791, 500);
+            this.BtnSaveGridData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BtnSaveGridData.Name = "BtnSaveGridData";
-            this.BtnSaveGridData.Size = new System.Drawing.Size(98, 34);
+            this.BtnSaveGridData.Size = new System.Drawing.Size(131, 42);
             this.BtnSaveGridData.TabIndex = 8;
             this.BtnSaveGridData.Values.Text = "保存";
             this.BtnSaveGridData.Click += new System.EventHandler(this.BtnSaveGridData_Click);
@@ -534,11 +550,11 @@
             this.RibbonTabContainer.Controls.Add(this.apabout);
             this.RibbonTabContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RibbonTabContainer.ItemSize = new System.Drawing.Size(65, 20);
-            this.RibbonTabContainer.Location = new System.Drawing.Point(3, 2);
-            this.RibbonTabContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RibbonTabContainer.Location = new System.Drawing.Point(4, 2);
+            this.RibbonTabContainer.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.RibbonTabContainer.Name = "RibbonTabContainer";
             this.RibbonTabContainer.SelectedIndex = 0;
-            this.RibbonTabContainer.Size = new System.Drawing.Size(1070, 101);
+            this.RibbonTabContainer.Size = new System.Drawing.Size(1427, 127);
             this.RibbonTabContainer.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.RibbonTabContainer.TabIndex = 3;
             this.RibbonTabContainer.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.RibbonTabContainer_Selecting);
@@ -550,10 +566,10 @@
             // 
             this.tpfile.Controls.Add(this.ribbonPageFile);
             this.tpfile.Location = new System.Drawing.Point(4, 24);
-            this.tpfile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tpfile.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.tpfile.Name = "tpfile";
-            this.tpfile.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tpfile.Size = new System.Drawing.Size(1062, 73);
+            this.tpfile.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.tpfile.Size = new System.Drawing.Size(1419, 99);
             this.tpfile.TabIndex = 0;
             this.tpfile.Text = "文件";
             this.tpfile.ToolTipText = "文件";
@@ -577,9 +593,9 @@
             this.tsXmlExp,
             this.toolStripButton1,
             this.loadConfig});
-            this.ribbonPageFile.Location = new System.Drawing.Point(3, 2);
+            this.ribbonPageFile.Location = new System.Drawing.Point(4, 2);
             this.ribbonPageFile.Name = "ribbonPageFile";
-            this.ribbonPageFile.Size = new System.Drawing.Size(1056, 69);
+            this.ribbonPageFile.Size = new System.Drawing.Size(1411, 95);
             this.ribbonPageFile.TabIndex = 0;
             this.ribbonPageFile.Text = "toolStripFile";
             this.ribbonPageFile.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ribbonPageFile_ItemClicked);
@@ -589,7 +605,7 @@
             this.tsbConnect.Image = ((System.Drawing.Image)(resources.GetObject("tsbConnect.Image")));
             this.tsbConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbConnect.Name = "tsbConnect";
-            this.tsbConnect.Size = new System.Drawing.Size(63, 66);
+            this.tsbConnect.Size = new System.Drawing.Size(77, 92);
             this.tsbConnect.Text = "数据连接";
             this.tsbConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbConnect.Click += new System.EventHandler(this.tsbConnect_Click);
@@ -599,7 +615,7 @@
             this.tsbRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsbRefresh.Image")));
             this.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbRefresh.Name = "tsbRefresh";
-            this.tsbRefresh.Size = new System.Drawing.Size(63, 66);
+            this.tsbRefresh.Size = new System.Drawing.Size(77, 92);
             this.tsbRefresh.Text = "重新获取";
             this.tsbRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbRefresh.Click += new System.EventHandler(this.tsbRefresh_Click);
@@ -609,7 +625,7 @@
             this.tsbBuild.Image = ((System.Drawing.Image)(resources.GetObject("tsbBuild.Image")));
             this.tsbBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbBuild.Name = "tsbBuild";
-            this.tsbBuild.Size = new System.Drawing.Size(65, 66);
+            this.tsbBuild.Size = new System.Drawing.Size(78, 92);
             this.tsbBuild.Tag = "chm";
             this.tsbBuild.Text = "CHM导出";
             this.tsbBuild.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -620,7 +636,7 @@
             this.tsWordExp.Image = ((System.Drawing.Image)(resources.GetObject("tsWordExp.Image")));
             this.tsWordExp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsWordExp.Name = "tsWordExp";
-            this.tsWordExp.Size = new System.Drawing.Size(66, 66);
+            this.tsWordExp.Size = new System.Drawing.Size(81, 92);
             this.tsWordExp.Tag = "word";
             this.tsWordExp.Text = "Word导出";
             this.tsWordExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -631,7 +647,7 @@
             this.tsExcelExp.Image = ((System.Drawing.Image)(resources.GetObject("tsExcelExp.Image")));
             this.tsExcelExp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsExcelExp.Name = "tsExcelExp";
-            this.tsExcelExp.Size = new System.Drawing.Size(64, 66);
+            this.tsExcelExp.Size = new System.Drawing.Size(79, 92);
             this.tsExcelExp.Tag = "excel";
             this.tsExcelExp.Text = "Excel导出";
             this.tsExcelExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -642,7 +658,7 @@
             this.tsPdfExp.Image = ((System.Drawing.Image)(resources.GetObject("tsPdfExp.Image")));
             this.tsPdfExp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsPdfExp.Name = "tsPdfExp";
-            this.tsPdfExp.Size = new System.Drawing.Size(58, 66);
+            this.tsPdfExp.Size = new System.Drawing.Size(71, 92);
             this.tsPdfExp.Tag = "pdf";
             this.tsPdfExp.Text = "PDF导出";
             this.tsPdfExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -653,7 +669,7 @@
             this.tsHtmlExp.Image = ((System.Drawing.Image)(resources.GetObject("tsHtmlExp.Image")));
             this.tsHtmlExp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsHtmlExp.Name = "tsHtmlExp";
-            this.tsHtmlExp.Size = new System.Drawing.Size(64, 66);
+            this.tsHtmlExp.Size = new System.Drawing.Size(78, 92);
             this.tsHtmlExp.Tag = "html";
             this.tsHtmlExp.Text = "Html导出";
             this.tsHtmlExp.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
@@ -666,7 +682,7 @@
             this.tsXmlExp.Image = ((System.Drawing.Image)(resources.GetObject("tsXmlExp.Image")));
             this.tsXmlExp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsXmlExp.Name = "tsXmlExp";
-            this.tsXmlExp.Size = new System.Drawing.Size(61, 66);
+            this.tsXmlExp.Size = new System.Drawing.Size(74, 92);
             this.tsXmlExp.Tag = "xml";
             this.tsXmlExp.Text = "XML导出";
             this.tsXmlExp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -677,7 +693,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(56, 66);
+            this.toolStripButton1.Size = new System.Drawing.Size(69, 92);
             this.toolStripButton1.Tag = "markdown";
             this.toolStripButton1.Text = "MD导出";
             this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -687,7 +703,7 @@
             this.loadConfig.Image = ((System.Drawing.Image)(resources.GetObject("loadConfig.Image")));
             this.loadConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.loadConfig.Name = "loadConfig";
-            this.loadConfig.Size = new System.Drawing.Size(63, 66);
+            this.loadConfig.Size = new System.Drawing.Size(77, 92);
             this.loadConfig.Tag = "markdown";
             this.loadConfig.Text = "加载配置";
             this.loadConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -698,8 +714,9 @@
             // 
             this.tptool.Controls.Add(this.tsbPDMUpload);
             this.tptool.Location = new System.Drawing.Point(4, 24);
+            this.tptool.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tptool.Name = "tptool";
-            this.tptool.Size = new System.Drawing.Size(1062, 73);
+            this.tptool.Size = new System.Drawing.Size(1419, 98);
             this.tptool.TabIndex = 3;
             this.tptool.Text = "工具";
             this.tptool.UseVisualStyleBackColor = true;
@@ -716,7 +733,7 @@
             this.toolStripButton3});
             this.tsbPDMUpload.Location = new System.Drawing.Point(0, 0);
             this.tsbPDMUpload.Name = "tsbPDMUpload";
-            this.tsbPDMUpload.Size = new System.Drawing.Size(1062, 73);
+            this.tsbPDMUpload.Size = new System.Drawing.Size(1419, 98);
             this.tsbPDMUpload.TabIndex = 1;
             this.tsbPDMUpload.Text = "toolStripFile";
             this.tsbPDMUpload.Click += new System.EventHandler(this.tsbSaveUpload_Click);
@@ -726,7 +743,7 @@
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(63, 70);
+            this.toolStripButton3.Size = new System.Drawing.Size(77, 95);
             this.toolStripButton3.Text = "批注上载";
             this.toolStripButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
@@ -735,10 +752,10 @@
             this.apabout.BackColor = System.Drawing.SystemColors.Control;
             this.apabout.Controls.Add(this.ribbonPageAbout);
             this.apabout.Location = new System.Drawing.Point(4, 24);
-            this.apabout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.apabout.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.apabout.Name = "apabout";
-            this.apabout.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.apabout.Size = new System.Drawing.Size(1062, 73);
+            this.apabout.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.apabout.Size = new System.Drawing.Size(1419, 98);
             this.apabout.TabIndex = 2;
             this.apabout.Text = "关于";
             this.apabout.ToolTipText = "关于";
@@ -753,9 +770,9 @@
             this.ribbonPageAbout.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.ribbonPageAbout.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonAbout});
-            this.ribbonPageAbout.Location = new System.Drawing.Point(3, 2);
+            this.ribbonPageAbout.Location = new System.Drawing.Point(4, 2);
             this.ribbonPageAbout.Name = "ribbonPageAbout";
-            this.ribbonPageAbout.Size = new System.Drawing.Size(1056, 69);
+            this.ribbonPageAbout.Size = new System.Drawing.Size(1411, 94);
             this.ribbonPageAbout.TabIndex = 0;
             this.ribbonPageAbout.Text = "toolStripAbout";
             // 
@@ -764,7 +781,7 @@
             this.toolStripButtonAbout.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAbout.Image")));
             this.toolStripButtonAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAbout.Name = "toolStripButtonAbout";
-            this.toolStripButtonAbout.Size = new System.Drawing.Size(52, 66);
+            this.toolStripButtonAbout.Size = new System.Drawing.Size(52, 91);
             this.toolStripButtonAbout.Text = "关于";
             this.toolStripButtonAbout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
@@ -789,13 +806,13 @@
             // MainForm
             // 
             this.AcceptButton = this.BtnSaveGridData;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1076, 700);
+            this.ClientSize = new System.Drawing.Size(1435, 875);
             this.Controls.Add(this.tabLayoutPnl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DBCHM";

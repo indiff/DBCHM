@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-
 public static class EnumExt<TEnum>
         where TEnum : struct
 {
     private static readonly Dictionary<string, TEnum> read_dict_Enums;
     private static readonly Dictionary<string, string> read_dict_Enums_desc;
+
     static EnumExt()
     {
         read_dict_Enums = new Dictionary<string, TEnum>();
@@ -28,6 +28,7 @@ public static class EnumExt<TEnum>
             read_dict_Enums_desc.Add(val.ToString(), desc);
         }
     }
+
     public static Dictionary<string, TEnum> All()
     {
         return new Dictionary<string, TEnum>(read_dict_Enums);
@@ -37,9 +38,9 @@ public static class EnumExt<TEnum>
     {
         return read_dict_Enums_desc[@this.ToString()];
     }
+
     public static int ToInt(TEnum @this)
     {
         return Convert.ToInt32(@this);
     }
-
 }

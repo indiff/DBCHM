@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
-using System.Data.Common;
-using System.Dynamic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MJTop.Data
 {
-
     internal class TypeInfo<T>
     {
         static TypeInfo()
@@ -39,11 +32,11 @@ namespace MJTop.Data
                     IsListParameter = true;
                 }
             }
-            else if ((typeof(IDictionary)).IsAssignableFrom(TyThis)) // Dictionary 或 Hashtable 
-                //不能是：
-                //|| (typeof(IDictionary<string, string>)).IsAssignableFrom(TyThis)
-                //|| (typeof(IDictionary<string, object>)).IsAssignableFrom(TyThis)
-                //|| (typeof(IDictionary<object, object>)).IsAssignableFrom(TyThis))
+            else if ((typeof(IDictionary)).IsAssignableFrom(TyThis)) // Dictionary 或 Hashtable
+                                                                     //不能是：
+                                                                     //|| (typeof(IDictionary<string, string>)).IsAssignableFrom(TyThis)
+                                                                     //|| (typeof(IDictionary<string, object>)).IsAssignableFrom(TyThis)
+                                                                     //|| (typeof(IDictionary<object, object>)).IsAssignableFrom(TyThis))
             {
                 IsDict = true;
             }
@@ -91,7 +84,6 @@ namespace MJTop.Data
 
         public static bool IsListParameter { get; private set; }
 
-
         public static IDataParameter[] CloneParameters(IDataParameter[] originalParameters)
         {
             IDataParameter[] parameterArray = new IDataParameter[originalParameters.Length];
@@ -104,6 +96,5 @@ namespace MJTop.Data
             }
             return parameterArray;
         }
-        
     }
 }

@@ -7,7 +7,6 @@ namespace DocTools.Dtos
     /// </summary>
     public class ColumnDto
     {
-
         /// <summary>
         /// 序号
         /// </summary>
@@ -67,6 +66,5 @@ namespace DocTools.Dtos
         /// </summary>
         [Display(Name = "列说明")]
         public string Comment { get; set; }
-
     }
 }

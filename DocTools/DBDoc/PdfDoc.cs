@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DocTools.Dtos;
+﻿using DocTools.Dtos;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using ZetaLongPaths;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace DocTools.DBDoc
 {
@@ -18,7 +14,7 @@ namespace DocTools.DBDoc
         }
 
         private static string TTF_Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\pdf\\msyh.ttf");
-        
+
         public override void Build(string filePath)
         {
             PdfUtils.ExportPdfByITextSharp(filePath, TTF_Path, this.Dto);
@@ -30,7 +26,6 @@ namespace DocTools.DBDoc
     /// </summary>
     internal static class PdfUtils
     {
-
         /// <summary>
         /// 引用iTextSharp.dll导出pdf数据库字典文档
         /// </summary>
@@ -156,7 +151,6 @@ namespace DocTools.DBDoc
                 {
                     pdfTable.SetWidths(new float[] { 50F, 80F, 70F, 50F, 50F, 50F, 50F, 50F, 70F });
                 }
-                    
 
                 //  添加表格
                 pdfDocument.Add(pdfTable);
@@ -164,7 +158,6 @@ namespace DocTools.DBDoc
                 //  PDF换页
                 pdfDocument.NewPage();
             }
-
 
             if (dto.Views.Count > 0)
             {
@@ -190,7 +183,6 @@ namespace DocTools.DBDoc
                 pdfDocument.NewPage();
             }
 
-
             if (dto.Procs.Count > 0)
             {
                 Chapter procChapter = new Chapter(new Paragraph("存储过程", pdfFont), (++chapterNum));
@@ -206,12 +198,11 @@ namespace DocTools.DBDoc
                     // 换行
                     pdfDocument.Add(new Paragraph("\n", pdfFont));
 
-                    Paragraph pgh = new Paragraph(item.Value.Replace("`",""), pdfFont);
+                    Paragraph pgh = new Paragraph(item.Value.Replace("`", ""), pdfFont);
                     pdfDocument.Add(pgh);
 
                     // 换行
                     pdfDocument.Add(new Paragraph("\n", pdfFont));
-        
                 }
                 pdfDocument.NewPage();
             }
@@ -318,10 +309,9 @@ namespace DocTools.DBDoc
         /// <param name="fontStyle"></param>
         private static Font BaseFont(string fontPath, float fontSize, int fontStyle)
         {
-            BaseFont chinese =  iTextSharp.text.pdf.BaseFont.CreateFont(fontPath, iTextSharp.text.pdf.BaseFont.IDENTITY_H, true);
+            BaseFont chinese = iTextSharp.text.pdf.BaseFont.CreateFont(fontPath, iTextSharp.text.pdf.BaseFont.IDENTITY_H, true);
             Font pdfFont = new Font(chinese, fontSize, fontStyle);
             return pdfFont;
         }
-
     }
 }

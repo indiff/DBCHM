@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Data;
-using System.Data.Common;
-using System.Dynamic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MJTop.Data
 {
@@ -31,7 +27,6 @@ namespace MJTop.Data
 
             if (@this == null || @this == DBNull.Value)
             {
-
                 if ((toType.IsGenericType && toType.GetGenericTypeDefinition().Equals(typeof(Nullable<>))))
                 {
                     return default(T);
@@ -71,7 +66,6 @@ namespace MJTop.Data
                 }
                 return (T)result;
             }
-
         }
 
         /// <summary>
@@ -96,7 +90,6 @@ namespace MJTop.Data
                 return def;
             }
         }
-
 
         /// <summary>
         /// 对象类型转换
@@ -148,7 +141,6 @@ namespace MJTop.Data
             }
             return Convert.ChangeType(@this, type);
         }
-
 
         /// <summary>
         /// 对象类型转换
@@ -210,7 +202,7 @@ namespace MJTop.Data
             return lst;
         }
 
-        #endregion
+        #endregion 数据类型
 
         #region NameValueCollection 扩展
 
@@ -291,7 +283,6 @@ namespace MJTop.Data
             return false;
         }
 
-
         /// <summary>
         /// 尝试获取 某个键的值
         /// </summary>
@@ -347,10 +338,6 @@ namespace MJTop.Data
             }
         }
 
-
-
-
-
         /// <summary>
         /// 尝试获取 某个键的值
         /// </summary>
@@ -363,7 +350,6 @@ namespace MJTop.Data
             value = null;
             return TryGetValue(@this, keyName, false, out value);
         }
-
 
         /// <summary>
         /// 尝试获取 某个键的值
@@ -410,7 +396,7 @@ namespace MJTop.Data
         /// <param name="keyName">键名</param>
         /// <param name="value">value值</param>
         /// <returns>返回bool</returns>
-        public static bool Remove(this NameValueCollection @this, string keyName,string value)
+        public static bool Remove(this NameValueCollection @this, string keyName, string value)
         {
             if (@this == null || @this.Count <= 0)
             {
@@ -441,8 +427,7 @@ namespace MJTop.Data
             return true;
         }
 
-
-        #endregion
+        #endregion NameValueCollection 扩展
 
         /// <summary>
         /// 查询集合中的某个元素的索引
@@ -464,7 +449,7 @@ namespace MJTop.Data
                 j++;
 
                 if (
-                    (curStr == null && item == null) || 
+                    (curStr == null && item == null) ||
                     (curStr != null && curStr.Equals(item, comparisonType))
                    )
 
@@ -474,7 +459,6 @@ namespace MJTop.Data
             }
             return -1;
         }
-
 
         /// <summary>
         /// 一个Key对应多个Value值的存储
@@ -501,7 +485,6 @@ namespace MJTop.Data
                 @this.Add(key, lstValue);
             }
         }
-
 
         /// <summary>
         /// 打印 str 加入joinChar 进行cnt次打印

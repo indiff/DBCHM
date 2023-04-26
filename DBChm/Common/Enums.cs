@@ -13,6 +13,6 @@ namespace DBCHM
         新建,
         编辑,
         删除,
-        克隆            
+        克隆
     }
 }

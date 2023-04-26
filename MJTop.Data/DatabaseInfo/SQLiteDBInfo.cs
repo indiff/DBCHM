@@ -21,6 +21,7 @@ namespace MJTop.Data.DatabaseInfo
             get;
             private set;
         }
+
         public SQLiteDBInfo(DB db)
         {
             this.Db = db;
@@ -51,16 +52,17 @@ namespace MJTop.Data.DatabaseInfo
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
+        public Dictionary<string, int> TableRows { get; private set; } = new Dictionary<string, int>();
 
         public List<string> TableNames { get; private set; } = new List<string>();
-        
-        public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; } 
 
-        public IgCaseDictionary<List<string>> TableColumnNameDict { get; private set; } 
+        public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; }
 
-        public IgCaseDictionary<List<ColumnInfo>> TableColumnInfoDict { get; private set; } 
+        public IgCaseDictionary<List<string>> TableColumnNameDict { get; private set; }
 
-        public IgCaseDictionary<NameValueCollection> TableColumnComments { get; private set; } 
+        public IgCaseDictionary<List<ColumnInfo>> TableColumnInfoDict { get; private set; }
+
+        public IgCaseDictionary<NameValueCollection> TableColumnComments { get; private set; }
 
         private IgCaseDictionary<ColumnInfo> DictColumnInfo { get; set; }
 
@@ -68,7 +70,8 @@ namespace MJTop.Data.DatabaseInfo
 
         public NameValueCollection Procs { get; private set; }
 
-        public List<string> DBNames { get { return DBName.TransList(); } }
+        public List<string> DBNames
+        { get { return DBName.TransList(); } }
 
         public ColumnInfo this[string tableName, string columnName]
         {
@@ -113,7 +116,7 @@ namespace MJTop.Data.DatabaseInfo
                 if (this.TableComments != null && this.TableComments.Count > 0)
                 {
                     this.TableNames = TableComments.AllKeys.ToList();
-                    
+
                     var dbConn = Db.CreateConn();
                     dbConn.Open();
 
@@ -124,7 +127,7 @@ namespace MJTop.Data.DatabaseInfo
                         TableInfo tabInfo = new TableInfo();
                         tabInfo.TableName = tableName;
                         tabInfo.TabComment = TableComments[tableName];
-                        
+
                         List<ColumnInfo> lstColInfo = new List<ColumnInfo>();
                         List<string> lstColName = new List<string>();
                         NameValueCollection nvcColDeText = new NameValueCollection();
@@ -155,7 +158,7 @@ namespace MJTop.Data.DatabaseInfo
                             lstColInfo.Add(colInfo);
                             lstColName.Add(colInfo.ColumnName);
                             nvcColDeText.Add(colInfo.ColumnName, string.Empty);
-                            
+
                             var strKey = (tableName + "@" + colInfo.ColumnName).ToLower();
                             DictColumnInfo.Add(strKey, colInfo);
 
@@ -172,7 +175,6 @@ namespace MJTop.Data.DatabaseInfo
                                 }
                             }
 
-
                             Global.Dict_Sqlite_DbType.TryGetValue(colInfo.TypeName, out DbType type);
                             colInfo.DbType = type;
                         }
@@ -181,7 +183,6 @@ namespace MJTop.Data.DatabaseInfo
                         this.TableColumnNameDict.Add(tableName, lstColName);
                         this.TableColumnInfoDict.Add(tableName, lstColInfo);
                         this.TableColumnComments.Add(tableName, nvcColDeText);
-
                     }
                     dbConn.Close();
                 }
@@ -195,6 +196,7 @@ namespace MJTop.Data.DatabaseInfo
         }
 
         #region Sqlite获取列信息
+
         //private List<ColumnInfo> SqliteColInfo(string tableName)
         //{
         //    List<ColumnInfo> lstCols = new List<ColumnInfo>();
@@ -222,14 +224,13 @@ namespace MJTop.Data.DatabaseInfo
         //    dbConn.Close();
         //    return lstCols;
         //}
-        #endregion
 
+        #endregion Sqlite获取列信息
 
         public Dictionary<string, DateTime> GetTableStruct_Modify()
         {
             throw new Exception("SQLite不支持 记录表结构更改时间！");
         }
-
 
         public bool IsExistTable(string tableName)
         {
@@ -296,7 +297,6 @@ namespace MJTop.Data.DatabaseInfo
                 }
 
                 this.TableColumnNameDict.Remove(tableName);
-
             }
             catch (Exception ex)
             {
@@ -316,13 +316,12 @@ namespace MJTop.Data.DatabaseInfo
             }
 
             var strKey = (tableName + "@" + columnName);
-            
+
             string ctor_sql = string.Empty;
             string drop_sql = string.Empty;
             string rename_sql = string.Empty;
             try
             {
-
                 //Sqlite 不支持直接删除列 的 处理方式,这里先创查询建 对应表的结构（排除要删除的列），然后删除原来的表，最后重命名新表的 表名称。
                 //该方法适用于 表中 没有数据的 情况。
                 {
@@ -333,7 +332,6 @@ namespace MJTop.Data.DatabaseInfo
                     drop_sql = string.Format("drop table if exists {0}", tableName);
                     rename_sql = string.Format("alter table {0} rename to {1}", temp_Name, tableName);
                     Db.ExecSqlTran(ctor_sql, drop_sql, rename_sql);
-
 
                     this.DictColumnInfo.Remove(strKey);
 
@@ -363,7 +361,6 @@ namespace MJTop.Data.DatabaseInfo
                     lstColInfo.Remove(curColInfo);
                     TableColumnInfoDict[tableName] = lstColInfo;
                 }
-                
             }
             catch (Exception ex)
             {

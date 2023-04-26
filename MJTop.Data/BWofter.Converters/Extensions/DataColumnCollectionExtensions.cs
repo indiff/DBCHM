@@ -27,14 +27,16 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace BWofter.Converters.Extensions
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+
     /// <summary><para>A static class that provides LINQ extensions for the <see cref="DataColumnCollection"/> type.</para></summary>
     public static class DataColumnCollectionExtensions
     {
@@ -43,6 +45,7 @@ namespace BWofter.Converters.Extensions
         /// <returns><para><see cref="IEnumerable{T}"/> of <see cref="DataColumn"/> values or <see cref="Enumerable.Empty{TResult}"/>.</para></returns>
         public static IEnumerable<DataColumn> Select(this DataColumnCollection collection) =>
             collection.Select(dc => dc);
+
         /// <summary><para>Returns an <see cref="IEnumerable{T}"/> of <see cref="DataColumn"/> values that represents <paramref name="collection"/>.</para></summary>
         /// <param name="collection"><para>The target of the extension method.</para></param>
         /// <param name="selector"><para>The selector of the extension method.</para></param>
@@ -61,6 +64,7 @@ namespace BWofter.Converters.Extensions
                 return collection.Cast<DataColumn>().Select(selector);
             }
         }
+
         /// <summary><para>Returns an <see cref="IEnumerable{T}"/> of <see cref="DataColumn"/> values that represents <paramref name="collection"/>.</para></summary>
         /// <param name="collection"><para>The target of the extension method.</para></param>
         /// <param name="predicate"><para>The predicate of the extension method.</para></param>

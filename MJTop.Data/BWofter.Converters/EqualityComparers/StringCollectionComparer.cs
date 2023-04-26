@@ -27,19 +27,23 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace BWofter.Converters.EqualityComparers
 {
     using System;
     using System.Collections.Generic;
+
     /// <summary><para>A utility class that is used to compare string collections within the cache object.</para></summary>
     public class StringCollectionComparer : IEqualityComparer<ICollection<string>>
     {
         private static readonly Lazy<StringCollectionComparer> instance = new Lazy<StringCollectionComparer>(true);
+
         /// <summary><para>Returns the singleton of <see cref="StringCollectionComparer"/>.</para></summary>
         /// <returns>The singleton of <see cref="StringCollectionComparer"/>.</returns>
         public static IEqualityComparer<ICollection<string>> GetInstance() => instance.Value;
+
         /// <summary><para>Determines whether the specified objects are equal.</para></summary>
         /// <param name="x"><para>The first object of type <see cref="ICollection{T}"/> of <see cref="string"/> values to compare.</para></param>
         /// <param name="x"><para>The second object of type <see cref="ICollection{T}"/> of <see cref="string"/> values to compare.</para></param>
@@ -87,6 +91,7 @@ namespace BWofter.Converters.EqualityComparers
             }
             return true;
         }
+
         /// <summary><para>Returns a hash code for the specified object.</para></summary>
         /// <param name="obj"><para>The <see cref="Object"/> for which a hash code is to be returned.</para></param>
         /// <returns><para>A hash code for the specified object.</para></returns>

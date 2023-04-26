@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DocTools.Dtos;
+using System;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DocTools.Dtos;
 using ZetaLongPaths;
 
 namespace DocTools.DBDoc
@@ -21,7 +17,6 @@ namespace DocTools.DBDoc
         /// 定义配置存放的路径 => C:\Users\用户名\AppData\Local\DBCHM
         /// </summary>
         public static string AppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create), ConfigFileName);
-
 
         public Doc(DBDto dto, string filter)
         {

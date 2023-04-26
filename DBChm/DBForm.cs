@@ -12,7 +12,6 @@ namespace DBCHM
         private DBForm()
             : this(OPType.新建)
         {
-
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace DBCHM
                 }
             }
 
-            //为KeyDown能应用到所有控件上 注册 KeyDown 事件 
+            //为KeyDown能应用到所有控件上 注册 KeyDown 事件
             foreach (Control control in this.Controls)
             {
                 control.KeyDown += control_KeyDown;
@@ -91,7 +90,7 @@ namespace DBCHM
             lblMsg.Text = string.Empty;
         }
 
-        void control_KeyDown(object sender, KeyEventArgs e)
+        private void control_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
@@ -118,6 +117,7 @@ namespace DBCHM
                 SetUserNameByDbType();
             }
         }
+
         private void BtnSelectFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDia = new OpenFileDialog();
@@ -191,7 +191,6 @@ namespace DBCHM
 
                 DBType type = (DBType)Enum.Parse(typeof(DBType), cboDBType.Text);
 
-
                 string connString = InitConnectionStr(type);
                 NameValueCollection nvc = new NameValueCollection();
                 if (OpType == OPType.新建 || OpType == OPType.克隆)
@@ -209,7 +208,6 @@ namespace DBCHM
                     nvc.Add("Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
                     ConfigUtils.Save(nvc);
-
                 }
                 else if (OpType == OPType.编辑)
                 {
@@ -228,7 +226,6 @@ namespace DBCHM
                     ConfigUtils.Save(nvc);
                 }
 
-
                 FormUtils.ShowProcessing("正在查询表结构信息，请稍等......", this, arg =>
                 {
                     try
@@ -239,10 +236,9 @@ namespace DBCHM
                     {
                         LogUtils.LogError("BtnOk_Click", Developer.SysDefault, ex, connString);
                     }
-
                 }, null);
 
-                this.DialogResult = DialogResult.OK;                
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
@@ -270,7 +266,7 @@ namespace DBCHM
         private void SetUserNameByDbType()
         {
             btnSelectFile.Visible = false;
-            
+
             TxtHost.Enabled = true;
             TxtPort.Enabled = true;
             TxtUName.Enabled = true;
@@ -292,7 +288,6 @@ namespace DBCHM
                 sslLabel.Visible = true;
                 noneSSLCB.Visible = true;
                 requiredSSLCB.Visible = true;
-
             }
             else if (dbtype == DBType.Oracle || dbtype == DBType.OracleDDTek)
             {
@@ -307,7 +302,7 @@ namespace DBCHM
             {
                 TxtUName.Text = "db2admin";
             }
-            else if(dbtype == DBType.SQLite)
+            else if (dbtype == DBType.SQLite)
             {
                 btnSelectFile.Visible = true;
 
@@ -348,7 +343,6 @@ namespace DBCHM
                     }
                 }
             }
-
         }
 
         private void txtConnectionOut_KeyPress(object sender, KeyPressEventArgs e)
@@ -370,7 +364,6 @@ namespace DBCHM
                     }
                 }
             }
-
         }
 
         private void cboDBName_SelectedIndexChanged(object sender, EventArgs e)
@@ -431,7 +424,7 @@ namespace DBCHM
         /// </summary>
         /// <param name="type"></param>
         /// <param name="strDBName"></param>
-        private void InitDb(DBType type) 
+        private void InitDb(DBType type)
         {
             if (type == DBType.MySql)
             {
@@ -456,7 +449,8 @@ namespace DBCHM
         /// 临时处理
         /// TODO 初始化连接串
         /// </summary>
-        private string InitConnectionStr(DBType type) {
+        private string InitConnectionStr(DBType type)
+        {
             CreateExtraParam();
             string connString = "";
             if (type == DBType.MySql)
@@ -464,7 +458,7 @@ namespace DBCHM
                 connString = DBMgr.GetConnectionString(type, TxtHost.Text,
                     (string.IsNullOrWhiteSpace(TxtPort.Text) ? null : new Nullable<int>(Convert.ToInt32(TxtPort.Text))),
                     cboDBName.Text, TxtUName.Text, TxtPwd.Text,
-                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 30 : Convert.ToInt32(txtConnTimeOut.Text)), 
+                    (string.IsNullOrWhiteSpace(txtConnTimeOut.Text) ? 30 : Convert.ToInt32(txtConnTimeOut.Text)),
                     this.extraParam);
             }
             else

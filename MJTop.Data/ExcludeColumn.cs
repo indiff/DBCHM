@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Specialized;
 
 namespace MJTop.Data
 {
     /// <summary>
     /// 排除列
     /// </summary>
-    public class ExcludeColumn 
+    public class ExcludeColumn
     {
         /// <summary>
         /// 表列集合
@@ -25,7 +20,6 @@ namespace MJTop.Data
             this.Coll = new NameValueCollection();
         }
 
-
         /// <summary>
         /// 需排除的 表名与多个列名
         /// </summary>
@@ -34,7 +28,7 @@ namespace MJTop.Data
         public void Add(string tableName, params string[] columnNames)
         {
             Db.CheckTabStuct(tableName, columnNames);
-            
+
             if (columnNames != null && columnNames.Length > 0)
             {
                 foreach (var columnName in columnNames)
@@ -43,7 +37,6 @@ namespace MJTop.Data
                 }
             }
         }
-
 
         /// <summary>
         /// 需排除的 表名与列名集合
@@ -64,7 +57,6 @@ namespace MJTop.Data
                         {
                             this.Coll.Add(tableName, columnName);
                         }
-
                     }
                 }
             }
@@ -94,7 +86,7 @@ namespace MJTop.Data
         /// <param name="tableName">表名</param>
         /// <param name="columnName">列名</param>
         /// <returns>返回bool</returns>
-        public bool Remove(string tableName,string columnName)
+        public bool Remove(string tableName, string columnName)
         {
             Db.CheckTabStuct(tableName, columnName);
 

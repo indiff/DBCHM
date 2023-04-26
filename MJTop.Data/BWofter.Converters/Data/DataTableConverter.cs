@@ -27,8 +27,9 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace BWofter.Converters.Data
 {
     using BWofter.Converters.EqualityComparers;
@@ -41,12 +42,14 @@ namespace BWofter.Converters.Data
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+
     /// <summary><para>A static class used to convert data tables into entities.</para></summary>
     /// <typeparam name="TEntity"><para>The entity type to convert to.</para></typeparam>
     public static class DataTableConverter<TEntity> where TEntity : class, new()
     {
         private static readonly Type type = typeof(TEntity);
         private static readonly ConcurrentDictionary<ICollection<string>, Func<DataRow, TEntity>> converters = new ConcurrentDictionary<ICollection<string>, Func<DataRow, TEntity>>(StringCollectionComparer.GetInstance());
+
         /// <summary><para>Iterates over the <see cref="DataRow"/> values in the <paramref name="dataTable"/>, mapping their fields
         /// to the entity type.</para></summary>
         /// <param name="dataTable"><para>The <see cref="DataTable"/> to map to the entity type.</para></param>
@@ -56,6 +59,7 @@ namespace BWofter.Converters.Data
             if (dataTable == null) throw new ArgumentNullException(nameof(dataTable));
             return ToEntities(dataTable, new Dictionary<DataColumn, string>(dataTable.Columns.Select(GetDataColumnKeyValuePair).ToDictionary()));
         }
+
         /// <summary><para>Iterates over the <see cref="DataRow"/> values in the <paramref name="dataTable"/>, mapping their fields
         /// to the entity type.</para></summary>
         /// <param name="dataTable"><para>The <see cref="DataTable"/> to map to the entity type.</para></param>
@@ -73,6 +77,7 @@ namespace BWofter.Converters.Data
                 yield return converter(row);
             }
         }
+
         /// <summary><para>Iterates over the <see cref="DataRow"/> values in <paramref name="dataRows"/>, mapping their fields
         /// to the entity type.</para></summary>
         /// <param name="dataRows"><para>The <see cref="DataRowCollection"/> to map to the entity type.</para></param>
@@ -83,6 +88,7 @@ namespace BWofter.Converters.Data
             if (dataRows.Count == 0) throw new ArgumentException($"Parameter {nameof(dataRows)} should have at least 1 value, 0 given.");
             return ToEntities(dataRows, dataRows[0].Table.Columns.Select(GetDataColumnKeyValuePair).ToDictionary());
         }
+
         /// <summary><para>Iterates over the <see cref="DataRow"/> values in <paramref name="dataRows"/>, mapping their fields
         /// to the entity type.</para></summary>
         /// <param name="dataRows"><para>The <see cref="DataRowCollection"/> to map to the entity type.</para></param>
@@ -100,6 +106,7 @@ namespace BWofter.Converters.Data
                 yield return converter(row);
             }
         }
+
         /// <summary><para>Iterates over the <see cref="DataRow"/> values in <paramref name="dataRows"/>, mapping their fields
         /// to the entity type.</para></summary>
         /// <param name="dataRows"><para>The <see cref="IEnumerable{T}"/> of <see cref="DataRow"/> values to map to the entity type.</para></param>
@@ -111,6 +118,7 @@ namespace BWofter.Converters.Data
             if (first == null) throw new ArgumentException($"Parameter {nameof(dataRows)} should have at least 1 value, 0 given.");
             return ToEntities(dataRows, first.Table.Columns.Select(GetDataColumnKeyValuePair).ToDictionary());
         }
+
         /// <summary><para>Iterates over the <see cref="DataRow"/> values in <paramref name="dataRows"/>, mapping their fields
         /// to the entity type.</para></summary>
         /// <param name="dataRows"><para>The <see cref="IEnumerable{T}"/> of <see cref="DataRow"/> values to map to the entity type.</para></param>
@@ -128,6 +136,7 @@ namespace BWofter.Converters.Data
                 yield return converter(row);
             }
         }
+
         /// <summary><para>Iterates over the <see cref="DataRow"/> values in <paramref name="dataRows"/>, mapping their fields
         /// to the entity type.</para></summary>
         /// <param name="dataRows"><para>The <see cref="Array"/> of <see cref="DataRow"/> values to map to the entity type.</para></param>
@@ -138,6 +147,7 @@ namespace BWofter.Converters.Data
             if (dataRows.Length == 0) throw new ArgumentException($"Parameter {nameof(dataRows)} should have at least 1 value, 0 given.");
             return ToEntities(dataRows, dataRows[0].Table.Columns.Select(GetDataColumnKeyValuePair).ToDictionary());
         }
+
         /// <summary><para>Iterates over the <see cref="DataRow"/> values in <paramref name="dataRows"/>, mapping their fields
         /// to the entity type.</para></summary>
         /// <param name="columnToMemberMap"><para>The <see cref="Dictionary{TKey, TValue}"/> to map the <see cref="DataColumn"/> values to properties.</para></param>
@@ -155,6 +165,7 @@ namespace BWofter.Converters.Data
                 yield return converter(row);
             }
         }
+
         //Creates a cached generator for the converter to use for all data tables with a matching set of data columns. Due to our assumption that data types are loose in
         //data tables, this will generate an extremely generic converter that doesn't statically use the data table's data typing.
         private static Func<DataRow, TEntity> GetConverter(IDictionary<DataColumn, string> columnToMemberMap)
@@ -246,6 +257,7 @@ namespace BWofter.Converters.Data
             }
             return value;
         }
+
         //Attempts to get a member info object from the entity type the converter is converting to, returning true if one is found.
         private static bool TryGetMemberInfo(string memberName, bool caseSensitive, out MemberInfo memberInfo)
         {
@@ -272,6 +284,7 @@ namespace BWofter.Converters.Data
             }
             return memberInfo != null;
         }
+
         //Creates a key value pair for the data column/column's name. This is used whenever no dictionary is provided to seed the converter's data column => property map.
         private static KeyValuePair<DataColumn, string> GetDataColumnKeyValuePair(DataColumn dataColumn) =>
             new KeyValuePair<DataColumn, string>(dataColumn, dataColumn.ColumnName);

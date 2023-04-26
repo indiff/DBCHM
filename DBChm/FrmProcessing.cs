@@ -73,7 +73,6 @@ namespace DBCHM
             }
         }
 
-
         private void FrmProcessing_Load(object sender, EventArgs e)
         {
             if (this.Owner != null)
@@ -102,7 +101,6 @@ namespace DBCHM
             //调用开始动画方法
             BeginAnimate();
         }
-
 
         //开始动画方法
 
@@ -156,7 +154,7 @@ namespace DBCHM
                 {
                     this.workAction(arg);
                 },
-                            this.workActionArg);
+                this.workActionArg);
 
                 workTask.Start();
                 Task.WaitAll(workTask);
@@ -169,7 +167,6 @@ namespace DBCHM
             {
                 this.WorkCompleted = true;
             }
-
         }
     }
 }

@@ -28,10 +28,10 @@
             margin: 20px auto;
         }
 
-        table td {
-            text-align: center;
-            line-height:30px
-        }
+            table td {
+                text-align: center;
+                line-height: 30px
+            }
 
         .tab tr td:first-child {
             width: 16.66666%;
@@ -46,14 +46,14 @@
             color: #015FB6;
         }
 
-        a:link, a:visited, a:active {
-            color: #015FB6;
-            text-decoration: none;
-        }
+            a:link, a:visited, a:active {
+                color: #015FB6;
+                text-decoration: none;
+            }
 
-        a:hover {
-            color: #E33E06;
-        }
+            a:hover {
+                color: #E33E06;
+            }
 
         .other-bg-color {
             background-color: #FCFCFC;
@@ -75,29 +75,32 @@
             <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
                 <td>序号</td>
                 <td colspan="3">表名</td>
+                <td colspan="3">行数</td>
                 <td colspan="2">表说明</td>
             </tr>
             @foreach (var item in Model.Tables)
             {
                 if (item != null && item.TableModule != null)
                 {
-                    <tr>
-                        <td>@item.TableOrder</td>
-                        <td colspan="3">
-                            <a href="表结构(@(Model.Tables.Count))/@(item.TableModule)/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
-                        </td>
-                        <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
-                    </tr>
+            <tr>
+                <td>@item.TableOrder</td>
+                <td colspan="3">
+                    <a href="表结构(@(Model.Tables.Count))/@(item.TableModule)/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
+                </td>
+                <td colspan="3">@(item.TableRows)</td>
+                <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
+            </tr>
                 }
                 if (item != null && item.TableModule == null)
                 {
-                    <tr>
-                        <td>@item.TableOrder</td>
-                        <td colspan="3">
-                            <a href="表结构(@(Model.Tables.Count))/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
-                        </td>
-                        <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
-                    </tr>
+            <tr>
+                <td>@item.TableOrder</td>
+                <td colspan="3">
+                    <a href="表结构(@(Model.Tables.Count))/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
+                </td>
+                <td colspan="3">@(item.TableRows)</td>
+                <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
+            </tr>
                 }
             }
         </table>
@@ -105,54 +108,52 @@
 
         @if (Model.Views != null && Model.Views.Count > 0)
         {
-            <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
-                <caption>
-                    视图
-                </caption>
-                <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
-                    <td>序号</td>
-                    <td colspan="5">视图名称</td>
-                </tr>
+        <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
+            <caption>
+                视图
+            </caption>
+            <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
+                <td>序号</td>
+                <td colspan="5">视图名称</td>
+            </tr>
 
-                @{ var vwIndex = 1; }
-                @foreach (var item in Model.Views)
+            @{ var vwIndex = 1; }
+            @foreach (var item in Model.Views)
                 {
-                    <tr>
-                        <td>@vwIndex</td>
-                        <td colspan="5">
-                            <a href="视图(@(Model.Views.Count))/@(item.Key).html">@item.Key</a>
-                        </td>
-                    </tr>
+            <tr>
+                <td>@vwIndex</td>
+                <td colspan="5">
+                    <a href="视图(@(Model.Views.Count))/@(item.Key).html">@item.Key</a>
+                </td>
+            </tr>
                     vwIndex++;
                 }
-
-            </table>
+        </table>
         }
 
         @if (Model.Procs != null && Model.Procs.Count > 0)
         {
-            <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
-                <caption>
-                    存储过程
-                </caption>
-                <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
-                    <td>序号</td>
-                    <td colspan="5">存储过程名称</td>
-                </tr>
+        <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
+            <caption>
+                存储过程
+            </caption>
+            <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
+                <td>序号</td>
+                <td colspan="5">存储过程名称</td>
+            </tr>
 
-                @{ var procIndex = 1; }
-                @foreach (var item in Model.Procs)
+            @{ var procIndex = 1; }
+            @foreach (var item in Model.Procs)
                 {
-                    <tr>
-                        <td>@procIndex</td>
-                        <td colspan="5">
-                            <a href="存储过程(@(Model.Procs.Count))/@(item.Key).html">@item.Key</a>
-                        </td>
-                    </tr>
+            <tr>
+                <td>@procIndex</td>
+                <td colspan="5">
+                    <a href="存储过程(@(Model.Procs.Count))/@(item.Key).html">@item.Key</a>
+                </td>
+            </tr>
                     procIndex++;
                 }
-
-            </table>
+        </table>
         }
     </div>
     <script type="text/javascript" src="resources/js/jQuery.js"></script>

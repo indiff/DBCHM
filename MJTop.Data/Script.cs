@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MJTop.Data
 {
@@ -55,7 +52,6 @@ namespace MJTop.Data
             return result;
         }
 
-
         /// <summary>
         /// 拼接in sql语句
         /// </summary>
@@ -96,7 +92,6 @@ namespace MJTop.Data
             }
             return result;
         }
-
 
         /// <summary>
         /// 拼接多条 like 语句
@@ -139,8 +134,7 @@ namespace MJTop.Data
             return result;
         }
 
-        #endregion
-        
+        #endregion SqlIn/SqlLike
 
         /// <summary>
         /// 插入后查询自增列的值
@@ -190,6 +184,7 @@ namespace MJTop.Data
 
                 case DBType.SQLite:
                     return string.Format("select last_insert_rowid()");
+
                 default:
                     throw new ArgumentException("不支持的数据库类型！");
             }

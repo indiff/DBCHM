@@ -16,9 +16,9 @@ namespace DBCHM
             this.ExecAct = execAct;
             this.MaxNum = maxNum;
         }
+
         public Action ExecAct { get; set; }
 
         public int MaxNum { get; set; }
-
     }
 }

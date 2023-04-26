@@ -23,12 +23,13 @@ namespace DBCHM
 
             CheckForIllegalCrossThreadCalls = false;
 
-            //为KeyDown能应用到所有控件上 注册 KeyDown 事件 
+            //为KeyDown能应用到所有控件上 注册 KeyDown 事件
             foreach (Control control in this.Controls)
             {
                 control.KeyDown += control_KeyDown;
             }
         }
+
         public void control_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -73,7 +74,6 @@ namespace DBCHM
                 return;
             }
 
-
             FormUtils.ShowProcessing("正在更新批注到数据库，请稍等......", this, arg =>
             {
                 string[] paths = txtMulItem.Text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -105,16 +105,14 @@ namespace DBCHM
                 MessageBox.Show("更新表列批注完成！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 FormUtils.IsOK_Close = true;
                 this.Close();
-
             }, null);
         }
-
 
         /// <summary>
         /// 通过pdm文件更新批注
         /// </summary>
         /// <param name="path"></param>
-        void UpdateCommentByPDM(string path)
+        private void UpdateCommentByPDM(string path)
         {
             var lstTabs = GetTables(path);
             var dbInfo = DBUtils.Instance?.Info;
@@ -139,8 +137,7 @@ namespace DBCHM
             }
         }
 
-
-        static IList<PdmModels.TableInfo> GetTables(params string[] pdmPaths)
+        private static IList<PdmModels.TableInfo> GetTables(params string[] pdmPaths)
         {
             List<PdmModels.TableInfo> lstTables = new List<PdmModels.TableInfo>();
             var pdmReader = new PDM.PdmReader();
@@ -156,7 +153,7 @@ namespace DBCHM
             return lstTables;
         }
 
-        void UpdateCommentByXML(string path)
+        private void UpdateCommentByXML(string path)
         {
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
             if (xmlContent.Contains("ArrayOfTableDto"))
@@ -165,7 +162,7 @@ namespace DBCHM
 
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(xmlContent);
-                
+
                 var dbName = doc.DocumentElement.GetAttribute("databaseName");
 
                 if (!DBUtils.Instance.Info.DBName.Equals(dbName, StringComparison.OrdinalIgnoreCase))
@@ -196,7 +193,6 @@ namespace DBCHM
             }
             else
             {
-
                 //通过 有 VS 生成的 实体类库 XML文档文件 来更新 表列批注
 
                 XmlAnalyze analyze = new XmlAnalyze(path);
@@ -218,7 +214,6 @@ namespace DBCHM
                         }
                     }
                 }
-
             }
         }
     }

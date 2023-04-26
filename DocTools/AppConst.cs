@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DocTools
+﻿namespace DocTools
 {
     /// <summary>
     /// dll库全局参数设置
@@ -20,7 +14,6 @@ namespace DocTools
         /// 数据库表目录
         /// </summary>
         public const string TABLE_CHAPTER_NAME = "数据库表目录";
-
 
         /// <summary>
         /// 数据库表结构

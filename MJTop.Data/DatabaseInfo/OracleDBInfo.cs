@@ -80,8 +80,10 @@ namespace MJTop.Data.DatabaseInfo
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
 
+        public Dictionary<string, int> TableRows { get; private set; } = new Dictionary<string, int>();
+
         public List<string> TableNames { get; private set; } = new List<string>();
-        
+
         public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; }
 
         public IgCaseDictionary<List<string>> TableColumnNameDict { get; private set; }
@@ -98,8 +100,9 @@ namespace MJTop.Data.DatabaseInfo
 
         public NameValueCollection Procs { get; private set; }
 
-        public List<string> DBNames { get { return DBName.TransList(); } }
-        
+        public List<string> DBNames
+        { get { return DBName.TransList(); } }
+
         public List<string> Sequences { get; set; } = new List<string>();
 
         public ColumnInfo this[string tableName, string columnName]
@@ -113,7 +116,6 @@ namespace MJTop.Data.DatabaseInfo
             }
         }
 
-
         public List<string> this[string tableName]
         {
             get
@@ -123,7 +125,6 @@ namespace MJTop.Data.DatabaseInfo
                 return colNames;
             }
         }
-
 
         public string IdentitySeqName(string tableName)
         {
@@ -144,8 +145,82 @@ namespace MJTop.Data.DatabaseInfo
             this.TableColumnComments = new IgCaseDictionary<NameValueCollection>(KeyCase.Upper);
 
             string sequence_Sql = string.Format("SELECT SEQUENCE_NAME FROM ALL_SEQUENCES WHERE SEQUENCE_OWNER = '{0}' ORDER BY SEQUENCE_NAME", User);
-            
-            string strSql = string.Format("SELECT T.TABLE_NAME as Name, TC.COMMENTS  as Value FROM SYS.ALL_ALL_TABLES T, SYS.ALL_TAB_COMMENTS TC WHERE T.IOT_NAME IS NULL  AND T.NESTED = 'NO'  AND T.SECONDARY = 'N'  AND NOT EXISTS ( SELECT 1 FROM SYS.ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME ) AND TC.OWNER ( + ) = T.OWNER  AND TC.TABLE_NAME ( + ) = T.TABLE_NAME  AND T.OWNER = '{0}' ORDER BY T.TABLE_NAME ASC", User);
+
+            // 读取表名称和注释信息 // 去除空格  // T.NUM_ROWS DESC, 按照行数降序
+            string tableCommentSql = string.Format("SELECT T.TABLE_NAME as Name, TRIM(TC.COMMENTS) AS Value  " +
+                                                   "FROM SYS.ALL_ALL_TABLES T, SYS.ALL_TAB_COMMENTS TC " +
+                                                   "WHERE T.IOT_NAME IS NULL  " +
+                                                   "AND T.NESTED = 'NO'  " +
+                                                   "AND T.SECONDARY = 'N'  " +
+                                                   "AND NOT EXISTS ( SELECT 1 FROM SYS.ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME ) " +
+                                                   "AND TC.OWNER ( + ) = T.OWNER  " +
+                                                   "AND TC.TABLE_NAME ( + ) = T.TABLE_NAME  " +
+                                                   "AND T.OWNER = '{0}' ORDER BY T.NUM_ROWS DESC,T.TABLE_NAME ASC", User);
+
+            // 添加内置的行数表 by indiff PROD_TABLE_ROWS  注意：使用下面的语句的话必须保证表结构存在 PROD_TABLE_ROWS
+            /*  // 创建表记录的语句，创建表的名称和行数表
+                    drop table PROD_TABLE_ROWS;
+                    create table PROD_TABLE_ROWS as
+                    SELECT
+	                    T.TABLE_NAME AS Name,
+	                    T.NUM_ROWS AS TableRows,
+	                    TRIM(TC.COMMENTS) AS Value
+                    FROM
+	                    SYS.ALL_ALL_TABLES T,
+	                    SYS.ALL_TAB_COMMENTS TC
+                    WHERE
+	                    T.IOT_NAME IS NULL
+	                    AND T.NESTED = 'NO'
+	                    AND T.SECONDARY = 'N'
+	                    AND NOT EXISTS ( SELECT 1 FROM SYS.ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME )
+	                    AND TC.OWNER ( + ) = T.OWNER
+	                    AND TC.TABLE_NAME ( + ) = T.TABLE_NAME
+	                    AND T.OWNER = 'XXX'
+                    ORDER BY
+                      T.NUM_ROWS DESC,
+	                    T.TABLE_NAME ASC
+             */
+            tableCommentSql = string.Format(@"SELECT
+	                                T.TABLE_NAME AS Name,
+	                                TRIM( TC.COMMENTS ) AS Value
+                                FROM
+	                                SYS.ALL_ALL_TABLES T,
+	                                SYS.ALL_TAB_COMMENTS TC,
+	                                PROD_TABLE_ROWS R
+                                WHERE
+	                                T.IOT_NAME IS NULL
+	                                AND T.NESTED = 'NO'
+	                                AND T.SECONDARY = 'N'
+	                                AND T.TABLE_NAME NOT IN ( 'PROD_TABLE_ROWS', 'PROD_TABLE_ROWS20220804', 'PROD_TABLE_ROWS20220813', 'TEST1')
+	                                AND NOT EXISTS ( SELECT 1 FROM SYS.ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME )
+	                                AND TC.OWNER ( + ) = T.OWNER
+	                                AND TC.TABLE_NAME ( + ) = T.TABLE_NAME
+	                                AND TC.TABLE_NAME = R.NAME
+	                                AND T.OWNER = '{0}'
+                                ORDER BY
+	                                R.TABLEROWS DESC", User);  // T.NUM_ROWS DESC, 按照行数降序
+
+            // 读取表名称和注释信息 添加表行数信息
+            string tableRowSql = string.Format(@"SELECT
+	                                            T.TABLE_NAME AS Name,
+	                                            T.NUM_ROWS AS Value
+                                            FROM
+	                                            SYS.ALL_ALL_TABLES T,
+	                                            SYS.ALL_TAB_COMMENTS TC
+                                            WHERE
+	                                            T.IOT_NAME IS NULL
+	                                            AND T.NESTED = 'NO'
+	                                            AND T.SECONDARY = 'N'
+	                                            AND NOT EXISTS ( SELECT 1 FROM SYS.ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME )
+	                                            AND TC.OWNER ( + ) = T.OWNER
+	                                            AND TC.TABLE_NAME ( + ) = T.TABLE_NAME
+	                                            AND T.OWNER = '{0}'
+                                            ORDER BY
+                                              T.NUM_ROWS DESC,
+                                              T.TABLE_NAME ASC", User);
+
+            // 使用测试库创建的临时表来存储数据行数  by indiff
+            tableRowSql = string.Format(@"SELECT NAME,TABLEROWS FROM prod_table_rows order by TABLEROWS DESC,NAME ASC", User);
 
             string viewSql = string.Format("select view_name,text from ALL_VIEWS WHERE OWNER = '{0}' order by view_name asc", User);
 
@@ -155,13 +230,15 @@ namespace MJTop.Data.DatabaseInfo
             //https://blog.csdn.net/rczrj/article/details/74977010
             procSql = string.Format("select * from (SELECT name,xmlagg(xmlparse(content text||' ' wellformed) order by line asc).getclobval() text FROM all_source where OWNER = '{0}' group by name ) order by name asc", User);
             procSql = string.Format("select(name || '(' || type || ')') as name , text from(SELECT name, type, xmlagg(xmlparse(content text|| ' ' wellformed) order by line asc).getclobval() text FROM all_source where OWNER = '{0}' group by name, type ) order by type,   name asc", User);
-            
+
             try
             {
                 //查询Oracle的所有序列
                 this.Sequences = Db.ReadList<string>(sequence_Sql);
 
-                this.TableComments = Db.ReadNameValues(strSql);
+                this.TableComments = Db.ReadNameValues(tableCommentSql);
+
+                this.TableRows = Db.ReadDictionary<string, int>(tableRowSql); ;
 
                 this.Version = Db.Scalar("select * from v$version where ROWNUM = 1", string.Empty);
 
@@ -191,34 +268,42 @@ namespace MJTop.Data.DatabaseInfo
                             TableInfo tabInfo = new TableInfo();
                             tabInfo.TableName = tableName;
                             tabInfo.TabComment = this.TableComments[tableName];
+                            if (!this.TableRows.ContainsKey(tableName))  // 如果通过表名查找行数字典找不到数据，则赋0
+                            {
+                                tabInfo.TableRows = 0;
+                            }
+                            else
+                            {
+                                tabInfo.TableRows = this.TableRows[tableName];
+                            }
 
                             /** 该语句，包含某列是否自增列，查询慢 **/
 
-                            strSql = @"select a.COLUMN_ID As Colorder,a.COLUMN_NAME As ColumnName,a.DATA_TYPE As TypeName,b.comments As DeText,(Case When a.DATA_TYPE='NUMBER' Then a.DATA_PRECISION When a.DATA_TYPE='NVARCHAR2' Then a.DATA_LENGTH/2 Else a.DATA_LENGTH End )As Length,a.DATA_SCALE As Scale,
+                            tableCommentSql = @"select a.COLUMN_ID As Colorder,a.COLUMN_NAME As ColumnName,a.DATA_TYPE As TypeName,b.comments As DeText,(Case When a.DATA_TYPE='NUMBER' Then a.DATA_PRECISION When a.DATA_TYPE='NVARCHAR2' Then a.DATA_LENGTH/2 Else a.DATA_LENGTH End )As Length,a.DATA_SCALE As Scale,
 	(Case When (select Count(1)  from all_cons_columns aa, all_constraints bb where aa.OWNER = '{0}' and bb.OWNER = '{0}' and aa.constraint_name = bb.constraint_name and bb.constraint_type = 'P' and aa.table_name = '{1}' And aa.column_name=a.COLUMN_NAME)>0 Then 1 Else 0 End
 	 ) As IsPK,(
-			 case when (select count(1) from all_triggers tri INNER JOIN all_source src on tri.trigger_Name=src.Name 
+			 case when (select count(1) from all_triggers tri INNER JOIN all_source src on tri.trigger_Name=src.Name
 				where tri.OWNER = '{0}' and src.OWNER = '{0}' and (triggering_Event='INSERT' and table_name='{1}')
-			and regexp_like(text,concat(concat('into\s*?:\s*?new\s*?\.\s*?',a.COLUMN_NAME),'\s+?'),'i'))>0 
-			then 1 else 0 end 
-	) As IsIdentity, 
+			and regexp_like(text,concat(concat('into\s*?:\s*?new\s*?\.\s*?',a.COLUMN_NAME),'\s+?'),'i'))>0
+			then 1 else 0 end
+	) As IsIdentity,
 		Case a.NULLABLE  When 'Y' Then 1 Else 0 End As CanNull,
-		a.data_default As DefaultVal from all_tab_columns a Inner Join all_col_comments b On a.TABLE_NAME=b.table_name 
+		a.data_default As DefaultVal from all_tab_columns a Inner Join all_col_comments b On a.TABLE_NAME=b.table_name
 	Where a.OWNER = '{0}' and b.OWNER = '{0}' and b.COLUMN_NAME= a.COLUMN_NAME and a.Table_Name='{1}'  order by a.column_ID Asc";
 
                             // 忽略 IsIdentity 查询
-                            strSql = @"select a.COLUMN_ID As Colorder,a.COLUMN_NAME As ColumnName,a.DATA_TYPE As TypeName,b.comments As DeText,(Case When a.DATA_TYPE='NUMBER' Then a.DATA_PRECISION When a.DATA_TYPE='NVARCHAR2' Then a.DATA_LENGTH/2 Else a.DATA_LENGTH End )As Length,a.DATA_SCALE As Scale,
+                            tableCommentSql = @"select a.COLUMN_ID As Colorder,a.COLUMN_NAME As ColumnName,a.DATA_TYPE As TypeName,b.comments As DeText,(Case When a.DATA_TYPE='NUMBER' Then a.DATA_PRECISION When a.DATA_TYPE='NVARCHAR2' Then a.DATA_LENGTH/2 Else a.DATA_LENGTH End )As Length,a.DATA_SCALE As Scale,
 	(Case When (select Count(1)  from all_cons_columns aa, all_constraints bb where aa.OWNER = '{0}' and bb.OWNER = '{0}' and aa.constraint_name = bb.constraint_name and bb.constraint_type = 'P' and aa.table_name = '{1}' And aa.column_name=a.COLUMN_NAME)>0 Then 1 Else 0 End
-	 ) As IsPK,0 As IsIdentity, 
+	 ) As IsPK,0 As IsIdentity,
 		Case a.NULLABLE  When 'Y' Then 1 Else 0 End As CanNull,
-		a.data_default As DefaultVal from all_tab_columns a Inner Join all_col_comments b On a.TABLE_NAME=b.table_name 
+		a.data_default As DefaultVal from all_tab_columns a Inner Join all_col_comments b On a.TABLE_NAME=b.table_name
 	Where a.OWNER = '{0}' and b.OWNER = '{0}' and b.COLUMN_NAME= a.COLUMN_NAME and a.Table_Name='{1}'  order by a.column_ID Asc";
 
-                            strSql = string.Format(strSql, User, tableName);
+                            tableCommentSql = string.Format(tableCommentSql, User, tableName);
 
                             try
                             {
-                                tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
+                                tabInfo.Colnumns = Db.GetDataTable(tableCommentSql).ConvertToListObject<ColumnInfo>();
 
                                 List<string> lstColName = new List<string>();
                                 NameValueCollection nvcColDeText = new NameValueCollection();
@@ -260,7 +345,7 @@ namespace MJTop.Data.DatabaseInfo
                             }
                             catch (Exception ex)
                             {
-                                LogUtils.LogError("DB", Developer.SysDefault, ex, strSql);
+                                LogUtils.LogError("DB", Developer.SysDefault, ex, tableCommentSql);
                             }
                         });
 
@@ -273,8 +358,6 @@ namespace MJTop.Data.DatabaseInfo
                     }
                     Task.WaitAll(lstTask.ToArray());
                 }
-
-                    
             }
             catch (Exception ex)
             {
@@ -283,10 +366,11 @@ namespace MJTop.Data.DatabaseInfo
             }
             return this.TableComments.Count == this.TableInfoDict.Count;
         }
-        
+
         /**
          * 处理存储过程的名称
          */
+
         private void handleProcsByIndiff()
         {
             NameValueCollection nvc = new NameValueCollection();
@@ -303,9 +387,11 @@ namespace MJTop.Data.DatabaseInfo
                 this.Procs = nvc;
             }
         }
+
         /**
          * 提取功能描述
          */
+
         private string getComment(string k, string v)
         {
             string pattern = @"功能描述：(.+)\s+";
@@ -350,7 +436,6 @@ namespace MJTop.Data.DatabaseInfo
             return Db.ReadDictionary<string, DateTime>(strSql);
         }
 
-
         public bool IsExistTable(string tableName)
         {
             tableName = (tableName ?? string.Empty);
@@ -362,7 +447,6 @@ namespace MJTop.Data.DatabaseInfo
             var strKey = (tableName + "@" + columnName);
             return DictColumnInfo.ContainsKey(strKey);
         }
-
 
         public string GetColumnComment(string tableName, string columnName)
         {
@@ -406,7 +490,7 @@ namespace MJTop.Data.DatabaseInfo
             Db.CheckTabStuct(tableName);
 
             //tableName = (tableName ?? string.Empty);
-           
+
             string upsert_sql = string.Empty;
             comment = (comment ?? string.Empty).Replace("'", "");
             try
@@ -447,7 +531,7 @@ namespace MJTop.Data.DatabaseInfo
                 NameValueCollection nvcColDesc = new NameValueCollection();
                 lstColInfo.ForEach(t =>
                 {
-                    if (t.ColumnName.Equals(columnName,StringComparison.OrdinalIgnoreCase))
+                    if (t.ColumnName.Equals(columnName, StringComparison.OrdinalIgnoreCase))
                     {
                         t.DeText = comment;
                     }
@@ -464,7 +548,6 @@ namespace MJTop.Data.DatabaseInfo
                 ColumnInfo colInfo = DictColumnInfo[strKey];
                 colInfo.DeText = comment;
                 DictColumnInfo[strKey] = colInfo;
-
             }
             catch (Exception ex)
             {
@@ -482,7 +565,6 @@ namespace MJTop.Data.DatabaseInfo
             string drop_sql = string.Empty;
             try
             {
-
                 drop_sql = "drop table " + tableName;
                 Db.ExecSql(drop_sql);
 
@@ -503,7 +585,6 @@ namespace MJTop.Data.DatabaseInfo
                 }
 
                 this.TableColumnNameDict.Remove(tableName);
-
             }
             catch (Exception ex)
             {
@@ -521,7 +602,7 @@ namespace MJTop.Data.DatabaseInfo
             columnName = (columnName ?? string.Empty);
 
             var strKey = (tableName + "@" + columnName);
-            
+
             string drop_sql = "alter table {0} drop column {1}";
             try
             {
@@ -555,7 +636,6 @@ namespace MJTop.Data.DatabaseInfo
                 });
                 lstColInfo.Remove(curColInfo);
                 TableColumnInfoDict[tableName] = lstColInfo;
-
             }
             catch (Exception ex)
             {

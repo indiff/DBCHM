@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DocTools.Dtos;
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DocTools.Dtos;
 using ZetaLongPaths;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DocTools.DBDoc
 {
@@ -16,7 +12,6 @@ namespace DocTools.DBDoc
     {
         public ChmDoc(DBDto dto, string filter = "chm files (*.chm)|*.chm") : base(dto, filter)
         {
-
         }
 
         private Encoding CurrEncoding
@@ -42,13 +37,13 @@ namespace DocTools.DBDoc
         }
 
         // 创建目录结构
-        void InitDirFiles(string tableStr, string viewStr, string procStr)
+        private void InitDirFiles(string tableStr, string viewStr, string procStr)
         {
             var dirNames = new string[] {
                 tableStr,
                 viewStr,
                 procStr,
-                //"函数", 
+                //"函数",
                 "resources\\js"
             };
 
@@ -63,7 +58,6 @@ namespace DocTools.DBDoc
                 ZlpIOHelper.CreateDirectory(tmpDir);
             }
 
-
             var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\chm\\");
 
             var files = Directory.GetFiles(dir, "*.js", SearchOption.AllDirectories);
@@ -77,7 +71,7 @@ namespace DocTools.DBDoc
 
         public override void Build(string filePath)
         {
-            #region 使用 HTML Help Workshop 的 hhc.exe 编译 ,先判断系统中是否已经安装有  HTML Help Workshop 
+            #region 使用 HTML Help Workshop 的 hhc.exe 编译 ,先判断系统中是否已经安装有  HTML Help Workshop
 
             if (this.HHCPath.IsNullOrWhiteSpace())
             {
@@ -85,7 +79,7 @@ namespace DocTools.DBDoc
 
                 if (File.Exists(htmlhelpPath))
                 {
-                    if (MessageBox.Show("导出CHM文档需安装 HTML Help Workshop ，是否现在安装？","提示",
+                    if (MessageBox.Show("导出CHM文档需安装 HTML Help Workshop ，是否现在安装？", "提示",
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
                     {
                         var proc = Process.Start(htmlhelpPath);
@@ -94,12 +88,12 @@ namespace DocTools.DBDoc
                 return;
             }
 
-            #endregion
+            #endregion 使用 HTML Help Workshop 的 hhc.exe 编译 ,先判断系统中是否已经安装有  HTML Help Workshop
 
             var tableStr = "表结构(" + this.Dto.Tables.Count + ")";
             var viewStr = "视图(" + this.Dto.Views.Count + ")";
             var procStr = "存储过程(" + this.Dto.Procs.Count + ")";
-            this.InitDirFiles(tableStr,viewStr,procStr);
+            this.InitDirFiles(tableStr, viewStr, procStr);
 
             //MessageBox.Show("InitDirFiles");
 
@@ -113,14 +107,12 @@ namespace DocTools.DBDoc
             var sqlcode_tpl = File.ReadAllText(Path.Combine(dir, "sqlcode.cshtml"), CurrEncoding);
             // MessageBox.Show("ReadAllText");
 
+            //  MessageBox.Show(" hhk_tpl RazorRender LI");
 
-            
-          //  MessageBox.Show(" hhk_tpl RazorRender LI");
-
-           try
+            try
             {
                 var hhk = hhk_tpl.RazorRender(this.Dto).Replace("</LI>", "");
-                var  hhc = hhc_tpl.RazorRender(this.Dto).Replace("</LI>", "");
+                var hhc = hhc_tpl.RazorRender(this.Dto).Replace("</LI>", "");
                 ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhc"), hhc, CurrEncoding);
                 ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhk"), hhk, CurrEncoding);
                 ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "数据库目录.html"), list_tpl.RazorRender(this.Dto), CurrEncoding);
@@ -130,10 +122,10 @@ namespace DocTools.DBDoc
                 MessageBox.Show(ex.Message);
             }
 
-           // MessageBox.Show("write all text");
+            // MessageBox.Show("write all text");
             foreach (var tab in this.Dto.Tables)
             {
-                if ( !String.IsNullOrWhiteSpace( tab.TableModule ))
+                if (!String.IsNullOrWhiteSpace(tab.TableModule))
                 {
                     // 文件实际目录
                     var tab_path_dir = Path.Combine(this.WorkTmpDir, tableStr, tab.TableModule);
@@ -142,23 +134,22 @@ namespace DocTools.DBDoc
                     if (!ZlpIOHelper.DirectoryExists(tab_path_dir))
                     {
                         ZlpIOHelper.CreateDirectory(tab_path_dir);
-                       //  ZlpIOHelper.DeleteDirectory(tab_path_dir, true);
+                        //  ZlpIOHelper.DeleteDirectory(tab_path_dir, true);
                     }
                     // 输出文件内容
                     var content = table_tpl.RazorRender(tab);
-                   //  File.WriteAllText(Path.Combine(this.WorkTmpDir, tableStr, tab.TableModule, "content.html"), content);
+                    //  File.WriteAllText(Path.Combine(this.WorkTmpDir, tableStr, tab.TableModule, "content.html"), content);
                     ZlpIOHelper.WriteAllText(tab_path, content, CurrEncoding);
-                  //   MessageBox.Show(content);
+                    //   MessageBox.Show(content);
                 }
                 else
                 {
-                   // MessageBox.Show( " table module is empty ");
+                    // MessageBox.Show( " table module is empty ");
                     var tab_path = Path.Combine(this.WorkTmpDir, tableStr, $"{tab.TableName} {tab.Comment}.html");
                     var content = table_tpl.RazorRender(tab);
                     ZlpIOHelper.WriteAllText(tab_path, content, CurrEncoding);
                 }
             }
-
 
             foreach (var item in Dto.Views)
             {
@@ -172,7 +163,7 @@ namespace DocTools.DBDoc
             int i = 0;
             foreach (var item in Dto.Procs)
             {
-                Console.WriteLine("start :" + item.Key  + (i++) );
+                Console.WriteLine("start :" + item.Key + (i++));
                 var proc_path = Path.Combine(this.WorkTmpDir, procStr, $"{item.Key}.html");
                 var content = sqlcode_tpl.RazorRender(
                     new SqlCode() { DBType = Dto.DBType, CodeName = item.Key, Content = item.Value.Trim() }
@@ -182,12 +173,9 @@ namespace DocTools.DBDoc
             }
 
             var hhp_Path = Path.Combine(this.WorkTmpDir, "chm.hhp");
-
             ZlpIOHelper.WriteAllText(hhp_Path, hhp_tpl.RazorRender(new ChmHHP(filePath, this.WorkTmpDir)), CurrEncoding);
 
-
             string res = StartRun(HHCPath, hhp_Path, Encoding.GetEncoding("gbk"));
-
             ZlpIOHelper.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
         }
 
@@ -196,7 +184,7 @@ namespace DocTools.DBDoc
             string str = "";
             ProcessStartInfo startInfo = new ProcessStartInfo()
             {
-                FileName = hhcPath,  //调入HHC.EXE文件 
+                FileName = hhcPath,  //调入HHC.EXE文件
                 Arguments = arguments,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 RedirectStandardOutput = true,
@@ -217,6 +205,5 @@ namespace DocTools.DBDoc
             }
             return str.Trim();
         }
-
     }
 }

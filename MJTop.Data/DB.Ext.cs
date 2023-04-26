@@ -1,16 +1,11 @@
-﻿using MJTop.Data.SPI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
-using System.Collections.Specialized;
-using MJTop.Data.DatabaseInfo;
+using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Text.RegularExpressions;
 
 namespace MJTop.Data
@@ -18,6 +13,7 @@ namespace MJTop.Data
     public partial class DB
     {
         #region 实体相关
+
         public virtual TEntity GetById<TEntity>(string tableName, object pkValue) where TEntity : class, new()
         {
             TableInfo tabInfo = Info.TableInfoDict[tableName];
@@ -230,7 +226,7 @@ namespace MJTop.Data
             return data.ConvertToListObject<TEntity>();
         }
 
-        #endregion
+        #endregion 实体相关
 
         public virtual DataTable SelectTable(string joinTableName, string whereStr, string orderbyStr)
         {
@@ -253,10 +249,12 @@ namespace MJTop.Data
 
             return GetDataTable(strSql);
         }
+
         public virtual bool Exist(string tableName, string columnName, object columnValue)
         {
             return Exist(tableName, columnName, columnValue, null);
         }
+
         public virtual bool Exist(string tableName, string columnName, object columnValue, params object[] excludeValues)
         {
             string exist_sql = "select count(1) from " + tableName + " where " + columnName + "='" + columnValue + "' ";
@@ -288,6 +286,7 @@ namespace MJTop.Data
             }
             return res;
         }
+
         public virtual int Delete(string tableName, string columnName, params object[] columnValues)
         {
             if (columnValues != null && columnValues.Length <= 0
@@ -334,7 +333,7 @@ namespace MJTop.Data
             }
             string delSql = string.Empty;
             delSql = "delete from " + tableName + " where " + Info.TableInfoDict[tableName].PriKeyColName + "=" + ParameterSql(Info.TableInfoDict[tableName].PriKeyColName);
-            int res = ExecSql(delSql, new DbParameter[] {  CreateParameter(Info.TableInfoDict[tableName].PriKeyColName, pkValue) });
+            int res = ExecSql(delSql, new DbParameter[] { CreateParameter(Info.TableInfoDict[tableName].PriKeyColName, pkValue) });
             var lstAct = DataChangeTriggers.GetActions(tableName);
             if (lstAct.Any())
             {

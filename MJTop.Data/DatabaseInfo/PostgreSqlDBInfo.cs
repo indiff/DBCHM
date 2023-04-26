@@ -21,6 +21,7 @@ namespace MJTop.Data.DatabaseInfo
             get;
             private set;
         }
+
         public PostgreSqlDBInfo(DB db)
         {
             this.Db = db;
@@ -51,20 +52,21 @@ namespace MJTop.Data.DatabaseInfo
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
+        public Dictionary<string, int> TableRows { get; private set; } = new Dictionary<string, int>();
 
         private NameValueCollection TableSchemas { get; set; } = new NameValueCollection();
 
         public List<string> TableNames { get; private set; } = new List<string>();
-        
-        public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; } 
 
-        public IgCaseDictionary<List<string>> TableColumnNameDict { get; private set; } 
+        public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; }
 
-        public IgCaseDictionary<List<ColumnInfo>> TableColumnInfoDict { get; private set; } 
+        public IgCaseDictionary<List<string>> TableColumnNameDict { get; private set; }
 
-        public IgCaseDictionary<NameValueCollection> TableColumnComments { get; private set; } 
+        public IgCaseDictionary<List<ColumnInfo>> TableColumnInfoDict { get; private set; }
 
-        private IgCaseDictionary<ColumnInfo> DictColumnInfo { get; set; } 
+        public IgCaseDictionary<NameValueCollection> TableColumnComments { get; private set; }
+
+        private IgCaseDictionary<ColumnInfo> DictColumnInfo { get; set; }
 
         private IgCaseDictionary<string> Dict_Table_Identity_Column { get; set; } = new IgCaseDictionary<string>();
 
@@ -95,7 +97,6 @@ namespace MJTop.Data.DatabaseInfo
             }
         }
 
-
         public bool Refresh()
         {
             this.DictColumnInfo = new IgCaseDictionary<ColumnInfo>();
@@ -118,7 +119,6 @@ order by schid asc";
 
             try
             {
-               
                 this.DBNames = Db.ReadList<string>(dbSql);
 
                 this.Version = Db.Scalar("select version()", string.Empty);
@@ -159,15 +159,15 @@ order by schid asc";
                             strSql = @"set search_path to " + TableSchemas[tableName] + @";select ordinal_position as Colorder,column_name as ColumnName,data_type as TypeName,
 coalesce(character_maximum_length,numeric_precision,-1) as Length,numeric_scale as Scale,
 case is_nullable when 'NO' then 0 else 1 end as CanNull,column_default as DefaultVal,
-case  when position('nextval' in column_default)>0 then 1 else 0 end as IsIdentity, 
+case  when position('nextval' in column_default)>0 then 1 else 0 end as IsIdentity,
 case when b.pk_name is null then 0 else 1 end as IsPK,c.DeText
-from information_schema.columns 
+from information_schema.columns
 left join (
-	select pg_attr.attname as colname,pg_constraint.conname as pk_name from pg_constraint  
-	inner join pg_class on pg_constraint.conrelid = pg_class.oid 
-	inner join pg_attribute pg_attr on pg_attr.attrelid = pg_class.oid and  pg_attr.attnum = pg_constraint.conkey[1] 
+	select pg_attr.attname as colname,pg_constraint.conname as pk_name from pg_constraint
+	inner join pg_class on pg_constraint.conrelid = pg_class.oid
+	inner join pg_attribute pg_attr on pg_attr.attrelid = pg_class.oid and  pg_attr.attnum = pg_constraint.conkey[1]
 	inner join pg_type on pg_type.oid = pg_attr.atttypid
-	where pg_class.relname =:tableName and pg_constraint.contype='p' 
+	where pg_class.relname =:tableName and pg_constraint.contype='p'
 ) b on b.colname = information_schema.columns.column_name
 left join (
 	select attname,description as DeText from pg_class
@@ -296,7 +296,7 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
             Db.CheckTabStuct(tableName);
 
             tableName = TableInfoDict[tableName].TableName;
-           
+
             string upsert_sql = string.Empty;
             comment = (comment ?? string.Empty).Replace("'", "");
             try
@@ -326,7 +326,7 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
 
             tableName = TableInfoDict[tableName].TableName;
             columnName = this[tableName, columnName].ColumnName;
-            
+
             string upsert_sql = string.Empty;
             comment = (comment ?? string.Empty).Replace("'", "");
             try
@@ -374,7 +374,6 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
             string drop_sql = string.Empty;
             try
             {
-
                 drop_sql = "drop table " + tableName;
                 Db.ExecSql(drop_sql);
 
@@ -395,7 +394,6 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
                 }
 
                 this.TableColumnNameDict.Remove(tableName);
-
             }
             catch (Exception ex)
             {
@@ -416,7 +414,7 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
 
             string drop_sql = "alter table {0} drop column {1}";
             try
-            {               
+            {
                 drop_sql = string.Format(drop_sql, tableName, columnName);
                 Db.ExecSql(drop_sql);
 
@@ -447,7 +445,6 @@ where table_schema not in ('pg_catalog','information_schema') and table_name=:ta
                 });
                 lstColInfo.Remove(curColInfo);
                 TableColumnInfoDict[tableName] = lstColInfo;
-
             }
             catch (Exception ex)
             {

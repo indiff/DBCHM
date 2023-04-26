@@ -30,7 +30,6 @@ namespace MJTop.Data
             set;
         }
 
-
         /// <summary>
         /// 数据类型
         /// </summary>
@@ -50,7 +49,7 @@ namespace MJTop.Data
             get;
             set;
         }
-        
+
         /// <summary>
         /// 字段长度 max 或特殊数据类型 使用 -1 表示！
         /// </summary>
@@ -71,7 +70,6 @@ namespace MJTop.Data
             set;
         }
 
-
         /// <summary>
         /// 是否自增列
         /// </summary>
@@ -81,8 +79,6 @@ namespace MJTop.Data
             get;
             set;
         }
-
-
 
         /// <summary>
         /// 是否主键
@@ -151,6 +147,5 @@ namespace MJTop.Data
             get;
             set;
         }
-
     }
 }

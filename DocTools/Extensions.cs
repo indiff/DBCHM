@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ZetaLongPaths;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Specialized;
 
 namespace DocTools
 {
@@ -177,7 +176,7 @@ namespace DocTools
             return md;
         }
 
-        #endregion
+        #endregion MarkDown
 
         #region Xml序列化/反序列化
 
@@ -208,8 +207,6 @@ namespace DocTools
             return xmldes.Deserialize(stream);
         }
 
-
-
         /// <summary>
         /// 序列化
         /// </summary>
@@ -233,6 +230,6 @@ namespace DocTools
             return str;
         }
 
-        #endregion
+        #endregion Xml序列化/反序列化
     }
 }

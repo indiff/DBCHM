@@ -1,15 +1,11 @@
 ﻿using DDTek.Oracle;
 using MJTop.Data.DatabaseInfo;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MJTop.Data.Database
 {
@@ -123,7 +119,7 @@ namespace MJTop.Data.Database
             return res;
         }
 
-        public override KeyValuePair<DataTable,long> GetDataTableByPager(int currentPage, int pageSize, string selColumns, string joinTableName, string whereStr, string orderbyStr)
+        public override KeyValuePair<DataTable, long> GetDataTableByPager(int currentPage, int pageSize, string selColumns, string joinTableName, string whereStr, string orderbyStr)
         {
             if (string.IsNullOrEmpty(selColumns))
             {
@@ -163,7 +159,6 @@ namespace MJTop.Data.Database
 
             string strSQL = "select {0} from {1} where 1=1 {2} order by {3}";
             strSQL = string.Format(strSQL, selColumns, joinTableName, whereStr, orderbyStr);
-
 
             strPageSQL = string.Format(@"SELECT * FROM (SELECT A.*, ROWNUM RN FROM ({0}) A) WHERE RN BETWEEN {1} AND {2}",
                                        strSQL, (currentPage - 1) * pageSize + 1, (currentPage) * pageSize);
@@ -257,7 +252,6 @@ namespace MJTop.Data.Database
             return reader.RecordsAffected;
         }
 
-
         public override DataTable SelectTop(string tableName, int top = 10, string orderbyStr = null)
         {
             string strSql = "select * from (select * from {0} {1})t where rownum <= {2}";
@@ -271,6 +265,5 @@ namespace MJTop.Data.Database
             }
             return base.SelectTop(tableName, top, orderbyStr);
         }
-
     }
 }

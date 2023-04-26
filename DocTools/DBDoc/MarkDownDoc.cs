@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using DocTools.Dtos;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using DocTools.Dtos;
 using ZetaLongPaths;
 
 namespace DocTools.DBDoc

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DocTools.Dtos
 {
     public class ChmHHP
     {
-        public ChmHHP() { }
+        public ChmHHP()
+        { }
 
         public ChmHHP(string chmFile, string workTmpDir)
         {

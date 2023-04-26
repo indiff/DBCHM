@@ -1,14 +1,13 @@
 ﻿using MJTop.Data.DatabaseInfo;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Data;
 using System.Text.RegularExpressions;
-using System.IO;
-using MySql.Data.MySqlClient;
 
 namespace MJTop.Data.Database
 {
@@ -53,7 +52,6 @@ namespace MJTop.Data.Database
             }
             else
             {
-
                 throw new ArgumentNullException("orderbyStr");
             }
 
@@ -64,7 +62,7 @@ namespace MJTop.Data.Database
             strSQL = string.Format(strSQL, selColumns, joinTableName, whereStr, orderbyStr);
 
             strPageSQL = string.Format(@"SELECT * FROM ({0}) A limit {1},{2}",
-                                       strSQL, (currentPage - 1) * pageSize,  pageSize);
+                                       strSQL, (currentPage - 1) * pageSize, pageSize);
 
             DataSet ds = new DataSet("ds");
             DbConnection conn = null;
@@ -110,7 +108,6 @@ namespace MJTop.Data.Database
             return new KeyValuePair<DataTable, long>(data, totalCount);
         }
 
-
         public override DataTable SelectTop(string tableName, int top = 10, string orderbyStr = null)
         {
             string strSql = "select * from {0} {1} limit 0,{2}";
@@ -125,15 +122,15 @@ namespace MJTop.Data.Database
             return base.SelectTop(tableName, top, orderbyStr);
         }
 
-        ///将DataTable转换为标准的CSV  
-        /// </summary>  
-        /// <param name="table">数据表</param>  
-        /// <returns>返回标准的CSV</returns>  
+        ///将DataTable转换为标准的CSV
+        /// </summary>
+        /// <param name="table">数据表</param>
+        /// <returns>返回标准的CSV</returns>
         private static string DataTableToCsv(DataTable table)
         {
-            //以半角逗号（即,）作分隔符，列为空也要表达其存在。  
-            //列内容如存在半角逗号（即,）则用半角引号（即""）将该字段值包含起来。  
-            //列内容如存在半角引号（即"）则应替换成半角双引号（""）转义，并用半角引号（即""）将该字段值包含起来。  
+            //以半角逗号（即,）作分隔符，列为空也要表达其存在。
+            //列内容如存在半角逗号（即,）则用半角引号（即""）将该字段值包含起来。
+            //列内容如存在半角引号（即"）则应替换成半角双引号（""）转义，并用半角引号（即""）将该字段值包含起来。
             StringBuilder sb = new StringBuilder();
             DataColumn colum;
             foreach (DataRow row in table.Rows)
@@ -177,12 +174,12 @@ namespace MJTop.Data.Database
                     FileName = tmpPath,
                     NumberOfLinesToSkip = 0,
                     TableName = tableName,
-                    Timeout=timeout
+                    Timeout = timeout
                 };
 
                 foreach (DataColumn dc in data.Columns)
                 {
-                    if (lstAllColName.Contains(dc.ColumnName,StringComparer.OrdinalIgnoreCase))
+                    if (lstAllColName.Contains(dc.ColumnName, StringComparer.OrdinalIgnoreCase))
                     {
                         bulk.Columns.Add(dc.ColumnName);
                     }
@@ -191,7 +188,6 @@ namespace MJTop.Data.Database
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally

@@ -1,9 +1,5 @@
-﻿using System;
+﻿using DocTools.Dtos;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DocTools.Dtos;
 
 namespace DocTools.DBDoc
 {
@@ -24,7 +20,6 @@ namespace DocTools.DBDoc
     /// </summary>
     internal static class ExcelUtils
     {
-
         /// <summary>
         /// 引用EPPlus.dll导出excel数据库字典文档
         /// </summary>
@@ -209,8 +204,6 @@ namespace DocTools.DBDoc
                 //  列标题字体为粗体
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
 
-               
-
                 //  添加列标题
                 for (int j = 0; j < lstName.Count; j++)
                 {
@@ -277,6 +270,5 @@ namespace DocTools.DBDoc
             tbWorksheet.Cells.Style.WrapText = true; // 自动换行
             tbWorksheet.Cells.Style.ShrinkToFit = true; // 单元格自动适应大小
         }
-
     }
 }

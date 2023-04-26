@@ -1,11 +1,8 @@
 ﻿using MJTop.Data.DatabaseInfo;
 using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
 
 namespace MJTop.Data.Database
 {
@@ -32,7 +29,7 @@ namespace MJTop.Data.Database
                 PostgreSqlDBInfo postgreInfo = Info as PostgreSqlDBInfo;
 
                 cmd.CommandText = kv.Key + ";" + Script.IdentitySql(DBType, tableName, null, postgreInfo.IdentityColumnName(tableName));
-               
+
                 var result2 = cmd.ExecuteScalar().ChangeType<Ret>();
 
                 if (OnExecuted != null)

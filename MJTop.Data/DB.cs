@@ -1,18 +1,14 @@
 ﻿using MJTop.Data.SPI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
-using System.Collections.Specialized;
-using MJTop.Data.DatabaseInfo;
+using System.Linq;
 using System.Reflection;
-using System.Threading;
-using System.Text.RegularExpressions;
-using System.Collections.Concurrent;
+using System.Text;
 
 namespace MJTop.Data
 {
@@ -49,7 +45,6 @@ namespace MJTop.Data
             protected set;
         }
 
-
         /// <summary>
         /// 超时时间
         /// </summary>
@@ -65,8 +60,9 @@ namespace MJTop.Data
         internal string ConnectionString { get; set; }
 
         #region AOP
+
         /// <summary>
-        /// 执行前 
+        /// 执行前
         /// </summary>
         public Action<DbCommand> OnExecuting { get; set; }
 
@@ -79,7 +75,8 @@ namespace MJTop.Data
         /// 报异常时
         /// </summary>
         public Action<DbCommand, Exception> OnError { get; set; }
-        #endregion
+
+        #endregion AOP
 
         /// <summary>
         /// 对数据 增删改 时触发
@@ -91,6 +88,7 @@ namespace MJTop.Data
         }
 
         #region 插入或更新排除列 设置与获取
+
         /// <summary>
         /// 设置 插入时 要排除表列 集合
         /// </summary>
@@ -127,7 +125,6 @@ namespace MJTop.Data
             return InsertExcludeColumns.Coll;
         }
 
-
         public string ParameterChar
         {
             get
@@ -136,9 +133,7 @@ namespace MJTop.Data
             }
         }
 
-
-        #endregion
-
+        #endregion 插入或更新排除列 设置与获取
 
         internal string ParameterSql(string parameterName)
         {
@@ -150,7 +145,7 @@ namespace MJTop.Data
         }
 
         /// <summary>
-        /// 构建 参数化 对象 
+        /// 构建 参数化 对象
         /// 不同数据库 参数化 时所使用的字符：Global.ParameterCharMap
         /// </summary>
         /// <param name="parameterName">参数化 变量名</param>
@@ -225,8 +220,8 @@ namespace MJTop.Data
             return CreateConn(this.ConnectionString);
         }
 
-
         #region internal ado.net的四大核心对象
+
         internal DbConnection CreateConn(string connectionString)
         {
             DbConnection _DBConn = DBFactory.CreateConnection();
@@ -299,8 +294,7 @@ namespace MJTop.Data
             }
         }
 
-        #endregion
-
+        #endregion internal ado.net的四大核心对象
 
         public DB(DBType dbType, DbProviderFactory dbFactory, string connectionString)
         {
@@ -308,7 +302,7 @@ namespace MJTop.Data
             this.DBFactory = dbFactory;
             this.ConnectionString = connectionString;
 
-            this.ConnectionStringBuilder = DBFactory.CreateConnectionStringBuilder();           
+            this.ConnectionStringBuilder = DBFactory.CreateConnectionStringBuilder();
             this.ConnectionStringBuilder.ConnectionString = connectionString;
 
             this.InsertExcludeColumns = new ExcludeColumn(this);
@@ -317,7 +311,6 @@ namespace MJTop.Data
             this.DataChangeTriggers = new TableTrigger(this);
 
             {//查询数据库表列信息前，先验证数据库能否可以连接成功！
-
                 try
                 {
                     using (DbConnection conn = CreateConn())
@@ -340,7 +333,8 @@ namespace MJTop.Data
             return BuildCommandByParam(conn, cmdText, null, timeOut, cmdType);
         }
 
-        static ConcurrentDictionary<Type, PropertyInfo[]> Dict_Type_Props = new ConcurrentDictionary<Type, PropertyInfo[]>();
+        private static ConcurrentDictionary<Type, PropertyInfo[]> Dict_Type_Props = new ConcurrentDictionary<Type, PropertyInfo[]>();
+
         internal DbCommand BuildCommandByParam(DbConnection conn, string cmdText, object cmdParms, int timeOut = 60, CommandType cmdType = CommandType.Text, string tableName = null)
         {
             if (conn.State != ConnectionState.Open)
@@ -519,7 +513,6 @@ namespace MJTop.Data
                     {
                         //其他类型
                     }
-
                 }
             }
 
@@ -557,7 +550,6 @@ namespace MJTop.Data
         {
             ExecSql("pragma journal_mode=delete;");
         }
-
 
         /// <summary>
         /// 验证 执行语句 是否 能执行通过
@@ -597,7 +589,6 @@ namespace MJTop.Data
             return bResult;
         }
 
-
         public virtual int RunStoreProc(string storeProcName, object parameters = null)
         {
             DbConnection conn = null;
@@ -626,6 +617,7 @@ namespace MJTop.Data
             }
             return cnt;
         }
+
         public virtual DataTable RunStoreProcGetDT(string storeProcName, object parameters = null)
         {
             DataSet ds = new DataSet("ds");
@@ -662,6 +654,7 @@ namespace MJTop.Data
             }
             return dt;
         }
+
         public virtual DataSet RunStoreProcGetDS(string storeProcName, object parameters = null)
         {
             DataSet ds = new DataSet("ds");
@@ -691,8 +684,6 @@ namespace MJTop.Data
             }
             return ds;
         }
-
-
 
         #region 基础查询
 
@@ -1152,7 +1143,7 @@ namespace MJTop.Data
             return dict;
         }
 
-        #endregion
+        #endregion 基础查询
 
         #region 执行
 
@@ -1263,7 +1254,6 @@ namespace MJTop.Data
                     }
                 }
                 tran.Commit();
-
             }
             catch (Exception ex)
             {
@@ -1277,6 +1267,7 @@ namespace MJTop.Data
             }
             return cnt;
         }
+
         public virtual int ExecSqlTran(List<KeyValuePair<string, List<DbParameter>>> strSqlList)
         {
             if (strSqlList == null || strSqlList.Count <= 0)
@@ -1336,12 +1327,9 @@ namespace MJTop.Data
             return cnt;
         }
 
+        #endregion 执行
 
-
-        #endregion
-
-
-        public virtual int BulkInsert(string tableName, DataTable data,int batchSize = 200000, int timeout = 60)
+        public virtual int BulkInsert(string tableName, DataTable data, int batchSize = 200000, int timeout = 60)
         {
             throw new NotImplementedException("该方法未支持！(" + this.DBType + ")");
         }
@@ -1371,6 +1359,7 @@ namespace MJTop.Data
             if (TypeInfo<DT>.IsAnonymousType)
             {
                 #region 匿名对象
+
                 var curNames = TypeInfo<DT>.PropNames;
                 enumNames = curNames.Intersect(lstColName, StringComparer.OrdinalIgnoreCase);
 
@@ -1404,11 +1393,13 @@ namespace MJTop.Data
                     sb_beforeSQL.Append(colName + ",");
                     sb_afterSQl.Append(ParameterSql(colName) + ",");
                 }
-                #endregion
+
+                #endregion 匿名对象
             }
             else if (TypeInfo<DT>.IsNameValueColl)
             {
                 #region NameValueCollection
+
                 var curNames = (data as NameValueCollection).AllKeys;
                 enumNames = curNames.Intersect(lstColName, StringComparer.OrdinalIgnoreCase);
 
@@ -1436,11 +1427,13 @@ namespace MJTop.Data
                     sb_beforeSQL.Append(colName + ",");
                     sb_afterSQl.Append(ParameterSql(colName) + ",");
                 }
-                #endregion
+
+                #endregion NameValueCollection
             }
             else if (TypeInfo<DT>.IsDict)
             {
                 #region IDictionary
+
                 var curNames = (data as IDictionary).Keys;
 
                 string[] arrKeys = new string[curNames.Count];
@@ -1473,7 +1466,8 @@ namespace MJTop.Data
                     sb_beforeSQL.Append(colName + ",");
                     sb_afterSQl.Append(ParameterSql(colName) + ",");
                 }
-                #endregion
+
+                #endregion IDictionary
             }
             else
             {
@@ -1544,7 +1538,6 @@ namespace MJTop.Data
             StringBuilder sb_beforeSQL = new StringBuilder();
             sb_beforeSQL.Append("update " + tableName + " set ");
 
-
             string update_sql = string.Empty;
             DbParameter paraPKOrUnique = null;
             string paraPKOrUniqueName = string.Empty;
@@ -1556,6 +1549,7 @@ namespace MJTop.Data
             if (TypeInfo<DT>.IsAnonymousType)
             {
                 #region 匿名对象
+
                 var curNames = TypeInfo<DT>.PropNames;
                 enumNames = curNames.Intersect(lstColName, StringComparer.OrdinalIgnoreCase);
 
@@ -1580,12 +1574,13 @@ namespace MJTop.Data
                         paraPKOrUniqueName = colName;
                     }
                 }
-                #endregion
 
+                #endregion 匿名对象
             }
             else if (TypeInfo<DT>.IsNameValueColl)
             {
                 #region NameValueCollection
+
                 var curNames = (data as NameValueCollection).AllKeys;
                 enumNames = curNames.Intersect(lstColName, StringComparer.OrdinalIgnoreCase);
 
@@ -1610,11 +1605,13 @@ namespace MJTop.Data
                         paraPKOrUniqueName = colName;
                     }
                 }
-                #endregion
+
+                #endregion NameValueCollection
             }
             else if (TypeInfo<DT>.IsDict)
             {
                 #region IDictionary
+
                 var curNames = (data as IDictionary).Keys;
 
                 string[] arrKeys = new string[curNames.Count];
@@ -1644,7 +1641,8 @@ namespace MJTop.Data
                         paraPKOrUniqueName = colName;
                     }
                 }
-                #endregion
+
+                #endregion IDictionary
             }
             else
             {
@@ -1792,8 +1790,6 @@ namespace MJTop.Data
             return new KeyValuePair<SaveType, bool>(saveType, res);
         }
 
-
-
         public virtual KeyValuePair<DataTable, long> GetDataTableByPager(int currentPage, int pageSize, string selColumns, string joinTableName, string whereStr, string orderbyStr)
         {
             long totalCount;
@@ -1811,6 +1807,6 @@ namespace MJTop.Data
             string strSql = "delete from " + ParameterSql(tableName);
             ExecSql(strSql, CreateParameter(tableName, tableName).TransArray());
             return true;
-        }       
+        }
     }
 }

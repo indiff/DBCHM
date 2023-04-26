@@ -1,11 +1,6 @@
 ﻿using MJTop.Data.DatabaseInfo;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
+using System.Data.Common;
 
 namespace MJTop.Data.Database
 {
@@ -17,7 +12,6 @@ namespace MJTop.Data.Database
             this.CmdTimeout = cmdTimeOut;
             this.Info = new SQLiteDBInfo(this);
         }
-
 
         public override DataTable SelectTop(string tableName, int top = 10, string orderbyStr = null)
         {

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DocTools
 {
@@ -24,6 +19,7 @@ namespace DocTools
 
         [DisplayName("端口")]
         public int? Port { get; set; }
+
         [DisplayName("数据库")]
         public string DBName { get; set; }
 

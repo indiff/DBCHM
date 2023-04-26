@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Web;
-using System.Text.RegularExpressions;
-using System.Linq;
 using System.Collections;
-using System.Reflection;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
+using System.Reflection;
+using System.Text;
 
 namespace MJTop.Data
 {
@@ -16,8 +13,8 @@ namespace MJTop.Data
     /// </summary>
     internal class LogUtils
     {
-
         private static object locker = new object();
+
         /// <summary>
         /// 获取请求相关信息
         /// </summary>
@@ -47,7 +44,6 @@ namespace MJTop.Data
             List<string> lstDetails = GetRequestData(level);
             lstDetails.Add(detail);
             log.Detail = string.Join("\r\n\r\n", lstDetails.ToArray());
-
 
             //todo :可以将日志写入 文件、数据库、MongoDB
             //这里写入根目录 log文件夹
@@ -85,7 +81,6 @@ namespace MJTop.Data
                 Write(logName, developer, LogLevel.Info, string.Join("\r\n", lstDetails.ToArray()), DateTime.Now);
             }
         }
-
 
         /// <summary>s
         /// 写入带 堆栈执行 的Info 日志
@@ -174,7 +169,7 @@ namespace MJTop.Data
                 {
                     lstDetails.Add("异常信息2：" + Log.GetModelData(ex.InnerException));
                 }
-                
+
                 StringBuilder sb_extInfo = new StringBuilder();
                 if (ext_InfoObjs != null && ext_InfoObjs.Length > 0)
                 {
@@ -191,13 +186,13 @@ namespace MJTop.Data
         }
     }
 
-
     /// <summary>
     /// 程序日志
     /// </summary>
     public class Log
     {
-        public Guid Id { get { return Guid.NewGuid(); } }
+        public Guid Id
+        { get { return Guid.NewGuid(); } }
 
         /// <summary>
         /// 日志名称
@@ -224,8 +219,8 @@ namespace MJTop.Data
         /// </summary>
         public DateTime CreateTime { get; set; }
 
+        #region private 反射 对象
 
-        #region  private 反射 对象
         /// <summary>
         /// 得到对象的所有属性值
         /// </summary>
@@ -295,6 +290,7 @@ namespace MJTop.Data
             Type[] argumentsTypes = objType.GetGenericArguments();
 
             #region isLstMark isDictMark
+
             bool isLstMark = false;
             if (argumentsTypes.Length == 1)
             {
@@ -308,7 +304,6 @@ namespace MJTop.Data
                 isLstMark = (obj as IList) != null;
             }
 
-
             bool isDictMark = false;
             if (argumentsTypes.Length == 2)
             {
@@ -321,11 +316,13 @@ namespace MJTop.Data
             {
                 isDictMark = ((obj as IDictionary) != null);
             }
-            #endregion
+
+            #endregion isLstMark isDictMark
 
             if (objType.IsArray)
             {
                 #region 数组类型
+
                 int arrRank = objType.GetArrayRank();
                 if (arrRank == 1)
                 {
@@ -343,11 +340,13 @@ namespace MJTop.Data
                         valueParam = string.Join(",", lst.ToArray());
                     }
                 }
-                #endregion
+
+                #endregion 数组类型
             }
             else if (isLstMark)
             {
                 #region List
+
                 IEnumerable enumlst = obj as IEnumerable;
                 if (enumlst != null)
                 {
@@ -364,11 +363,13 @@ namespace MJTop.Data
                         valueParam = string.Join(",", lsts.ToArray());
                     }
                 }
-                #endregion
+
+                #endregion List
             }
             else if (isDictMark)
             {
                 #region Dictionary
+
                 IDictionary dict = obj as IDictionary;
                 if (dict != null && dict.Count > 0)
                 {
@@ -379,11 +380,13 @@ namespace MJTop.Data
                     }
                     valueParam = sb.ToString();
                 }
-                #endregion
+
+                #endregion Dictionary
             }
             else if (obj is NameValueCollection)
             {
                 #region NameValueCollection
+
                 NameValueCollection nvc = (NameValueCollection)obj;
                 if (nvc != null && nvc.Count > 0)
                 {
@@ -394,11 +397,13 @@ namespace MJTop.Data
                     }
                     valueParam = sb.ToString();
                 }
-                #endregion
+
+                #endregion NameValueCollection
             }
             else if (obj is ICollection)
             {
                 #region ICollection
+
                 ICollection coll = obj as ICollection;
                 if (coll != null)
                 {
@@ -416,7 +421,7 @@ namespace MJTop.Data
                     }
                 }
 
-                #endregion
+                #endregion ICollection
             }
             return valueParam.TrimEnd();
         }
@@ -424,16 +429,16 @@ namespace MJTop.Data
         public static bool IsSimpleType(Type type)
         {
             //IsPrimitive 判断是否为基础类型。
-            //基元类型为 Boolean、 Byte、 SByte、 Int16、 UInt16、 Int32、 UInt32、 Int64、 UInt64、 IntPtr、 UIntPtr、 Char、 Double 和 Single。          
+            //基元类型为 Boolean、 Byte、 SByte、 Int16、 UInt16、 Int32、 UInt32、 Int64、 UInt64、 IntPtr、 UIntPtr、 Char、 Double 和 Single。
             Type t = Nullable.GetUnderlyingType(type) ?? type;
             if (t.IsPrimitive || t.IsEnum || t == typeof(string)) return true;
             return false;
         }
 
-        #endregion
-
+        #endregion private 反射 对象
 
         #region 枚举 处理
+
         /// <summary>
         /// 根据枚举对象得到 枚举键值对
         /// </summary>
@@ -458,7 +463,6 @@ namespace MJTop.Data
             return dict;
         }
 
-
         /// <summary>
         /// 根据枚举val获取枚举name
         /// </summary>
@@ -470,7 +474,8 @@ namespace MJTop.Data
             T t = (T)Enum.Parse(typeof(T), enumVal.ToString());
             return t;
         }
-        #endregion
+
+        #endregion 枚举 处理
     }
 
     /// <summary>
@@ -494,11 +499,8 @@ namespace MJTop.Data
         SysDefault = 0,
 
         /// <summary>
-        /// 其他用户 
+        /// 其他用户
         /// </summary>
         MJ = 115
     }
-
- 
-
 }

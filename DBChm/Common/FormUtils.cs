@@ -17,6 +17,7 @@ namespace DBCHM
 
             DictDBType.Remove(DBType.Oracle.ToString());
         }
+
         /// <summary>
         /// 所有数据库类型 对应的端口
         /// </summary>
@@ -26,7 +27,7 @@ namespace DBCHM
             { DBType.SqlServer.ToString(),"1433"},
              { DBType.MySql.ToString(),"3306"},
             { DBType.OracleDDTek.ToString(),"1521"},
-            //{ DBType.Oracle.ToString(),"1521"},            
+            //{ DBType.Oracle.ToString(),"1521"},
             { DBType.PostgreSql.ToString(),"5432"},
             { DBType.DB2.ToString(),"50000"},
         };
@@ -39,16 +40,12 @@ namespace DBCHM
             get; private set;
         }
 
-
         /// <summary>
         /// 是否正常的Close
         /// </summary>
         public static bool IsOK_Close { get; set; } = false;
 
-
         public static ProgressArg ProgArg { get; set; }
-
-        
 
         /// <summary>
         /// Loading加载
@@ -77,6 +74,5 @@ namespace DBCHM
                 LogUtils.LogError("FrmProcessing", Developer.SysDefault, ex, msg);
             }
         }
-
     }
 }

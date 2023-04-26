@@ -1,5 +1,4 @@
-﻿
-var hljs = {};
+﻿var hljs = {};
 // Convenience variables for build-in objects
 var ArrayProto = [],
     objectKeys = Object.keys;
@@ -135,7 +134,7 @@ function mergeStreams(original, highlighted, value) {
         /*
         To avoid starting the stream just before it should stop the order is
         ensured that original always starts first and closes last:
-    
+
         if (event1 == 'start' && event2 == 'start')
           return original;
         if (event1 == 'start' && event2 == 'stop')
@@ -144,7 +143,7 @@ function mergeStreams(original, highlighted, value) {
           return original;
         if (event1 == 'stop' && event2 == 'stop')
           return highlighted;
-    
+
         ... which is collapsed to:
         */
         return highlighted[0].event === 'start' ? original : highlighted;
@@ -194,9 +193,7 @@ function mergeStreams(original, highlighted, value) {
 
 /* Initialization */
 
-
 function compileLanguage(language) {
-
     function reStr(re) {
         return (re && re.source) || re;
     }
@@ -306,7 +303,6 @@ properties:
 
 */
 function highlight(name, value, ignore_illegals, continuation) {
-
     function subMode(lexeme, mode) {
         var i, length;
 
@@ -408,7 +404,6 @@ function highlight(name, value, ignore_illegals, continuation) {
     }
 
     function processLexeme(buffer, lexeme) {
-
         mode_buffer += buffer;
 
         if (lexeme == null) {
@@ -483,7 +478,6 @@ function highlight(name, value, ignore_illegals, continuation) {
     log("language：" + language);
     compileLanguage(language);
     var top = continuation || language;
-   
 
     var continuations = {}; // keep continuations for sub-languages
     var result = '', current;

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Aspose.Words.Tables;
+﻿using Aspose.Words.Tables;
 using DocTools.Dtos;
+using System.Collections.Generic;
 
 namespace DocTools.DBDoc
 {
@@ -103,9 +103,10 @@ namespace DocTools.DBDoc
                 builder.ParagraphFormat.ClearFormatting();
 
                 #region 表格列设置，列标题，列宽，字体等
+
                 // Make the header row.
                 builder.InsertCell();
-                // Set the left indent for the table. Table wide formatting must be applied after 
+                // Set the left indent for the table. Table wide formatting must be applied after
                 // at least one row is present in the table.
                 asposeTable.Alignment = Aspose.Words.Tables.TableAlignment.Center;
                 asposeTable.PreferredWidth = PreferredWidth.FromPercent(120);
@@ -162,11 +163,13 @@ namespace DocTools.DBDoc
                 builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(30);
                 builder.Write("列说明");
                 builder.EndRow();
-                #endregion
+
+                #endregion 表格列设置，列标题，列宽，字体等
 
                 foreach (var column in table.Columns)
                 {
                     #region 遍历表格数据行写入
+
                     // Set features for the other rows and cells.
                     builder.CellFormat.Shading.BackgroundPatternColor = System.Drawing.Color.White;
                     builder.CellFormat.Width = 100.0;
@@ -214,7 +217,8 @@ namespace DocTools.DBDoc
                     builder.Write(column.Comment); // 列说明
 
                     builder.EndRow();
-                    #endregion
+
+                    #endregion 遍历表格数据行写入
                 }
 
                 // TODO 表格创建完成，结束
@@ -259,7 +263,7 @@ namespace DocTools.DBDoc
             builder.Write(" / ");
             // TODO Add field for total page numbers in document
             builder.InsertField("NUMPAGES");
-            // Finally update the outer field to recalcaluate the final value. 
+            // Finally update the outer field to recalcaluate the final value.
             // Doing this will automatically update the inner fields at the same time.
             // field.Update();
         }
@@ -277,9 +281,10 @@ namespace DocTools.DBDoc
             Aspose.Words.Tables.Table logTable = builder.StartTable();
 
             #region 表格列设置，列标题，列宽，字体等
+
             // Make the header row.
             builder.InsertCell();
-            // Set the left indent for the table. Table wide formatting must be applied after 
+            // Set the left indent for the table. Table wide formatting must be applied after
             // at least one row is present in the table.
             logTable.Alignment = Aspose.Words.Tables.TableAlignment.Center;
             logTable.AllowAutoFit = true;
@@ -310,11 +315,13 @@ namespace DocTools.DBDoc
             builder.Write("审核人");
 
             builder.EndRow();
-            #endregion
+
+            #endregion 表格列设置，列标题，列宽，字体等
 
             for (var i = 0; i < 5; i++)
             {
                 #region 遍历表格数据行写入
+
                 // Set features for the other rows and cells.
                 builder.CellFormat.Shading.BackgroundPatternColor = System.Drawing.Color.White;
                 builder.CellFormat.Width = 100.0;
@@ -340,7 +347,8 @@ namespace DocTools.DBDoc
                 builder.Write(""); // 审核人
 
                 builder.EndRow();
-                #endregion
+
+                #endregion 遍历表格数据行写入
             }
             // TODO 表格创建完成，结束
             builder.EndTable();
@@ -360,9 +368,10 @@ namespace DocTools.DBDoc
             Aspose.Words.Tables.Table overviewTable = builder.StartTable();
 
             #region 表格列设置，列标题，列宽，字体等
+
             // Make the header row.
             builder.InsertCell();
-            // Set the left indent for the table. Table wide formatting must be applied after 
+            // Set the left indent for the table. Table wide formatting must be applied after
             // at least one row is present in the table.
             overviewTable.Alignment = Aspose.Words.Tables.TableAlignment.Center;
             overviewTable.AllowAutoFit = true;
@@ -386,12 +395,14 @@ namespace DocTools.DBDoc
             builder.Write("注释/说明");
 
             builder.EndRow();
-            #endregion
+
+            #endregion 表格列设置，列标题，列宽，字体等
 
             // TODO 遍历数据库表集合
             foreach (var table in tables)
             {
                 #region 遍历表格数据行写入
+
                 // Set features for the other rows and cells.
                 builder.CellFormat.Shading.BackgroundPatternColor = System.Drawing.Color.White;
                 builder.CellFormat.Width = 100.0;
@@ -409,7 +420,8 @@ namespace DocTools.DBDoc
 
                 builder.InsertCell();
                 builder.Write((!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "")); // 说明
-                #endregion
+
+                #endregion 遍历表格数据行写入
 
                 builder.EndRow();
             }
@@ -451,7 +463,7 @@ namespace DocTools.DBDoc
         /// <param name="watermarkText">Text of the watermark.</param>
         public static void InsertWatermarkText(Aspose.Words.Document doc, string watermarkText)
         {
-            // Create a watermark shape. This will be a WordArt shape. 
+            // Create a watermark shape. This will be a WordArt shape.
             // You are free to try other shape types as watermarks.
             Aspose.Words.Drawing.Shape watermark = new Aspose.Words.Drawing.Shape(doc, Aspose.Words.Drawing.ShapeType.TextPlainText);
             // Set up the text of the watermark.
@@ -502,6 +514,5 @@ namespace DocTools.DBDoc
             // Insert a clone of the watermark into the header.
             header.AppendChild(watermarkPara.Clone(true));
         }
-
     }
 }

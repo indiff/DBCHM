@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -30,6 +29,7 @@ namespace MJTop.Data.DatabaseInfo
             Refresh();
             this.Tools = new Tool(db, this);
         }
+
         public string DBName
         {
             get { return (Db.ConnectionStringBuilder as DB2ConnectionStringBuilder).Database; }
@@ -53,6 +53,7 @@ namespace MJTop.Data.DatabaseInfo
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
+        public Dictionary<string, int> TableRows { get; private set; } = new Dictionary<string, int>();
 
         private NameValueCollection TableSchemas { get; set; } = new NameValueCollection();
 
@@ -95,7 +96,8 @@ namespace MJTop.Data.DatabaseInfo
             }
         }
 
-        private DB2ConnectionStringBuilder ConnBuilder { get { return Db.ConnectionStringBuilder as DB2ConnectionStringBuilder; } }
+        private DB2ConnectionStringBuilder ConnBuilder
+        { get { return Db.ConnectionStringBuilder as DB2ConnectionStringBuilder; } }
 
         public bool Refresh()
         {
@@ -104,7 +106,6 @@ namespace MJTop.Data.DatabaseInfo
             this.TableColumnNameDict = new IgCaseDictionary<List<string>>(KeyCase.Upper);
             this.TableColumnInfoDict = new IgCaseDictionary<List<ColumnInfo>>(KeyCase.Upper);
             this.TableColumnComments = new IgCaseDictionary<NameValueCollection>(KeyCase.Upper);
-
 
             string dbSql = string.Empty;
             string strSql = string.Format("select tabschema,tabname,remarks from syscat.tables where type='T' and OWNER='{0}' order BY tabschema asc, tabname ASC", ConnBuilder.UserID.ToUpper());
@@ -204,7 +205,7 @@ namespace MJTop.Data.DatabaseInfo
             }
             return this.TableComments.Count == this.TableInfoDict.Count;
         }
-        
+
         public Dictionary<string, DateTime> GetTableStruct_Modify()
         {
             string strSql = string.Format("select tabname,alter_time from syscat.tables where type='T' and tabschema='{0}' order by alter_time desc", ConnBuilder.UserID);
@@ -304,7 +305,6 @@ namespace MJTop.Data.DatabaseInfo
                 ColumnInfo colInfo = DictColumnInfo[strKey];
                 colInfo.DeText = comment;
                 DictColumnInfo[strKey] = colInfo;
-
             }
             catch (Exception ex)
             {
@@ -340,7 +340,6 @@ namespace MJTop.Data.DatabaseInfo
                 }
 
                 this.TableColumnNameDict.Remove(tableName);
-
             }
             catch (Exception ex)
             {
@@ -390,7 +389,6 @@ namespace MJTop.Data.DatabaseInfo
                 });
                 lstColInfo.Remove(curColInfo);
                 TableColumnInfoDict[tableName] = lstColInfo;
-
             }
             catch (Exception ex)
             {
@@ -399,6 +397,5 @@ namespace MJTop.Data.DatabaseInfo
             }
             return true;
         }
-
     }
 }

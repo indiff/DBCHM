@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace DocTools.Dtos
 {
@@ -12,7 +9,8 @@ namespace DocTools.Dtos
     /// </summary>
     public class DBDto
     {
-        public DBDto() { }
+        public DBDto()
+        { }
 
         public DBDto(string dbName, object tag = null)
         {
@@ -34,12 +32,13 @@ namespace DocTools.Dtos
 
         private SortedDictionary<string, List<TableDto>> _TableDict = null;
 
-        public SortedDictionary<string, List<TableDto>> TableDict {
-           get
+        public SortedDictionary<string, List<TableDto>> TableDict
+        {
+            get
             {
                 // 数据库表信息是否包含模块信息
                 bool isModule = false;
-                foreach ( var t in Tables)
+                foreach (var t in Tables)
                 {
                     if (!String.IsNullOrEmpty(t.TableModule))
                     {
@@ -47,10 +46,11 @@ namespace DocTools.Dtos
                     }
                 }
 
-                if ( isModule )
+                if (isModule)
                 {
                     _TableDict = new SortedDictionary<string, List<TableDto>>();
-                    Tables.ForEach(t => {
+                    Tables.ForEach(t =>
+                    {
                         if (String.IsNullOrEmpty(t.TableModule))
                         {
                             List<TableDto> list = null;
@@ -58,18 +58,18 @@ namespace DocTools.Dtos
                             {
                                 list = new List<TableDto>();
                                 _TableDict.Add("未知", list);
-                            } else
+                            }
+                            else
                             {
                                 list = _TableDict["未知"];
                             }
                             t.TableModule = "未知";
                             list.Add(t);
-                            
                         }
                         else
                         {
                             List<TableDto> list = null;
-                            if (!_TableDict.ContainsKey( t.TableModule ))
+                            if (!_TableDict.ContainsKey(t.TableModule))
                             {
                                 list = new List<TableDto>();
                                 _TableDict.Add(t.TableModule, list);
@@ -79,15 +79,14 @@ namespace DocTools.Dtos
                                 list = _TableDict[t.TableModule];
                             }
                             list.Add(t);
-                            
                         }
                     });
                     return _TableDict;
-                } else
+                }
+                else
                 {
                     return null;
                 }
-                
             }
             set
             {
@@ -112,6 +111,8 @@ namespace DocTools.Dtos
                     {
                         t.Comment = FilterIllegalDir(t.Comment);
                     });
+                    // 排序 add by indiff 排序操作不了
+                    // _Tables.Sort();
                     return _Tables;
                 }
             }
@@ -124,7 +125,7 @@ namespace DocTools.Dtos
         /// <summary>
         /// 数据库视图
         /// </summary>
-        public Dictionary<string,string> Views { get; set; }
+        public Dictionary<string, string> Views { get; set; }
 
         /// <summary>
         /// 数据库存储过程
@@ -135,7 +136,6 @@ namespace DocTools.Dtos
         /// 其他一些参数数据，用法如 winform 控件的 Tag属性
         /// </summary>
         public object Tag { get; set; }
-
 
         /// <summary>
         /// 处理非法字符路径
@@ -150,6 +150,5 @@ namespace DocTools.Dtos
             }
             return str;
         }
-
     }
 }

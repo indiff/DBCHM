@@ -20,6 +20,11 @@ namespace MJTop.Data
         public string TabComment { get; set; }
 
         /// <summary>
+        /// 表数据行数
+        /// </summary>
+        public int TableRows { get; set; }
+
+        /// <summary>
         /// 该表包含的所有列
         /// </summary>
         public List<ColumnInfo> Colnumns { get; set; }

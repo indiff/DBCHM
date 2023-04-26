@@ -24,6 +24,7 @@ namespace DBCHM
 
         [DisplayName("端口")]
         public int? Port { get; set; }
+
         [DisplayName("数据库")]
         public string DBName { get; set; }
 

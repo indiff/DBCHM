@@ -18,6 +18,7 @@ namespace DocTools
         /// 当前应用程序的名称
         /// </summary>
         private static string ConfigFileName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName).Replace(".vshost", "");
+
         /// <summary>
         /// 定义配置存放的路径
         /// </summary>
@@ -43,7 +44,7 @@ namespace DocTools
             {
                 if (!ZetaLongPaths.ZlpIOHelper.DirectoryExists(AppPath))
                 {
-                    ZetaLongPaths.ZlpIOHelper.CreateDirectory(AppPath);                   
+                    ZetaLongPaths.ZlpIOHelper.CreateDirectory(AppPath);
                 }
                 AddSecurityControll2Folder(AppPath);
                 ConfigFilePath = Path.Combine(AppPath, ConfigFileName + ".db");
@@ -88,7 +89,7 @@ namespace DocTools
             {
                 // v1.7.3.7 版本 增加 连接超时 与 最后连接时间
                 var info = db.Info;
-                if(!info.IsExistColumn(nameof(DBCHMConfig), nameof(DBCHMConfig.Modified)))
+                if (!info.IsExistColumn(nameof(DBCHMConfig), nameof(DBCHMConfig.Modified)))
                 {
                     var configs = db.GetListDictionary("select * from " + nameof(DBCHMConfig));
 
@@ -119,8 +120,6 @@ namespace DocTools
             }
         }
 
-
-
         /// <summary>
         /// 判断磁盘路径下是否安装存在某个文件，最后返回存在某个文件的路径
         /// </summary>
@@ -149,11 +148,6 @@ namespace DocTools
             return false;
         }
 
-
-
-
-
-
         /// <summary>
         /// 搜索获取软件安装目录
         /// </summary>
@@ -179,7 +173,6 @@ namespace DocTools
                 "Install_Dir",
                 "UninstallString"
             };
-
 
             Microsoft.Win32.RegistryKey regKey = null;
             try
@@ -248,11 +241,10 @@ namespace DocTools
                                 }
                             }
                         }
-
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogUtils.LogError(nameof(SearchInstallDir), Developer.SysDefault, ex);
             }
@@ -263,12 +255,8 @@ namespace DocTools
             return installDir;
         }
 
-
         [DllImport("shell32.dll")]
-
         public static extern void SHChangeNotify(uint wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
-
-
 
         /// <summary>
         ///为文件夹添加users，everyone用户组的完全控制权限
@@ -347,6 +335,5 @@ namespace DocTools
             string strSql = "select count(1) from DBCHMConfig";
             return db.Single<int>(strSql, 0) > 0;
         }
-
     }
 }

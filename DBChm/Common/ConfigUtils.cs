@@ -18,6 +18,7 @@ namespace DBCHM
         /// 当前应用程序的名称
         /// </summary>
         private static string ConfigFileName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName).Replace(".vshost", "");
+
         /// <summary>
         /// 定义配置存放的路径
         /// </summary>
@@ -43,7 +44,7 @@ namespace DBCHM
             {
                 if (!ZetaLongPaths.ZlpIOHelper.DirectoryExists(AppPath))
                 {
-                    ZetaLongPaths.ZlpIOHelper.CreateDirectory(AppPath);                   
+                    ZetaLongPaths.ZlpIOHelper.CreateDirectory(AppPath);
                 }
                 AddSecurityControll2Folder(AppPath);
                 ConfigFilePath = Path.Combine(AppPath, ConfigFileName + ".db");
@@ -88,7 +89,7 @@ namespace DBCHM
             {
                 // v1.7.3.7 版本 增加 连接超时 与 最后连接时间
                 var info = db.Info;
-                if(!info.IsExistColumn(nameof(DBCHMConfig), nameof(DBCHMConfig.Modified)))
+                if (!info.IsExistColumn(nameof(DBCHMConfig), nameof(DBCHMConfig.Modified)))
                 {
                     var configs = db.GetListDictionary("select * from " + nameof(DBCHMConfig));
 
@@ -118,8 +119,6 @@ namespace DBCHM
                 }
             }
         }
-
-
 
         /// <summary>
         /// 判断磁盘路径下是否安装存在某个文件，最后返回存在某个文件的路径
@@ -187,7 +186,6 @@ namespace DBCHM
                     }
                 }
             }
-            
 
             if (!isFind)
             {
@@ -217,10 +215,7 @@ namespace DBCHM
         }
 
         [DllImport("shell32.dll")]
-
         public static extern void SHChangeNotify(uint wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
-
-
 
         /// <summary>
         ///为文件夹添加users，everyone用户组的完全控制权限
@@ -299,6 +294,5 @@ namespace DBCHM
             string strSql = "select count(1) from DBCHMConfig";
             return db.Single<int>(strSql, 0) > 0;
         }
-
     }
 }

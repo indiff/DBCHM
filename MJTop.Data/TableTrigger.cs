@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MJTop.Data
 {
@@ -39,7 +36,6 @@ namespace MJTop.Data
             this.ExecActions.AddRange(tableName, actions);
         }
 
-
         /// <summary>
         /// 删除 表对应执行的Action集合数据
         /// </summary>
@@ -51,7 +47,7 @@ namespace MJTop.Data
             {
                 throw new ArgumentException("表名不能为空！");
             }
-            Db.CheckTabStuct(tableName);          
+            Db.CheckTabStuct(tableName);
             return this.ExecActions.Remove(tableName);
         }
 
@@ -84,6 +80,5 @@ namespace MJTop.Data
                 return new List<Action>();
             }
         }
-
     }
 }

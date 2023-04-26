@@ -179,6 +179,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TplFile\chm\警告文件.txt">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Content>
     <None Include="TplFile\html\html.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

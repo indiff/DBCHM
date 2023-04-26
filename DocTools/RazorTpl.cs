@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using RazorEngine;
+﻿using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using RazorEngine.Text;
+using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DocTools
 {

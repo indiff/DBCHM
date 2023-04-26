@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MJTop.Data.SPI
 {
@@ -25,15 +21,17 @@ namespace MJTop.Data.SPI
         bool Refresh();
 
         List<string> TableNames { get; }
-        
+
         NameValueCollection TableComments { get; }
+
+        Dictionary<string, int> TableRows { get; }
 
         IgCaseDictionary<TableInfo> TableInfoDict { get; }
 
         IgCaseDictionary<List<string>> TableColumnNameDict { get; }
 
         IgCaseDictionary<List<ColumnInfo>> TableColumnInfoDict { get; }
-        
+
         IgCaseDictionary<NameValueCollection> TableColumnComments { get; }
 
         NameValueCollection Views { get; }
@@ -46,13 +44,13 @@ namespace MJTop.Data.SPI
         List<string> this[string tableName] { get; }
 
         ColumnInfo this[string tableName, string columnName] { get; }
-        
+
         bool IsExistTable(string tableName);
 
         bool IsExistColumn(string tableName, string columnName);
 
         string GetColumnComment(string tableName, string columnName);
-        
+
         string GetTableComment(string tableName);
 
         List<ColumnInfo> GetColumns(string tableName);
@@ -67,6 +65,5 @@ namespace MJTop.Data.SPI
 
         [Obsolete("注意：MySql的所有表存储引擎必须为MyISAM 方才查询支持，方才查询准确。", false)]
         Dictionary<string, DateTime> GetTableStruct_Modify();
-        
     }
 }

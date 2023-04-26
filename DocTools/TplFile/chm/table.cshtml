@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=gbk" />
-    <title>@Model.TableName</title>
+    <title>@Model.TableName @Model.Comment @(Model.TableRows)</title>
     <style type="text/css">
         * {
             padding: 0;
@@ -14,15 +14,14 @@
             font-family: "Cascadia Code","lucida console","Consolas",'Microsoft YaHei' !important;
         }
 
-
         table {
             margin: 20px auto;
         }
 
-        table td {
-            text-align: center;
-            line-height: 30px
-        }
+            table td {
+                text-align: center;
+                line-height: 30px
+            }
 
         .styledb {
             font-size: 16px;
@@ -38,14 +37,14 @@
             color: #015FB6;
         }
 
-        a:link, a:visited, a:active {
-            color: #015FB6;
-            text-decoration: none;
-        }
+            a:link, a:visited, a:active {
+                color: #015FB6;
+                text-decoration: none;
+            }
 
-        a:hover {
-            color: #E33E06;
-        }
+            a:hover {
+                color: #E33E06;
+            }
 
         .other-bg-color {
             background-color: #FCFCFC;
@@ -74,14 +73,15 @@
 <body>
     <div style="text-align: center">
         <div>
+            <h1>@Model.TableName @Model.Comment @(Model.TableRows)</h1>
             <table border="0" cellpadding="5" cellspacing="0" width="90%">
                 <tr>
                     <td bgcolor="#FBFBFB">
                         <table id='tab-struct' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
                             <caption>
                                 <div class="styletab">@Model.TableName</div>
-                                <span style='float: left; margin-top: 6px;font-size:16px;'>@Model.Comment</span>
-                                <a href='../数据库目录.html' style='float: right; margin-top: 6px;font-size:16px;'>
+                                <span style="float: left; margin-top: 6px;font-size:16px;">@Model.Comment</span>
+                                <a href="数据库目录.html" style="float: right; margin-top: 6px;font-size:16px;">
                                     返回目录
                                 </a>
                             </caption>
@@ -94,7 +94,7 @@
                                 <td>主键</td>
                                 @if (!Model.DBType.StartsWith("Oracle"))
                                 {
-                                    <td>自增</td>
+                                <td>自增</td>
                                 }
                                 <td>允许空</td>
                                 <td>默认值</td>
@@ -105,23 +105,23 @@
                             }
                             @foreach (var item in Model.Columns)
                             {
-                                <tr>
-                                    <td>@index</td>
-                                    <td>@item.ColumnName</td>
-                                    <td>@item.ColumnTypeName</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.Length)? "&nbsp;":item.Length)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.Scale)? "&nbsp;":item.Scale)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.IsPK)?"&nbsp;": item.IsPK)</td>
+                            <tr>
+                                <td>@index</td>
+                                <td>@item.ColumnName</td>
+                                <td>@item.ColumnTypeName</td>
+                                <td>@(string.IsNullOrWhiteSpace(item.Length)? "&nbsp;":item.Length)</td>
+                                <td>@(string.IsNullOrWhiteSpace(item.Scale)? "&nbsp;":item.Scale)</td>
+                                <td>@(string.IsNullOrWhiteSpace(item.IsPK)?"&nbsp;": item.IsPK)</td>
 
-                                    @if (!Model.DBType.StartsWith("Oracle"))
+                                @if (!Model.DBType.StartsWith("Oracle"))
                                     {
-                                        <td>@(string.IsNullOrWhiteSpace(item.IsIdentity) ?"&nbsp;": item.IsIdentity)</td>
+                                <td>@(string.IsNullOrWhiteSpace(item.IsIdentity) ?"&nbsp;": item.IsIdentity)</td>
                                     }
 
-                                    <td>@(string.IsNullOrWhiteSpace(item.CanNull) ?"&nbsp;": item.CanNull)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.DefaultVal) ?"&nbsp;": item.DefaultVal)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.Comment) ?"&nbsp;": item.Comment)</td>
-                                </tr>
+                                <td>@(string.IsNullOrWhiteSpace(item.CanNull) ?"&nbsp;": item.CanNull)</td>
+                                <td>@(string.IsNullOrWhiteSpace(item.DefaultVal) ?"&nbsp;": item.DefaultVal)</td>
+                                <td>@(string.IsNullOrWhiteSpace(item.Comment) ?"&nbsp;": item.Comment)</td>
+                            </tr>
                                 index++;
                             }
                         </table>

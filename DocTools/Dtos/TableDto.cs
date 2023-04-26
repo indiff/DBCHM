@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DocTools.Dtos
@@ -6,9 +7,8 @@ namespace DocTools.Dtos
     /// <summary>
     /// 数据库表dto
     /// </summary>
-    public class TableDto
+    public class TableDto : IComparable<TableDto>
     {
-
         /// <summary>
         /// 序号
         /// </summary>
@@ -28,6 +28,12 @@ namespace DocTools.Dtos
         public string TableName { get; set; }
 
         /// <summary>
+        /// 行数
+        /// </summary>
+        [Display(Name = "行数")]
+        public int TableRows { get; set; }
+
+        /// <summary>
         /// 注释
         /// </summary>
         [Display(Name = "表说明")]
@@ -45,5 +51,15 @@ namespace DocTools.Dtos
         [Display(Name = "列数据")]
         public List<ColumnDto> Columns { get; set; }
 
+        public int CompareTo(TableDto other)
+        {
+            if ( this.TableRows == 0 && other.TableRows == 0 ) {  return 0; }
+
+            if (this.TableRows != other.TableRows)
+            {
+                return this.TableRows.CompareTo(other.TableRows);
+            }
+            else return 0;
+        }
     }
 }

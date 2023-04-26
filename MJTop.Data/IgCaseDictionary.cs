@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MJTop.Data
 {
@@ -26,7 +22,7 @@ namespace MJTop.Data
         /// </summary>
         public IgCaseDictionary()
         {
-            this.Case =  KeyCase.Lower;
+            this.Case = KeyCase.Lower;
             this.Locker = new ReaderWriterLockSlim();
         }
 
@@ -68,7 +64,6 @@ namespace MJTop.Data
             }
         }
 
-
         public new TValue this[string key]
         {
             get
@@ -83,7 +78,7 @@ namespace MJTop.Data
                     }
                     return base[(Case == KeyCase.Lower ? key.ToLower() : key.ToUpper())];
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     LogUtils.LogError("IgCaseDictionary", Developer.SysDefault, ex, "Key:" + key);
                     throw ex;

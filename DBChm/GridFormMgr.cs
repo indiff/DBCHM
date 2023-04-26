@@ -11,16 +11,14 @@ namespace DBCHM
         {
             InitializeComponent();
 
-            //为KeyDown能应用到所有控件上 注册 KeyDown 事件 
+            //为KeyDown能应用到所有控件上 注册 KeyDown 事件
             foreach (Control control in this.Controls)
             {
                 control.KeyDown += control_KeyDown;
             }
         }
 
-
-
-        void control_KeyDown(object sender, KeyEventArgs e)
+        private void control_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
@@ -28,7 +26,8 @@ namespace DBCHM
             }
         }
 
-        DBForm dbForm = null;
+        private DBForm dbForm = null;
+
         private void linkAdd_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             dbForm = new DBForm(OPType.新建);
@@ -101,8 +100,7 @@ namespace DBCHM
             int Id = Convert.ToInt32(GV_DBConfigs.SelectedRows[0].Cells[0].Value);
             DBCHMConfig config = ConfigUtils.Get(Id);
 
-
-            if ((DBType)Enum.Parse(typeof(DBType), config.DBType) == DBType.SqlServer 
+            if ((DBType)Enum.Parse(typeof(DBType), config.DBType) == DBType.SqlServer
                 && !GV_DBConfigs.SelectedRows[0].Cells[6].Value.ToString().Equals("sa", StringComparison.OrdinalIgnoreCase))
             {
                 var dia = MessageBox.Show("非超级管理员的账号，可能因权限不足，查询不出表结构信息，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
@@ -123,8 +121,7 @@ namespace DBCHM
                 {
                     LogUtils.LogError("连接数据库失败", Developer.SysDefault, ex, config);
                     MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }                
-
+                }
             }, null);
         }
 
@@ -154,8 +151,8 @@ namespace DBCHM
                     GV_DBConfigs.Columns[1].Width = 150;
                 }
             }
-                  
         }
+
         private void GV_DBConfigs_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             btnConnect_Click(sender, e);
@@ -179,7 +176,6 @@ namespace DBCHM
                     e.Value = strEncrypt;
                 }
             }
-        
         }
     }
 }

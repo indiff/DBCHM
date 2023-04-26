@@ -52,9 +52,10 @@ namespace MJTop.Data.DatabaseInfo
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
+        public Dictionary<string, int> TableRows { get; private set; } = new Dictionary<string, int>();
 
         public List<string> TableNames { get; private set; } = new List<string>();
-        
+
         public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; }
 
         public IgCaseDictionary<List<string>> TableColumnNameDict { get; private set; }
@@ -99,7 +100,7 @@ namespace MJTop.Data.DatabaseInfo
             this.TableColumnNameDict = new IgCaseDictionary<List<string>>();
             this.TableColumnInfoDict = new IgCaseDictionary<List<ColumnInfo>>();
             this.TableColumnComments = new IgCaseDictionary<NameValueCollection>();
-
+            this.TableRows = new Dictionary<string, int>();
 
             string dbSql = "SELECT SCHEMA_NAME FROM information_schema.SCHEMATA order by  SCHEMA_NAME asc";
             string strSql = string.Format("SELECT table_name name,TRIM(TABLE_COMMENT) value FROM INFORMATION_SCHEMA.TABLES WHERE lower(table_type)='base table' and  table_schema = '{0}' order by table_name asc ", DBName);
@@ -175,6 +176,10 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                                 this.TableColumnNameDict.Add(tableName, lstColName);
                                 this.TableColumnInfoDict.Add(tableName, tabInfo.Colnumns);
                                 this.TableColumnComments.Add(tableName, nvcColDeText);
+
+                                // 设置表行数信息
+                                var singleRow = Db.Single<int>("select count(*) as TABLEROWS from " + DBName + "." + tableName, 0);
+                                this.TableRows.Add(tableName, singleRow);
                             }
                             catch (Exception ex)
                             {
@@ -199,8 +204,8 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
             return this.TableComments.Count == this.TableInfoDict.Count;
         }
 
-
         #region MySql 获取列信息
+
         //private List<ColumnInfo> MySqlReadColInfo(string strSql)
         //{
         //    List<ColumnInfo> lstCols = new List<ColumnInfo>();
@@ -269,8 +274,8 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 }
             }
         }
-        #endregion
 
+        #endregion MySql 获取列信息
 
         public bool IsAllMyISAM
         {
@@ -280,7 +285,6 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 return Db.Single<bool>(strSql, false);
             }
         }
-
 
         public Dictionary<string, DateTime> GetTableStruct_Modify()
         {
@@ -338,7 +342,6 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 var tabInfo = TableInfoDict[tableName];
                 tabInfo.TabComment = comment;
                 TableInfoDict[tableName] = tabInfo;
-
             }
             catch (Exception ex)
             {
@@ -426,7 +429,6 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
             string drop_sql = string.Empty;
             try
             {
-
                 drop_sql = "drop table " + tableName;
                 Db.ExecSql(drop_sql);
 
@@ -447,7 +449,6 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 }
 
                 this.TableColumnNameDict.Remove(tableName);
-
             }
             catch (Exception ex)
             {
@@ -466,7 +467,6 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
             string drop_sql = "alter table `{0}` drop column `{1}`";
             try
             {
-               
                 drop_sql = string.Format(drop_sql, tableName, columnName);
                 Db.ExecSql(drop_sql);
 
@@ -497,7 +497,6 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
                 });
                 lstColInfo.Remove(curColInfo);
                 TableColumnInfoDict[tableName] = lstColInfo;
-
             }
             catch (Exception ex)
             {
@@ -506,6 +505,5 @@ from information_schema.columns where table_schema = ?DBName and table_name = ?t
             }
             return true;
         }
-
     }
 }

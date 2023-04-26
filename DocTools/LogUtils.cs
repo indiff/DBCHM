@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Web;
-using System.Text.RegularExpressions;
 using System.Linq;
-using System.Collections;
-using System.Reflection;
-using System.Collections.Specialized;
+using System.Text;
 using ZetaLongPaths;
 
 /// <summary>
@@ -15,9 +10,7 @@ using ZetaLongPaths;
 /// </summary>
 public class LogUtils
 {
-
     private static object locker = new object();
-
 
     /// <summary>
     /// 写入日志
@@ -60,7 +53,6 @@ public class LogUtils
             Write(logName, developer, LogLevel.Info, Info_objs?.ToList(), DateTime.Now);
         }
     }
-
 
     /// <summary>s
     /// 写入带 堆栈执行 的Info 日志
@@ -158,13 +150,13 @@ public class LogUtils
     }
 }
 
-
 /// <summary>
 /// 程序日志
 /// </summary>
 public class Log
 {
-    public Guid Id { get { return Guid.NewGuid(); } }
+    public Guid Id
+    { get { return Guid.NewGuid(); } }
 
     /// <summary>
     /// 日志名称
@@ -191,14 +183,13 @@ public class Log
     /// </summary>
     public DateTime Added { get; set; }
 
-
     public override string ToString()
     {
         return Newtonsoft.Json.JsonConvert.SerializeObject(this ?? default(Log));
     }
 
-
     #region 枚举 处理
+
     /// <summary>
     /// 根据枚举对象得到 枚举键值对
     /// </summary>
@@ -223,7 +214,6 @@ public class Log
         return dict;
     }
 
-
     /// <summary>
     /// 根据枚举val获取枚举name
     /// </summary>
@@ -235,7 +225,8 @@ public class Log
         T t = (T)Enum.Parse(typeof(T), enumVal.ToString());
         return t;
     }
-    #endregion
+
+    #endregion 枚举 处理
 }
 
 /// <summary>
@@ -259,7 +250,7 @@ public enum Developer
     SysDefault = 0,
 
     /// <summary>
-    /// 其他用户 
+    /// 其他用户
     /// </summary>
 
     MJ = 1,

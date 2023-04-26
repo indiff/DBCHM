@@ -52,21 +52,22 @@ namespace MJTop.Data.DatabaseInfo
         }
 
         public NameValueCollection TableComments { get; private set; } = new NameValueCollection();
+        public Dictionary<string, int> TableRows { get; private set; } = new Dictionary<string, int>();
 
         private NameValueCollection TableSchemas { get; set; } = new NameValueCollection();
 
         public List<string> TableNames { get; private set; } = new List<string>();
-        
-        public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; } 
 
-        public IgCaseDictionary<List<string>> TableColumnNameDict { get; private set; } 
+        public IgCaseDictionary<TableInfo> TableInfoDict { get; private set; }
 
-        public IgCaseDictionary<List<ColumnInfo>> TableColumnInfoDict { get; private set; } 
+        public IgCaseDictionary<List<string>> TableColumnNameDict { get; private set; }
 
-        public IgCaseDictionary<NameValueCollection> TableColumnComments { get; private set; } 
+        public IgCaseDictionary<List<ColumnInfo>> TableColumnInfoDict { get; private set; }
+
+        public IgCaseDictionary<NameValueCollection> TableColumnComments { get; private set; }
 
         private IgCaseDictionary<ColumnInfo> DictColumnInfo { get; set; } = new IgCaseDictionary<ColumnInfo>();
-        
+
         public NameValueCollection Views { get; private set; }
 
         public NameValueCollection Procs { get; private set; }
@@ -150,7 +151,7 @@ namespace MJTop.Data.DatabaseInfo
                             tabInfo.TableName = tableName;
                             tabInfo.TabComment = TableComments[tableName];
 
-                           var colSql = @"select s.* FROM (SELECT a.colorder Colorder,a.name ColumnName,b.name TypeName,row_number() over (partition by a.name order by b.name) as group_idx,(case when (SELECT count(*) FROM sysobjects  WHERE (name in (SELECT name FROM sysindexes  WHERE (id = a.id) AND (indid in  (SELECT indid FROM sysindexkeys  WHERE (id = a.id) AND (colid in  (SELECT colid FROM syscolumns WHERE (id = a.id) AND (name = a.name)))))))  AND (xtype = 'PK'))>0 then 1 else 0 end) IsPK,(case when COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 then 1 else 0 end) IsIdentity,  CASE When b.name ='uniqueidentifier' Then 36  WHEN (charindex('int',b.name)>0) OR (charindex('time',b.name)>0) THEN NULL ELSE  COLUMNPROPERTY(a.id,a.name,'PRECISION') end as [Length], CASE WHEN ((charindex('int',b.name)>0) OR (charindex('time',b.name)>0)) THEN NULL ELSE isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),null) end as Scale,(case when a.isnullable=1 then 1 else 0 end) CanNull,Replace(Replace(IsNull(e.text,''),'(',''),')','') DefaultVal,isnull(g.[value], ' ') AS DeText FROM  syscolumns a left join systypes b on a.xtype=b.xusertype inner join sysobjects d on a.id=d.id and d.xtype='U' and d.name<>'dtproperties' left join syscomments e on a.cdefault=e.id left join sys.extended_properties g on a.id=g.major_id AND a.colid=g.minor_id  And g.class=1 left join sys.extended_properties f on d.id=f.class and f.minor_id=0 left join sys.schemas c on d.uid = c.schema_id where b.name is not NULL and  c.name + '.' + d.name = @tableName ) s WHERE s.group_idx = 1 order by s.colorder";
+                            var colSql = @"select s.* FROM (SELECT a.colorder Colorder,a.name ColumnName,b.name TypeName,row_number() over (partition by a.name order by b.name) as group_idx,(case when (SELECT count(*) FROM sysobjects  WHERE (name in (SELECT name FROM sysindexes  WHERE (id = a.id) AND (indid in  (SELECT indid FROM sysindexkeys  WHERE (id = a.id) AND (colid in  (SELECT colid FROM syscolumns WHERE (id = a.id) AND (name = a.name)))))))  AND (xtype = 'PK'))>0 then 1 else 0 end) IsPK,(case when COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 then 1 else 0 end) IsIdentity,  CASE When b.name ='uniqueidentifier' Then 36  WHEN (charindex('int',b.name)>0) OR (charindex('time',b.name)>0) THEN NULL ELSE  COLUMNPROPERTY(a.id,a.name,'PRECISION') end as [Length], CASE WHEN ((charindex('int',b.name)>0) OR (charindex('time',b.name)>0)) THEN NULL ELSE isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),null) end as Scale,(case when a.isnullable=1 then 1 else 0 end) CanNull,Replace(Replace(IsNull(e.text,''),'(',''),')','') DefaultVal,isnull(g.[value], ' ') AS DeText FROM  syscolumns a left join systypes b on a.xtype=b.xusertype inner join sysobjects d on a.id=d.id and d.xtype='U' and d.name<>'dtproperties' left join syscomments e on a.cdefault=e.id left join sys.extended_properties g on a.id=g.major_id AND a.colid=g.minor_id  And g.class=1 left join sys.extended_properties f on d.id=f.class and f.minor_id=0 left join sys.schemas c on d.uid = c.schema_id where b.name is not NULL and  c.name + '.' + d.name = @tableName ) s WHERE s.group_idx = 1 order by s.colorder";
 
                             try
                             {
@@ -190,7 +191,7 @@ namespace MJTop.Data.DatabaseInfo
                             {
                                 LogUtils.LogError("DB", Developer.SysDefault, ex, "查询过程出现失败，账号的权限可能不足！！！");
                             }
-                        });                       
+                        });
                         lstTask.Add(task);
                         if (lstTask.Count(t => t.Status != TaskStatus.RanToCompletion) >= 50)
                         {
@@ -208,7 +209,6 @@ namespace MJTop.Data.DatabaseInfo
             }
             return this.TableComments.Count == this.TableInfoDict.Count;
         }
-
 
         public Dictionary<string, DateTime> GetTableStruct_Modify()
         {
@@ -264,13 +264,13 @@ namespace MJTop.Data.DatabaseInfo
             {
                 upsert_sql = @" if exists (
                  SELECT case when a.colorder = 1 then d.name  else '' end as 表名,  case when a.colorder = 1 then isnull(f.value, '')  else '' end as 表说明
-                FROM syscolumns a 
-                       inner join sysobjects d 
-                          on a.id = d.id 
-                             and d.xtype = 'U' 
+                FROM syscolumns a
+                       inner join sysobjects d
+                          on a.id = d.id
+                             and d.xtype = 'U'
                              and d.name <> 'sys.extended_properties'
-                       left join sys.extended_properties   f 
-                         on a.id = f.major_id 
+                       left join sys.extended_properties   f
+                         on a.id = f.major_id
                             and f.minor_id = 0
                  where a.colorder = 1 and d.name<>'sysdiagrams'  and d.name=N'{0}' and f.value is not null
                  )
@@ -330,7 +330,6 @@ namespace MJTop.Data.DatabaseInfo
                 ColumnInfo colInfo = DictColumnInfo[tableName + "@" + columnName];
                 colInfo.DeText = comment;
                 DictColumnInfo[tableName + "@" + columnName] = colInfo;
-
             }
             catch (Exception ex)
             {
@@ -347,7 +346,6 @@ namespace MJTop.Data.DatabaseInfo
             string drop_sql = string.Empty;
             try
             {
-
                 drop_sql = "drop table " + tableName;
                 Db.ExecSql(drop_sql);
 
@@ -368,7 +366,6 @@ namespace MJTop.Data.DatabaseInfo
                 }
 
                 this.TableColumnNameDict.Remove(tableName);
-
             }
             catch (Exception ex)
             {
@@ -426,7 +423,5 @@ namespace MJTop.Data.DatabaseInfo
             }
             return true;
         }
-
-
     }
 }

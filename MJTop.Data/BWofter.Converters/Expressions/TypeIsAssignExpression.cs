@@ -27,24 +27,28 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace BWofter.Converters.Expressions
 {
     using System;
     using System.Linq.Expressions;
+
     public sealed class TypeIsAssignExpression : DataExpression
     {
         public Expression Left { get; }
         public Expression Right { get; }
         public override Type Type => boolType;
         public Type TargetType { get; }
+
         public TypeIsAssignExpression(Expression left, Expression right, Type type)
         {
             Left = left ?? throw new ArgumentNullException(nameof(left));
             Right = right ?? throw new ArgumentNullException(nameof(right));
             TargetType = type ?? throw new ArgumentNullException(nameof(type));
         }
+
         public override Expression Reduce() =>
              NotEqual(Assign(Right, TypeAs(Left, TargetType)), Constant(null, TargetType));
     }

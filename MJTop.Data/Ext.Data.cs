@@ -5,14 +5,8 @@ using System.Data;
 using System.Data.Common;
 using System.Dynamic;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Reflection.Emit;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MJTop.Data
 {
@@ -21,8 +15,7 @@ namespace MJTop.Data
     /// </summary>
     public static class ExtData
     {
-        #region  DataTable 转实体类型数据 方法1
-
+        #region DataTable 转实体类型数据 方法1
 
         /// <summary>
         /// 根据类型的属性集合，匹配修改DataTable列名（用来处理属性名与列名不一致的大小写问题）
@@ -119,7 +112,8 @@ namespace MJTop.Data
         //        return dynamicBuilder;
         //    }
         //}
-        #endregion
+
+        #endregion DataTable 转实体类型数据 方法1
 
         #region DataTable 转实体类型数据 方法2
 
@@ -213,7 +207,6 @@ namespace MJTop.Data
             return obj;
         }
 
-
         /// <summary>
         /// 反射将datatable转换为List对象
         /// </summary>
@@ -236,9 +229,7 @@ namespace MJTop.Data
             return objs;
         }
 
-
-        #endregion
-
+        #endregion DataTable 转实体类型数据 方法2
 
         #region DataTable 转实体类型数据 方法3
 
@@ -253,7 +244,7 @@ namespace MJTop.Data
             return BWofter.Converters.Data.DataTableConverter<T>.ToEntities(dataTable);
         }
 
-        #endregion
+        #endregion DataTable 转实体类型数据 方法3
 
         #region DataTable DataRow DataColumn 扩展
 
@@ -288,7 +279,6 @@ namespace MJTop.Data
             return lst;
         }
 
-
         /// <summary>
         /// 将DataTable的其中 两列数据 存储为 Dictionary
         /// </summary>
@@ -315,7 +305,6 @@ namespace MJTop.Data
             return dict;
         }
 
-
         /// <summary>
         /// 将DataTable的其中 两列数据 存储为 NameValueCollection
         /// </summary>
@@ -340,9 +329,8 @@ namespace MJTop.Data
             return nvc;
         }
 
-
         /// <summary>
-        ///给当前DataTable增加列名 
+        ///给当前DataTable增加列名
         /// </summary>
         /// <param name="this">DataTable对象</param>
         /// <param name="columns">列信息</param>
@@ -428,8 +416,6 @@ namespace MJTop.Data
             return lstDC.ToArray();
         }
 
-
-
         /// <summary>
         /// 将DataRow转为 dynamic 类型对象
         /// </summary>
@@ -446,9 +432,10 @@ namespace MJTop.Data
             return expandoDict;
         }
 
-        #endregion
+        #endregion DataTable DataRow DataColumn 扩展
 
         #region DbParameterCollection 扩展
+
         /// <summary>
         /// DbParameterCollection 转数组
         /// </summary>
@@ -470,7 +457,8 @@ namespace MJTop.Data
 
             return paras;
         }
-        #endregion
+
+        #endregion DbParameterCollection 扩展
 
         #region DBType 扩展
 
@@ -485,16 +473,22 @@ namespace MJTop.Data
             {
                 case DBType.SqlServer:
                     return Global.Dict_SqlServer_DbType;
+
                 case DBType.MySql:
                     return Global.Dict_MySql_DbType;
+
                 case DBType.Oracle:
                     return Global.Dict_Oracle_DbType;
+
                 case DBType.OracleDDTek:
                     return Global.Dict_Oracle_DbType;
+
                 case DBType.PostgreSql:
                     return Global.Dict_PostgreSql_DbType;
+
                 case DBType.SQLite:
                     return Global.Dict_Sqlite_DbType;
+
                 default:
                     throw new ArgumentException("未知数据库类型！");
             }
@@ -526,8 +520,7 @@ namespace MJTop.Data
             return Global.ParameterCharMap[dbType];
         }
 
-
-        #endregion
+        #endregion DBType 扩展
 
         /// <summary>
         /// 引用类型对象的序列化（深度克隆）
@@ -544,7 +537,7 @@ namespace MJTop.Data
             }
             using (Stream objectStream = new MemoryStream())
             {
-                //利用 System.Runtime.Serialization序列化与反序列化完成引用对象的复制  
+                //利用 System.Runtime.Serialization序列化与反序列化完成引用对象的复制
                 IFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(objectStream, RealObject);
                 objectStream.Seek(0, SeekOrigin.Begin);

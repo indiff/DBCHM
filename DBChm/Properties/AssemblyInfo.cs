@@ -1,16 +1,16 @@
-﻿using System.Resources;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("DBCHM - tyj")]
+[assembly: AssemblyTitle("DBCHM - indiff")]
 [assembly: AssemblyDescription("数据库CHM生成工具")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("indiff")]
 [assembly: AssemblyProduct("DBCHM")]
-[assembly: AssemblyCopyright("Copyright ©2018-2022 by lztkdr modify by tyj")]
+[assembly: AssemblyCopyright("Copyright ©2018-2022 by lztkdr modify by indiff")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
 [assembly: Guid("55b00db1-ba55-47b7-bd44-35c0fcd05fd5")]
 
-// 程序集的版本信息由下列四个值组成: 
+// 程序集的版本信息由下列四个值组成:
 //
 //      主版本
 //      次版本

@@ -1,22 +1,9 @@
-﻿using MJTop.Data.SPI;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
-using System.Data;
-using System.Data.Common;
-using System.Reflection;
-using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
-using Oracle.ManagedDataAccess.Client;
 using System.Configuration;
-using System.Text.RegularExpressions;
-using System.Data.SQLite;
-using DDTek.Oracle;
-using Npgsql;
 using System.Diagnostics;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace MJTop.Data
 {
@@ -27,9 +14,10 @@ namespace MJTop.Data
     {
         static DBMgr()
         {
-           InitDLL();
+            InitDLL();
         }
-        static void InitDLL()
+
+        private static void InitDLL()
         {
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
             // 框架加载dll失败后执行，手动加载dll
@@ -71,7 +59,6 @@ namespace MJTop.Data
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
-
         }
 
         /// <summary>
@@ -144,7 +131,6 @@ namespace MJTop.Data
             return DBFactory.CreateInstance(DBType.SQLite, GetConnectionString(DBType.SQLite, null, null, dbPath, null, password), cmdTimeOut);
         }
 
-
         /// <summary>
         /// 获取连接字符串
         /// </summary>
@@ -167,18 +153,23 @@ namespace MJTop.Data
                 case DBType.SqlServer:
                     connectionString = string.Format(@"server={0}{1};database={2};uid={3};pwd={4};connection timeout={5}", server, (port.HasValue ? ("," + port.Value) : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
+
                 case DBType.MySql:
                     connectionString = string.Format(@"Server={0};{1}Database={2};User={3};Password={4};OldGuids=True;connection timeout={5};" + extraParam, server, (port.HasValue ? ("Port=" + port.Value + ";") : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
+
                 case DBType.Oracle:
                     connectionString = string.Format("Data Source={0}:{1}/{2};User Id={3};password={4};Pooling=true;connection timeout={5}", server, (port ?? 1521), databBase, uid, pwd, connTimeOut);
                     break;
+
                 case DBType.OracleDDTek:
                     connectionString = string.Format("Host={0};Port={1};Service Name={2};User ID={3};Password={4};PERSIST SECURITY INFO=True;connection timeout={5}", server, (port ?? 1521), databBase, uid, pwd, connTimeOut);
                     break;
+
                 case DBType.PostgreSql:
                     connectionString = string.Format("host={0};{1}database={2};user id={3};password={4};timeout={5}", server, (port.HasValue ? ("port=" + port.Value + ";") : string.Empty), databBase, uid, pwd, connTimeOut);
                     break;
+
                 case DBType.SQLite:
                     //connectionString = string.Format("Data Source={0};Pooling=True;BinaryGUID=True;Enlist=N;Synchronous=Off;Journal Mode=WAL;Cache Size=5000;", databBase);
                     connectionString = string.Format("Data Source={0};", databBase);
@@ -187,15 +178,16 @@ namespace MJTop.Data
                         connectionString += "version=3;password=" + pwd;
                     }
                     break;
+
                 case DBType.DB2:
                     connectionString = string.Format(@"server={0}:{1};Database={2};Uid={3};Pwd={4};connection timeout={5}", server, (port ?? 50000), databBase, uid, pwd, connTimeOut);
                     break;
+
                 default:
                     throw new ArgumentException("未知数据库类型！");
             }
             return connectionString;
         }
-
 
         /// <summary>
         /// 测试连接是否成功

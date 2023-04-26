@@ -1,15 +1,10 @@
 ﻿using MJTop.Data.DatabaseInfo;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
-using System.Collections.Concurrent;
+using System.Data.Common;
 using System.Data.SqlClient;
-using System.Collections;
-using System.Collections.Specialized;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace MJTop.Data.Database
@@ -56,7 +51,7 @@ namespace MJTop.Data.Database
             return bResult;
         }
 
-        public override KeyValuePair<DataTable,long> GetDataTableByPager(int currentPage, int pageSize, string selColumns, string joinTableName, string whereStr, string orderbyStr)
+        public override KeyValuePair<DataTable, long> GetDataTableByPager(int currentPage, int pageSize, string selColumns, string joinTableName, string whereStr, string orderbyStr)
         {
             if (string.IsNullOrEmpty(selColumns))
             {
@@ -100,7 +95,6 @@ namespace MJTop.Data.Database
             strPageSQL = string.Format(@"SELECT * FROM ({0}) A WHERE   RN BETWEEN {1} AND {2}",
                                        strSQL, (currentPage - 1) * pageSize + 1, (currentPage) * pageSize);
 
-
             DataSet ds = new DataSet("ds");
             DbConnection conn = null;
             DbCommand cmd = null;
@@ -116,7 +110,7 @@ namespace MJTop.Data.Database
                 {
                     data = ds.Tables[0];
                 }
-                
+
                 cmd.CommandText = cntSQL;
                 cmd.Parameters.Clear();
 
@@ -141,7 +135,7 @@ namespace MJTop.Data.Database
             }
         }
 
-        public override int BulkInsert(string tableName, DataTable data,int batchSize = 200000, int timeout = 60)
+        public override int BulkInsert(string tableName, DataTable data, int batchSize = 200000, int timeout = 60)
         {
             List<string> lstAllColName = this.Info[tableName];
             SqlBulkCopy bulk = null;
@@ -164,7 +158,7 @@ namespace MJTop.Data.Database
             return data.Rows.Count;
         }
 
-        public override int BulkInsert(string tableName, DbDataReader reader,int batchSize = 200000, int timeout = 60)
+        public override int BulkInsert(string tableName, DbDataReader reader, int batchSize = 200000, int timeout = 60)
         {
             List<string> lstAllColName = this.Info[tableName];
             SqlBulkCopy bulk = null;

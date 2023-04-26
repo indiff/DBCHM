@@ -27,24 +27,28 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace BWofter.Converters.Expressions
 {
     using System;
     using System.Linq.Expressions;
+
     public sealed class TryParseExpression : DataExpression
     {
         public Expression InParameter { get; }
         public Expression OutParameter { get; }
         public override Type Type => boolType;
         public Type TargetType { get; }
+
         public TryParseExpression(Expression inParameter, Expression outParameter, Type type)
         {
             InParameter = inParameter ?? throw new ArgumentNullException(nameof(inParameter));
             OutParameter = outParameter ?? throw new ArgumentNullException(nameof(outParameter));
             TargetType = type ?? throw new ArgumentNullException(nameof(type));
         }
+
         public override Expression Reduce() =>
             Call(TargetType.GetMethod("TryParse", new[] { stringType, TargetType.MakeByRefType() }), InParameter, OutParameter);
     }

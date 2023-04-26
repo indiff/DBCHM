@@ -27,8 +27,9 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 namespace BWofter.Converters.Expressions
 {
     using System;
@@ -40,11 +41,13 @@ namespace BWofter.Converters.Expressions
         public Expression Operand { get; }
         public override Type Type { get; }
         private static readonly MethodInfo changeType = convertType.GetMethod(nameof(System.Convert.ChangeType), new[] { objectType, typeType });
+
         public ChangeTypeExpression(Expression operand, Type type)
         {
             Operand = operand ?? throw new ArgumentNullException(nameof(operand));
             Type = type ?? throw new ArgumentNullException(nameof(operand));
         }
+
         public override Expression Reduce()
         {
             if (convertType.GetMethod($"To{Type.Name}", new[] { Operand.Type }) is MethodInfo methodInfo)
