@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ZetaLongPaths;
@@ -115,6 +116,8 @@ namespace DocTools.DBDoc
                 var hhc = hhc_tpl.RazorRender(this.Dto).Replace("</LI>", "");
                 ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhc"), hhc, CurrEncoding);
                 ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhk"), hhk, CurrEncoding);
+                // 按照函数来排序
+                this.Dto.Tables = this.Dto.Tables.OrderByDescending(t => t.TableRows).ToList();
                 ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "数据库目录.html"), list_tpl.RazorRender(this.Dto), CurrEncoding);
             }
             catch (Exception ex)

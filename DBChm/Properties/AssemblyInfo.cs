@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("indiff")]
 [assembly: AssemblyProduct("DBCHM")]
-[assembly: AssemblyCopyright("Copyright ©2018-2022 by lztkdr modify by indiff")]
+[assembly: AssemblyCopyright("Copyright ©2018-2026 by lztkdr modify by indiff")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

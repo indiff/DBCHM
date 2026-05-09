@@ -203,7 +203,7 @@ namespace MJTop.Data.DatabaseInfo
             // 读取表名称和注释信息 添加表行数信息
             string tableRowSql = string.Format(@"SELECT
 	                                            T.TABLE_NAME AS Name,
-	                                            T.NUM_ROWS AS Value
+	                                            NVL(T.NUM_ROWS,0) AS Value
                                             FROM
 	                                            SYS.ALL_ALL_TABLES T,
 	                                            SYS.ALL_TAB_COMMENTS TC
@@ -216,11 +216,12 @@ namespace MJTop.Data.DatabaseInfo
 	                                            AND TC.TABLE_NAME ( + ) = T.TABLE_NAME
 	                                            AND T.OWNER = '{0}'
                                             ORDER BY
-                                              T.NUM_ROWS DESC,
+                                              NVL(T.NUM_ROWS,0) DESC,
                                               T.TABLE_NAME ASC", User);
 
             // 使用测试库创建的临时表来存储数据行数  by indiff
-            tableRowSql = string.Format(@"SELECT NAME,TABLEROWS FROM prod_table_rows order by TABLEROWS DESC,NAME ASC", User);
+            //tableRowSql = string.Format(@"SELECT NAME,TABLEROWS FROM prod_table_rows order by TABLEROWS DESC,NAME ASC", User);
+            //tableRowSql = string.Format(@"SELECT NAME,TABLEROWS FROM prod_table_rows order by TABLEROWS DESC", User);
 
             string viewSql = string.Format("select view_name,text from ALL_VIEWS WHERE OWNER = '{0}' order by view_name asc", User);
 
