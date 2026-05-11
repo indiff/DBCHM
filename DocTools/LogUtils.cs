@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -185,7 +186,8 @@ public class Log
 
     public override string ToString()
     {
-        return Newtonsoft.Json.JsonConvert.SerializeObject(this ?? default(Log));
+        //return Newtonsoft.Json.JsonConvert.SerializeObject(this ?? default(Log));
+        return Newtonsoft.Json.JsonConvert.SerializeObject(this ?? default(Log), Formatting.Indented);
     }
 
     #region 枚举 处理

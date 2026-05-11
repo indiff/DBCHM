@@ -3,7 +3,7 @@ using IBM.Data.DB2;
 using MJTop.Data.Database;
 using MySql.Data.MySqlClient;
 using Npgsql;
-using Oracle.ManagedDataAccess.Client;
+using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;

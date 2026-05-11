@@ -1,4 +1,5 @@
 ﻿using MJTop.Data.SPI;
+using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -33,10 +34,10 @@ namespace MJTop.Data.DatabaseInfo
         {
             get
             {
-                if (Db.ConnectionStringBuilder is Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder)
+                if (Db.ConnectionStringBuilder is OracleConnectionStringBuilder)
                 {
                     //127.0.0.1:1521/CTMS
-                    string source = (Db.ConnectionStringBuilder as Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder).DataSource;
+                    string source = (Db.ConnectionStringBuilder as OracleConnectionStringBuilder).DataSource;
                     return Regex.Replace(source, @"(.+/)(.+)", "$2");
                 }
                 else
@@ -50,9 +51,9 @@ namespace MJTop.Data.DatabaseInfo
         {
             get
             {
-                if (Db.ConnectionStringBuilder is Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder)
+                if (Db.ConnectionStringBuilder is OracleConnectionStringBuilder)
                 {
-                    return (Db.ConnectionStringBuilder as Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder).UserID?.ToUpper();
+                    return (Db.ConnectionStringBuilder as OracleConnectionStringBuilder).UserID?.ToUpper();
                 }
                 else
                 {

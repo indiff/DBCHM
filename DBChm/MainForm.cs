@@ -16,6 +16,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace DBCHM
 {
@@ -292,13 +293,16 @@ namespace DBCHM
                     }
                 }
 
-                //try
+                try
                 {
                     treeDB.Nodes.Add(tnTable);
                 }
-                //catch (Exception  ex)
-                //{
-                //}
+                catch (Exception ex)
+                {
+                    LogUtils.LogError("treeDB.Nodes.Add", Developer.SysDefault, ex, tnTable);
+                    SetMsg(ex.Message, false);
+                    return;
+                }
             }
 
             if (DBUtils.Instance.Info.Views.Keys.Count > 0)
