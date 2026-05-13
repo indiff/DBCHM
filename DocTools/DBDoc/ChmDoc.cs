@@ -178,8 +178,22 @@ namespace DocTools.DBDoc
             var hhp_Path = Path.Combine(this.WorkTmpDir, "chm.hhp");
             ZlpIOHelper.WriteAllText(hhp_Path, hhp_tpl.RazorRender(new ChmHHP(filePath, this.WorkTmpDir)), CurrEncoding);
 
+           
+
+            string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log");
+            string logDirectory = Path.GetDirectoryName(logFilePath); // 获取 "D:\DBCHM\log"
+
+            // 确保目录存在
+            if (!Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+
             string res = StartRun(HHCPath, hhp_Path, Encoding.GetEncoding("gbk"));
-            ZlpIOHelper.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
+            ZlpIOHelper.WriteAllText(logFilePath, res);
+
+            //string res = StartRun(HHCPath, hhp_Path, Encoding.GetEncoding("gbk"));
+            //ZlpIOHelper.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
         }
 
         private string StartRun(string hhcPath, string arguments, Encoding encoding)

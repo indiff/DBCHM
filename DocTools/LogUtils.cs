@@ -33,9 +33,9 @@ public class LogUtils
         string logText = log.ToString() + "\r\n----------------------------------------------------------------------------------------------------\r\n";
         string fileName = DateTime.Now.ToString("yyyyMMdd") + ".log";
         string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
-        if (!ZetaLongPaths.ZlpIOHelper.DirectoryExists(dir))
+        if (!ZlpIOHelper.DirectoryExists(dir))
         {
-            ZetaLongPaths.ZlpIOHelper.CreateDirectory(dir);
+            ZlpIOHelper.CreateDirectory(dir);
         }
         fileName = Path.Combine(dir, fileName);
         ZlpIOHelper.AppendText(fileName, logText, Encoding.GetEncoding("GBK"));
@@ -72,10 +72,10 @@ public class LogUtils
             string fullName = frame.GetMethod().DeclaringType.FullName;
             string methodName = frame.GetMethod().Name;
             int execLine = frame.GetFileLineNumber();
-            lstDetails.Add("文件路径：" + execFile + "\r\n");
-            lstDetails.Add("类全命名：" + fullName + "\r\n");
-            lstDetails.Add("执行方法：" + methodName + "\r\n");
-            lstDetails.Add("当前行号：" + execLine + "\r\n");
+            lstDetails.Add("文件路径：" + execFile );
+            lstDetails.Add("类全命名：" + fullName );
+            lstDetails.Add("执行方法：" + methodName );
+            lstDetails.Add("当前行号：" + execLine );
 
             if (Info_objs != null && Info_objs.Length > 0)
             {
@@ -102,10 +102,10 @@ public class LogUtils
             string fullName = frame.GetMethod().DeclaringType.FullName;
             string methodName = frame.GetMethod().Name;
             int execLine = frame.GetFileLineNumber();
-            lstDetails.Add("文件路径：" + execFile + "\r\n");
-            lstDetails.Add("类全命名：" + fullName + "\r\n");
-            lstDetails.Add("执行方法：" + methodName + "\r\n");
-            lstDetails.Add("当前行号：" + execLine + "\r\n");
+            lstDetails.Add("文件路径：" + execFile );
+            lstDetails.Add("类全命名：" + fullName );
+            lstDetails.Add("执行方法：" + methodName );
+            lstDetails.Add("当前行号：" + execLine );
 
             if (Info_objs != null && Info_objs.Length > 0)
             {
@@ -133,10 +133,10 @@ public class LogUtils
             string fullName = frame.GetMethod().DeclaringType.FullName;
             string methodName = frame.GetMethod().Name;
             int execLine = frame.GetFileLineNumber();
-            lstDetails.Add("文件路径：" + execFile + "\r\n");
-            lstDetails.Add("类全命名：" + fullName + "\r\n");
-            lstDetails.Add("执行方法：" + methodName + "\r\n");
-            lstDetails.Add("当前行号：" + execLine + "\r\n");
+            lstDetails.Add("文件路径：" + execFile );
+            lstDetails.Add("类全命名：" + fullName );
+            lstDetails.Add("执行方法：" + methodName );
+            lstDetails.Add("当前行号：" + execLine );
             lstDetails.Add(ex);
             if (ex.InnerException != null)
             {

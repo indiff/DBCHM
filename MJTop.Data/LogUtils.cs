@@ -99,10 +99,10 @@ namespace MJTop.Data
                 string fullName = frame.GetMethod().DeclaringType.FullName;
                 string methodName = frame.GetMethod().Name;
                 int execLine = frame.GetFileLineNumber();
-                lstDetails.Add("文件路径：" + execFile + "\r\n");
-                lstDetails.Add("类全命名：" + fullName + "\r\n");
-                lstDetails.Add("执行方法：" + methodName + "\r\n");
-                lstDetails.Add("当前行号：" + execLine + "\r\n");
+                lstDetails.Add("文件路径：" + execFile);
+                lstDetails.Add("类全命名：" + fullName);
+                lstDetails.Add("执行方法：" + methodName);
+                lstDetails.Add("当前行号：" + execLine);
 
                 if (Info_objs != null && Info_objs.Length > 0)
                 {
@@ -134,10 +134,10 @@ namespace MJTop.Data
                 string fullName = frame.GetMethod().DeclaringType.FullName;
                 string methodName = frame.GetMethod().Name;
                 int execLine = frame.GetFileLineNumber();
-                lstDetails.Add("文件路径：" + execFile + "\r\n");
-                lstDetails.Add("类全命名：" + fullName + "\r\n");
-                lstDetails.Add("执行方法：" + methodName + "\r\n");
-                lstDetails.Add("当前行号：" + execLine + "\r\n");
+                lstDetails.Add("文件路径：" + execFile);
+                lstDetails.Add("类全命名：" + fullName);
+                lstDetails.Add("执行方法：" + methodName);
+                lstDetails.Add("当前行号：" + execLine);
 
                 if (Info_objs != null && Info_objs.Length > 0)
                 {
@@ -169,7 +169,7 @@ namespace MJTop.Data
                 {
                     lstDetails.Add("异常信息2：" + Log.GetModelData(ex.InnerException));
                 }
-
+                
                 StringBuilder sb_extInfo = new StringBuilder();
                 if (ext_InfoObjs != null && ext_InfoObjs.Length > 0)
                 {
@@ -290,7 +290,6 @@ namespace MJTop.Data
             Type[] argumentsTypes = objType.GetGenericArguments();
 
             #region isLstMark isDictMark
-
             bool isLstMark = false;
             if (argumentsTypes.Length == 1)
             {
@@ -304,6 +303,7 @@ namespace MJTop.Data
                 isLstMark = (obj as IList) != null;
             }
 
+
             bool isDictMark = false;
             if (argumentsTypes.Length == 2)
             {
@@ -316,8 +316,7 @@ namespace MJTop.Data
             {
                 isDictMark = ((obj as IDictionary) != null);
             }
-
-            #endregion isLstMark isDictMark
+            #endregion
 
             if (objType.IsArray)
             {
@@ -340,7 +339,6 @@ namespace MJTop.Data
                         valueParam = string.Join(",", lst.ToArray());
                     }
                 }
-
                 #endregion 数组类型
             }
             else if (isLstMark)
@@ -363,7 +361,6 @@ namespace MJTop.Data
                         valueParam = string.Join(",", lsts.ToArray());
                     }
                 }
-
                 #endregion List
             }
             else if (isDictMark)
@@ -380,7 +377,6 @@ namespace MJTop.Data
                     }
                     valueParam = sb.ToString();
                 }
-
                 #endregion Dictionary
             }
             else if (obj is NameValueCollection)
@@ -397,7 +393,6 @@ namespace MJTop.Data
                     }
                     valueParam = sb.ToString();
                 }
-
                 #endregion NameValueCollection
             }
             else if (obj is ICollection)

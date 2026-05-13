@@ -233,7 +233,7 @@ namespace DBCHM
                 BtnSaveGridData.Enabled = false;
             }
 
-            if (DBUtils.Instance.Info.TableNames.Count > 0)
+            if (DBUtils.Instance.Info.TableNames != null && DBUtils.Instance.Info.TableNames.Count > 0)
             {
                 TreeNode tnTable = new TreeNode("表", 0, 0) { Name = "table" };
                 // 需要添加的模块节点
@@ -305,7 +305,8 @@ namespace DBCHM
                 }
             }
 
-            if (DBUtils.Instance.Info.Views.Keys.Count > 0)
+            if (DBUtils.Instance.Info.Views != null &&
+                DBUtils.Instance.Info.Views.Keys.Count > 0)
             {
                 TreeNode tnView = new TreeNode("视图", 0, 0) { Name = "view" };
                 foreach (var vwName in DBUtils.Instance.Info.Views.AllKeys)
@@ -329,7 +330,7 @@ namespace DBCHM
                 treeDB.Nodes.Add(tnView);
             }
 
-            if (DBUtils.Instance.Info.Procs.Keys.Count > 0)
+            if (DBUtils.Instance.Info.Procs　!= null && DBUtils.Instance.Info.Procs.Keys.Count > 0)
             {
                 TreeNode tnProc = new TreeNode("存储过程", 0, 0) { Name = "proc" };
                 foreach (var procName in DBUtils.Instance.Info.Procs.AllKeys)

@@ -1,10 +1,11 @@
 ﻿using MJTop.Data.SPI;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -149,11 +150,11 @@ namespace MJTop.Data.DatabaseInfo
 
             // 读取表名称和注释信息 // 去除空格  // T.NUM_ROWS DESC, 按照行数降序
             string tableCommentSql = string.Format("SELECT T.TABLE_NAME as Name, TRIM(TC.COMMENTS) AS Value  " +
-                                                   "FROM SYS.ALL_ALL_TABLES T, SYS.ALL_TAB_COMMENTS TC " +
+                                                   "FROM ALL_ALL_TABLES T, ALL_TAB_COMMENTS TC " +
                                                    "WHERE T.IOT_NAME IS NULL  " +
                                                    "AND T.NESTED = 'NO'  " +
                                                    "AND T.SECONDARY = 'N'  " +
-                                                   "AND NOT EXISTS ( SELECT 1 FROM SYS.ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME ) " +
+                                                   "AND NOT EXISTS ( SELECT 1 FROM ALL_MVIEWS MV WHERE MV.OWNER = T.OWNER AND MV.MVIEW_NAME = T.TABLE_NAME ) " +
                                                    "AND TC.OWNER ( + ) = T.OWNER  " +
                                                    "AND TC.TABLE_NAME ( + ) = T.TABLE_NAME  " +
                                                    "AND T.OWNER = '{0}' ORDER BY T.NUM_ROWS DESC,T.TABLE_NAME ASC", User);
@@ -180,13 +181,13 @@ namespace MJTop.Data.DatabaseInfo
                     ORDER BY
                       T.NUM_ROWS DESC,
 	                    T.TABLE_NAME ASC
-             */
+            
             tableCommentSql = string.Format(@"SELECT
 	                                T.TABLE_NAME AS Name,
 	                                TRIM( TC.COMMENTS ) AS Value
                                 FROM
-	                                SYS.ALL_ALL_TABLES T,
-	                                SYS.ALL_TAB_COMMENTS TC,
+	                                ALL_ALL_TABLES T,
+	                                ALL_TAB_COMMENTS TC,
 	                                PROD_TABLE_ROWS R
                                 WHERE
 	                                T.IOT_NAME IS NULL
@@ -200,7 +201,7 @@ namespace MJTop.Data.DatabaseInfo
 	                                AND T.OWNER = '{0}'
                                 ORDER BY
 	                                R.TABLEROWS DESC", User);  // T.NUM_ROWS DESC, 按照行数降序
-
+             */
             // 读取表名称和注释信息 添加表行数信息
             string tableRowSql = string.Format(@"SELECT
 	                                            T.TABLE_NAME AS Name,
@@ -645,6 +646,35 @@ namespace MJTop.Data.DatabaseInfo
                 return false;
             }
             return true;
+        }
+
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"{{OracleDBInfo");
+            sb.AppendLine($"  DBName: {DBName}");
+            sb.AppendLine($"  User: {User}");
+            sb.AppendLine($"  Version: {Version}");
+            sb.AppendLine($"  VersionNumber: {VersionNumber}");
+
+            // 只输出个数，不输出具体内容
+            sb.AppendLine($"  TableComments: Count = {TableComments?.Count ?? 0}");
+            sb.AppendLine($"  TableRows: Count = {TableRows?.Count ?? 0}");
+            sb.AppendLine($"  TableNames: Count = {TableNames?.Count ?? 0}");
+            sb.AppendLine($"  TableInfoDict: Count = {TableInfoDict?.Count ?? 0}");
+            sb.AppendLine($"  TableColumnNameDict: Count = {TableColumnNameDict?.Count ?? 0}");
+            sb.AppendLine($"  TableColumnInfoDict: Count = {TableColumnInfoDict?.Count ?? 0}");
+            sb.AppendLine($"  TableColumnComments: Count = {TableColumnComments?.Count ?? 0}");
+            sb.AppendLine($"  DictColumnInfo: Count = {DictColumnInfo?.Count ?? 0}");
+            sb.AppendLine($"  Dict_Table_Sequence: Count = {Dict_Table_Sequence?.Count ?? 0}");
+            sb.AppendLine($"  Views: Count = {Views?.Count ?? 0}");
+            sb.AppendLine($"  Procs: Count = {Procs?.Count ?? 0}");
+            sb.AppendLine($"  DBNames: Count = {DBNames?.Count ?? 0}");
+            sb.AppendLine($"  Sequences: Count = {Sequences?.Count ?? 0}");
+            sb.AppendLine($"}}");
+
+            return sb.ToString();
         }
     }
 }

@@ -1,8 +1,8 @@
-using ComponentFactory.Krypton.Toolkit;using System;using System.Collections.Generic;using System.ComponentModel;using System.Drawing;using System.Reflection;using System.Windows.Forms;namespace DBCHM{    internal partial class AboutBox : KryptonForm    {        public AboutBox()        {            InitializeComponent();            this.Text = String.Format("About {0}", AssemblyTitle);            this.labelProductName.Text = AssemblyProduct;            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);            this.labelCopyright.Text = AssemblyCopyright;            this.labelCompanyName.Text = AssemblyCompany;
-        }
+using System;using System.Collections.Generic;using System.ComponentModel;using System.Drawing;using System.Windows.Forms;using System.Reflection;using ComponentFactory.Krypton.Toolkit;namespace DBCHM{    partial class AboutBox : KryptonForm    {        public AboutBox()        {            InitializeComponent();            this.Text = String.Format("关于 {0}", AssemblyTitle);            this.labelProductName.Text = AssemblyProduct;            this.labelVersion.Text = String.Format("版本号： {0}", AssemblyVersion);            this.labelCopyright.Text = AssemblyCopyright;            this.labelCompanyName.Text = AssemblyCompany;
+            //this.textBoxDescription.Text = "更新时间：2024-07-31" + "\r\n\r\n" +            //    "更新内容：\r\n\r\n" +            //    "1、支持达梦数据库连接配置及数据库字典文档生成。\r\n\r\n" +            //    "2、MySQL数据库连接配置优化，数据库连接字符串支持添加自定义参数。\r\n\r\n" +             //    "3、数据库表、视图、存储过程查询优化。\r\n\r\n" +            //    "4、MySql.Data.6.9.12升级为MySql.Data.8.0.31，解决“Character set 'utf8mb3' is not supported by .Net Framework.”问题。\r\n\r\n" +            //    "5、修复了一些已知问题。\r\n\r\n" +            //    this.textBoxDescription.Text;            this.textBoxDescription.Text = "更新时间：2024-10-08" + "\r\n\r\n" +                "更新内容：\r\n\r\n" +                "1、支持神通数据库连接配置及数据库字典文档生成。\r\n\r\n" +                "2、支持人大金仓（电科金仓）数据库连接配置及数据库字典文档生成。\r\n\r\n" +                "3、修复了一些已知问题。\r\n\r\n" +                 this.textBoxDescription.Text;        }
 
         #region Assembly Attribute Accessors
-        public string AssemblyTitle        {            get            {
+        public string AssemblyTitle        {            get            {
                 // Get all Title attributes on this assembly
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
                 // If there is at least one Title attribute
@@ -37,8 +37,7 @@ using ComponentFactory.Krypton.Toolkit;using System;using System.Collections.G
                 if (attributes.Length == 0)                    return "";
                 // If there is a Company attribute, return its value
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;            }        }
-
-        #endregion Assembly Attribute Accessors
+        #endregion
         private void okButton_Click(object sender, EventArgs e)        {            this.Dispose();        }        private void textBoxDescription_Click(object sender, EventArgs e)        {
-            // System.Diagnostics.Process.Start("http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26");
-            System.Diagnostics.Process.Start("https://github.com/indiff/DBCHM/issues");        }    }}
+            // System.Diagnostics.Process.Start("http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26");			System.Diagnostics.Process.Start("https://github.com/indiff/DBCHM/issues");
+        }    }}
